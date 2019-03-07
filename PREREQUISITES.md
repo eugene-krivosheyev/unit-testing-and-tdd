@@ -64,6 +64,6 @@ http://github.com
 http://oracle.com
 http://maven.org
 http://mvnrepository.com
-https://repo.maven.apache.org
+http://repo.maven.apache.org
 http://www.jetbrains.com
 ```
