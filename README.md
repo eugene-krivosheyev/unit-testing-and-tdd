@@ -64,6 +64,7 @@
 1. State-based testing VS Interaction-based testing
 1. [Фреймворк тест-дублеров уровня объектов](https://site.mockito.org)
 1. [Фреймворк тест-дублеров уровня REST-сервисов](http://wiremock.org/docs/getting-started/)
+1. Как среда сборки различает UT и IT
 
 ## 8. Реализация фикстуры (1/0.5)
 1. Как максимально реюзать фикстуры?
