@@ -9,6 +9,7 @@ import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 public class ClientTest {
     @Test
@@ -28,5 +29,10 @@ public class ClientTest {
                 notNullValue()
         ));
         //endregion
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowExceptionWhenIdIsNull() {
+        new Client(null, "dummy client name");
     }
 }
