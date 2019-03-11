@@ -10,6 +10,7 @@ public class Client {
     private Collection<UUID> accountIds = new ArrayList<>(); //TODO
 
     public Client(UUID id, String name) {
+        //TODO: arguments verifying
         this.id = id;
         this.name = name;
     }
@@ -20,5 +21,10 @@ public class Client {
 
     public String getName() {
         return name;
+    }
+
+    //TODO addAccount and reference integrity
+    public void addAccount() {
+
     }
 }
