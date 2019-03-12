@@ -19,7 +19,8 @@ import static org.junit.Assert.fail;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ClientTest {
-    @Mock
+//    @Mock
+//    Can't mock final class
     private UUID repo;
 
     @Test(timeout = 10_000)
@@ -29,12 +30,11 @@ public class ClientTest {
         //endregion
 
         //region when
-        if(1==1) throw new RuntimeException();
+//        if(1==1) throw new RuntimeException(); -> Case for different test failures
         Client sut = new Client(stubId, "dummy client name");
         //endregion
 
         //region then
-        assertFalse(true);
         assertThat(sut.getId(),
             allOf(
                 equalTo(stubId),
@@ -44,7 +44,7 @@ public class ClientTest {
     }
 
     //@Ignore
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = RuntimeException.class)
     public void shouldThrowExceptionWhenIdIsNull() {
         new Client(null, "dummy client name");
     }

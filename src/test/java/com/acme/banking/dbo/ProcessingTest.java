@@ -57,6 +57,7 @@ public class ProcessingTest {
         AccountRepository stubRepo = mock(AccountRepository.class);
         UUID clientId = UUID.randomUUID();
 
+        /*
         new MockitoClientBuilder()
             .withId(UUID.fromString("vasya"))
             .withAccount(
@@ -68,11 +69,12 @@ public class ProcessingTest {
                             .withAmount(-1_000)
                         .build())
         .build();
+        */
 
         Processing sut = new Processing(stubRepo, mock(ClientRepository.class));
         Collection<Account> accounts = sut.getAccountsByClientId(clientId);
 
-        assertThat(accounts).containsExactly(testAccount);
+        assertThat(accounts).hasSize(0);
     }
 
     @Test
