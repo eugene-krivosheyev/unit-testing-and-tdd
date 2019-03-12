@@ -6,7 +6,8 @@ import com.acme.banking.dbo.domain.SavingAccount;
 import com.acme.banking.dbo.service.AccountRepository;
 import com.acme.banking.dbo.service.ClientRepository;
 import com.acme.banking.dbo.service.Processing;
-import org.junit.Test;
+import org.junit.*;
+import org.mockito.Mock;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -18,10 +19,36 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 public class ProcessingTest {
+    private static int state = 0;
+
+    private AccountRepository dummyAccountRepo;
+    private ClientRepository dummyClientRepo;
+    private Processing sut;
+
+    @BeforeClass
+    public static void globalSetUp() {
+
+    }
+
+    @AfterClass
+    public static void globalTearDown() {
+
+    }
+
+    @Before
+    public void setUp() {
+        dummyAccountRepo = mock(AccountRepository.class);
+        dummyClientRepo = mock(ClientRepository.class);
+        sut = new Processing(dummyAccountRepo, dummyClientRepo);
+    }
+
+    @After
+    public void tearDown() {
+
+    }
+
     @Test(expected = IllegalArgumentException.class)
     public void shouldThrowExceptionWhenIdIsNull() {
-        AccountRepository dummyRepo = mock(AccountRepository.class);
-        Processing sut = new Processing(dummyRepo, mock(ClientRepository.class));
         sut.getAccountsByClientId(null);
     }
 
@@ -29,20 +56,18 @@ public class ProcessingTest {
     public void shouldGetAccountsByClientIdWhenClientAndAccountExist() {
         AccountRepository stubRepo = mock(AccountRepository.class);
         UUID clientId = UUID.randomUUID();
-        SavingAccount testAccount = new SavingAccount(
-                UUID.randomUUID(),
-                new Client(clientId, "client"),
-                1.0
-        );
 
-        when(stubRepo.getAllAccountsByClientId(clientId)).thenReturn(
-            Arrays.asList(testAccount)
-        );
-
-        when(stubRepo.getAllAccountsByClientId(any()))
-                .thenReturn(Collections.EMPTY_LIST)
-                .thenReturn(null)
-                .thenThrow(new RuntimeException());
+        new MockitoClientBuilder()
+            .withId(UUID.fromString("vasya"))
+            .withAccount(
+                    new MockitoAccountBuilder()
+                            .withAmount(1_000)
+                        .build())
+            .withAccount(
+                    new MockitoAccountBuilder()
+                            .withAmount(-1_000)
+                        .build())
+        .build();
 
         Processing sut = new Processing(stubRepo, mock(ClientRepository.class));
         Collection<Account> accounts = sut.getAccountsByClientId(clientId);
