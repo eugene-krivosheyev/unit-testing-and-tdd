@@ -7,12 +7,22 @@ import java.util.Collection;
 import java.util.UUID;
 
 public class Processing {
+    private AccountRepository repository;
+    private ClientRepository clientRepository;
+
+    public Processing(AccountRepository repository, ClientRepository clientRepository) {
+        this.repository = repository;
+        this.clientRepository = clientRepository;
+    }
+
     public UUID createClient(String name) {
-        return null;
+        if (name == null || name.isEmpty()) throw new IllegalArgumentException();
+        return clientRepository.createClient(name);
     }
 
     public Collection<Account> getAccountsByClientId(UUID clientId) {
-        return null;
+        if (clientId == null) throw new IllegalArgumentException();
+        return repository.getAccountsByClientId(clientId);
     }
 
     public void transfer(double amount, UUID fromAccountId, UUID toAccountId) {
