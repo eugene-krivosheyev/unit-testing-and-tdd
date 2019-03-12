@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
+import static org.fest.assertions.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assume.assumeTrue;
@@ -25,6 +26,10 @@ public class ArrayListTest {
         //endregion
 
         //region Then
+        assertThat(sut.size())
+            .isEqualTo(1)
+            .isGreaterThan(0);
+
         assertEquals(1, sut.size());
         //endregion
     }
