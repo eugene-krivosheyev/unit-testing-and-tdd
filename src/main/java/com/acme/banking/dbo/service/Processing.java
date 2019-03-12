@@ -15,14 +15,16 @@ public class Processing {
         this.clientRepository = clientRepository;
     }
 
+    //TODO: implement and cover with _unit_ test
     public UUID createClient(String name) {
         if (name == null || name.isEmpty()) throw new IllegalArgumentException();
         return clientRepository.createClient(name);
     }
 
+    //TODO: implement getNonNegativeAccountsByClientId and cover with _unit_ tests
     public Collection<Account> getAccountsByClientId(UUID clientId) {
         if (clientId == null) throw new IllegalArgumentException();
-        return repository.getAccountsByClientId(clientId);
+        return repository.getAllAccountsByClientId(clientId);
     }
 
     public void transfer(double amount, UUID fromAccountId, UUID toAccountId) {

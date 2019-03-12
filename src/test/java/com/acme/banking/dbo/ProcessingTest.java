@@ -35,11 +35,11 @@ public class ProcessingTest {
                 1.0
         );
 
-        when(stubRepo.getAccountsByClientId(clientId)).thenReturn(
+        when(stubRepo.getAllAccountsByClientId(clientId)).thenReturn(
             Arrays.asList(testAccount)
         );
 
-        when(stubRepo.getAccountsByClientId(any()))
+        when(stubRepo.getAllAccountsByClientId(any()))
                 .thenReturn(Collections.EMPTY_LIST)
                 .thenReturn(null)
                 .thenThrow(new RuntimeException());

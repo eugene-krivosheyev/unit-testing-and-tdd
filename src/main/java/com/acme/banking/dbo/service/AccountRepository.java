@@ -6,5 +6,5 @@ import java.util.Collection;
 import java.util.UUID;
 
 public interface AccountRepository {
-    Collection<Account> getAccountsByClientId(UUID clientId);
+    Collection<Account> getAllAccountsByClientId(UUID clientId);
 }
