@@ -45,7 +45,7 @@ public class ReportingTest {
     public void shouldReportHeadersForAllBranchHierarchy() {
         //??????
         assertThat(sut.getReport())
-                .equals("# Report" +
+                .isEqualTo("# Report" +
                         " ## Branch: 1" +
                         "  ### Branch: 1.1" +
                         "  ### Branch: 1.2" +
