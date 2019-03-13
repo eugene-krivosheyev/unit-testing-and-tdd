@@ -52,4 +52,11 @@ public class ReportingTest {
                         "   #### Branch: 1.2.1" +
                         " ## Branch: 2");
     }
+
+    @Test
+    public void shouldReportHeaderForBranch1st() {
+        assertThat(sut.getReport())
+                .isEqualTo("# Report" +
+                        " ## Branch: 1");
+    }
 }
