@@ -51,19 +51,13 @@
 ### Hardware
 RAM ≥ 8Гб
 
-### Software 
+### Software
 1.	git
 1.	JDK8
 1.	Maven
 1.	IDEA
 
-### Локальная сеть Wi-Fi с доступом в интернет
-```
-http://git-scm.com
-http://github.com
-http://oracle.com
-http://maven.org
-http://mvnrepository.com
-http://repo.maven.apache.org
-http://www.jetbrains.com
-```
+### Доступы тренера и участников
+1. Корпоративный Git Repo (на создание и изменение своих git repo)
+1. Корпоративный Maven Repo (на разрешение зависимостей и добавление новых)
+1. Корпоративный Jenkins (на создание проекта и запуск)
