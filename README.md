@@ -96,6 +96,8 @@
 - When developers analyse and refactor test codebase for maintainability
 - Then public code review should state for tests maintainability 
 
+---
+
 ## 7. Как группировать тесты в наборы? (0.5/0)
 1. Зачем нужны test suites?
 1. Способы группировки "из коробки" фреймворка: [группы](https://github.com/junit-team/junit4/wiki/aggregating-tests-in-suites) и [категории](https://github.com/junit-team/junit4/wiki/Categories)
@@ -165,6 +167,8 @@
 - And made it through TDD cycles
 - Then coverage for this component should be 100%
 - And public code review should state for maintainability
+
+---
 
 ## 12. [Базовые шаблоны TDD](https://www.dropbox.com/s/iiip3qdny3wwuyd/00.jpg?dl=0) (1.5/1)
 1. Test First
