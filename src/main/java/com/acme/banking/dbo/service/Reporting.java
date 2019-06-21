@@ -7,6 +7,7 @@ public class Reporting {
      * @return Markdown report for all branches, clients, accounts
      */
     public String getReport(Branch rootBranch) {
+        //TODO impl
         return null;
     }
 }

@@ -6,6 +6,7 @@ import com.acme.banking.dbo.domain.Cash;
 import java.util.Collection;
 import java.util.UUID;
 
+//TODO impl
 public class Processing {
     public UUID createClient(String name) {
         return null;
@@ -20,7 +21,6 @@ public class Processing {
     }
 
     public void cash(double amount, UUID fromAccountId) {
-
         Cash.log(amount, fromAccountId);
     }
 }
