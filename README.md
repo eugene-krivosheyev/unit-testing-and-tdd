@@ -5,7 +5,7 @@
 ## После тренинга участники смогут:
 1. Объяснить себе и менеджменту, где им нужны тесты, а где нет
 1. Разрабатывать тесты как «спецификации на примерах» в роли документации
-1. Разрабатывать поддерживаемые тесты и их наборы по модели 
+1. Разрабатывать поддерживаемые тесты и их наборы 
 1. Подменять сложные компоненты системы на время тестирования
 1. Анализировать тестовое покрытие для принятия решений по тест-дизайну
 1. Обеспечивать поддерживаемый дизайн системы при помощи TDD
@@ -55,12 +55,14 @@
 ## 4. Как ускорить разработку автотестов за счет готовых фреймворков и библиотек? (1/0.5)
 1. Подключение вспомогательных фреймворков
 1. Простые сравнения средствами основного фреймворка
+1. [Встроенные типизированные сравнения](http://junit.sourceforge.net/javadoc/org/junit/Assert.html)
 1. [Типизированные сравнения средствами встроенного фреймворка](https://github.com/junit-team/junit4/wiki/Matchers-and-assertthat)
 1. [Типизированные сравнения средствами отдельного фреймворка](https://github.com/alexruiz/fest-assert-2.x/wiki/One-minute-starting-guide)
 1. [Таймауты](https://github.com/junit-team/junit4/wiki/Timeout-for-tests)
 1. [Исключения](https://github.com/junit-team/junit4/wiki/Exception-testing)
 1. [Параметризованные тесты](https://github.com/junit-team/junit4/wiki/Parameterized-tests)
 1. Расширение поведения тестов с помощью [запускальщиков](https://github.com/junit-team/junit4/wiki/Test-runners) и [правил](https://github.com/junit-team/junit4/wiki/Rules)
+1. Расширение поведения тестов с помощью [правил](https://github.com/junit-team/junit4/wiki/rules)
 
 ### Coding Iteration #02
 - Given legacy codebase with Client and SavingAccount domain types
@@ -72,7 +74,7 @@
 ## 5. Как писать интеграционные и модульные тесты? (1/0.5)
 1. В чем их специфика? Системные vs Интеграционные vs Модульные
 1. Как по коду определить скоуп?
-1. Виды тест-дублеров
+1. Виды [тест-дублеров](http://xunitpatterns.com/Test%20Double.html) по модели xUnit Test Patterns
 1. State-based testing VS Interaction-based testing
 1. [Фреймворк тест-дублеров уровня объектов](https://site.mockito.org)
 1. [Фреймворк тест-дублеров уровня REST-сервисов](http://wiremock.org/docs/getting-started/)
@@ -227,4 +229,8 @@
 ## 15. Финальная ретроспектива (1/0.5)
 - План конкретных ближайших действий
 
-## Буфер (2)
+## 16. Буфер (2)
+- @MockBean & @SpyBean with Spring Boot Test
+- Что покрывать обязательно, а на что можно забить
+- Баланс между UT, IT, ST
+- BDD with Cucumber Intro
