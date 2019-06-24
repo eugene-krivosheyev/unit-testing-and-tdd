@@ -11,6 +11,23 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
 public class ClientTest {
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowsIllegalArgExceptionWhenClientCreatedWithNullId() {
+        //given
+        String name = "Abba";
+        //when
+        new Client(null, name);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowsIllegalArgExceptionWhenClientCreatedWithNullName() {
+        //given
+        UUID id = UUID.randomUUID();
+        //when
+        new Client(id,  null);
+    }
+
     @Test
     public void shouldSavePropertiesWhenCreated() {
         //region given
