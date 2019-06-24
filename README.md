@@ -21,6 +21,11 @@
 1. Разбивка по парам и знакомство-представление друг друга
 1. Приоритезация целей тренинга и сбор проблем
 
+### Fork and then clone codebase for further development
+```
+git clone --depth 1 -b <YYYY-MM-project> https://github.com/eugene-krivosheyev/spring-core-for-qa
+```
+
 ## 2. Что такое автотест? (1.5/0.5)
 1. Каковы цели и задачи _авто_ тестов?
 1. В чем отличие от отладки?
