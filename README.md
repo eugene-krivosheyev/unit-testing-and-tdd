@@ -73,6 +73,7 @@ git clone --depth 1 -b <YYYY-MM-project> https://github.com/eugene-krivosheyev/s
 - Given legacy codebase with Client and SavingAccount domain types
 - When developers add consistency rules for linking Client and SavingAccount
 - And cover these components with maintainable autotests
+- And use chosen Junit Rules or develop custom Rule
 - Then coverage for theses components should be ≥ 90%
 - And public code review should state for maintainability
 
