@@ -36,7 +36,7 @@
 1. Роль фикстуры
 1. [Забытый полуторный этап](https://github.com/junit-team/junit4/wiki/Assumptions-with-assume)
 1. Тест = фиксированная трасса выполнения
-1. Тестовый набор = спецификация компонента
+1. Тестовый набор = спецификация поведения компонента
 
 ### Coding Iteration #01
 - Given legacy codebase with Client and SavingAccount domain types
