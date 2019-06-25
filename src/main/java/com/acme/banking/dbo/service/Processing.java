@@ -8,6 +8,12 @@ import java.util.UUID;
 
 //TODO impl
 public class Processing {
+    private TxLog txLog;
+
+    public Processing(TxLog txLog) {
+        this.txLog = txLog;
+    }
+
     public UUID createClient(String name) {
         return null;
     }
@@ -21,6 +27,6 @@ public class Processing {
     }
 
     public void cash(double amount, UUID fromAccountId) {
-        Cash.log(amount, fromAccountId);
+        txLog.log(amount, fromAccountId);
     }
 }
