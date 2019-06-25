@@ -5,7 +5,7 @@
 ## После тренинга участники смогут:
 1. Объяснить себе и менеджменту, где им нужны тесты, а где нет
 1. Разрабатывать тесты как «спецификации на примерах» в роли документации
-1. Разрабатывать поддерживаемые тесты и их наборы по модели 
+1. Разрабатывать поддерживаемые тесты и их наборы 
 1. Подменять сложные компоненты системы на время тестирования
 1. Анализировать тестовое покрытие для принятия решений по тест-дизайну
 1. Обеспечивать поддерживаемый дизайн системы при помощи TDD
@@ -41,7 +41,7 @@ git clone --depth 1 -b <YYYY-MM-project> https://github.com/eugene-krivosheyev/s
 1. Роль фикстуры
 1. [Забытый полуторный этап](https://github.com/junit-team/junit4/wiki/Assumptions-with-assume)
 1. Тест = фиксированная трасса выполнения
-1. Тестовый набор = спецификация компонента
+1. Тестовый набор = спецификация поведения компонента
 
 ### Coding Iteration #01
 - Given legacy codebase with Client and SavingAccount domain types
@@ -60,24 +60,27 @@ git clone --depth 1 -b <YYYY-MM-project> https://github.com/eugene-krivosheyev/s
 ## 4. Как ускорить разработку автотестов за счет готовых фреймворков и библиотек? (1/0.5)
 1. Подключение вспомогательных фреймворков
 1. Простые сравнения средствами основного фреймворка
+1. [Встроенные типизированные сравнения](http://junit.sourceforge.net/javadoc/org/junit/Assert.html)
 1. [Типизированные сравнения средствами встроенного фреймворка](https://github.com/junit-team/junit4/wiki/Matchers-and-assertthat)
 1. [Типизированные сравнения средствами отдельного фреймворка](https://github.com/alexruiz/fest-assert-2.x/wiki/One-minute-starting-guide)
 1. [Таймауты](https://github.com/junit-team/junit4/wiki/Timeout-for-tests)
 1. [Исключения](https://github.com/junit-team/junit4/wiki/Exception-testing)
 1. [Параметризованные тесты](https://github.com/junit-team/junit4/wiki/Parameterized-tests)
 1. Расширение поведения тестов с помощью [запускальщиков](https://github.com/junit-team/junit4/wiki/Test-runners) и [правил](https://github.com/junit-team/junit4/wiki/Rules)
+1. Расширение поведения тестов с помощью [правил](https://github.com/junit-team/junit4/wiki/rules)
 
 ### Coding Iteration #02
 - Given legacy codebase with Client and SavingAccount domain types
 - When developers add consistency rules for linking Client and SavingAccount
 - And cover these components with maintainable autotests
+- And use chosen Junit Rules or develop custom Rule
 - Then coverage for theses components should be ≥ 90%
 - And public code review should state for maintainability
 
 ## 5. Как писать интеграционные и модульные тесты? (1/0.5)
 1. В чем их специфика? Системные vs Интеграционные vs Модульные
 1. Как по коду определить скоуп?
-1. Виды тест-дублеров
+1. Виды [тест-дублеров](http://xunitpatterns.com/Test%20Double.html) по модели xUnit Test Patterns
 1. State-based testing VS Interaction-based testing
 1. [Фреймворк тест-дублеров уровня объектов](https://site.mockito.org)
 1. [Фреймворк тест-дублеров уровня REST-сервисов](http://wiremock.org/docs/getting-started/)
@@ -232,4 +235,8 @@ git clone --depth 1 -b <YYYY-MM-project> https://github.com/eugene-krivosheyev/s
 ## 15. Финальная ретроспектива (1/0.5)
 - План конкретных ближайших действий
 
-## Буфер (2)
+## 16. Буфер (2)
+- @MockBean & @SpyBean with Spring Boot Test
+- Что покрывать обязательно, а на что можно забить
+- Баланс между UT, IT, ST
+- BDD with Cucumber Intro

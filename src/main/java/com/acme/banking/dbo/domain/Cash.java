@@ -4,6 +4,7 @@ import java.util.UUID;
 
 public class Cash {
     public static void log(double amount, UUID fromAccountId) {
-
+        //region Persistence logic
+        //endregion
     }
 }
