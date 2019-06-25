@@ -23,6 +23,11 @@ public class ReportingTest {
         when(stubRepo.findById(any(UUID.class)))
                 .thenReturn(stubAccount);
 
+        when(stubRepo.findById(accountId))
+                .thenReturn(null)
+                .thenReturn(stubAccount)
+                .thenThrow(new IllegalStateException());
+
         Reporting sut = new Reporting(stubRepo);
 
         assertThat(sut.getReport(accountId))
