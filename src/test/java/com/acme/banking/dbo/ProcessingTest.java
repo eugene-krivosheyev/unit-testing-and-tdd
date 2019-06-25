@@ -31,12 +31,17 @@ public class ProcessingTest {
 
     @Test
     public void shouldLogTxWithTxLogWhenCacheOperation() {
+        new AccountRepoBuilder()
+                .withAccount(1, 100)
+                .withAccount(2, 200)
+            .build();
+
         AccountRepository stubRepo =
             new FakeDatabaseAccountRepositoryBuilder()
                 .withAccount(
                         new AccountBuilder()
-                                .withId()
-                                .withAmount()
+                                .withId(100)
+                                .withClientId(200)
                             .build())
                 .withAccount(
                         new AccountBuilder()
