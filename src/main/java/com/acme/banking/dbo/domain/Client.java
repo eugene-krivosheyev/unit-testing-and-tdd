@@ -24,4 +24,15 @@ public class Client {
     public String getName() {
         return name;
     }
+
+    public void addAccount(Account account) {
+        if (account.getClientId() != id)
+            throw new IllegalStateException("Account does not belong to this client");
+        accountIds.add(account.getId());
+    }
+
+    public Collection<UUID> getAccountIds() {
+        return this.accountIds;
+    }
+
 }

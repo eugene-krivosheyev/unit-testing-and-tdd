@@ -2,7 +2,6 @@ package com.acme.banking.dbo;
 
 import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.domain.SavingAccount;
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.UUID;
@@ -12,49 +11,51 @@ import static org.junit.Assert.assertTrue;
 
 public class SavingAccountTest {
 
+    final String ANY_STRING = "ANY";
+    final double ANY_DOUBLE = 1;
+
     @Test(expected = IllegalArgumentException.class)
-    public void shouldThrowsIllegalArgExceptionWhenClientCreatedWithNullId() {
+    public void shouldThrowsIllegalArgExceptionWhenSavingAccountCreatedWithNullId() {
         //given
-        String clientName = "Abba";
-        Client client = new Client(UUID.randomUUID(), clientName);
+        Client stubClient = new Client(UUID.randomUUID(), ANY_STRING);
         //when
-        new SavingAccount(null, client, 0);
+        new SavingAccount(null, stubClient, 0);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void shouldThrowsIllegalArgExceptionWhenClientCreatedWithNullClient() {
-        //given
-        String clientName = "Abba";
-        Client client = new Client(UUID.randomUUID(), clientName);
-        //when
+    public void shouldThrowsIllegalArgExceptionWhenSavingAccountCreatedWithNullClient() {
         new SavingAccount(UUID.randomUUID(), null, 0);
     }
 
     @Test
-    public void shouldHeavingAmountEquelInputAmount(){
-        //given
-        double stub = 12;
-        SavingAccount sut = new SavingAccount(UUID.randomUUID(), new Client(UUID.randomUUID(), ""), stub);
+    public void shouldHeavingAmountEqualsInputAmount(){
+        double expectedAmount = ANY_DOUBLE;
+        SavingAccount sut = new SavingAccount(UUID.randomUUID(), new Client(UUID.randomUUID(), ""), expectedAmount);
 
-        //when
-        double amount = sut.getAmount();
+        double actualAmount = sut.getAmount();
 
-        //then
-        assertTrue(amount == stub);
+        assertTrue(actualAmount == expectedAmount);
     }
 
 
     @Test
-    public void shouldHavingClientEqualsStubClient(){
-        //given
-        Client stubClient = new Client(UUID.randomUUID(), "");
-        SavingAccount sut = new SavingAccount(UUID.randomUUID(), stubClient, 10);
+    public void shouldHavingClientEqualsStubClientAndClientIsNotNull() {
+        Client dummyClient = new Client(UUID.randomUUID(), ANY_STRING);
+        SavingAccount sut = new SavingAccount(UUID.randomUUID(), dummyClient, ANY_DOUBLE);
 
-        //when
-        Client client = sut.getClient();
+        Client actualClient = sut.getClient();
 
-        //then
-        assertEquals( stubClient, client);
+        assertEquals( actualClient, dummyClient);
+    }
+
+
+    @Test
+    public void shouldReturnCorrectUUIDAfterAccountWasCreated() {
+        UUID expectedUUID = UUID.randomUUID();
+        Client dummyClient = new Client(UUID.randomUUID(), ANY_STRING);
+        SavingAccount sut = new SavingAccount(expectedUUID, dummyClient, ANY_DOUBLE);
+
+        assertEquals( expectedUUID, sut.getId());
     }
 
 }
