@@ -3,6 +3,8 @@ package com.acme.banking.dbo;
 import com.acme.banking.dbo.domain.Client;
 import org.junit.Test;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.UUID;
 
 import static org.hamcrest.CoreMatchers.allOf;
