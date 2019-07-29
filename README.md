@@ -133,6 +133,7 @@ git clone --depth 1 -b <YYYY-MM-project> https://github.com/eugene-krivosheyev/a
 1. Метрика Cohesion
 1. Понятность/осознаваемость
 1. Каков тестопригодный дизайн?
+1. @VisibleForTesting и другие способы сделать тесты ближе к коду: пакетная видимость и Reflection API with FEST-reflect
 
 ### Live Coding Demo для реализации компонента Reporting и нового CheckingAccount
 1. Принципы проектирования SOLID
@@ -144,6 +145,10 @@ git clone --depth 1 -b <YYYY-MM-project> https://github.com/eugene-krivosheyev/a
 - Given legacy codebase with Reporting component
 - When developers implement polymorhic testable implementation for Reporting and CheckingAccount
 - Then cross-team code review should state for its testability
+
+### Тестирование ui
+- Web IU: PageObject & StepObject Design Patterns
+- Android: MVC Pattern and its testing
 
 ## 10. Какую ценность дает практика TDD? (0.5/0)
 1. Что такое TDD?
