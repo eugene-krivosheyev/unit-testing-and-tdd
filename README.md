@@ -233,3 +233,4 @@ git clone --depth 1 -b <YYYY-MM-project> https://github.com/eugene-krivosheyev/a
 - План конкретных ближайших действий
 
 ## Буфер (2)
+- BDD over Cucumber
