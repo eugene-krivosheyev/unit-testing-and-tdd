@@ -150,6 +150,9 @@ git clone --depth 1 -b <YYYY-MM-project> https://github.com/eugene-krivosheyev/a
 - Web IU: PageObject & StepObject Design Patterns
 - Android: MVC Pattern and its testing
 
+## BDD with Cicumber
+- [Cucumber Intro](https://medium.com/@mlvandijk/getting-started-with-cucumber-in-java-a-10-minute-tutorial-586652d2c82) 
+
 ## 10. Какую ценность дает практика TDD? (0.5/0)
 1. Что такое TDD?
 1. TDD как практика проектирования
