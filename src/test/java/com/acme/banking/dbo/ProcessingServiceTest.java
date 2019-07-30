@@ -4,27 +4,47 @@ import com.acme.banking.dbo.domain.Account;
 import com.acme.banking.dbo.domain.Cash;
 import com.acme.banking.dbo.service.AccountRepository;
 import com.acme.banking.dbo.service.ProcessingService;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.UUID;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
+@RunWith(MockitoJUnitRunner.class)
 public class ProcessingServiceTest {
-    @Test
-    public void shouldCallAccountsTransferMethodsWhenTransfer() {
-        Cash mockCash = mock(Cash.class);
-        AccountRepository stubRepository = mock(AccountRepository.class);
-        Account account1 = mock(Account.class);
-        Account account2 = mock(Account.class);
+    @Mock private Cash mockCash;
+    private AccountRepository stubRepository;
+    private Account account1;
+    private Account account2;
+    private ProcessingService sut;
+    private final UUID fromAccountId = UUID.randomUUID();
+    private final UUID toAccountId = UUID.randomUUID();
+
+    @BeforeClass
+    public static void setUpEarly() {
+
+    }
+
+    @Before
+    public void setUp() {
+        mockCash = mock(Cash.class);
+        stubRepository = mock(AccountRepository.class);
+        account1 = mock(Account.class);
+        account2 = mock(Account.class);
         when(stubRepository.findAccountById(any(UUID.class)))
                 .thenReturn(account1)
                 .thenReturn(account2);
-        final ProcessingService sut = new ProcessingService(stubRepository, mockCash);
+        sut = new ProcessingService(stubRepository, mockCash);
+    }
 
-        final UUID fromAccountId = UUID.randomUUID();
-        final UUID toAccountId = UUID.randomUUID();
+    @Test
+    public void shouldCallAccountsTransferMethodsWhenTransfer() {
         sut.transfer(1., fromAccountId, toAccountId);
 
         verify(stubRepository).findAccountById(fromAccountId);
