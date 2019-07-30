@@ -35,6 +35,7 @@ public class ProcessingServiceTest {
     public void setUp() {
         mockCash = mock(Cash.class);
 
+        /*
         stubRepository = new MockitoRepoBuilder()
                 .withAccount()
                     .withClient()
@@ -43,7 +44,7 @@ public class ProcessingServiceTest {
                 .withAccount()
                     .withAmount(2)
             .build();
-
+        */
 
         sut = new ProcessingService(stubRepository, mockCash);
     }
