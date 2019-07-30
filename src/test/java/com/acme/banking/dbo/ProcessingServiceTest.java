@@ -19,7 +19,7 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class ProcessingServiceTest {
     @Mock private Cash mockCash;
-    private AccountRepository stubRepository;
+    private AccountRepository stubAccountRepository;
     private Account account1;
     private Account account2;
     private ProcessingService sut;
@@ -35,29 +35,25 @@ public class ProcessingServiceTest {
     public void setUp() {
         mockCash = mock(Cash.class);
 
-        /*
-        stubRepository = new MockitoRepoBuilder()
-                .withAccount()
-                    .withClient()
-                        .withId(0)
-                        .withName("abc")
-                .withAccount()
-                    .withAmount(2)
-            .build();
-        */
 
-        sut = new ProcessingService(stubRepository, mockCash);
+        stubAccountRepository = new MockitoRepoBuilder()
+                .withAccount(fromAccountId, 100.)
+                .withAccount(toAccountId, 0.)
+            .build();
+
+
+        sut = new ProcessingService(stubAccountRepository, mockCash);
     }
 
     @Test
     public void shouldCallAccountsTransferMethodsWhenTransfer() {
         sut.transfer(1., fromAccountId, toAccountId);
 
-        verify(stubRepository).findAccountById(fromAccountId);
-        verify(stubRepository).findAccountById(toAccountId);
+        verify(stubAccountRepository).findAccountById(fromAccountId);
+        verify(stubAccountRepository).findAccountById(toAccountId);
         verify(account1).withdraw(1.);
         verify(account2).credit(1.);
-        verify(stubRepository).save(account1);
-        verify(stubRepository).save(account2);
+        verify(stubAccountRepository).save(account1);
+        verify(stubAccountRepository).save(account2);
     }
 }
