@@ -43,11 +43,8 @@ public class ArrayListTest {
         sut.add(stub2);
         //endregion
 
-        //region When
-        final String result = sut.toString();
-
         //region Then
-        assertThat(result)
+        assertThat(sut.toString())
                 .contains("test value 1")
                 .contains("test value 2");
     }
