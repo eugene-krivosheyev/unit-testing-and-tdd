@@ -34,12 +34,17 @@ public class ProcessingServiceTest {
     @Before
     public void setUp() {
         mockCash = mock(Cash.class);
-        stubRepository = mock(AccountRepository.class);
-        account1 = mock(Account.class);
-        account2 = mock(Account.class);
-        when(stubRepository.findAccountById(any(UUID.class)))
-                .thenReturn(account1)
-                .thenReturn(account2);
+
+        stubRepository = new MockitoRepoBuilder()
+                .withAccount()
+                    .withClient()
+                        .withId(0)
+                        .withName("abc")
+                .withAccount()
+                    .withAmount(2)
+            .build();
+
+
         sut = new ProcessingService(stubRepository, mockCash);
     }
 
