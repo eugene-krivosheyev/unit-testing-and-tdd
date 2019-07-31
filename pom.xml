@@ -112,5 +112,11 @@
             <version>4.7.1</version>
             <scope>test</scope>
         </dependency>
+		<dependency>
+			<groupId>org.easytesting</groupId>
+			<artifactId>fest-reflect</artifactId>
+			<version>1.4.1</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 </project>

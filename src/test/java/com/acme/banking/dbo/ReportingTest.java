@@ -6,23 +6,16 @@ import org.junit.Test;
 import java.util.UUID;
 
 import static org.fest.assertions.api.Assertions.assertThat;
+import static org.fest.reflect.core.Reflection.field;
 
 public class ReportingTest {
     @Test
     public void shouldMakeMarkupReportForAccountWhenAlreadyExists() {
         final Reporting sut = new Reporting();
 
-        assertThat(sut.getReportForAccount(UUID.fromString("0")))
-                .contains("## *" + UUID.fromString("0") + "* $100.");
-    }
-
-    @Test
-    public void shouldMakeMarkupReportForClientWhenAlreadyExists() {
-        final Reporting sut = new Reporting();
-
-        assertThat(sut.getReportForClient(UUID.fromString("0")))
-                .contains("# " + *id* + name)
-                .contains("## " + *id1* + $100);
-                .contains("## " + *id2* + $100);
+        //https://github.com/alexruiz/fest-reflect
+        assertThat(
+                field("state").ofType(Integer.class).in(sut).get())
+            .isEqualTo(1);
     }
 }
