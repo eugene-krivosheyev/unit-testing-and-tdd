@@ -5,6 +5,6 @@ import com.acme.banking.dbo.domain.Account;
 import java.util.UUID;
 
 public interface AccountRepository {
-    Account findAccountById(UUID fromAccountId);
+    Account findAccountById(long fromAccountId);
     void save(Account account);
 }
