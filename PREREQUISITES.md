@@ -60,8 +60,7 @@ RAM ≥ 8Гб
 1.	Maven
 1.	IDEA Ultimate (можно trial)
 
-### Доступы тренера и участников
-1. [Git Repo с материалами и кодовой базой](https://github.com/eugene-krivosheyev/automated-testing-and-tdd) (клонирование на машины локально)
-1. Корпоративный Git Repo (создание и изменение своих git repo)
-1. Корпоративный Maven Repo (разрешение зависимостей и добавление новых)
-1. Корпоративный Jenkins (создание проекта и запуск)
+### Доступы тренера и участников из локальной сети
+1. https://github.com:443
+1. https://mvnrepository.com:443
+1. https://repo.maven.apache.org:443
