@@ -3,13 +3,19 @@ package com.acme.banking.dbo;
 import com.acme.banking.dbo.domain.Account;
 import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.domain.SavingAccount;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import java.util.UUID;
 
 import static org.junit.Assert.assertTrue;
 
 public class SavingAccountTest {
+
+    @Rule
+    public final ExpectedException thrown = ExpectedException.none();
+
     @Test
     public void shouldReturnClientWhenClientAdded() {
         //region given
@@ -76,8 +82,11 @@ public class SavingAccountTest {
         //endregion
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void shouldIllegalArgumentExceptionWhenIdIsNull() {
+
+        thrown.expect(IllegalArgumentException.class);
+
         //region given
         UUID stubId = UUID.randomUUID();
         //endregion
@@ -89,8 +98,11 @@ public class SavingAccountTest {
         //endregion
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void shouldIllegalArgumentExceptionWhenClientIsNull() {
+
+        thrown.expect(IllegalArgumentException.class);
+
         //region given
         UUID stubId = UUID.randomUUID();
         //endregion

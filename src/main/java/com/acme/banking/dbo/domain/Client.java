@@ -10,8 +10,9 @@ public class Client {
     private Collection<Account> accounts = new ArrayList<>(); //TODO
 
     public Client(UUID id, String name) {
-        if (id == null) throw new IllegalArgumentException();
-        if (name == null) throw new IllegalArgumentException();
+        if (id == null) throw new IllegalArgumentException("id cannot be a null");
+        if (name == null) throw new IllegalArgumentException("name cannot be an empty");
+        if (name.isEmpty()) throw new IllegalArgumentException("name cannot be a null");
         this.id = id;
         this.name = name;
     }
@@ -25,6 +26,9 @@ public class Client {
     }
 
     public void addAccount(Account account) {
+        if (!account.getClientId().equals(id)) {
+            throw new IllegalArgumentException("clint id is not equal current client id");
+        }
         accounts.add(account);
     }
 
