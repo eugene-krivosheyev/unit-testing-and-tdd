@@ -47,17 +47,17 @@ public class SavingAccountTest {
         //endregion
 
         //region then
-        assertTrue(sutClient.isAccountsEmpty());
+        assertTrue(sutClient.hasAccounts());
         //endregion
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void shouldThrowExceptionWhenIdNull() {
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowExceptionWhenIdIsNull() {
         new SavingAccount(stubId, null, stubAmount);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void shouldThrowExceptionWhenClientNull() {
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowExceptionWhenClientIsNull() {
         Client sutClient = new Client(stubId, stubName);
         new SavingAccount(null, sutClient, stubAmount);
     }

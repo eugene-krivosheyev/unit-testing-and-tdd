@@ -22,17 +22,22 @@ public class ClientTest {
         //region then
         assertThat(sut.getId(), equalTo(stubId));
         assertThat(sut.getName(), equalTo(stubName));
-        assertTrue(sut.isAccountsEmpty());
+        assertTrue(sut.hasAccounts());
         //endregion
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void shouldThrowExceptionWhenClientIdNull() {
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowExceptionWhenClientIdIsNull() {
         new Client(null, stubName);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void shouldThrowExceptionWhenNameNull() {
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowExceptionWhenNameIsNull() {
         new Client(stubId, null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowExceptionWhenNameIsEmpty() {
+        new Client(stubId, "");
     }
 }

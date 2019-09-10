@@ -1,5 +1,7 @@
 package com.acme.banking.dbo.domain;
 
+import com.acme.banking.dbo.utils.ObjectUtils;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.UUID;
@@ -8,22 +10,11 @@ public class Client {
     private UUID id;
     private String name;
     private Collection<Account> accounts = new ArrayList<>();
+    private ObjectUtils utils = new ObjectUtils();
 
     public Client(UUID id, String name) {
-        if (id == null || name == null) {
-            throw new IllegalArgumentException("id and name must not be null");
-        }
-
-        this.id = id;
-        this.name = name;
-    }
-
-    public void addAccount(Account account) {
-        accounts.add(account);
-    }
-
-    public void removeAccount(Account account) {
-        accounts.remove(account);
+        this.id = utils.requireNonNull(id, "id must not be null or empty");
+        this.name = utils.requireNonNull(name, "name must not be null or empty");
     }
 
     public UUID getId() {
@@ -34,11 +25,19 @@ public class Client {
         return name;
     }
 
+    public void addAccount(Account account) {
+        accounts.add(account);
+    }
+
+    public void removeAccount(Account account) {
+        accounts.remove(account);
+    }
+
     public boolean existAccount(Account account) {
         return accounts.contains(account);
     }
 
-    public boolean isAccountsEmpty() {
+    public boolean hasAccounts() {
         return accounts.isEmpty();
     }
 }

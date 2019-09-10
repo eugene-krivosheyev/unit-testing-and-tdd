@@ -1,19 +1,18 @@
 package com.acme.banking.dbo.domain;
 
+import com.acme.banking.dbo.utils.ObjectUtils;
+
 import java.util.UUID;
 
 public class SavingAccount implements Account {
     private UUID id;
     private Client client;
     private double amount;
+    private ObjectUtils utils = new ObjectUtils();
 
     public SavingAccount(UUID id, Client client, double amount) {
-        if (id == null || client == null) {
-            throw new IllegalArgumentException("id and client must not be null");
-        }
-
-        this.id = id;
-        this.client = client;
+        this.id = utils.requireNonNull(id, "id must not be null or empty");
+        this.client = utils.requireNonNull(client, "client must not be null or empty");
         this.amount = amount;
     }
 
