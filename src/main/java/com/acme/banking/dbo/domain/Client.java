@@ -11,6 +11,9 @@ public class Client {
     private Collection<Account> accounts = new ArrayList<>(); //TODO
 
     public Client(UUID id, String name) {
+        if (id == null) throw new IllegalArgumentException("id is null");
+        if (name == null) throw new IllegalArgumentException("name is null");
+        if (name.isEmpty()) throw new IllegalArgumentException("name is empty");
         this.id = Objects.requireNonNull(id);
         this.name = Objects.requireNonNull(name);
     }
@@ -24,6 +27,9 @@ public class Client {
     }
 
     public void addAccount(Account account) {
+        if (!account.getClientId().equals(id)) {
+            throw new IllegalArgumentException("This account does not belong to the client");
+        }
         accounts.add(account);
     }
 

@@ -22,7 +22,8 @@ public class SavingAccountTest {
 
     @Test(expected = NullPointerException.class)
     public void shouldThrowExceptionWhenCreatingAndIdIsNull() {
-        Client stubClient = new Client(null, "dummy client name");
+        UUID stubId = UUID.randomUUID();
+        Client stubClient = new Client(stubId, "dummy client name");
 
         SavingAccount sut = new SavingAccount(null, stubClient, 0);
     }
