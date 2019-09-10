@@ -95,6 +95,25 @@ public class ClientTest {
     }
 
     @Test
+    public void shouldThrowExceptionWhenRemoveAlienAccount() {
+
+        thrown.expect(IllegalArgumentException.class);
+
+        //region given
+        UUID stubId = UUID.randomUUID();
+        //endregion
+
+        //region when
+        String name = "dummy client name";
+        Client client = new Client(stubId, "dummy client name");
+        SavingAccount account = new SavingAccount(stubId, client, 0);
+
+        Client sut = new Client(UUID.randomUUID(), "dummy client name another");
+        sut.removeAccount(account);
+        //endregion
+    }
+
+    @Test
     public void shouldElementNotExistWhenRemoved() {
 
         //region given

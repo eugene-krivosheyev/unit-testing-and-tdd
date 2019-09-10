@@ -33,6 +33,9 @@ public class Client {
     }
 
     public void removeAccount(Account account) {
+        if (!account.getClientId().equals(id)) {
+            throw new IllegalArgumentException("clint id is not equal current client id");
+        }
         accounts.remove(account);
     }
 
