@@ -1,5 +1,6 @@
 package com.acme.banking.dbo.domain;
 
+import java.util.Objects;
 import java.util.UUID;
 
 public class SavingAccount implements Account {
@@ -8,8 +9,8 @@ public class SavingAccount implements Account {
     private double amount;
 
     public SavingAccount(UUID id, Client client, double amount) {
-        this.id = id;
-        this.client = client;
+        this.id = Objects.requireNonNull(id);
+        this.client = Objects.requireNonNull(client);
         this.amount = amount;
     }
 
