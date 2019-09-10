@@ -49,6 +49,4 @@ public class SavingAccountTest {
         Client stubClient = new Client(stubID, "dummy name");
         new SavingAccount(stubID, stubClient, 100d);
     }
-
-
 }

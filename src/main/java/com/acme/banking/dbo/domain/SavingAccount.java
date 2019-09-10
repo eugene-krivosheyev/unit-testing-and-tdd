@@ -14,11 +14,12 @@ public class SavingAccount implements Account {
         this.client = client;
         this.amount = amount;
     }
-
+    @Override
     public Client getClient() {
         return client;
     }
 
+    @Override
     public void setClient(Client client) {
         this.client = client;
     }
