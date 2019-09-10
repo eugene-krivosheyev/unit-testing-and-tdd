@@ -1,6 +1,9 @@
 package com.acme.banking.dbo;
 
+import com.acme.banking.dbo.domain.Account;
 import com.acme.banking.dbo.domain.Client;
+import com.acme.banking.dbo.domain.SavingAccount;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.UUID;
@@ -23,10 +26,10 @@ public class ClientTest {
 
         //region then
         assertThat(sut.getId(),
-            allOf(
-                equalTo(stubId),
-                notNullValue()
-        ));
+                allOf(
+                        equalTo(stubId),
+                        notNullValue()
+                ));
 
         assertThat(sut.getName(),
                 allOf(
@@ -52,5 +55,30 @@ public class ClientTest {
         new Client(stubId, stubName);
     }
 
-    //TODO add test for removing and adding account to accounts of client
+    @Test
+    public void shouldIncrementListOfAccountsAndClientGetAddedAccountWhenAddNewAccountToClient() {
+        UUID stubId = UUID.randomUUID();
+        Client stubClient = new Client(stubId, "dummy name");
+        Account stubAccount = new SavingAccount(stubId, stubClient, 100d);
+
+        Client sut = new Client(stubId, "sut client name");
+        sut.addAccount(stubAccount);
+
+        assertEquals(1, sut.getAccounts().size());
+        assertTrue(sut.getAccounts().contains(stubAccount));
+    }
+
+    @Test
+    public void shouldDecrementListOfAccountAndClientLoseRemovedAccountWhenAccountRemoved() {
+        UUID stubId = UUID.randomUUID();
+        Client stubClient = new Client(stubId, "dummy name");
+        Account stubAccount = new SavingAccount(stubId, stubClient, 100d);
+        Client sut = new Client(stubId, "sut client name");
+
+        sut.addAccount(stubAccount);
+        sut.removeAccount(stubAccount);
+
+        assertEquals(0, sut.getAccounts().size());
+        assertFalse(sut.getAccounts().contains(stubAccount));
+    }
 }
