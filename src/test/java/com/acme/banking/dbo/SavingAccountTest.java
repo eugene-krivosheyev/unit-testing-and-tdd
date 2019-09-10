@@ -22,6 +22,10 @@ public class SavingAccountTest {
         SavingAccount sutAccount = new SavingAccount(stubId, sutClient, stubAmount);
         //endregion
 
+        //region when
+        sutClient.addAccount(sutAccount);
+        //endregion
+
         //region then
         assertSame(sutAccount.getId(), stubId);
         assertSame(sutAccount.getClient(), sutClient);
@@ -32,7 +36,7 @@ public class SavingAccountTest {
     }
 
     @Test
-    public void shouldRemoveAccountWhenClientAndAccountCreated() throws UniqueConstraintException {
+    public void shouldRemoveAccountWhenClientAndAccountCreated() {
         //region given
         Client sutClient = new Client(stubId, stubName);
         SavingAccount sutAccount = new SavingAccount(stubId, sutClient, stubAmount);
@@ -48,12 +52,12 @@ public class SavingAccountTest {
     }
 
     @Test(expected = NullPointerException.class)
-    public void shouldThrowExceptionWhenIdIsNull() throws UniqueConstraintException {
+    public void shouldThrowExceptionWhenIdIsNull() {
         new SavingAccount(stubId, null, stubAmount);
     }
 
     @Test(expected = NullPointerException.class)
-    public void shouldThrowExceptionWhenClientIsNull() throws UniqueConstraintException {
+    public void shouldThrowExceptionWhenClientIsNull() {
         Client sutClient = new Client(stubId, stubName);
         new SavingAccount(null, sutClient, stubAmount);
     }

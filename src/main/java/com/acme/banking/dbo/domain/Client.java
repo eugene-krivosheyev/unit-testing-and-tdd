@@ -30,7 +30,6 @@ public class Client {
         if (accounts.contains(account)) {
             throw new UniqueConstraintException("Account has exist");
         }
-        account.setClient(this);
         accounts.add(account);
     }
 

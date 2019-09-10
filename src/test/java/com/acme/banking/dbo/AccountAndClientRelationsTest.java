@@ -27,6 +27,7 @@ public class AccountAndClientRelationsTest {
         //region when
         final Client sutClient = new Client(stubId, stubName);
         SavingAccount sutAccount = new SavingAccount(stubId, sutClient, stubAmount);
+        sutAccount.linkTo(sutClient);
         //endregion
 
         //region then
@@ -44,6 +45,7 @@ public class AccountAndClientRelationsTest {
         //region when
         final Client sutClient = new Client(stubId, stubName);
         SavingAccount sutAccount = new SavingAccount(stubId, sutClient, stubAmount);
+        sutAccount.linkTo(sutClient);
         sutClient.addAccount(sutAccount);
         //endregion
 
@@ -51,6 +53,5 @@ public class AccountAndClientRelationsTest {
         assertSame(sutAccount.getClient(), sutClient);
         assertTrue(sutClient.existAccount(sutAccount));
         //endregion
-
     }
 }
