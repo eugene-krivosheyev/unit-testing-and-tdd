@@ -4,7 +4,9 @@ import java.util.Objects;
 
 public class ObjectUtils {
 
-    public String requireNonNull(String value, String message) {
+    public String requireNonNull(String value, String message)
+            throws NullPointerException, IllegalArgumentException {
+
         if (value == null) throw new NullPointerException(message);
         if (value.length() == 0) throw new IllegalArgumentException(message);
         return value;
