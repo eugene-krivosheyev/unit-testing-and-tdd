@@ -28,7 +28,7 @@ public class SavingAccountTest {
     }
 
     @Test
-    public void shouldClientIdIsEqualClientId() {
+    public void shouldClientIdsIsEqualWhenSaved() {
         //region given
         UUID stubId = UUID.randomUUID();
         //endregion
@@ -44,7 +44,7 @@ public class SavingAccountTest {
     }
 
     @Test
-    public void shouldCreatedClientHasId() {
+    public void shouldCreatedClientHasIdWhenSaved() {
         //region given
         UUID stubId = UUID.randomUUID();
         //endregion
@@ -60,7 +60,7 @@ public class SavingAccountTest {
     }
 
     @Test
-    public void shouldAmountIsEqualAmount() {
+    public void shouldAmountsIsEqualWhenSaved() {
         //region given
         UUID stubId = UUID.randomUUID();
         //endregion
