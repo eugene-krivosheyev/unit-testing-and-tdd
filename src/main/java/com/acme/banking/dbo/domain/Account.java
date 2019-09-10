@@ -4,5 +4,8 @@ import java.util.UUID;
 
 public interface Account {
     UUID getId();
-    UUID getClientId(); //TODO reference integrity
+    UUID getClientId();
+    double getAmount();
+    void setClient(Client client);
+    String getClientName();
 }

@@ -8,7 +8,7 @@ public class SavingAccount implements Account {
     private double amount;
 
     public SavingAccount(UUID id, Client client, double amount) {
-        if(client.getName().isEmpty()) throw new IllegalArgumentException();
+        if(client.getName().length()<2) throw new IllegalArgumentException();
         if(amount==0.0d) throw new IllegalArgumentException();
 
         this.id = id;
@@ -20,6 +20,12 @@ public class SavingAccount implements Account {
         return client;
     }
 
+    @Override
+    public void setClient(Client client){
+        this.client = client;
+    }
+
+    @Override
     public double getAmount() {
         return amount;
     }
@@ -32,5 +38,9 @@ public class SavingAccount implements Account {
     @Override
     public UUID getClientId() {
         return client.getId();
+    }
+    @Override
+    public String getClientName(){
+        return client.getName();
     }
 }

@@ -3,6 +3,7 @@ package com.acme.banking.dbo.domain;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class Client {
     private UUID id;
@@ -28,6 +29,7 @@ public class Client {
     }
 
     public void addAccount (Account account){
+        account.setClient(new Client(id, name));
         accounts.add(account);
     }
 
