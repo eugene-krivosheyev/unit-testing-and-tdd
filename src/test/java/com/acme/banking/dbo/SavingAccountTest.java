@@ -47,6 +47,7 @@ public class SavingAccountTest {
         //endregion
 
         //region then
+        assertNull(sutAccount.getClient());
         assertTrue(sutClient.hasAccounts());
         //endregion
     }
