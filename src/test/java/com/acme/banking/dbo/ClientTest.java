@@ -81,4 +81,15 @@ public class ClientTest {
         assertEquals(0, sut.getAccounts().size());
         assertFalse(sut.getAccounts().contains(stubAccount));
     }
+
+    @Test
+    public void shouldBeSameAccountOwnerNameWhenAddingAccount() {
+        UUID stubId = UUID.randomUUID();
+        Client sut = new Client(stubId, "account owner name");
+        SavingAccount account = new SavingAccount(stubId, new Client(UUID.randomUUID(), "some new person"), 100);
+        sut.addAccount(account);
+
+        assertEquals(sut.getAccounts().iterator().next().getClient().getName(), sut.getName());
+        assertEquals(sut.getAccounts().iterator().next().getClient().getId(), sut.getId());
+    }
 }
