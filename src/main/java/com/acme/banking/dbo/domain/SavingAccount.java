@@ -11,7 +11,9 @@ public class SavingAccount implements Account {
     private double amount;
     private ObjectUtils utils = new ObjectUtils();
 
-    public SavingAccount(UUID id, Client client, double amount) {
+    public SavingAccount(UUID id, Client client, double amount)
+            throws NullPointerException, IllegalArgumentException {
+
         this.id = utils.requireNonNull(id, "id must not be null or empty");
         this.client = utils.requireNonNull(client, "client must not be null or empty");
         this.amount = amount;

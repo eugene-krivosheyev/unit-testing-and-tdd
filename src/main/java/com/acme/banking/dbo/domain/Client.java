@@ -13,7 +13,9 @@ public class Client {
     private Collection<Account> accounts = new ArrayList<>();
     private ObjectUtils utils = new ObjectUtils();
 
-    public Client(UUID id, String name) {
+    public Client(UUID id, String name)
+            throws NullPointerException, IllegalArgumentException {
+
         this.id = utils.requireNonNull(id, "id must not be null or empty");
         this.name = utils.requireNonNull(name, "name must not be null or empty");
     }
