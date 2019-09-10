@@ -24,6 +24,11 @@ public class SavingAccount implements Account {
         client.addAccount(this);
     }
 
+    @Override
+    public void removeClient() {
+        client = null;
+    }
+
     public Client getClient() {
         return client;
     }
@@ -40,10 +45,5 @@ public class SavingAccount implements Account {
     @Override
     public UUID getClientId() {
         return client.getId();
-    }
-
-    @Override
-    public void removeClient() {
-        client = null;
     }
 }
