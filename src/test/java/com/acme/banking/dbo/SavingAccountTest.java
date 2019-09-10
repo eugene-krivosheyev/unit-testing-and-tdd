@@ -2,13 +2,17 @@ package com.acme.banking.dbo;
 
 import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.domain.SavingAccount;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import java.util.UUID;
 
 import static org.junit.Assert.*;
 
 public class SavingAccountTest {
+    @Rule
+    public final ExpectedException thrown = ExpectedException.none();
     @Test
     public void shouldSavePropertiesWhenCreated() {
         UUID stubId = UUID.randomUUID();
@@ -20,16 +24,20 @@ public class SavingAccountTest {
         assertSame(stubClient, sut.getClient());
     }
 
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowExceptionWhenCreatingAndIdIsNull() {
+    @Test
+    public void shouldThrowIllegalArgumentExceptionWhenCreatingAndIdIsNull() {
+        thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage("id is null");
         UUID stubId = UUID.randomUUID();
         Client stubClient = new Client(stubId, "dummy client name");
 
         SavingAccount sut = new SavingAccount(null, stubClient, 0);
     }
 
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowExceptionWhenCreatingAndClientIsNull() {
+    @Test
+    public void shouldThrowIllegalArgumentExceptionWhenCreatingAndClientIsNull() {
+        thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage("client is null");
         UUID stubId = UUID.randomUUID();
 
         SavingAccount sut = new SavingAccount(stubId, null, 0);
