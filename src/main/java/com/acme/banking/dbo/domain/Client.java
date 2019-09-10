@@ -13,9 +13,7 @@ public class Client {
     private Collection<UUID> accountIds = new ArrayList<>();
     private ObjectUtils utils = new ObjectUtils();
 
-    public Client(UUID id, String name)
-            throws NullPointerException, IllegalArgumentException {
-
+    public Client(UUID id, String name) throws NullPointerException, IllegalArgumentException {
         this.id = utils.requireNonNull(id, "id must not be null or empty");
         this.name = utils.requireNonNull(name, "name must not be null or empty");
     }
@@ -36,6 +34,7 @@ public class Client {
     }
 
     public void removeAccount(Account account) {
+        account.removeClient();
         accountIds.remove(account.getId());
     }
 

@@ -7,5 +7,6 @@ import java.util.UUID;
 public interface Account {
     UUID getId();
     UUID getClientId();
+    void removeClient();
     void linkTo(Client client) throws UniqueConstraintException;
 }
