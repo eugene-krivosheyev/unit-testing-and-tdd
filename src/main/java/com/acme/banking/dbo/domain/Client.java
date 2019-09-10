@@ -23,6 +23,7 @@ public class Client {
 
     public void addAccount(Account account){
         accounts.add(account);
+        account.setClient(this);
     }
 
     public void removeAccount(Account account){

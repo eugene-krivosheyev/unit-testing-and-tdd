@@ -13,10 +13,15 @@ public class SavingAccount implements Account {
         this.id = id;
         this.client = client;
         this.amount = amount;
+        client.addAccount(this);
     }
 
     public Client getClient() {
         return client;
+    }
+
+    public void setClient(Client client){
+        this.client = client;
     }
 
     public double getAmount() {
