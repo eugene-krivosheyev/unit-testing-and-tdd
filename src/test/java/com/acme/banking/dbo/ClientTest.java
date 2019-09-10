@@ -81,4 +81,19 @@ public class ClientTest {
         assertFalse(sut.getAccounts().contains(stubAccount));
 
     }
+
+    @Test
+    public void shouldSaveIdWhenCreated() {
+        UUID stubId = UUID.randomUUID();
+        Client sut = new Client(stubId, "dummy client name");
+        assertSame(stubId, sut.getId());
+    }
+
+    @Test
+    public void shouldSaveNameWhenCreated() {
+        UUID stubId = UUID.randomUUID();
+        String name = "dummy client name";
+        Client sut = new Client(stubId, name);
+        assertSame(name, sut.getName());
+    }
 }
