@@ -14,8 +14,8 @@ public class Client {
         if (id == null) throw new IllegalArgumentException("id is null");
         if (name == null) throw new IllegalArgumentException("name is null");
         if (name.isEmpty()) throw new IllegalArgumentException("name is empty");
-        this.id = Objects.requireNonNull(id);
-        this.name = Objects.requireNonNull(name);
+        this.id = id;
+        this.name = name;
     }
 
     public UUID getId() {
