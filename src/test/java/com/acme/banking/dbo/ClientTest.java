@@ -84,4 +84,34 @@ public class ClientTest {
         assertFalse(client.getAccounts().contains(account));
         //endregion
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldIllegalArgumentExceptionWhenIdIsNull() {
+        //region given
+        UUID stubId = UUID.randomUUID();
+        //endregion
+
+        //region when
+        Client client = new Client(null, "dummy client name");
+        SavingAccount account = new SavingAccount(stubId, client, 0);
+        client.addAccount(account);
+        assumeTrue(client.getAccounts().contains(account));
+        client.removeAccount(account);
+        //endregion
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldIllegalArgumentExceptionWhenNameIsNull() {
+        //region given
+        UUID stubId = UUID.randomUUID();
+        //endregion
+
+        //region when
+        Client client = new Client(stubId, null);
+        SavingAccount account = new SavingAccount(stubId, client, 0);
+        client.addAccount(account);
+        assumeTrue(client.getAccounts().contains(account));
+        client.removeAccount(account);
+        //endregion
+    }
 }
