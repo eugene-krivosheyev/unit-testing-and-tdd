@@ -36,13 +36,13 @@ public class ClientTest {
 
 
     @Test(expected = NullPointerException.class)
-    public void shouldThrowExceptionWhenCreatedAndIdIsNull() {
+    public void shouldThrowExceptionWhenCreatingAndIdIsNull() {
         Client sut = new Client(null, "dummy client name");
 
     }
 
     @Test(expected = NullPointerException.class)
-    public void shouldThrowExceptionWhenCreatedAndNameIsNull() {
+    public void shouldThrowExceptionWhenCreatingAndNameIsNull() {
         UUID stubId = UUID.randomUUID();
 
         Client sut = new Client(stubId, null);

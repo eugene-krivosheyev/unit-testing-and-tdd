@@ -21,14 +21,14 @@ public class SavingAccountTest {
     }
 
     @Test(expected = NullPointerException.class)
-    public void shouldThrowExceptionWhenCreatedAndIdIsNull() {
+    public void shouldThrowExceptionWhenCreatingAndIdIsNull() {
         Client stubClient = new Client(null, "dummy client name");
 
         SavingAccount sut = new SavingAccount(null, stubClient, 0);
     }
 
     @Test(expected = NullPointerException.class)
-    public void shouldThrowExceptionWhenCreatedAndClientIsNull() {
+    public void shouldThrowExceptionWhenCreatingAndClientIsNull() {
         UUID stubId = UUID.randomUUID();
 
         SavingAccount sut = new SavingAccount(stubId, null, 0);
