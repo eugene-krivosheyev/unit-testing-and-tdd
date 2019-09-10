@@ -1,5 +1,6 @@
 package com.acme.banking.dbo.domain;
 
+import com.acme.banking.dbo.errors.UniqueConstraintException;
 import com.acme.banking.dbo.utils.ObjectUtils;
 
 import java.util.ArrayList;
@@ -25,7 +26,11 @@ public class Client {
         return name;
     }
 
-    public void addAccount(Account account) {
+    public void addAccount(Account account) throws UniqueConstraintException {
+        if (accounts.contains(account)) {
+            throw new UniqueConstraintException("Account has exist");
+        }
+        account.setClient(this);
         accounts.add(account);
     }
 

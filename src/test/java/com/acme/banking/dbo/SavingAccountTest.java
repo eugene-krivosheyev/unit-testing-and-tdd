@@ -2,6 +2,7 @@ package com.acme.banking.dbo;
 
 import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.domain.SavingAccount;
+import com.acme.banking.dbo.errors.UniqueConstraintException;
 import org.junit.Test;
 
 import java.util.UUID;
@@ -15,14 +16,10 @@ public class SavingAccountTest {
     private final double stubAmount = .1;
 
     @Test
-    public void shouldAddAccountWhenClientAndAccountCreated() {
+    public void shouldAddAccountWhenClientAndAccountCreated() throws UniqueConstraintException {
         //region given
         Client sutClient = new Client(stubId, stubName);
         SavingAccount sutAccount = new SavingAccount(stubId, sutClient, stubAmount);
-        //endregion
-
-        //region when
-        sutClient.addAccount(sutAccount);
         //endregion
 
         //region then
@@ -35,14 +32,13 @@ public class SavingAccountTest {
     }
 
     @Test
-    public void shouldRemoveAccountWhenClientAndAccountCreated() {
+    public void shouldRemoveAccountWhenClientAndAccountCreated() throws UniqueConstraintException {
         //region given
         Client sutClient = new Client(stubId, stubName);
         SavingAccount sutAccount = new SavingAccount(stubId, sutClient, stubAmount);
         //endregion
 
         //region when
-        sutClient.addAccount(sutAccount);
         sutClient.removeAccount(sutAccount);
         //endregion
 
@@ -52,12 +48,12 @@ public class SavingAccountTest {
     }
 
     @Test(expected = NullPointerException.class)
-    public void shouldThrowExceptionWhenIdIsNull() {
+    public void shouldThrowExceptionWhenIdIsNull() throws UniqueConstraintException {
         new SavingAccount(stubId, null, stubAmount);
     }
 
     @Test(expected = NullPointerException.class)
-    public void shouldThrowExceptionWhenClientIsNull() {
+    public void shouldThrowExceptionWhenClientIsNull() throws UniqueConstraintException {
         Client sutClient = new Client(stubId, stubName);
         new SavingAccount(null, sutClient, stubAmount);
     }
