@@ -34,7 +34,11 @@ public class Client {
         return name;
     }
 
-    public Collection<Account> getAccounts() {
-        return accounts;
+    public boolean containsAccount(Account account) {
+        return accounts.contains(account);
+    }
+
+    public boolean isAccountsEmpty() {
+        return accounts.isEmpty();
     }
 }

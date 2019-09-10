@@ -6,8 +6,7 @@ import org.junit.Test;
 import java.util.UUID;
 
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 public class ClientTest {
 
@@ -23,7 +22,7 @@ public class ClientTest {
         //region then
         assertThat(sut.getId(), equalTo(stubId));
         assertThat(sut.getName(), equalTo(stubName));
-        assertEquals(0, sut.getAccounts().size());
+        assertTrue(sut.isAccountsEmpty());
         //endregion
     }
 

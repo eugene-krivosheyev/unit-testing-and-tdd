@@ -30,7 +30,7 @@ public class SavingAccountTest {
         assertSame(sutAccount.getClient(), sutClient);
         assertSame(sutAccount.getClientId(), stubId);
         assertEquals(sutAccount.getAmount(), stubAmount, 0.0);
-        assertTrue(sutClient.getAccounts().contains(sutAccount));
+        assertTrue(sutClient.containsAccount(sutAccount));
         //endregion
     }
 
@@ -47,7 +47,7 @@ public class SavingAccountTest {
         //endregion
 
         //region then
-        assertEquals(0, sutClient.getAccounts().size());
+        assertTrue(sutClient.isAccountsEmpty());
         //endregion
     }
 
