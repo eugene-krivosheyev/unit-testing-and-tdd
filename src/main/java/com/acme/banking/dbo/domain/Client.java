@@ -34,7 +34,7 @@ public class Client {
         return name;
     }
 
-    public boolean containsAccount(Account account) {
+    public boolean existAccount(Account account) {
         return accounts.contains(account);
     }
 
