@@ -7,9 +7,12 @@ import java.util.UUID;
 public class Client {
     private UUID id;
     private String name;
-    private Collection<UUID> accountIds = new ArrayList<>(); //TODO
+
+    private Collection<Account> accounts = new ArrayList<>();
 
     public Client(UUID id, String name) {
+        if (id == null) throw new IllegalArgumentException("id cannot be null");
+        if (name == null || name.equals("")) throw new IllegalArgumentException("name cannot be null or empty");
         this.id = id;
         this.name = name;
     }
@@ -20,5 +23,17 @@ public class Client {
 
     public String getName() {
         return name;
+    }
+
+    public Collection<Account> getAccounts() {
+        return accounts;
+    }
+
+    public void addAccount(Account account) {
+        accounts.add(account);
+    }
+
+    public void removeAccount(Account account) {
+        accounts.remove(account);
     }
 }

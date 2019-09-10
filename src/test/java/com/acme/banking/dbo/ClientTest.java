@@ -8,7 +8,7 @@ import java.util.UUID;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 public class ClientTest {
     @Test
@@ -27,6 +27,24 @@ public class ClientTest {
                 equalTo(stubId),
                 notNullValue()
         ));
+
+        assertThat(sut.getName(), allOf(equalTo("dummy client name"), notNullValue()));
         //endregion
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowIllegalArgumentExceptionIfNameIsEmpty() {
+        String stubName = "";
+        UUID stubId = UUID.randomUUID();
+
+        Client sut = new Client(stubId, stubName);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowIllegalArgumentExceptionIfIdIsNull() {
+        String stubName = null;
+        UUID stubId = UUID.randomUUID();
+
+        Client sut = new Client(stubId, stubName);
     }
 }
