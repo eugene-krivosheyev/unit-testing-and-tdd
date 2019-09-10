@@ -10,7 +10,7 @@ import java.util.UUID;
 public class Client {
     private UUID id;
     private String name;
-    private Collection<Account> accounts = new ArrayList<>();
+    private Collection<UUID> accountIds = new ArrayList<>();
     private ObjectUtils utils = new ObjectUtils();
 
     public Client(UUID id, String name)
@@ -29,21 +29,21 @@ public class Client {
     }
 
     public void addAccount(Account account) throws UniqueConstraintException {
-        if (accounts.contains(account)) {
+        if (accountIds.contains(account.getId())) {
             throw new UniqueConstraintException("Account has exist");
         }
-        accounts.add(account);
+        accountIds.add(account.getId());
     }
 
     public void removeAccount(Account account) {
-        accounts.remove(account);
+        accountIds.remove(account.getId());
     }
 
     public boolean existAccount(Account account) {
-        return accounts.contains(account);
+        return accountIds.contains(account.getId());
     }
 
     public boolean hasAccounts() {
-        return accounts.isEmpty();
+        return accountIds.isEmpty();
     }
 }
