@@ -83,7 +83,7 @@ public class SavingAccountTest {
     }
 
     @Test
-    public void shouldIllegalArgumentExceptionWhenIdIsNull() {
+    public void shouldShowExceptionWhenIdIsNull() {
 
         thrown.expect(IllegalArgumentException.class);
 
@@ -99,7 +99,7 @@ public class SavingAccountTest {
     }
 
     @Test
-    public void shouldIllegalArgumentExceptionWhenClientIsNull() {
+    public void shouldShowExceptionWhenClientIsNull() {
 
         thrown.expect(IllegalArgumentException.class);
 
