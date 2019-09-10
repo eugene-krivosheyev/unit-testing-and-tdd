@@ -27,13 +27,13 @@ public class SavingAccountTest {
     public void shouldThrowIllegalArgumentExceptionIfClientIsNull() {
         Client stubClient = null;
         UUID stubID = UUID.randomUUID();
-        SavingAccount sut = new SavingAccount(stubID, stubClient, 100d);
+        new SavingAccount(stubID, stubClient, 100d);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void shouldThrowIllegalArgumentExceptionIfIdIsNull() {
         UUID stubID = null;
         Client stubClient = new Client(stubID, "dummy name");
-        SavingAccount sut = new SavingAccount(stubID, stubClient, 100d);
+        new SavingAccount(stubID, stubClient, 100d);
     }
 }

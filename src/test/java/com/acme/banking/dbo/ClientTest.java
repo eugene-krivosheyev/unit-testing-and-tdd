@@ -28,23 +28,29 @@ public class ClientTest {
                 notNullValue()
         ));
 
-        assertThat(sut.getName(), allOf(equalTo("dummy client name"), notNullValue()));
+        assertThat(sut.getName(),
+                allOf(
+                        equalTo("dummy client name"),
+                        notNullValue()
+                ));
         //endregion
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void shouldThrowIllegalArgumentExceptionIfNameIsEmpty() {
+    public void shouldNotCreateClientWhenNameIsEmpty() {
         String stubName = "";
         UUID stubId = UUID.randomUUID();
 
-        Client sut = new Client(stubId, stubName);
+        new Client(stubId, stubName);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void shouldThrowIllegalArgumentExceptionIfIdIsNull() {
+    public void shouldNotCreateClientWhenIdIsNull() {
         String stubName = null;
         UUID stubId = UUID.randomUUID();
 
-        Client sut = new Client(stubId, stubName);
+        new Client(stubId, stubName);
     }
+
+    //TODO add test for removing and adding account to accounts of client
 }
