@@ -27,9 +27,8 @@ public class Client {
     }
 
     public void addAccount(Account account) {
-        if (!account.getClientId().equals(id)) {
-            throw new IllegalArgumentException("This account does not belong to the client");
-        }
+        if (!account.getClientId().equals(id))
+            throw new IllegalStateException("This account does not belong to the client");
         accounts.add(account);
     }
 

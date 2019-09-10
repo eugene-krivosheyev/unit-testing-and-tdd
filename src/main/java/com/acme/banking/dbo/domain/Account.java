@@ -6,4 +6,5 @@ public interface Account {
     UUID getId();
     UUID getClientId(); //TODO reference integrity
 
+    Client getClient();
 }
