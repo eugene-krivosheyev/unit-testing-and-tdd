@@ -61,6 +61,6 @@ RAM ≥ 8Гб
 1.	IDEA Ultimate (можно trial)
 
 ### Доступы тренера и участников из локальной сети
-1. https://github.com:443
+1. https://github.com:443 (с возможностью логина, pull и push)
 1. https://mvnrepository.com:443
 1. https://repo.maven.apache.org:443
