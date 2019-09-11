@@ -38,6 +38,7 @@ public class ReportingTest {
     @Test
     public void shouldLogReportingEventWhenReportRequested() throws AccountNotFoundException {
         Account accountDummy = mock(Account.class);
+//        Account accountSpy = spy(accRepo);
         AccountRepository accountsDummy = mock(AccountRepository.class);
         when(accountsDummy.findById(any(UUID.class))).thenReturn(accountDummy);
         final UUID accountId = UUID.randomUUID();
