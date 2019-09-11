@@ -31,6 +31,7 @@ public class Client {
             throw new UniqueConstraintException("Account has exist");
         }
         accountIds.add(account.getId());
+        account.setClient(this);
     }
 
     public void removeAccount(Account account) {

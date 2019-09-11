@@ -26,8 +26,8 @@ public class AccountAndClientRelationsTest {
 
         //region when
         final Client sutClient = new Client(stubId, stubName);
-        SavingAccount sutAccount = new SavingAccount(stubId, sutClient, stubAmount);
-        sutAccount.linkTo(sutClient);
+        SavingAccount sutAccount = new SavingAccount(stubId, stubAmount);
+        sutClient.addAccount(sutAccount);
         //endregion
 
         //region then
@@ -44,8 +44,8 @@ public class AccountAndClientRelationsTest {
 
         //region when
         final Client sutClient = new Client(stubId, stubName);
-        SavingAccount sutAccount = new SavingAccount(stubId, sutClient, stubAmount);
-        sutAccount.linkTo(sutClient);
+        SavingAccount sutAccount = new SavingAccount(stubId, stubAmount);
+        sutClient.addAccount(sutAccount);
         sutClient.addAccount(sutAccount);
         //endregion
 
