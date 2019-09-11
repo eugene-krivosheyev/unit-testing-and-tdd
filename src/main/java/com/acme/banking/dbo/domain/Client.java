@@ -1,8 +1,7 @@
 package com.acme.banking.dbo.domain;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.UUID;
+
+import java.util.*;
 
 public class Client {
     private UUID id;
@@ -13,6 +12,7 @@ public class Client {
         if (name == null) throw new IllegalArgumentException();
         if (id == null) throw new IllegalArgumentException();
 
+        Objects.equals("", name);
         this.id = id;
         this.name = name;
     }
@@ -33,5 +33,8 @@ public class Client {
         return name;
     }
 
-    public Collection<Account> getAccountIds() { return  accountIds; }
+
+    public Collection<Account> getAccounts() {
+        return Collections.unmodifiableCollection(accountIds);
+    }
 }
