@@ -1,4 +1,4 @@
-package com.acme.banking.dbo.errors;
+package com.acme.banking.dbo.error;
 
 public class NotFoundException extends Exception {
     public NotFoundException(String message) {

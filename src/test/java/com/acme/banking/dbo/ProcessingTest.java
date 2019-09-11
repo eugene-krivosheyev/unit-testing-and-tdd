@@ -1,13 +1,13 @@
 package com.acme.banking.dbo;
 
+import com.acme.banking.dbo.builder.TestAccountRepository;
+import com.acme.banking.dbo.builder.TestClientRepository;
 import com.acme.banking.dbo.domain.Account;
 import com.acme.banking.dbo.domain.Cash;
-import com.acme.banking.dbo.domain.Client;
-import com.acme.banking.dbo.domain.SavingAccount;
 import com.acme.banking.dbo.dto.AccountDto;
 import com.acme.banking.dbo.dto.ClientDto;
-import com.acme.banking.dbo.errors.AccountNotEnoughException;
-import com.acme.banking.dbo.errors.NotFoundException;
+import com.acme.banking.dbo.error.AccountNotEnoughException;
+import com.acme.banking.dbo.error.NotFoundException;
 import com.acme.banking.dbo.repository.AccountsRepository;
 import com.acme.banking.dbo.repository.ClientsRepository;
 import com.acme.banking.dbo.service.ProcessingService;
@@ -15,24 +15,28 @@ import com.acme.banking.dbo.service.ProcessingServiceImpl;
 import org.fest.assertions.api.Assertions;
 import org.junit.Test;
 
-import java.util.*;
+import java.util.List;
+import java.util.UUID;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertSame;
 import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
 
 public class ProcessingTest {
 
-    private final UUID stubId = UUID.randomUUID();
-    private final double stubAmount = 0.3;
-    private final String stubName = "StubName";
-
-    private final AccountsRepository accountsRepositoryMock = mock(AccountsRepository.class);
-    private final ClientsRepository clientsRepositoryMock = mock(ClientsRepository.class);
-    private final Cash cash = spy(Cash.class);
-    private final ProcessingService service = new ProcessingServiceImpl(accountsRepositoryMock, clientsRepositoryMock, cash);
-
     @Test
     public void shouldInvokeLogWhenProcessingCreated() {
+        //region given
+        final UUID stubId = UUID.randomUUID();
+        final double stubAmount = 0.3;
+        final Cash cash = spy(Cash.class);
+        final ProcessingService service = new ProcessingServiceImpl(
+                mock(AccountsRepository.class),
+                mock(ClientsRepository.class),
+                cash
+        );
+        //endregion
+
         //region when
         service.cash(stubAmount, stubId);
         //endregion
@@ -43,86 +47,116 @@ public class ProcessingTest {
     }
 
     @Test
-    public void shouldReturnsClientWhenClientCreated() {
+    public void shouldReturnsClientDtoWhenClientCreated() {
         //region given
-        when(clientsRepositoryMock.create(stubName)).thenReturn(new Client(stubId, stubName));
+        TestClientRepository clientBuilder = new TestClientRepository.Builder()
+                .build();
+
+        final ProcessingService service = new ProcessingServiceImpl(
+                mock(AccountsRepository.class),
+                clientBuilder.getRepository(),
+                mock(Cash.class)
+        );
         //endregion
 
         //region when
-        ClientDto client = service.createClient(stubName);
+        ClientDto client = service.createClient(clientBuilder.getName());
         //endregion
 
         //region then
-        assertSame(client.getId(), stubId);
-        assertSame(client.getName(), stubName);
+        assertSame(client.getId(), clientBuilder.getId());
+        assertSame(client.getName(), clientBuilder.getName());
         //endregion
     }
 
     @Test(expected = NotFoundException.class)
     public void shouldThrowExceptionWhenFindByClientId() throws NotFoundException {
         //region given
-        when(clientsRepositoryMock.create(stubName)).thenReturn(new Client(stubId, stubName));
+        TestClientRepository clientBuilder = new TestClientRepository.Builder()
+                .build();
+
+        final ProcessingService service = new ProcessingServiceImpl(
+                mock(AccountsRepository.class),
+                clientBuilder.getRepository(),
+                mock(Cash.class)
+        );
         //endregion
 
         //region when
-        service.getAccountsByClientId(stubId);
+        service.getAccountsByClientId(clientBuilder.getId());
         //endregion
     }
 
     @Test
     public void shouldReturnsAccountsWhenFindByClientId() throws NotFoundException {
         //region given
-        List<Account> stubAccounts = Collections.singletonList(new SavingAccount(stubId, stubAmount));
-        when(accountsRepositoryMock.findAccountsByClientId(stubId)).thenReturn(stubAccounts);
+        TestAccountRepository accountBuilder = new TestAccountRepository.Builder()
+                .setTransferAmount(0.2)
+                .build();
+
+        final ProcessingService service = new ProcessingServiceImpl(
+                accountBuilder.getRepository(),
+                mock(ClientsRepository.class),
+                mock(Cash.class)
+        );
         //endregion
 
         //region when
-        List<AccountDto> accounts = service.getAccountsByClientId(stubId);
+        List<AccountDto> accounts = service.getAccountsByClientId(accountBuilder.getId());
         //endregion
 
         //region then
         Assertions.assertThat(accounts).isNotEmpty();
-        assertSame(accounts.get(0).getId(), stubId);
+        assertSame(accounts.get(0).getId(), accountBuilder.getId());
         //endregion
     }
 
     @Test(expected = AccountNotEnoughException.class)
     public void shouldThrowExceptionWhenNotEnoughAmount() throws AccountNotEnoughException {
         //region given
-        double transferAmount = 0.9;
-        Account fromAccount = new SavingAccount(UUID.randomUUID(), stubAmount);
-        Account toAccount = new SavingAccount(UUID.randomUUID(), stubAmount);
+        TestAccountRepository accountBuilder = new TestAccountRepository.Builder()
+                .setTransferAmount(0.9)
+                .build();
 
-        when(accountsRepositoryMock.findById(fromAccount.getId())).thenReturn(fromAccount);
-        when(accountsRepositoryMock.findById(toAccount.getId())).thenReturn(toAccount);
-        when(accountsRepositoryMock.transfer(transferAmount, fromAccount, toAccount)).thenReturn(stubId);
+        final ProcessingService service = new ProcessingServiceImpl(
+                accountBuilder.getRepository(),
+                mock(ClientsRepository.class),
+                mock(Cash.class)
+        );
+        final Account fromAccount = accountBuilder.getFromAccount();
+        final Account toAccount = accountBuilder.getToAccount();
         //endregion
 
         //region when
-        service.transfer(transferAmount, fromAccount.getId(), toAccount.getId());
+        service.transfer(accountBuilder.getTransferAmount(), fromAccount.getId(), toAccount.getId());
         //endregion
     }
 
     @Test
     public void shouldTransferFromAccountToAccountWhenTransferAmount() throws AccountNotEnoughException {
         //region given
-        double transferAmount = 0.2;
-        Account fromAccount = new SavingAccount(UUID.randomUUID(), stubAmount);
-        Account toAccount = new SavingAccount(UUID.randomUUID(), stubAmount);
+        TestAccountRepository accountBuilder = new TestAccountRepository.Builder()
+                .setTransferAmount(0.2)
+                .build();
 
-        when(accountsRepositoryMock.findById(fromAccount.getId())).thenReturn(fromAccount);
-        when(accountsRepositoryMock.findById(toAccount.getId())).thenReturn(toAccount);
-        when(accountsRepositoryMock.transfer(transferAmount, fromAccount, toAccount)).thenReturn(stubId);
+        final ProcessingService service = new ProcessingServiceImpl(
+                accountBuilder.getRepository(),
+                mock(ClientsRepository.class),
+                mock(Cash.class)
+        );
+        final AccountsRepository repository = accountBuilder.getRepository();
+        final Account fromAccount = accountBuilder.getFromAccount();
+        final Account toAccount = accountBuilder.getToAccount();
         //endregion
 
         //region when
-        UUID transferId = service.transfer(transferAmount, fromAccount.getId(), toAccount.getId());
+        UUID transferId = service.transfer(accountBuilder.getTransferAmount(), fromAccount.getId(), toAccount.getId());
         //endregion
 
         //region then
-        verify(accountsRepositoryMock, times(1)).findById(fromAccount.getId());
-        verify(accountsRepositoryMock, times(1)).findById(toAccount.getId());
-        assertSame(transferId, stubId);
+        verify(repository, times(1)).findById(fromAccount.getId());
+        verify(repository, times(1)).findById(toAccount.getId());
+        assertSame(transferId, accountBuilder.getTransferId());
         //endregion
     }
 }

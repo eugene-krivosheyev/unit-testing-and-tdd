@@ -5,8 +5,8 @@ import com.acme.banking.dbo.domain.Cash;
 import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.dto.AccountDto;
 import com.acme.banking.dbo.dto.ClientDto;
-import com.acme.banking.dbo.errors.AccountNotEnoughException;
-import com.acme.banking.dbo.errors.NotFoundException;
+import com.acme.banking.dbo.error.AccountNotEnoughException;
+import com.acme.banking.dbo.error.NotFoundException;
 import com.acme.banking.dbo.repository.AccountsRepository;
 import com.acme.banking.dbo.repository.ClientsRepository;
 

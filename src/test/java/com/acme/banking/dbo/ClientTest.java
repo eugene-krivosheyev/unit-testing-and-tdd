@@ -1,43 +1,43 @@
 package com.acme.banking.dbo;
 
+import com.acme.banking.dbo.builder.TestEntities;
 import com.acme.banking.dbo.domain.Client;
 import org.junit.Test;
 
 import java.util.UUID;
 
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 public class ClientTest {
-
-    private final UUID stubId = UUID.randomUUID();
-    private final String stubName = "dummy client name";
 
     @Test
     public void shouldSavePropertiesWhenCreated() {
         //region given
-        Client sut = new Client(stubId, stubName);
+        TestEntities builder = new TestEntities.Builder().build();
+        Client sut = builder.getClient();
         //endregion
 
         //region then
-        assertThat(sut.getId(), equalTo(stubId));
-        assertThat(sut.getName(), equalTo(stubName));
+        assertThat(sut.getId(), equalTo(builder.getId()));
+        assertThat(sut.getName(), equalTo(builder.getName()));
         assertTrue(sut.hasAccounts());
         //endregion
     }
 
     @Test(expected = NullPointerException.class)
     public void shouldThrowExceptionWhenClientIdIsNull() {
-        new Client(null, stubName);
+        new Client(null, "Name");
     }
 
     @Test(expected = NullPointerException.class)
     public void shouldThrowExceptionWhenNameIsNull() {
-        new Client(stubId, null);
+        new Client(UUID.randomUUID(), null);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void shouldThrowExceptionWhenNameIsEmpty() {
-        new Client(stubId, "");
+        new Client(UUID.randomUUID(), "");
     }
 }

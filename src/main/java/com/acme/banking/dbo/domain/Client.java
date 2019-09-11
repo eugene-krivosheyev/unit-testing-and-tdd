@@ -1,6 +1,6 @@
 package com.acme.banking.dbo.domain;
 
-import com.acme.banking.dbo.errors.UniqueConstraintException;
+import com.acme.banking.dbo.error.UniqueConstraintException;
 import com.acme.banking.dbo.utils.ObjectUtils;
 
 import java.util.ArrayList;
