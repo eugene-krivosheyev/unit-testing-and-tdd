@@ -7,6 +7,10 @@ import com.acme.banking.dbo.domain.SavingAccount;
 import com.acme.banking.dbo.service.AuditService;
 import com.acme.banking.dbo.service.Reporting;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Captor;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.UUID;
 
@@ -14,7 +18,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
+@RunWith(MockitoJUnitRunner.class)
 public class ReportingTest {
+    @Mock private AccountRepository accountsStub;
+    @Captor private ???
+
     @Test
     public void shouldGetReportWhenClientExistsInRepo() throws AccountNotFoundException {
         AccountRepository accountsStub = mock(AccountRepository.class);
