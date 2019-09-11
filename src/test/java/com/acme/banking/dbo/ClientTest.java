@@ -27,68 +27,48 @@ public class ClientTest {
 
     @Test
     public void shouldSavePropertiesWhenCreated() {
-        //region given
         UUID stubId = UUID.randomUUID();
-        //endregion
 
-        //region when
         Client sut = new Client(stubId, "dummy client name");
-        //endregion
 
-        //region then
         assertThat(sut.getId(),
             allOf(
                 equalTo(stubId),
                 notNullValue()
         ));
-        //endregion
     }
 
     @Test
     public void shouldAddAccountToAccountsList(){
-        //region given
         UUID stubId = UUID.randomUUID();
         Client dummyClient = new Client(stubId, "dummy client name");
         Account account = new SavingAccount(stubId,dummyClient,0d);
-        //endregion
 
-        //region when
         Client sut = new Client(stubId, "dummy client name");
-        //endregion
 
         Assume.assumeTrue(sut.getAccounts().isEmpty());
 
         sut.addAccount(account);
 
-        //region then
         assertTrue(sut.getAccounts().size() == 1);
         assertTrue(sut==account.getClient());
-        //endregion
     }
 
     @Test
     public void shouldRemoveAccountFromAccountList(){
-        //region given
         UUID stubId = UUID.randomUUID();
         Client dummyClient = new Client(stubId, "dummy client name");
         Account account = new SavingAccount(stubId,dummyClient,0d);
-        //endregion
 
-        //region when
         Client sut = new Client(stubId, "dummy client name");
-        //endregion
 
         sut.addAccount(account);
 
-        //region then
         assertTrue(sut.getAccounts().size() == 1);
-        //endregion
 
         sut.removeAccount(account);
 
-        //region then
         assertTrue(sut.getAccounts().size() == 0);
-        //endregion
     }
 
     @Test
