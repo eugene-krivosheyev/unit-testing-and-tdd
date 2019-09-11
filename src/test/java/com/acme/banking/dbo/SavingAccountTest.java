@@ -9,6 +9,7 @@ import org.junit.rules.ExpectedException;
 import org.junit.rules.TestRule;
 import org.junit.rules.Timeout;
 
+import java.util.Random;
 import java.util.UUID;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -48,5 +49,14 @@ public class SavingAccountTest {
         UUID stubID = null;
         Client stubClient = new Client(stubID, "dummy name");
         new SavingAccount(stubID, stubClient, 100d);
+    }
+
+    @Test
+    public void shouldGetClientIdWhenAccountCreated() {
+        UUID sutClientId = UUID.randomUUID();
+        Client stubClient = new Client(sutClientId, "account owner name");
+        SavingAccount stubAccount = new SavingAccount(sutClientId, stubClient, 100d);
+
+        assertEquals(sutClientId, stubAccount.getClientId());
     }
 }
