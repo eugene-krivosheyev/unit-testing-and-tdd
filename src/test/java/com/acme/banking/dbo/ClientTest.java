@@ -83,7 +83,7 @@ public class ClientTest {
     }
 
     @Test
-    public void shouldBeSameAccountOwnerNameWhenAddingAccount() {
+    public void shouldBeSameAccountOwnerNameWhenAddAccountToAccounts() {
         UUID stubId = UUID.randomUUID();
         Client sut = new Client(stubId, "account owner name");
         SavingAccount account = new SavingAccount(stubId, new Client(UUID.randomUUID(), "some new person"), 100);

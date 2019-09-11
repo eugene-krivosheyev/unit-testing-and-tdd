@@ -9,7 +9,6 @@ import org.junit.rules.ExpectedException;
 import org.junit.rules.TestRule;
 import org.junit.rules.Timeout;
 
-import java.util.Random;
 import java.util.UUID;
 
 import static org.hamcrest.CoreMatchers.equalTo;
