@@ -7,4 +7,6 @@ public interface Account {
     UUID getClientId();
     Client getClient();
     void setClient(Client client);
+    double getAmount();
+    void setAmount(double amount);
 }

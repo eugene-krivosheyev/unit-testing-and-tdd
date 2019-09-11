@@ -23,9 +23,14 @@ public class SavingAccount implements Account {
     public void setClient(Client client) {
         this.client = client;
     }
-
+    @Override
     public double getAmount() {
         return amount;
+    }
+
+    @Override
+    public void setAmount(double amount) {
+        this.amount = amount;
     }
 
     @Override
