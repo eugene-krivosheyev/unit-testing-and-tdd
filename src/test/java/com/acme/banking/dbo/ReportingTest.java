@@ -32,11 +32,6 @@ public class ReportingTest {
         AuditService auditDummy = mock(AuditService.class);
         final Reporting sut = new Reporting(accountsStub, auditDummy);
 
-        new JpaAccountRepositoryBuilder()
-                .withAccountById(1, 100, 200)
-                .withAccountById(2, new MockitoAccountBuilder().withId(2).withAmount(100).build())
-            .build();
-
         final String report = sut.getReport(accountStub);
 
         assertThat(report)
