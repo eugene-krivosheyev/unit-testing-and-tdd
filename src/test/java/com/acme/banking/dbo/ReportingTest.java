@@ -3,6 +3,7 @@ package com.acme.banking.dbo;
 import com.acme.banking.dbo.dal.AccountNotFoundException;
 import com.acme.banking.dbo.dal.AccountRepository;
 import com.acme.banking.dbo.domain.Account;
+import com.acme.banking.dbo.domain.SavingAccount;
 import com.acme.banking.dbo.service.AuditService;
 import com.acme.banking.dbo.service.Reporting;
 import org.junit.Test;
@@ -44,6 +45,7 @@ public class ReportingTest {
         final UUID accountId = UUID.randomUUID();
         when(accountDummy.getId()).thenReturn(accountId);
         when(accountDummy.getClientId()).thenReturn(UUID.randomUUID());
+        //doReturn("qq").when(accountDummy.getId());
 
         AuditService auditMock = mock(AuditService.class);
         final Reporting sut = new Reporting(accountsDummy, auditMock);
@@ -52,5 +54,14 @@ public class ReportingTest {
 
         verify(auditMock, times(1))
                 .log("report for accountid " + accountId);
+    }
+
+    @Test
+    public void shouldReturnNewResultAfterInsert() throws AccountNotFoundException {
+        AccountRepository accountsDummy = mock(AccountRepository.class);
+        when(accountsDummy.findById(any()))
+                .thenReturn(null)
+                .thenReturn(new SavingAccount(null, null, 0))
+                .thenThrow(new IllegalArgumentException());
     }
 }
