@@ -3,6 +3,7 @@ package com.acme.banking.dbo;
 import com.acme.banking.dbo.dal.AccountNotFoundException;
 import com.acme.banking.dbo.dal.AccountRepository;
 import com.acme.banking.dbo.domain.Account;
+import com.acme.banking.dbo.service.AuditService;
 import com.acme.banking.dbo.service.Reporting;
 import org.junit.Test;
 
@@ -10,8 +11,7 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class ReportingTest {
     @Test
@@ -23,7 +23,8 @@ public class ReportingTest {
         when(accountStub.getId()).thenReturn(accountID);
         when(accountStub.getClientId()).thenReturn(clientID);
         when(accountsStub.findById(accountID)).thenReturn(accountStub);
-        final Reporting sut = new Reporting(accountsStub);
+        AuditService auditDummy = mock(AuditService.class);
+        final Reporting sut = new Reporting(accountsStub, auditDummy);
 
         final String report = sut.getReport(accountStub);
 
@@ -32,5 +33,23 @@ public class ReportingTest {
                 .contains("## ")
                 .contains(accountID.toString())
                 .contains(clientID.toString());
+    }
+
+    @Test
+    public void shouldLogReportingEventWhenReportRequested() throws AccountNotFoundException {
+        Account accountDummy = mock(Account.class);
+        AccountRepository accountsDummy = mock(AccountRepository.class);
+        when(accountsDummy.findById(any(UUID.class))).thenReturn(accountDummy);
+        final UUID accountId = UUID.randomUUID();
+        when(accountDummy.getId()).thenReturn(accountId);
+        when(accountDummy.getClientId()).thenReturn(UUID.randomUUID());
+
+        AuditService auditMock = mock(AuditService.class);
+        final Reporting sut = new Reporting(accountsDummy, auditMock);
+
+        sut.getReport(accountDummy);
+
+        verify(auditMock, times(1))
+                .log("report for accountid " + accountId);
     }
 }

@@ -8,10 +8,12 @@ import com.acme.banking.dbo.domain.Branch;
 public class Reporting {
     //Field DI
     private AccountRepository accounts;
+    private AuditService auditService;
 
     //Constructor DI
-    public Reporting(AccountRepository accounts) {
+    public Reporting(AccountRepository accounts, AuditService auditService) {
         this.accounts = accounts;
+        this.auditService = auditService;
     }
 
     //Setter DI
@@ -29,6 +31,7 @@ public class Reporting {
 
     public String getReport(Account account) throws AccountNotFoundException {
         final Account foundAccount = accounts.findById(account.getId());
+        auditService.log("report for accountid " + foundAccount.getId());
         return "## " + foundAccount.getId() + " " + foundAccount.getClientId();
     }
 }
