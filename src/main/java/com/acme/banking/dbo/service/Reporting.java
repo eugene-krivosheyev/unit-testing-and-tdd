@@ -6,7 +6,23 @@ import com.acme.banking.dbo.domain.Account;
 import com.acme.banking.dbo.domain.Branch;
 
 public class Reporting {
-    private AccountRepository accounts = RepoFactory.create(); //Factory Method [GoF]
+    //Field DI
+    private AccountRepository accounts;
+
+    //Constructor DI
+    public Reporting(AccountRepository accounts) {
+        this.accounts = accounts;
+    }
+
+    //Setter DI
+    public void setAccounts(AccountRepository accounts) {
+        this.accounts = accounts;
+    }
+
+    //Method DI
+    public void execute(@Autowired Repo repo, @RequestBody Account param, @RequestParam String reqParam) {
+
+    }
 
     /**
      * @return Markdown report for all branches, clients, accounts
