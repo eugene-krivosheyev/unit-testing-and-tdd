@@ -6,7 +6,7 @@ import com.acme.banking.dbo.domain.Account;
 import com.acme.banking.dbo.domain.Branch;
 
 public class Reporting {
-    private AccountRepository accounts = new JdbcAccountRepo(); //Creator [GRASP]
+    private AccountRepository accounts = RepoFactory.create(); //Factory Method [GoF]
 
     /**
      * @return Markdown report for all branches, clients, accounts
