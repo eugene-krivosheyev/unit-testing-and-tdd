@@ -19,10 +19,6 @@ public class Reporting {
         this.accounts = accounts;
     }
 
-    //Method DI
-    public void execute(@Autowired Repo repo, @RequestBody Account param, @RequestParam String reqParam) {
-
-    }
 
     /**
      * @return Markdown report for all branches, clients, accounts
