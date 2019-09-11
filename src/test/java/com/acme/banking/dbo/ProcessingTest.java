@@ -6,7 +6,7 @@ import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.domain.SavingAccount;
 import com.acme.banking.dbo.dto.AccountDto;
 import com.acme.banking.dbo.dto.ClientDto;
-import com.acme.banking.dbo.errors.AccountException;
+import com.acme.banking.dbo.errors.AccountNotEnoughException;
 import com.acme.banking.dbo.errors.NotFoundException;
 import com.acme.banking.dbo.repository.AccountsRepository;
 import com.acme.banking.dbo.repository.ClientsRepository;
@@ -86,8 +86,8 @@ public class ProcessingTest {
         //endregion
     }
 
-    @Test(expected = AccountException.class)
-    public void shouldThrowExceptionWhenNotEnoughAmount() throws AccountException {
+    @Test(expected = AccountNotEnoughException.class)
+    public void shouldThrowExceptionWhenNotEnoughAmount() throws AccountNotEnoughException {
         //region given
         double transferAmount = 0.9;
         Account fromAccount = new SavingAccount(UUID.randomUUID(), stubAmount);
@@ -104,7 +104,7 @@ public class ProcessingTest {
     }
 
     @Test
-    public void shouldTransferFromAccountToAccountWhenTransferAmount() throws AccountException {
+    public void shouldTransferFromAccountToAccountWhenTransferAmount() throws AccountNotEnoughException {
         //region given
         double transferAmount = 0.2;
         Account fromAccount = new SavingAccount(UUID.randomUUID(), stubAmount);

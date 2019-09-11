@@ -5,7 +5,7 @@ import com.acme.banking.dbo.domain.Cash;
 import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.dto.AccountDto;
 import com.acme.banking.dbo.dto.ClientDto;
-import com.acme.banking.dbo.errors.AccountException;
+import com.acme.banking.dbo.errors.AccountNotEnoughException;
 import com.acme.banking.dbo.errors.NotFoundException;
 import com.acme.banking.dbo.repository.AccountsRepository;
 import com.acme.banking.dbo.repository.ClientsRepository;
@@ -51,12 +51,12 @@ public class ProcessingServiceImpl implements ProcessingService {
     }
 
     @Override
-    public UUID transfer(double amount, UUID fromAccountId, UUID toAccountId) throws AccountException {
+    public UUID transfer(double amount, UUID fromAccountId, UUID toAccountId) throws AccountNotEnoughException {
         Account fromAccount = accountsRepository.findById(fromAccountId);
         Account toAccount = accountsRepository.findById(toAccountId);
 
         if (amount > fromAccount.getAmount()) {
-            throw new AccountException("Amount not enough");
+            throw new AccountNotEnoughException("Amount not enough");
         }
 
         return accountsRepository.transfer(amount, fromAccount, toAccount);
