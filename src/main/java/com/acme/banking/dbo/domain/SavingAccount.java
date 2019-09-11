@@ -31,6 +31,7 @@ public class SavingAccount implements Account {
         return client;
     }
 
+    @Override
     public double getAmount() {
         return amount;
     }

@@ -6,6 +6,7 @@ import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.domain.SavingAccount;
 import com.acme.banking.dbo.dto.AccountDto;
 import com.acme.banking.dbo.dto.ClientDto;
+import com.acme.banking.dbo.errors.AccountException;
 import com.acme.banking.dbo.errors.NotFoundException;
 import com.acme.banking.dbo.repository.AccountsRepository;
 import com.acme.banking.dbo.repository.ClientsRepository;
@@ -64,11 +65,7 @@ public class ProcessingTest {
         //endregion
 
         //region when
-        Collection<AccountDto> accounts = service.getAccountsByClientId(stubId);
-        //endregion
-
-        //region then
-        Assertions.assertThat(accounts).isNotEmpty();
+        service.getAccountsByClientId(stubId);
         //endregion
     }
 
@@ -89,8 +86,25 @@ public class ProcessingTest {
         //endregion
     }
 
+    @Test(expected = AccountException.class)
+    public void shouldThrowExceptionWhenNotEnoughAmount() throws AccountException {
+        //region given
+        double transferAmount = 0.9;
+        Account fromAccount = new SavingAccount(UUID.randomUUID(), stubAmount);
+        Account toAccount = new SavingAccount(UUID.randomUUID(), stubAmount);
+
+        when(accountsRepositoryMock.findById(fromAccount.getId())).thenReturn(fromAccount);
+        when(accountsRepositoryMock.findById(toAccount.getId())).thenReturn(toAccount);
+        when(accountsRepositoryMock.transfer(transferAmount, fromAccount, toAccount)).thenReturn(stubId);
+        //endregion
+
+        //region when
+        service.transfer(transferAmount, fromAccount.getId(), toAccount.getId());
+        //endregion
+    }
+
     @Test
-    public void shouldTransferFromAccountToAccountAmountWhenTransferAmount() {
+    public void shouldTransferFromAccountToAccountWhenTransferAmount() throws AccountException {
         //region given
         double transferAmount = 0.2;
         Account fromAccount = new SavingAccount(UUID.randomUUID(), stubAmount);
