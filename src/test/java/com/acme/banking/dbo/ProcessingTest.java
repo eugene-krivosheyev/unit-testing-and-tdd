@@ -24,10 +24,10 @@ import static org.mockito.Mockito.*;
 public class ProcessingTest {
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
-    private UUID fromAccountId = UUID.randomUUID();
-    private UUID toAccountId = UUID.randomUUID();
-    private double defaultAmount = 100;
-    private double transferAmount = 50;
+    private UUID fromAccountId;
+    private UUID toAccountId;
+    private double defaultAmount;
+    private double transferAmount;
 
     @Before
     public void setUp() {
