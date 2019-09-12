@@ -38,8 +38,7 @@ public class ReportingTest {
                         " ## 2: Филиал2 0\n" +
                         " ## 3: Филиал3 0");
     }
-
-
+    
     @Test
     public void shouldGetReportForFilialWhenChildrenBranchesExist() {
         Reporting reporting = new Reporting();
