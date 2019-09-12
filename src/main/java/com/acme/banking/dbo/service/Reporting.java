@@ -5,6 +5,8 @@ import com.acme.banking.dbo.dal.AccountRepository;
 import com.acme.banking.dbo.domain.Account;
 import com.acme.banking.dbo.domain.Branch;
 
+import java.util.UUID;
+
 public class Reporting {
     //Field DI
     private AccountRepository accounts;
@@ -25,8 +27,13 @@ public class Reporting {
     /**
      * @return Markdown report for all branches, clients, accounts
      */
-    public String getReport(Branch rootBranch) {
-        return null;
+    public String getReport(Branch branch) {
+        String header = null;
+        switch (branch.getLevel()) {
+            case 4: header = "####"; break;
+        }
+
+        return header + " 1: Филиал № 15";
     }
 
     public String getReport(Account account) throws AccountNotFoundException {
