@@ -29,36 +29,49 @@ public class TestBranchRepository {
 
         public Builder() {}
 
-        public TestBranchRepository build() {
+        public Builder setFilialWithEmptyBranches() {
+            Branch branch = new Branch(1, "Филиал1", Collections.emptyList(), Collections.emptyList());
+            when(repository.findBranchById(1)).thenReturn(branch);
+            return this;
+        }
 
-            SavingAccount account5 = new SavingAccount(UUID.randomUUID(), 3000.0);
-            Branch branchFive= new Branch(1, "Филиал1", Collections.emptyList(), Collections.singletonList(account5));
-
+        public Builder setFilialWithAccounts() {
             Client client = new Client(UUID.randomUUID(), "Игорь");
             SavingAccount account = new SavingAccount(UUID.randomUUID(), 3000.0);
             account.setClient(client);
-            Branch branchFourth = new Branch(1, "Филиал1", Collections.emptyList(), Collections.singletonList(account));
+            Branch branch = new Branch(1, "Филиал1", Collections.emptyList(), Collections.singletonList(account));
+            when(repository.findBranchById(4)).thenReturn(branch);
+            return this;
+        }
 
-            Branch branchSecond3 = new Branch(3, "Филиал3", Collections.emptyList(), Collections.emptyList());
-            Branch branchSecond2 = new Branch(2, "Филиал2", Collections.emptyList(), Collections.emptyList());
-            Branch branchSecond = new Branch(1, "Филиал1", Arrays.asList(branchSecond2, branchSecond3), Collections.emptyList());
+        public Builder setFilialWithOneLevelBranch() {
+            Branch branch3 = new Branch(3, "Филиал3", Collections.emptyList(), Collections.emptyList());
+            Branch branch2 = new Branch(2, "Филиал2", Collections.emptyList(), Collections.emptyList());
+            Branch branch = new Branch(1, "Филиал1", Arrays.asList(branch2, branch3), Collections.emptyList());
+            when(repository.findBranchById(2)).thenReturn(branch);
+            return this;
+        }
 
-            Branch branchThird7 = new Branch(7, "Филиал7", Collections.emptyList(), Collections.emptyList());
-            Branch branchThird6 = new Branch(6, "Филиал6", Collections.emptyList(), Collections.emptyList());
-            Branch branchThird5 = new Branch(5, "Филиал5", Collections.emptyList(), Collections.emptyList());
-            Branch branchThird4 = new Branch(4, "Филиал4", Collections.emptyList(), Collections.emptyList());
-            Branch branchThird3 = new Branch(3, "Филиал3", Arrays.asList(branchThird6, branchThird7), Collections.emptyList());
-            Branch branchThird2 = new Branch(2, "Филиал2", Arrays.asList(branchThird4, branchThird5), Collections.emptyList());
-            Branch branchThird = new Branch(1, "Филиал1", Arrays.asList(branchThird2, branchThird3), Collections.emptyList());
+        public Builder setFilialWithBranches() {
+            Branch branch7 = new Branch(7, "Филиал7", Collections.emptyList(), Collections.emptyList());
+            Branch branch6 = new Branch(6, "Филиал6", Collections.emptyList(), Collections.emptyList());
+            Branch branch5 = new Branch(5, "Филиал5", Collections.emptyList(), Collections.emptyList());
+            Branch branch4 = new Branch(4, "Филиал4", Collections.emptyList(), Collections.emptyList());
+            Branch branch3 = new Branch(3, "Филиал3", Arrays.asList(branch6, branch7), Collections.emptyList());
+            Branch branch2 = new Branch(2, "Филиал2", Arrays.asList(branch4, branch5), Collections.emptyList());
+            Branch branch = new Branch(1, "Филиал1", Arrays.asList(branch2, branch3), Collections.emptyList());
+            when(repository.findBranchById(3)).thenReturn(branch);
+            return this;
+        }
 
-            Branch branchOne = new Branch(1, "Филиал1", Collections.emptyList(), Collections.emptyList());
+        public Builder setFilialWithEmptyClient() {
+            SavingAccount account = new SavingAccount(UUID.randomUUID(), 3000.0);
+            Branch branch = new Branch(1, "Филиал1", Collections.emptyList(), Collections.singletonList(account));
+            when(repository.findBranchById(5)).thenReturn(branch);
+            return this;
+        }
 
-            when(repository.findBranchById(5)).thenReturn(branchFive);
-            when(repository.findBranchById(4)).thenReturn(branchFourth);
-            when(repository.findBranchById(3)).thenReturn(branchThird);
-            when(repository.findBranchById(2)).thenReturn(branchSecond);
-            when(repository.findBranchById(1)).thenReturn(branchOne);
-
+        public TestBranchRepository build() {
             return new TestBranchRepository(this);
         }
     }
