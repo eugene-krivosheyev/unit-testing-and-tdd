@@ -52,6 +52,20 @@ public class ProcessingTest {
     }
 
     @Test
+    public void shouldThrowIllegalArgumentExceptionWhenCreatingClientAndNameIsNull() throws AccountNotFoundException, ClientNotFoundException {
+        ClientRepository clientRepoDummy = new MockitoClientRepositoryBuilder()
+                .build();
+        AccountRepository accountRepoDummy = new MockitoAccountRepositoryBuilder()
+                .build();
+        final Processing sut = new Processing(clientRepoDummy, accountRepoDummy);
+        thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage("name is null or is empty");
+
+        sut.createClient(null);
+
+    }
+
+    @Test
     public void shouldThrowNotEnoughMoneyExceptionWhenTransferAndNotEnoughMoney() throws AccountNotFoundException, NotEnoughMoneyException, ClientNotFoundException {
         Account fromAccountStub = new MockitoAccountBuilder()
                 .withId(fromAccountId)

@@ -21,6 +21,7 @@ public class Processing {
     }
 
     public UUID createClient(String name) {
+        if (name == null || name.isEmpty()) throw new IllegalArgumentException("name is null or is empty");
         Client client = new Client(null, name);
         return clientRepo.add(client);
     }
