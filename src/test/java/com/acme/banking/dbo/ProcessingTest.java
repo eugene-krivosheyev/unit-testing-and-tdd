@@ -48,7 +48,7 @@ public class ProcessingTest {
         sut.createClient("123");
 
         verify(clientRepoMock, times(1))
-                .add(any());
+                .add(any(Client.class));
     }
 
     @Test
@@ -143,7 +143,7 @@ public class ProcessingTest {
 
         sut.transfer(transferAmount, fromAccountId, toAccountId);
 
-        verify(accountRepoMock, times(2)).update(any());
+        verify(accountRepoMock, times(2)).update(any(Account.class));
     }
 
     @Test
@@ -271,6 +271,6 @@ public class ProcessingTest {
 
         sut.cash(transferAmount, fromAccountId, cashDummy);
 
-        verify(accountRepoMock, times(1)).update(any());
+        verify(accountRepoMock, times(1)).update(any(Account.class));
     }
 }
