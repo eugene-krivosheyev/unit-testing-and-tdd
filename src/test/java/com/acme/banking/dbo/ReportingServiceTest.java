@@ -14,7 +14,9 @@ import static org.fest.assertions.api.Assertions.assertThat;
 public class ReportingServiceTest {
 
     @Test
-    public void shouldGetReportForFilialWhenChildrenBranchesEmpty() throws EmptyBranchException, EmptyClientException {
+    public void shouldGetReportForFilialWhenChildrenBranchesEmpty()
+            throws EmptyBranchException, EmptyClientException {
+
         TestBranchRepository branchRepository = new TestBranchRepository.Builder()
                 .setFilialWithEmptyBranches()
                 .build();
@@ -30,7 +32,9 @@ public class ReportingServiceTest {
     }
 
     @Test
-    public void shouldGetReportForFilialWithAccountWhenChildrenBranchesEmpty() throws EmptyBranchException, EmptyClientException {
+    public void shouldGetReportForFilialWithAccountWhenChildrenBranchesEmpty()
+            throws EmptyBranchException, EmptyClientException {
+
         TestBranchRepository branchRepository = new TestBranchRepository.Builder()
                 .setFilialWithAccounts()
                 .build();
@@ -49,7 +53,9 @@ public class ReportingServiceTest {
     }
 
     @Test
-    public void shouldGetReportForFilialLevelOneWhenChildrenBranchesExist() throws EmptyBranchException, EmptyClientException {
+    public void shouldGetReportForFilialLevelOneWhenChildrenBranchesExist()
+            throws EmptyBranchException, EmptyClientException {
+
         TestBranchRepository branchRepository = new TestBranchRepository.Builder()
                 .setFilialWithOneLevelBranch()
                 .build();
@@ -67,7 +73,9 @@ public class ReportingServiceTest {
     }
 
     @Test
-    public void shouldGetReportForFilialWhenChildrenBranchesExist() throws EmptyBranchException, EmptyClientException {
+    public void shouldGetReportForFilialWhenChildrenBranchesExist()
+            throws EmptyBranchException, EmptyClientException {
+
         TestBranchRepository branchRepository = new TestBranchRepository.Builder()
                 .setFilialWithBranches()
                 .build();
@@ -89,13 +97,17 @@ public class ReportingServiceTest {
     }
 
     @Test(expected = EmptyBranchException.class)
-    public void shouldReturnEmptyReportWhenBrunchIsNull() throws EmptyBranchException, EmptyClientException {
+    public void shouldReturnEmptyReportWhenBrunchIsNull()
+            throws EmptyBranchException, EmptyClientException {
+
         ReportingServiceImpl reportingService = new ReportingServiceImpl();
         reportingService.getReport(null);
     }
 
     @Test(expected = EmptyClientException.class)
-    public void shouldThrowExceptionWhenClientIsNull() throws EmptyBranchException, EmptyClientException {
+    public void shouldThrowExceptionWhenClientIsNull()
+            throws EmptyBranchException, EmptyClientException {
+        
         TestBranchRepository branchRepository = new TestBranchRepository.Builder()
                 .setFilialWithEmptyClient()
                 .build();
