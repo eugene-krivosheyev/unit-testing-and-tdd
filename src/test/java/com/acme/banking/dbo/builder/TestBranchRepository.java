@@ -31,6 +31,9 @@ public class TestBranchRepository {
 
         public TestBranchRepository build() {
 
+            SavingAccount account5 = new SavingAccount(UUID.randomUUID(), 3000.0);
+            Branch branchFive= new Branch(1, "Филиал1", Collections.emptyList(), Collections.singletonList(account5));
+
             Client client = new Client(UUID.randomUUID(), "Игорь");
             SavingAccount account = new SavingAccount(UUID.randomUUID(), 3000.0);
             account.setClient(client);
@@ -50,6 +53,7 @@ public class TestBranchRepository {
 
             Branch branchOne = new Branch(1, "Филиал1", Collections.emptyList(), Collections.emptyList());
 
+            when(repository.findBranchById(5)).thenReturn(branchFive);
             when(repository.findBranchById(4)).thenReturn(branchFourth);
             when(repository.findBranchById(3)).thenReturn(branchThird);
             when(repository.findBranchById(2)).thenReturn(branchSecond);

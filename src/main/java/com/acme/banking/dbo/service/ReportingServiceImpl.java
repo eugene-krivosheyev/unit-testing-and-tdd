@@ -3,6 +3,7 @@ package com.acme.banking.dbo.service;
 import com.acme.banking.dbo.domain.Account;
 import com.acme.banking.dbo.domain.Branch;
 import com.acme.banking.dbo.error.EmptyBranchException;
+import com.acme.banking.dbo.error.EmptyClientException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,15 +14,15 @@ public class ReportingServiceImpl implements ReportingService {
      * @return Markdown report for all branches, clients, accounts
      */
     @Override
-    public String getReport(Branch branch) throws EmptyBranchException {
+    public String getReport(Branch branch) throws EmptyBranchException, EmptyClientException {
         if (branch == null) {
             throw new EmptyBranchException("Branch is null");
-        } else {
-            return getFormattedReport(branch, 1);
         }
+
+        return getFormattedReport(branch, 1);
     }
 
-    private String getFormattedReport(Branch branch, int level) {
+    private String getFormattedReport(Branch branch, int level) throws EmptyClientException {
         StringBuilder levelString = new StringBuilder();
         StringBuilder levelSpace = new StringBuilder();
 
@@ -40,6 +41,11 @@ public class ReportingServiceImpl implements ReportingService {
             if (i > 0) {
                 result.append(System.lineSeparator());
             }
+
+            if (account.getClient() == null) {
+                throw new EmptyClientException("Client is null");
+            }
+
             result.append(levelSpace);
             result.append(String.format("- %s, Client: %s", account.getAmount(), account.getClient().getName()));
         }

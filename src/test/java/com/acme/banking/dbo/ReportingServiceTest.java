@@ -5,6 +5,7 @@ import com.acme.banking.dbo.domain.Account;
 import com.acme.banking.dbo.domain.Branch;
 import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.error.EmptyBranchException;
+import com.acme.banking.dbo.error.EmptyClientException;
 import com.acme.banking.dbo.service.ReportingServiceImpl;
 import org.junit.Test;
 
@@ -13,7 +14,7 @@ import static org.fest.assertions.api.Assertions.assertThat;
 public class ReportingServiceTest {
 
     @Test
-    public void shouldGetReportForFilialWhenChildrenBranchesEmpty() throws EmptyBranchException {
+    public void shouldGetReportForFilialWhenChildrenBranchesEmpty() throws EmptyBranchException, EmptyClientException {
         TestBranchRepository branchRepository = new TestBranchRepository.Builder().build();
         ReportingServiceImpl reportingService = new ReportingServiceImpl();
 
@@ -26,7 +27,7 @@ public class ReportingServiceTest {
     }
 
     @Test
-    public void shouldGetReportForFilialWithAccountsWhenChildrenBranchesEmpty() throws EmptyBranchException {
+    public void shouldGetReportForFilialWithAccountsWhenChildrenBranchesEmpty() throws EmptyBranchException, EmptyClientException {
         TestBranchRepository branchRepository = new TestBranchRepository.Builder().build();
         ReportingServiceImpl reportingService = new ReportingServiceImpl();
 
@@ -42,7 +43,7 @@ public class ReportingServiceTest {
     }
 
     @Test
-    public void shouldGetReportForFilialLevelOneWhenChildrenBranchesExist() throws EmptyBranchException {
+    public void shouldGetReportForFilialLevelOneWhenChildrenBranchesExist() throws EmptyBranchException, EmptyClientException {
         TestBranchRepository branchRepository = new TestBranchRepository.Builder().build();
         ReportingServiceImpl reportingService = new ReportingServiceImpl();
 
@@ -57,7 +58,7 @@ public class ReportingServiceTest {
     }
 
     @Test
-    public void shouldGetReportForFilialWhenChildrenBranchesExist() throws EmptyBranchException {
+    public void shouldGetReportForFilialWhenChildrenBranchesExist() throws EmptyBranchException, EmptyClientException {
         TestBranchRepository branchRepository = new TestBranchRepository.Builder().build();
         ReportingServiceImpl reportingService = new ReportingServiceImpl();
 
@@ -76,8 +77,17 @@ public class ReportingServiceTest {
     }
 
     @Test(expected = EmptyBranchException.class)
-    public void shouldReturnEmptyReportWhenBrunchIsNull() throws EmptyBranchException {
+    public void shouldReturnEmptyReportWhenBrunchIsNull() throws EmptyBranchException, EmptyClientException {
         ReportingServiceImpl reportingService = new ReportingServiceImpl();
         reportingService.getReport(null);
+    }
+
+    @Test(expected = EmptyClientException.class)
+    public void shouldThrowExceptionWhenClientIsNull() throws EmptyBranchException, EmptyClientException {
+        TestBranchRepository branchRepository = new TestBranchRepository.Builder().build();
+        ReportingServiceImpl reportingService = new ReportingServiceImpl();
+
+        Branch branch = branchRepository.getRepository().findBranchById(5);
+        reportingService.getReport(branch);
     }
 }
