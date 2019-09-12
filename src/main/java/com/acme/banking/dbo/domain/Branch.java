@@ -1,8 +1,11 @@
 package com.acme.banking.dbo.domain;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import static java.util.Collections.unmodifiableCollection;
+import static java.util.Collections.unmodifiableList;
 
 public class Branch {
     private int id;
@@ -17,12 +20,12 @@ public class Branch {
         this.name = name;
     }
 
-    public Collection<Account> getAccounts() {
-        return unmodifiableCollection(accounts);
+    public List<Account> getAccounts() {
+        return unmodifiableList(new ArrayList<>(accounts));
     }
 
-    public Collection<Branch> getChildren() {
-        return unmodifiableCollection(branches);
+    public List<Branch> getChildren() {
+        return unmodifiableList(new ArrayList<>(branches));
     }
 
     public int getId() {

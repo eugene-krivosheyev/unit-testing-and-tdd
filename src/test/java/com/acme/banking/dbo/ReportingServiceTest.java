@@ -1,36 +1,53 @@
 package com.acme.banking.dbo;
 
+import com.acme.banking.dbo.builder.TestBranchRepository;
+import com.acme.banking.dbo.domain.Account;
 import com.acme.banking.dbo.domain.Branch;
+import com.acme.banking.dbo.domain.Client;
+import com.acme.banking.dbo.error.EmptyBranchException;
 import com.acme.banking.dbo.service.ReportingServiceImpl;
 import org.junit.Test;
-
-import java.util.Arrays;
-import java.util.Collections;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 
 public class ReportingServiceTest {
 
     @Test
-    public void shouldGetReportForFilialWhenChildrenBranchesEmpty() {
+    public void shouldGetReportForFilialWhenChildrenBranchesEmpty() throws EmptyBranchException {
+        TestBranchRepository branchRepository = new TestBranchRepository.Builder().build();
         ReportingServiceImpl reportingService = new ReportingServiceImpl();
 
-        Branch branch1 = new Branch(1, "Филиал1", Collections.emptyList(), Collections.emptyList());
-        String result = reportingService.getReport(branch1);
+        Branch branch = branchRepository.getRepository().findBranchById(1);
+        String result = reportingService.getReport(branch);
 
         assertThat(result)
                 .isNotEmpty()
-                .isEqualTo("# 1: Филиал1 0");
+                .isEqualTo("# " + branch.getId() + ": " + branch.getName() + " " + branch.getAccounts().size());
     }
 
     @Test
-    public void shouldGetReportForFilialLevelOneWhenChildrenBranchesExist() {
+    public void shouldGetReportForFilialWithAccountsWhenChildrenBranchesEmpty() throws EmptyBranchException {
+        TestBranchRepository branchRepository = new TestBranchRepository.Builder().build();
         ReportingServiceImpl reportingService = new ReportingServiceImpl();
 
-        Branch branch3 = new Branch(3, "Филиал3", Collections.emptyList(), Collections.emptyList());
-        Branch branch2 = new Branch(2, "Филиал2", Collections.emptyList(), Collections.emptyList());
-        Branch branch1 = new Branch(1, "Филиал1", Arrays.asList(branch2, branch3), Collections.emptyList());
-        String result = reportingService.getReport(branch1);
+        Branch branch = branchRepository.getRepository().findBranchById(4);
+        Account account = branch.getAccounts().get(0);
+        Client client = account.getClient();
+        String result = reportingService.getReport(branch);
+
+        assertThat(result)
+                .isNotEmpty()
+                .isEqualTo("# " + branch.getId() + ": " + branch.getName() + " " + branch.getAccounts().size() + "\n" +
+                        " - " + account.getAmount() + ", Client: "+ client.getName());
+    }
+
+    @Test
+    public void shouldGetReportForFilialLevelOneWhenChildrenBranchesExist() throws EmptyBranchException {
+        TestBranchRepository branchRepository = new TestBranchRepository.Builder().build();
+        ReportingServiceImpl reportingService = new ReportingServiceImpl();
+
+        Branch branch = branchRepository.getRepository().findBranchById(2);
+        String result = reportingService.getReport(branch);
 
         assertThat(result)
                 .isNotEmpty()
@@ -40,17 +57,12 @@ public class ReportingServiceTest {
     }
 
     @Test
-    public void shouldGetReportForFilialWhenChildrenBranchesExist() {
+    public void shouldGetReportForFilialWhenChildrenBranchesExist() throws EmptyBranchException {
+        TestBranchRepository branchRepository = new TestBranchRepository.Builder().build();
         ReportingServiceImpl reportingService = new ReportingServiceImpl();
 
-        Branch branch7 = new Branch(7, "Филиал7", Collections.emptyList(), Collections.emptyList());
-        Branch branch6 = new Branch(6, "Филиал6", Collections.emptyList(), Collections.emptyList());
-        Branch branch5 = new Branch(5, "Филиал5", Collections.emptyList(), Collections.emptyList());
-        Branch branch4 = new Branch(4, "Филиал4", Collections.emptyList(), Collections.emptyList());
-        Branch branch3 = new Branch(3, "Филиал3", Arrays.asList(branch6, branch7), Collections.emptyList());
-        Branch branch2 = new Branch(2, "Филиал2", Arrays.asList(branch4, branch5), Collections.emptyList());
-        Branch branch1 = new Branch(1, "Филиал1", Arrays.asList(branch2, branch3), Collections.emptyList());
-        String result = reportingService.getReport(branch1);
+        Branch branch = branchRepository.getRepository().findBranchById(3);
+        String result = reportingService.getReport(branch);
 
         assertThat(result)
                 .isNotEmpty()
@@ -61,5 +73,11 @@ public class ReportingServiceTest {
                         " ## 3: Филиал3 0\n" +
                         "  ### 6: Филиал6 0\n" +
                         "  ### 7: Филиал7 0");
+    }
+
+    @Test(expected = EmptyBranchException.class)
+    public void shouldReturnEmptyReportWhenBrunchIsNull() throws EmptyBranchException {
+        ReportingServiceImpl reportingService = new ReportingServiceImpl();
+        reportingService.getReport(null);
     }
 }

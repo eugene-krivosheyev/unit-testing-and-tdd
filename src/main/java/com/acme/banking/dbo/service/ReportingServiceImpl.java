@@ -1,6 +1,8 @@
 package com.acme.banking.dbo.service;
 
+import com.acme.banking.dbo.domain.Account;
 import com.acme.banking.dbo.domain.Branch;
+import com.acme.banking.dbo.error.EmptyBranchException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,8 +13,12 @@ public class ReportingServiceImpl implements ReportingService {
      * @return Markdown report for all branches, clients, accounts
      */
     @Override
-    public String getReport(Branch branch) {
-        return getFormattedReport(branch, 1);
+    public String getReport(Branch branch) throws EmptyBranchException {
+        if (branch == null) {
+            throw new EmptyBranchException("Branch is null");
+        } else {
+            return getFormattedReport(branch, 1);
+        }
     }
 
     private String getFormattedReport(Branch branch, int level) {
@@ -27,6 +33,16 @@ public class ReportingServiceImpl implements ReportingService {
         StringBuilder result = new StringBuilder();
         result.append(String.format("%s %s: %s %s", levelString.toString(), branch.getId(), branch.getName(), branch.getAccounts().size()));
         result.append(System.lineSeparator());
+
+        List<Account> accounts = new ArrayList<>(branch.getAccounts());
+        for (int i = 0; i < accounts.size(); i++) {
+            Account account = accounts.get(i);
+            if (i > 0) {
+                result.append(System.lineSeparator());
+            }
+            result.append(levelSpace);
+            result.append(String.format("- %s, Client: %s", account.getAmount(), account.getClient().getName()));
+        }
 
         List<Branch> branches = new ArrayList<>(branch.getChildren());
         for (int i = 0; i < branches.size(); i++) {
