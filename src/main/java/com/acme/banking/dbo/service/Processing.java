@@ -32,9 +32,8 @@ public class Processing {
     public void transfer(double amount, UUID fromAccountId, UUID toAccountId) throws AccountNotFoundException, NotEnoughMoneyException {
         Account fromAccount = accountRepo.findById(fromAccountId);
         Account toAccount = accountRepo.findById(toAccountId);
-        double newFromAmount = fromAccount.getAmount()-amount;
-        if (newFromAmount<0) throw new NotEnoughMoneyException("Not enough money!");
-        fromAccount.setAmount(newFromAmount);
+        if (fromAccount.getAmount()<amount) throw new NotEnoughMoneyException("Not enough money!");
+        fromAccount.setAmount(fromAccount.getAmount()-amount);
         toAccount.setAmount(toAccount.getAmount() + amount);
 
         accountRepo.update(fromAccount);
@@ -44,9 +43,8 @@ public class Processing {
     public void cash(double amount, UUID fromAccountId, Cash cash) throws AccountNotFoundException, NotEnoughMoneyException {
         if (cash == null) throw new IllegalArgumentException("cash is null");
         Account fromAccount = accountRepo.findById(fromAccountId);
-        double newFromAmount = fromAccount.getAmount() - amount;
-        if (newFromAmount<0) throw new NotEnoughMoneyException("Not enough money!");
-        fromAccount.setAmount(newFromAmount);
+        if (fromAccount.getAmount()<amount) throw new NotEnoughMoneyException("Not enough money!");
+        fromAccount.setAmount(fromAccount.getAmount() - amount);
         accountRepo.update(fromAccount);
 
         cash.log(amount, fromAccountId);
