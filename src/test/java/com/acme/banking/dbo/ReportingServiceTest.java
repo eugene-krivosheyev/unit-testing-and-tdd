@@ -1,7 +1,7 @@
 package com.acme.banking.dbo;
 
 import com.acme.banking.dbo.domain.Branch;
-import com.acme.banking.dbo.service.Reporting;
+import com.acme.banking.dbo.service.ReportingServiceImpl;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -9,14 +9,14 @@ import java.util.Collections;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 
-public class ReportingTest {
+public class ReportingServiceTest {
 
     @Test
     public void shouldGetReportForFilialWhenChildrenBranchesEmpty() {
-        Reporting reporting = new Reporting();
+        ReportingServiceImpl reportingService = new ReportingServiceImpl();
 
         Branch branch1 = new Branch(1, "Филиал1", Collections.emptyList(), Collections.emptyList());
-        String result = reporting.getReport(branch1);
+        String result = reportingService.getReport(branch1);
 
         assertThat(result)
                 .isNotEmpty()
@@ -25,12 +25,12 @@ public class ReportingTest {
 
     @Test
     public void shouldGetReportForFilialLevelOneWhenChildrenBranchesExist() {
-        Reporting reporting = new Reporting();
+        ReportingServiceImpl reportingService = new ReportingServiceImpl();
 
         Branch branch3 = new Branch(3, "Филиал3", Collections.emptyList(), Collections.emptyList());
         Branch branch2 = new Branch(2, "Филиал2", Collections.emptyList(), Collections.emptyList());
         Branch branch1 = new Branch(1, "Филиал1", Arrays.asList(branch2, branch3), Collections.emptyList());
-        String result = reporting.getReport(branch1);
+        String result = reportingService.getReport(branch1);
 
         assertThat(result)
                 .isNotEmpty()
@@ -38,10 +38,10 @@ public class ReportingTest {
                         " ## 2: Филиал2 0\n" +
                         " ## 3: Филиал3 0");
     }
-    
+
     @Test
     public void shouldGetReportForFilialWhenChildrenBranchesExist() {
-        Reporting reporting = new Reporting();
+        ReportingServiceImpl reportingService = new ReportingServiceImpl();
 
         Branch branch7 = new Branch(7, "Филиал7", Collections.emptyList(), Collections.emptyList());
         Branch branch6 = new Branch(6, "Филиал6", Collections.emptyList(), Collections.emptyList());
@@ -50,7 +50,7 @@ public class ReportingTest {
         Branch branch3 = new Branch(3, "Филиал3", Arrays.asList(branch6, branch7), Collections.emptyList());
         Branch branch2 = new Branch(2, "Филиал2", Arrays.asList(branch4, branch5), Collections.emptyList());
         Branch branch1 = new Branch(1, "Филиал1", Arrays.asList(branch2, branch3), Collections.emptyList());
-        String result = reporting.getReport(branch1);
+        String result = reportingService.getReport(branch1);
 
         assertThat(result)
                 .isNotEmpty()

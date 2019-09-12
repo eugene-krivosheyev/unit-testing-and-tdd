@@ -5,11 +5,12 @@ import com.acme.banking.dbo.domain.Branch;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Reporting {
+public class ReportingServiceImpl implements ReportingService {
 
     /**
      * @return Markdown report for all branches, clients, accounts
      */
+    @Override
     public String getReport(Branch branch) {
         return getFormattedReport(branch, 1);
     }
