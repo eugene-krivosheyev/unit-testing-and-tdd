@@ -38,14 +38,6 @@ public class ClientTest {
     }
 
     @Test
-    public void shouldThrowIllegalArgumentExceptionWhenCreatingAndIdIsNull() {
-        thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("id is null");
-
-        new Client(null, "dummy client name");
-    }
-
-    @Test
     public void shouldThrowIllegalArgumentExceptionWhenCreatingAndNameIsNull() {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("name is null");

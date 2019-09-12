@@ -11,7 +11,6 @@ public class Client {
     private Collection<Account> accounts = new ArrayList<>(); //TODO
 
     public Client(UUID id, String name) {
-        if (id == null) throw new IllegalArgumentException("id is null");
         if (name == null) throw new IllegalArgumentException("name is null");
         if (name.isEmpty()) throw new IllegalArgumentException("name is empty");
         this.id = id;
