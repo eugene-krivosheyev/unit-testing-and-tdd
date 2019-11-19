@@ -23,7 +23,7 @@
 
 ### Fork and then clone codebase for further development
 ```
-git clone --depth 1 -b <YYYY-MM-project> https://github.com/eugene-krivosheyev/spring-core-for-qa
+git clone --depth 1 -b <YYYY-MM-project> https://github.com/eugene-krivosheyev/unit-testing-and-tdd
 ```
 
 ## 2. Что такое автотест? (1.5/0.5)
