@@ -1,69 +1,46 @@
 package com.acme.banking.dbo;
 
 import com.acme.banking.dbo.domain.Client;
+import com.acme.banking.dbo.domain.SavingAccount;
 import org.junit.Test;
 
 import java.util.UUID;
 
-import static org.hamcrest.CoreMatchers.allOf;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertNull;
 
-public class ClientTest {
+public class SavingAccountTest {
     @Test
-    public void shouldSavePropertiesWhenCreated() {
+    public void shouldExistSavingAccountWhenCreated() {
         //region given
         UUID stubId = UUID.randomUUID();
+        Client stubClient = new Client(UUID.randomUUID(), "some name");
+        double stubAmount = 1;
         //endregion
 
         //region when
-        Client sut = new Client(stubId, "dummy client name");
+        SavingAccount sut = new SavingAccount(stubId, stubClient, stubAmount);
         //endregion
 
         //region then
-        assertThat(sut.getId(),
-                allOf(
-                        equalTo(stubId),
-                        notNullValue()
-                ));
+        assertNotNull(sut);
         //endregion
     }
 
-    @Test
-    public void shouldThrowIllegalArgumentExceptionWhenNameIsNull() {
-        //region given
-        UUID stubId = UUID.randomUUID();
-        Client sut = null;
-        String name = null;
-        //endregion
-
-        try {
-            //region when
-            sut = new Client(stubId, name);
-            //endregion
-
-        //region then
-        } catch (IllegalArgumentException e) {
-            assertTrue(true);
-        } catch (Exception e) {
-            fail(e.getLocalizedMessage());
-        } finally {
-            assertNull(sut);
-        }
-        //endregion
-    }
     @Test
     public void shouldThrowIllegalArgumentExceptionWhenIdIsNull() {
         //region given
         UUID stubId = null;
-        Client sut = null;
-        String name = "dummy client name";
+        Client stubClient = new Client(UUID.randomUUID(), "some name");
+        double stubAmount = 1;
+
+        SavingAccount sut = null;
         //endregion
 
         try {
             //region when
-            sut = new Client(stubId, name);
+            sut = new SavingAccount(stubId, stubClient, stubAmount);
             //endregion
 
             //region then
@@ -78,16 +55,44 @@ public class ClientTest {
     }
 
     @Test
-    public void shouldThrowIllegalArgumentExceptionWhenNameIsEmpty() {
+    public void shouldThrowIllegalArgumentExceptionWhenClientIsNull() {
         //region given
         UUID stubId = UUID.randomUUID();
-        Client sut = null;
-        String name = "";
+        Client stubClient = null;
+        double stubAmount = 1;
+
+        SavingAccount sut = null;
         //endregion
 
         try {
             //region when
-            sut = new Client(stubId, name);
+            sut = new SavingAccount(stubId, stubClient, stubAmount);
+            //endregion
+
+            //region then
+        } catch (IllegalArgumentException e) {
+            assertTrue(true);
+        } catch (Exception e) {
+            fail(e.getLocalizedMessage());
+        } finally {
+            assertNull(sut);
+        }
+        //endregion
+    }
+
+    @Test
+    public void shouldThrowIllegalArgumentExceptionWhenAmountLessThanZero() {
+        //region given
+        UUID stubId = UUID.randomUUID();
+        Client stubClient = new Client(stubId, "some name");
+        double stubAmount = -1;
+
+        SavingAccount sut = null;
+        //endregion
+
+        try {
+            //region when
+            sut = new SavingAccount(stubId, stubClient, stubAmount);
             //endregion
 
             //region then
