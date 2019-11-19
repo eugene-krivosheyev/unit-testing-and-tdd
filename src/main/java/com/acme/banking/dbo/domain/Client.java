@@ -12,10 +12,10 @@ public class Client {
     public Client(UUID id, String name) {
         if (id == null) throw new IllegalArgumentException("id is null");
         if (name == null || "".equals(name)) throw new IllegalArgumentException("name is null or empty");
-
+      
         this.id = id;
         this.name = name;
-    }
+}
 
     public UUID getId() {
         return id;
