@@ -1,6 +1,7 @@
 package com.acme.banking.dbo;
 
 import com.acme.banking.dbo.domain.Client;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.UUID;
@@ -28,5 +29,16 @@ public class ClientTest {
                 notNullValue()
         ));
         //endregion
+    }
+
+    @Test
+    public void shouldCreateClientWithValidValues() {
+        UUID dummyUuid = UUID.randomUUID();
+
+        Client sut = new Client(dummyUuid, "Dummy");
+
+        Assert.assertNotNull(sut);
+        Assert.assertEquals(dummyUuid, sut.getId());
+        Assert.assertEquals("Dummy", sut.getName());
     }
 }

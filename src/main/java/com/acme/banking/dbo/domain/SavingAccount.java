@@ -4,21 +4,14 @@ import java.util.UUID;
 
 public class SavingAccount implements Account {
     private UUID id;
-    private Client client;
     private double amount;
 
-    public SavingAccount(UUID id, Client client, double amount) {
+    public SavingAccount(UUID id, double amount) {
         if (id == null) throw new IllegalArgumentException("id = null");
-        if (client == null) throw new IllegalArgumentException("client = null");
-        if (amount > 0) throw new IllegalArgumentException("amount < 0");
+        if (amount < 0) throw new IllegalArgumentException("amount < 0");
 
         this.id = id;
-        this.client = client;
         this.amount = amount;
-    }
-
-    public Client getClient() {
-        return client;
     }
 
     public double getAmount() {
@@ -32,6 +25,6 @@ public class SavingAccount implements Account {
 
     @Override
     public UUID getClientId() {
-        return client.getId();
+        return null;
     }
 }
