@@ -17,10 +17,6 @@ public class SavingAccount implements Account {
         this.amount = amount;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
     public Client getClient() {
         return client;
     }

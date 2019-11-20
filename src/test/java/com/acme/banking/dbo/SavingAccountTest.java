@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public class SavingAccountTest {
     @Test
-    public void shouldSaveIdWhenSavingAccountWithPositiveCase(){
+    public void shouldCreateNewSavingAccountWithValidValues() {
         //region given
         UUID dummyUuid = UUID.randomUUID();
         Client dummyClient = new Client(dummyUuid, "Dummy");
@@ -20,7 +20,10 @@ public class SavingAccountTest {
         //endregion
 
         //region then
+        Assert.assertNotNull(sut);
         Assert.assertEquals(dummyUuid, sut.getId());
+        Assert.assertEquals("Dummy", sut.getClient().getName());
+        Assert.assertEquals(0, sut.getAmount(), 0.0);
         //endregion
     }
 }
