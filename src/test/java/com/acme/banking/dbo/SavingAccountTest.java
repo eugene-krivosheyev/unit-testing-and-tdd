@@ -9,13 +9,18 @@ import java.util.UUID;
 
 public class SavingAccountTest {
     @Test
-    public void shouldSavingIdWhenSavingAccountWithDefaultParams(){
-        final UUID dummyUuid = new UUID(0L, 0L);
-        final Client dummyClient = new Client(dummyUuid, "Dummy");
+    public void shouldSaveIdWhenSavingAccountWithPositiveCase(){
+        //region given
+        UUID dummyUuid = UUID.randomUUID();
+        Client dummyClient = new Client(dummyUuid, "Dummy");
+        //endregion
 
-        final SavingAccount sut = new SavingAccount(dummyUuid,  dummyClient, 0.);
+        //region when
+        SavingAccount sut = new SavingAccount(dummyUuid,  dummyClient, 0.);
+        //endregion
 
-
-        Assert.assertEquals(sut.getId(), dummyUuid);
+        //region then
+        Assert.assertEquals(dummyUuid, sut.getId());
+        //endregion
     }
 }
