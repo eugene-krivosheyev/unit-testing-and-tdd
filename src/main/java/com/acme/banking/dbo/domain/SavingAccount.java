@@ -14,6 +14,7 @@ public class SavingAccount implements Account {
 
         this.id = id;
         this.client = client;
+        this.client.addIdToClientAccountIds(id);
         this.amount = amount;
     }
 

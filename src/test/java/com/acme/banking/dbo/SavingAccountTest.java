@@ -3,7 +3,9 @@ package com.acme.banking.dbo;
 import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.domain.SavingAccount;
 import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import java.util.UUID;
 
@@ -12,6 +14,10 @@ import static org.junit.Assert.*;
 import static org.junit.Assert.assertNull;
 
 public class SavingAccountTest {
+    @Rule
+    public final ExpectedException exception = ExpectedException.none();
+    //todo TestNameRule
+
     @Test
     public void shouldExistAndInitializedSavingAccountWhenCreatedWithCorrectArgumentsAndPositiveAmount() {
         //region given
@@ -75,7 +81,7 @@ public class SavingAccountTest {
     }
 
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void shouldThrowIllegalArgumentExceptionWhenIdIsNull() {
         //todo добавить в шаблоны заполнение регионов
         //region given
@@ -83,7 +89,8 @@ public class SavingAccountTest {
         Client stubClient = new Client(UUID.randomUUID(), "some name");
         double stubAmount = 1;
 
-        SavingAccount sut = null;
+        exception.expect(IllegalArgumentException.class);
+        exception.expectMessage("id is null");
         //endregion
 
         //region when
