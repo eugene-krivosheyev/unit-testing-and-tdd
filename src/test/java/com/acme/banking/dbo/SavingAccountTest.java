@@ -2,6 +2,7 @@ package com.acme.banking.dbo;
 
 import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.domain.SavingAccount;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.UUID;
@@ -12,7 +13,7 @@ import static org.junit.Assert.assertNull;
 
 public class SavingAccountTest {
     @Test
-    public void shouldExistSavingAccountWhenCreated() {
+    public void shouldExistAndInitializedSavingAccountWhenCreatedWithCorrectArgumentsAndPositiveAmount() {
         //region given
         UUID stubId = UUID.randomUUID();
         Client stubClient = new Client(UUID.randomUUID(), "some name");
@@ -25,11 +26,58 @@ public class SavingAccountTest {
 
         //region then
         assertNotNull(sut);
+        assertEquals(stubId, sut.getId());
+        assertEquals(stubClient, sut.getClient());
+        assertEquals(stubAmount, sut.getAmount(), 0.00001); //todo Need to approve delta with business analytics
         //endregion
     }
 
     @Test
+    public void shouldExistAndInitializedSavingAccountWhenCreatedWithCorrectArgumentsAndZeroAmount() {
+        //region given
+        UUID stubId = UUID.randomUUID();
+        Client stubClient = new Client(UUID.randomUUID(), "some name");
+        double stubAmount = 0;
+        //endregion
+
+        //region when
+        SavingAccount sut = new SavingAccount(stubId, stubClient, stubAmount);
+        //endregion
+
+        //region then
+        assertNotNull(sut);
+        assertEquals(stubId, sut.getId());
+        assertEquals(stubClient, sut.getClient());
+        assertEquals(stubAmount, sut.getAmount(), 0.00001); //todo Need to approve delta with business analytics
+        //endregion
+    }
+
+    @Test
+    @Ignore
+    public void shouldThrowErrorWhenGetClientIdIsNull() {
+        //region given
+        UUID stubId = UUID.randomUUID();
+        //todo mock client for client.getId ==null
+        Client stubClient = new Client(UUID.randomUUID(), "some name");
+        double stubAmount = 0;
+        //endregion
+
+        //region when
+        SavingAccount sut = new SavingAccount(stubId, stubClient, stubAmount);
+        //endregion
+
+        //region then
+        assertNotNull(sut);
+        assertEquals(stubId, sut.getId());
+        assertEquals(stubClient, sut.getClient());
+        assertEquals(stubAmount, sut.getAmount(), 0.00001); //todo Need to approve delta with business analytics
+        //endregion
+    }
+
+
+    @Test(expected = IllegalArgumentException.class)
     public void shouldThrowIllegalArgumentExceptionWhenIdIsNull() {
+        //todo добавить в шаблоны заполнение регионов
         //region given
         UUID stubId = null;
         Client stubClient = new Client(UUID.randomUUID(), "some name");
@@ -38,71 +86,45 @@ public class SavingAccountTest {
         SavingAccount sut = null;
         //endregion
 
-        try {
-            //region when
-            sut = new SavingAccount(stubId, stubClient, stubAmount);
-            //endregion
+        //region when
+        new SavingAccount(stubId, stubClient, stubAmount);
+        //endregion
 
-            //region then
-        } catch (IllegalArgumentException e) {
-            assertTrue(true);
-        } catch (Exception e) {
-            fail(e.getLocalizedMessage());
-        } finally {
-            assertNull(sut);
-        }
+        //region then
         //endregion
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void shouldThrowIllegalArgumentExceptionWhenClientIsNull() {
         //region given
         UUID stubId = UUID.randomUUID();
         Client stubClient = null;
         double stubAmount = 1;
-
-        SavingAccount sut = null;
         //endregion
 
-        try {
-            //region when
-            sut = new SavingAccount(stubId, stubClient, stubAmount);
-            //endregion
 
-            //region then
-        } catch (IllegalArgumentException e) {
-            assertTrue(true);
-        } catch (Exception e) {
-            fail(e.getLocalizedMessage());
-        } finally {
-            assertNull(sut);
-        }
+        //region when
+        new SavingAccount(stubId, stubClient, stubAmount);
+        //endregion
+
+        //region then
         //endregion
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void shouldThrowIllegalArgumentExceptionWhenAmountLessThanZero() {
         //region given
         UUID stubId = UUID.randomUUID();
         Client stubClient = new Client(stubId, "some name");
         double stubAmount = -1;
-
-        SavingAccount sut = null;
         //endregion
 
-        try {
-            //region when
-            sut = new SavingAccount(stubId, stubClient, stubAmount);
-            //endregion
 
-            //region then
-        } catch (IllegalArgumentException e) {
-            assertTrue(true);
-        } catch (Exception e) {
-            fail(e.getLocalizedMessage());
-        } finally {
-            assertNull(sut);
-        }
+        //region when
+        new SavingAccount(stubId, stubClient, stubAmount);
+        //endregion
+
+        //region then
         //endregion
     }
 }
