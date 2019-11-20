@@ -9,6 +9,10 @@ public class RelationshipClientAccount {
     public RelationshipClientAccount(Client client, List<SavingAccount> savingAccountList) {
         if(client == null) throw new IllegalArgumentException("client = null");
         if (savingAccountList == null || savingAccountList.isEmpty()) throw new IllegalArgumentException("savingAccountList = null or empty");
+        for (SavingAccount savingAccount : savingAccountList) {
+            if (savingAccount.equals(client))
+                throw new IllegalArgumentException("The account does not belong to the client");
+        }
         this.client = client;
         this.savingAccountList = savingAccountList;
     }
