@@ -138,4 +138,22 @@ public class SavingAccountTest {
         //region then
         //endregion
     }
+
+    @Test
+    public void shouldAddIdToClientAccountIdsWhenSavingAccountCreated() {
+        //region given
+        UUID stubId = UUID.randomUUID();
+        //todo mock client for client.getId ==null
+        Client stubClient = new Client(UUID.randomUUID(), "some name");
+        double stubAmount = 0;
+        //endregion
+
+        //region when
+        SavingAccount sut = new SavingAccount(stubId, stubClient, stubAmount);
+        //endregion
+
+        //region then
+        assertTrue(stubClient.getAccountByIds().contains(sut));
+        //endregion
+    }
 }

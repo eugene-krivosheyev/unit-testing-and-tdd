@@ -34,5 +34,4 @@ public class Client {
         if(account.getClient().getId() != this.getId()) throw new IllegalArgumentException("cannot add account to client because it is wrong");
             this.savingAccounts.add(account);
     }
-
 }
