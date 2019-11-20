@@ -1,5 +1,6 @@
 package com.acme.banking.dbo.domain;
 
+import java.util.Collections;
 import java.util.List;
 
 public class RelationshipClientAccount {
@@ -9,10 +10,7 @@ public class RelationshipClientAccount {
     public RelationshipClientAccount(Client client, List<SavingAccount> savingAccountList) {
         if(client == null) throw new IllegalArgumentException("client = null");
         if (savingAccountList == null || savingAccountList.isEmpty()) throw new IllegalArgumentException("savingAccountList = null or empty");
-        for (SavingAccount savingAccount : savingAccountList) {
-            if (savingAccount.equals(client))
-                throw new IllegalArgumentException("The account does not belong to the client");
-        }
+
         this.client = client;
         this.savingAccountList = savingAccountList;
     }
@@ -22,6 +20,6 @@ public class RelationshipClientAccount {
     }
 
     public List<SavingAccount> getSavingAccountList() {
-        return savingAccountList;
+        return (List<SavingAccount>) Collections.unmodifiableCollection(savingAccountList);
     }
 }

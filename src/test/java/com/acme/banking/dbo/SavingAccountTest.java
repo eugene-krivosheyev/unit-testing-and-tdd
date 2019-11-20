@@ -1,6 +1,5 @@
 package com.acme.banking.dbo;
 
-import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.domain.SavingAccount;
 import org.junit.Assert;
 import org.junit.Test;
@@ -12,18 +11,16 @@ public class SavingAccountTest {
     public void shouldCreateNewSavingAccountWithValidValues() {
         //region given
         UUID dummyUuid = UUID.randomUUID();
-        Client dummyClient = new Client(dummyUuid, "Dummy");
         //endregion
 
         //region when
-        SavingAccount sut = new SavingAccount(dummyUuid,  dummyClient, 0.);
+        SavingAccount sut = new SavingAccount(dummyUuid,0.);
         //endregion
 
         //region then
         Assert.assertNotNull(sut);
         Assert.assertEquals(dummyUuid, sut.getId());
         Assert.assertEquals(dummyUuid, sut.getClientId());
-        Assert.assertEquals("Dummy", sut.getClient().getName());
         Assert.assertEquals(0, sut.getAmount(), 0.0);
         //endregion
     }
