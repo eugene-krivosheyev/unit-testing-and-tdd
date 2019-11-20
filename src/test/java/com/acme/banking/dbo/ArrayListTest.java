@@ -5,6 +5,8 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 
@@ -17,7 +19,9 @@ import static org.hamcrest.CoreMatchers.is;
 /**
  * TestCase for SUT
  */
+@RunWith(MockitoJUnitRunner.class)
 public class ArrayListTest {
+    @Mock private Object stub;// = mock(Object);
 
     @Test(timeout = 5_000, expected = NullPointerException.class) //BDD
     public void shouldSizeIncrementedWhenAddNullElement() {
@@ -64,20 +68,5 @@ public class ArrayListTest {
         Assert.assertEquals(1, sut.size());
         Assert.assertFalse(sut.isEmpty());
         //endregion
-    }
-
-
-    private int initialAmount;
-    private int withdrawAmount;
-    private boolean success;
-
-    @Test
-    public void shouldGetErrorWhenWithdrawMoreThanAmount() {
-        final SavingAccount savingAccount = new SavingAccount(null, null, initialAmount);
-        try {
-            savingAccount.withdraw(withdrawAmount);
-        } catch (WithdrawException e) {
-            if (success) fail();
-        }
     }
 }
