@@ -7,8 +7,10 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.*;
+import static org.fest.assertions.api.Assertions.assertThat;
 import static org.junit.Assume.assumeTrue;
+
+import static org.hamcrest.CoreMatchers.is;
 
 /**
  * TestCase for SUT
@@ -18,7 +20,7 @@ public class ArrayListTest {
     public void shouldSizeIncrementedWhenAddNullElement() {
         //AAA | GWT
         //region Given
-        final ArrayList sut = new ArrayList();
+        final ArrayList<Integer> sut = new ArrayList<>();
         //endregion
 
         //region When
@@ -26,8 +28,18 @@ public class ArrayListTest {
         //endregion
 
         //region Than
-        assertEquals(1, sut.size());
-//        assertEquals(.3, .1 + .2, 0.000000000000000000000001);
+        Assert.assertEquals(1, sut.size());
+
+        Assert.assertThat(sut.size(), is(1));
+        assertThat(sut.size())
+                .isEqualTo(1)
+                .isNotNegative()
+                .isGreaterThan(0);
+
+        assertThat(sut)
+                .contains(1)
+                .containsExactly(1)
+                .hasSize(1);
         //endregion
     }
 
@@ -46,8 +58,8 @@ public class ArrayListTest {
         //endregion
 
         //region Then
-        assertEquals(1, sut.size());
-        assertFalse(sut.isEmpty());
+        Assert.assertEquals(1, sut.size());
+        Assert.assertFalse(sut.isEmpty());
         //endregion
     }
 }
