@@ -1,12 +1,9 @@
 package com.acme.banking.dbo;
 
 import com.acme.banking.dbo.domain.Client;
-import com.acme.banking.dbo.domain.SavingAccount;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 import static org.hamcrest.CoreMatchers.allOf;
