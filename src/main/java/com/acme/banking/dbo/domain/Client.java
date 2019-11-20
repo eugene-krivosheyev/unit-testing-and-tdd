@@ -9,12 +9,14 @@ public class Client {
     private String name;
     private Collection<UUID> accountIds = new ArrayList<>(); //TODO
 
-    public Client(UUID id, String name) {
-        if (id == null) return; //throw IllegalArgumentException
-        if (name == null || "".equals(name)) return;
-
+    public Client(UUID id, String name, Collection<UUID> accountIds) {
+        if (id == null) throw new IllegalArgumentException("id must not null");
+        if (name == null || "".equals(name)) throw new IllegalArgumentException("name must not null and not empty");
+        if (accountIds == null) throw new IllegalArgumentException("accounts must not null");
         this.id = id;
         this.name = name;
+        this.accountIds = accountIds;
+
     }
 
     public UUID getId() {
@@ -23,5 +25,9 @@ public class Client {
 
     public String getName() {
         return name;
+    }
+
+    public Collection<UUID> getAccountIds() {
+        return accountIds;
     }
 }
