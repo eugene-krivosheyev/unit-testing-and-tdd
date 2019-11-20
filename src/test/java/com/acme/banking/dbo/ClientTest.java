@@ -42,7 +42,7 @@ public class ClientTest {
         //endregion
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void shouldExceptionWhenCreatedAndEmptyNameAndNotNullOthers() {
         //region given
         UUID stubId = UUID.randomUUID();
@@ -50,12 +50,14 @@ public class ClientTest {
         Collection<UUID> stubAccountsIds = new ArrayList();
         //endregion
 
+        thrown.expect(IllegalArgumentException.class);
+
         //region when
         Client sut = new Client(stubId, dummyName, stubAccountsIds);
         //endregion
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void shouldExceptionWhenCreatedAndNullIdAndNotNullOthersAndNotEmptyNameAnd() {
         //region given
         UUID stubId = null;
@@ -63,31 +65,35 @@ public class ClientTest {
         Collection<UUID> stubAccountsIds = new ArrayList();
         //endregion
 
+        thrown.expect(IllegalArgumentException.class);
+
         //region when
         Client sut = new Client(stubId, dummyName, stubAccountsIds);
         //endregion
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void shouldExceptionWhenCreatedAndNullNameAndNotNulOthers() {
         //region given
         UUID stubId = UUID.randomUUID();
         String dummyName = null;
         Collection<UUID> stubAccountsIds = new ArrayList();
         //endregion
-
+        thrown.expect(IllegalArgumentException.class);
         //region when
         Client sut = new Client(stubId, dummyName, stubAccountsIds);
         //endregion
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void shouldExceptionWhenCreatedAndNullAccountsAndNotNulOthers() {
         //region given
         UUID stubId = UUID.randomUUID();
         String dummyName = "dummy client name";
         Collection<UUID> stubAccountsIds = null;
         //endregion
+
+        thrown.expect(IllegalArgumentException.class);
 
         //region when
         Client sut = new Client(stubId, dummyName, stubAccountsIds);
