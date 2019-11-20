@@ -7,7 +7,7 @@ public class RelationshipClientAccount {
     private List<SavingAccount> savingAccountList;
 
     public RelationshipClientAccount(Client client, List<SavingAccount> savingAccountList) {
-        if(client.equals(null)) throw new IllegalArgumentException("client = null");
+        if(client == null) throw new IllegalArgumentException("client = null");
         if (savingAccountList == null || savingAccountList.isEmpty()) throw new IllegalArgumentException("savingAccountList = null or empty");
         this.client = client;
         this.savingAccountList = savingAccountList;
