@@ -74,6 +74,8 @@ git clone --depth 1 -b <YYYY-MM-project> https://github.com/eugene-krivosheyev/u
 - Then coverage for theses components should be ≥ 90%
 - And public code review should state for maintainability
 
+---
+
 ## 5. Как писать интеграционные и модульные тесты? (1/0.5)
 1. В чем их специфика? Системные vs Интеграционные vs Модульные
 1. Как по коду определить скоуп?
@@ -90,7 +92,7 @@ git clone --depth 1 -b <YYYY-MM-project> https://github.com/eugene-krivosheyev/u
 - Then coverage for theses component should be ≥ 90%
 - And public code review should state for maintainability
 
-## 6. Реализация фикстуры для обеспечения поддерживаемости тестов (1.5/1)
+## 6. Реализация фикстуры для обеспечения поддерживаемости тестов (1/0.5)
 1. Как максимально реюзать фикстуры?
 1. Наследование тест-кейсов
 1. [Методы фреймворка](https://github.com/junit-team/junit4/wiki/Test-fixtures)
@@ -101,20 +103,12 @@ git clone --depth 1 -b <YYYY-MM-project> https://github.com/eugene-krivosheyev/u
 - When developers analyse and refactor test codebase for maintainability
 - Then public code review should state for tests maintainability 
 
----
-
-## 7. Как группировать тесты в наборы? (0.5/0)
-1. Зачем нужны test suites?
-1. Способы группировки "из коробки" фреймворка: [группы](https://github.com/junit-team/junit4/wiki/aggregating-tests-in-suites) и [категории](https://github.com/junit-team/junit4/wiki/Categories)
-1. Способ группировки средствами среды сборки
-
-## 8. Как поддерживать качество тестов и снижать дублирование? (1/0.5)
+## 8. Как поддерживать качество тестов и снижать дублирование? (0.5/0)
 ### Как обеспечить качество самих тестов?
 1. Сначала поломанный тест
 1. Анализ тестового покрытия
 1. Ревью кода тестов
 1. Mutation coverage
-
 ### Анти-паттерны разработки модульных тестов: "вредные советы"
 1. Отношение к тестам не как к обычному коду
 1. Большие расфокусированные тесты
@@ -122,28 +116,17 @@ git clone --depth 1 -b <YYYY-MM-project> https://github.com/eugene-krivosheyev/u
 1. Дублирование фикстуры
 1. Стопроцентное покрытие
 
-### Coding Iteration #05
-- Given test codebase
-- When developers analyse and refactor test codebase for maintainability
-- Then cross-team code review should state for tests maintainability
-
-## 9. Как обеспечить тестопригодность дизайна legacy системы? (1.5/0.5)
+## 9. Как обеспечить тестопригодность дизайна legacy системы? (0.5/0)
 1. Как оценить тестопригодность legacy code?
 1. Метрика Coupling
 1. Метрика Cohesion
 1. Понятность/осознаваемость
 1. Каков тестопригодный дизайн?
 
-### Live Coding Demo для реализации компонента Reporting и нового CheckingAccount
-1. Принципы проектирования SOLID
-1. Шаблоны Factory и DI
-1. Шаблоны Strategy/State
-1. Ключевая диллема покрытия legacy code?
-
-### Coding Iteration #06
-- Given legacy codebase with Reporting component
-- When developers implement polymorhic testable implementation for Reporting and CheckingAccount
-- Then cross-team code review should state for its testability
+## Что покрывать в условиях реального проекта? (0.5/0)
+1. Бизнес-модель
+1. Метрики
+### Что покрываем в контексте продуктовой разработки?
 
 ## 10. Какую ценность дает практика TDD? (0.5/0)
 1. Что такое TDD?
@@ -159,7 +142,7 @@ git clone --depth 1 -b <YYYY-MM-project> https://github.com/eugene-krivosheyev/u
 1. Чистый работающий код
 1. Управление страхом
 
-## 11. В каком ритме писать по TDD? (1.5/0.5)
+## 11. В каком ритме писать по TDD? (1/0.5)
 1. Red – Green – Refactor
 1. Скорость отработки тестового набора как предусловие практики TDD
 
@@ -172,8 +155,6 @@ git clone --depth 1 -b <YYYY-MM-project> https://github.com/eugene-krivosheyev/u
 - And made it through TDD cycles
 - Then coverage for this component should be 100%
 - And public code review should state for maintainability
-
----
 
 ## 12. [Базовые шаблоны TDD](https://www.dropbox.com/s/iiip3qdny3wwuyd/00.jpg?dl=0) (1.5/1)
 1. Test First
