@@ -20,6 +20,6 @@ public class RelationshipClientAccount {
     }
 
     public List<SavingAccount> getSavingAccountList() {
-        return (List<SavingAccount>) Collections.unmodifiableCollection(savingAccountList);
+        return Collections.unmodifiableList(savingAccountList);
     }
 }

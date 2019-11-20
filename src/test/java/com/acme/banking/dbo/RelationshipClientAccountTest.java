@@ -4,9 +4,7 @@ import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.domain.RelationshipClientAccount;
 import com.acme.banking.dbo.domain.SavingAccount;
 import org.junit.Assert;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 import java.util.ArrayList;
 import java.util.List;
