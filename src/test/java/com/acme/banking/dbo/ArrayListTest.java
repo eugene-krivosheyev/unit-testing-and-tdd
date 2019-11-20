@@ -16,7 +16,7 @@ import static org.hamcrest.CoreMatchers.is;
  * TestCase for SUT
  */
 public class ArrayListTest {
-    @Test //BDD
+    @Test @Ignore//BDD
     public void shouldSizeIncrementedWhenAddNullElement() {
         //AAA | GWT
         //region Given

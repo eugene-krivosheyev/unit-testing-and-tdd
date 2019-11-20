@@ -29,11 +29,9 @@ public class Client {
         return accountIds;
     }
 
-    public void setAccountIds(Collection<UUID> accountIds) {
-        this.accountIds = accountIds;
+    public void addIdToClientAccountIds(SavingAccount account) {
+        if(account.getClient().getId() != this.getId()) throw new IllegalArgumentException("cannot add account to client because it is wrong");
+            this.accountIds.add(account.getId());
     }
 
-    public void addIdToClientAccountIds(UUID accountId) {
-        this.accountIds.add(accountId);
-    }
 }

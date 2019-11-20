@@ -14,8 +14,8 @@ public class SavingAccount implements Account {
 
         this.id = id;
         this.client = client;
-        this.client.addIdToClientAccountIds(id);
         this.amount = amount;
+        this.client.addIdToClientAccountIds(this);
     }
 
     public Client getClient() {
@@ -35,4 +35,5 @@ public class SavingAccount implements Account {
     public UUID getClientId() {
         return client.getId();
     }
+
 }

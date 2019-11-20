@@ -101,12 +101,14 @@ public class SavingAccountTest {
         //endregion
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void shouldThrowIllegalArgumentExceptionWhenClientIsNull() {
         //region given
         UUID stubId = UUID.randomUUID();
         Client stubClient = null;
         double stubAmount = 1;
+        exception.expect(IllegalArgumentException.class);
+        exception.expectMessage("client is null");
         //endregion
 
 
@@ -118,12 +120,14 @@ public class SavingAccountTest {
         //endregion
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void shouldThrowIllegalArgumentExceptionWhenAmountLessThanZero() {
         //region given
         UUID stubId = UUID.randomUUID();
         Client stubClient = new Client(stubId, "some name");
         double stubAmount = -1;
+        exception.expect(IllegalArgumentException.class);
+        exception.expectMessage("amount less than 0");
         //endregion
 
 
