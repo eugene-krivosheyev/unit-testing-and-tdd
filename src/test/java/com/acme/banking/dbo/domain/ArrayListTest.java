@@ -2,10 +2,7 @@ package com.acme.banking.dbo.domain;
 
 import com.acme.banking.dbo.domain.SavingAccount;
 import com.sun.deploy.security.ruleset.ExceptionRule;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -24,12 +21,37 @@ import static org.mockito.Mockito.*;
  */
 public class ArrayListTest {
     private ExpectedException expected = ExpectedException.none();
+    private ArrayList<Object> sut;
+    private Object stub1;
+    private Object stub2;
+
+    @BeforeClass
+    public static void setUpGlobals() {
+
+    }
+
+    @AfterClass
+    public static void clearGlobals() {
+
+    }
+
+    @Before
+    public void setUp() {
+        stub1 = mock(Object.class);
+        stub2 = mock(Object.class);
+        sut = new ArrayList<>();
+    }
+
+    @After
+    public void clear() {
+
+    }
+
 
     @Test(timeout = 5_000, expected = NullPointerException.class) //BDD
     public void shouldSizeIncrementedWhenAddNullElement() {
         //AAA | GWT
         //region Given
-        final ArrayList<Integer> sut = new ArrayList<>();
         //endregion
 
         //region When
@@ -52,10 +74,10 @@ public class ArrayListTest {
         //endregion
     }
 
+
     @Test
     public void shouldSizeIncrementedAndElementExistsWhenNotNullElementAdded() {
         //region Given | Fixture
-        final ArrayList sut = new ArrayList();
         final Object dummy = new Object();
         //endregion
         //region Assumptions
@@ -74,9 +96,6 @@ public class ArrayListTest {
 
     @Test
     public void shouldCallElementsToStringWhenToStringStateBased() {
-        final ArrayList<Object> sut = new ArrayList<>();
-        Object stub1 = mock(Object.class);
-        Object stub2 = mock(Object.class);
         when(stub1.toString()).thenReturn("1");
         when(stub2.toString()).thenReturn("2");
 
@@ -85,15 +104,13 @@ public class ArrayListTest {
 
         assertThat(sut.toString())
                 .contains("1")
-                .contains("3");
+                .contains("2");
     }
+
+
 
     @Test
     public void shouldCallElementsToStringWhenToStringInteractionBased() {
-        final ArrayList<Object> sut = new ArrayList<>();
-        Object stub1 = mock(Object.class);
-        Object stub2 = mock(Object.class);
-
         sut.add(stub1);
         sut.add(stub2);
 
