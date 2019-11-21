@@ -14,6 +14,8 @@ import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class ClientTest {
     @Rule
@@ -122,6 +124,7 @@ public class ClientTest {
         Client stubClient = new Client(stubClientId, "dummy client name");
         Client stubWrongClient = new Client(UUID.randomUUID(), "another dummy client name");
         UUID stubAccountId = UUID.randomUUID();
+
         exception.expect(IllegalArgumentException.class);
         exception.expectMessage("cannot add account to client because it is wrong");
         //endregion
@@ -133,7 +136,25 @@ public class ClientTest {
 
         //region then
         //endregion
+    }
 
+    @Test
+    public void shouldThrowIllegalArgumentExceptionWhenAddSavingAccountToClientUnit() {
+        //region given
+        UUID stubClientId = UUID.randomUUID();
+        UUID stubWrongClientId = UUID.randomUUID();
+        Client stubClient = new Client(stubClientId, "dummy client name");
+
+        SavingAccount stubAccount = mock(SavingAccount.class);
+        when(stubAccount.getClient().getId()).thenReturn(stubWrongClientId);
+
+        exception.expect(IllegalArgumentException.class);
+        exception.expectMessage("cannot add account to client because it is wrong");
+        //endregion
+
+        //region when
+        stubClient.addIdToClientAccountIds(stubAccount);
+        //endregion
     }
 
 }
