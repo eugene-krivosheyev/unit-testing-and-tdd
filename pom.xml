@@ -42,6 +42,7 @@
 				<artifactId>pitest-maven</artifactId>
 				<version>1.4.5</version>
 				<configuration>
+					<timestampedReports>false</timestampedReports>
 					<targetClasses>
 						<param>com.acme.*</param>
 					</targetClasses>

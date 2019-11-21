@@ -2,6 +2,7 @@ package com.acme.banking.dbo;
 
 import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.domain.SavingAccount;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
@@ -17,12 +18,21 @@ public class SavingAccountTest {
     @Rule
     public final ExpectedException exception = ExpectedException.none();
     //todo TestNameRule
+    private UUID stubId;
+    private String dummy_client_name;
+    private Client stubClient;
+
+    @Before
+    protected void setUp() {
+        stubId = UUID.randomUUID();
+        dummy_client_name = "dummy client name";
+        stubClient = mock(Client.class);
+    }
 
     @Test
     public void shouldExistAndInitializedSavingAccountWhenCreatedWithCorrectArgumentsAndPositiveAmount() {
         //region given
-        UUID stubId = UUID.randomUUID();
-        Client stubClient = mock(Client.class);
+
         double stubAmount = 1;
         //endregion
 
@@ -41,8 +51,6 @@ public class SavingAccountTest {
     @Test
     public void shouldExistAndInitializedSavingAccountWhenCreatedWithCorrectArgumentsAndZeroAmount() {
         //region given
-        UUID stubId = UUID.randomUUID();
-        Client stubClient = mock(Client.class);
         double stubAmount = 0;
         //endregion
 
@@ -65,14 +73,11 @@ public class SavingAccountTest {
         exception.expect(IllegalArgumentException.class);
         exception.expectMessage("id is null");
 
-        UUID dummyId = null;
-        Client stubClient = mock(Client.class);
         double stubAmount = 1;
-
         //endregion
 
         //region when
-        new SavingAccount(dummyId, stubClient, stubAmount);
+        new SavingAccount(null, stubClient, stubAmount);
         //endregion
 
         //region then
@@ -85,14 +90,11 @@ public class SavingAccountTest {
         exception.expect(IllegalArgumentException.class);
         exception.expectMessage("client is null");
 
-        UUID stubId = UUID.randomUUID();
-        Client dummyClient = null;
         double stubAmount = 1;
         //endregion
 
-
         //region when
-        new SavingAccount(stubId, dummyClient, stubAmount);
+        new SavingAccount(stubId, null, stubAmount);
         //endregion
 
         //region then
@@ -105,11 +107,8 @@ public class SavingAccountTest {
         exception.expect(IllegalArgumentException.class);
         exception.expectMessage("amount less than 0");
 
-        UUID stubId = UUID.randomUUID();
-        Client stubClient = mock(Client.class);
         double stubAmount = -1;
         //endregion
-
 
         //region when
         new SavingAccount(stubId, stubClient, stubAmount);
@@ -124,25 +123,6 @@ public class SavingAccountTest {
      */
     public void shouldAddIdToClientAccountIdsWhenSavingAccountCreated() {
         //region given
-        UUID stubId = UUID.randomUUID();
-        Client stubClient = mock(Client.class);
-        double stubAmount = 0;
-        //endregion
-
-        //region when
-        final SavingAccount sut = new SavingAccount(stubId, stubClient, stubAmount);
-        //endregion
-
-        //region then
-        verify(stubClient, times(1)).addIdToClientAccountIds(sut);
-        //endregion
-    }
-
-    @Test
-    public void shouldAddIdToClientAccountIdsWhenSavingAccountCreatedWithMock() {
-        //region given
-        UUID stubId = UUID.randomUUID();
-        Client stubClient = mock(Client.class);
         double stubAmount = 0;
         //endregion
 

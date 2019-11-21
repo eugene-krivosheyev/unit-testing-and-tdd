@@ -2,6 +2,7 @@ package com.acme.banking.dbo;
 
 import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.domain.SavingAccount;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -18,14 +19,23 @@ public class ClientTest {
     @Rule
     public final ExpectedException exception = ExpectedException.none();
 
+    private UUID stubId;
+    private String dummy_client_name;
+
+    @Before
+    protected void setUp() {
+        stubId = UUID.randomUUID();
+        dummy_client_name = "dummy client name";
+    }
+
     @Test
     public void shouldSavePropertiesWhenCreated() {
+
         //region given
-        UUID stubId = UUID.randomUUID();
         //endregion
 
         //region when
-        Client sut = new Client(stubId, "dummy client name");
+        Client sut = new Client(stubId, dummy_client_name);
         //endregion
 
         //region then
@@ -42,17 +52,13 @@ public class ClientTest {
         //region given
         exception.expect(IllegalArgumentException.class);
         exception.expectMessage("name is null or empty");
-
-        UUID stubId = UUID.randomUUID();
-        String name = null;
         //endregion
 
         //region when
-        new Client(stubId, name);
+        new Client(stubId, null);
         //endregion
 
         //region then
-
         //endregion
     }
 
@@ -61,13 +67,10 @@ public class ClientTest {
         //region given
         exception.expect(IllegalArgumentException.class);
         exception.expectMessage("id is null");
-
-        UUID dummyId = null;
-        String name = "dummy client name";
         //endregion
 
         //region when
-        new Client(dummyId, name);
+        new Client(null, dummy_client_name);
         //endregion
 
         //region then
@@ -79,13 +82,10 @@ public class ClientTest {
         //region given
         exception.expect(IllegalArgumentException.class);
         exception.expectMessage("name is null or empty");
-
-        UUID stubId = UUID.randomUUID();
-        String emptyName = "";
         //endregion
 
         //region when
-        new Client(stubId, emptyName);
+        new Client(stubId, "");
         //endregion
 
         //region then
@@ -96,10 +96,8 @@ public class ClientTest {
     public void shouldHaveSameClientIdsWhenAddSavingAccountToClient() {
 
         //region given
-        UUID stubClientId = UUID.randomUUID();
-        UUID stubAccountId = UUID.randomUUID();
         SavingAccount stubAccount = mock(SavingAccount.class);
-        Client sut = new Client(stubClientId, "dummy client name");
+        Client sut = new Client(stubId, dummy_client_name);
         when(stubAccount.getClient()).thenReturn(sut);
         //endregion
 
@@ -109,6 +107,7 @@ public class ClientTest {
 
         //region then
         assertTrue(sut.getAccounts().contains(stubAccount));
+        //todo  assertThat(containsExactly);
         //endregion
     }
 
@@ -118,7 +117,6 @@ public class ClientTest {
         exception.expect(IllegalArgumentException.class);
         exception.expectMessage("cannot add account to client because it is wrong");
 
-        UUID stubClientId = UUID.randomUUID();
         UUID stubOtherClientId = UUID.randomUUID();
         Client stubWrongClient = mock(Client.class);
         when(stubWrongClient.getId()).thenReturn(stubOtherClientId);
@@ -128,7 +126,7 @@ public class ClientTest {
         //endregion
 
         //region when
-        Client sut = new Client(stubClientId, "dummy name");
+        Client sut = new Client(stubId, "dummy name");
         sut.addIdToClientAccountIds(stubSavingAccount);
         //endregion
 
