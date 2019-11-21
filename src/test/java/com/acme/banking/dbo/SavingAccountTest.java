@@ -17,6 +17,7 @@ public class SavingAccountTest {
     @Rule
     public final ExpectedException exception = ExpectedException.none();
     //todo TestNameRule
+    final double DELTA = 0.00001; //todo Need to approve delta with business analytics
     private UUID stubId;
     private String dummyClientName;
     private Client stubClient;
@@ -42,7 +43,7 @@ public class SavingAccountTest {
         assertNotNull(sut);
         assertEquals(stubId, sut.getId());
         assertEquals(stubClient, sut.getClient());
-        assertEquals(stubAmount, sut.getAmount(), 0.00001); //todo Need to approve delta with business analytics
+        assertEquals(stubAmount, sut.getAmount(), DELTA);
         //endregion
     }
 
@@ -60,7 +61,8 @@ public class SavingAccountTest {
         assertNotNull(sut);
         assertEquals(stubId, sut.getId());
         assertEquals(stubClient, sut.getClient());
-        assertEquals(stubAmount, sut.getAmount(), 0.00001); //todo Need to approve delta with business analytics
+
+        assertEquals(stubAmount, sut.getAmount(), DELTA);
         //endregion
     }
 
