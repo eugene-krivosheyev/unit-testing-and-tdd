@@ -12,17 +12,15 @@ import static org.mockito.Mockito.when;
 
 public class ReportingTest {
     @Test
-    public void shouldGetReportWhenBranchNotEmpty(){
+    public void shouldGetReportWhenBranchHasClients(){
         Reporting sut = new Reporting();
-        Branch stubBranch= mock(Branch.class);
-        Collection<Account> stubAccounts =new ArrayList<>();
-        final Account stubAccount = mock(Account.class);
-        stubAccounts.add(stubAccount);
+        Branch stubBranch = mock(Branch.class);
+        Collection<Account> stubAccounts = mock(Collection.class);
+        when(stubAccounts.isEmpty()).thenReturn(false);
         when(stubBranch.getAccounts()).thenReturn(stubAccounts);
         String report  = sut.getReport(stubBranch);
 
-        assertThat(report).contains("## "+stubAccount.getId());
-
+        assertThat(report).contains("## clientName");
     }
     @Test
     public void shouldGetReportWhenBranchIsEmpty(){
