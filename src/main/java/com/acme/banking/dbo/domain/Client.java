@@ -26,7 +26,7 @@ public class Client {
         return name;
     }
 
-    public Collection<SavingAccount> getAccountByIds() {
+    public Collection<SavingAccount> getAccounts() {
         return Collections.unmodifiableCollection(savingAccounts);
     }
 

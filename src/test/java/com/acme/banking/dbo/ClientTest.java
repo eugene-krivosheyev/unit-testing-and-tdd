@@ -12,6 +12,8 @@ import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class ClientTest {
     @Rule
@@ -39,10 +41,11 @@ public class ClientTest {
     @Test
     public void shouldThrowIllegalArgumentExceptionWhenNameIsNull() {
         //region given
-        UUID stubId = UUID.randomUUID();
-        String name = null;
         exception.expect(IllegalArgumentException.class);
         exception.expectMessage("name is null or empty");
+
+        UUID stubId = UUID.randomUUID();
+        String name = null;
         //endregion
 
         //region when
@@ -57,14 +60,15 @@ public class ClientTest {
     @Test
     public void shouldThrowIllegalArgumentExceptionWhenIdIsNull() {
         //region given
-        UUID stubId = null;
-        String name = "dummy client name";
         exception.expect(IllegalArgumentException.class);
         exception.expectMessage("id is null");
+
+        UUID dummyId = null;
+        String name = "dummy client name";
         //endregion
 
         //region when
-        new Client(stubId, name);
+        new Client(dummyId, name);
         //endregion
 
         //region then
@@ -74,15 +78,15 @@ public class ClientTest {
     @Test
     public void shouldThrowIllegalArgumentExceptionWhenNameIsEmpty() {
         //region given
-        UUID stubId = UUID.randomUUID();
-
-        String name = "";
         exception.expect(IllegalArgumentException.class);
         exception.expectMessage("name is null or empty");
+
+        UUID stubId = UUID.randomUUID();
+        String emptyName = "";
         //endregion
 
         //region when
-        new Client(stubId, name);
+        new Client(stubId, emptyName);
         //endregion
 
         //region then
@@ -98,38 +102,37 @@ public class ClientTest {
         //endregion
 
         //region when
-        SavingAccount sub = new SavingAccount(stubAccountId, stubClient, 1);
-
+        SavingAccount sut = new SavingAccount(stubAccountId, stubClient, 1);
         //endregion
 
         //region then
-        assertEquals(stubClientId, sub.getClientId());
+        assertEquals(stubClientId, sut.getClientId());
 
-//        assertThat(sut.getId(),
-//                allOf(
-//                        equalTo(stubClientId),
-//                        notNullValue()
-//                ));
         //endregion
     }
 
     @Test
     public void shouldThrowIllegalArgumentExceptionWhenAddSavingAccountToClient() {
         //region given
-        UUID stubClientId = UUID.randomUUID();
-        Client stubClient = new Client(stubClientId, "dummy client name");
-        Client stubWrongClient = new Client(UUID.randomUUID(), "another dummy client name");
-        UUID stubAccountId = UUID.randomUUID();
         exception.expect(IllegalArgumentException.class);
         exception.expectMessage("cannot add account to client because it is wrong");
+
+        UUID stubClientId = UUID.randomUUID();
+        UUID stubWrongClientId = UUID.randomUUID();
+        Client stubWrongClient = mock(Client.class);
+        when(stubWrongClient.getId()).thenReturn(stubWrongClientId);
+
+        final SavingAccount stubSavingAccount = mock(SavingAccount.class);
+        when(stubSavingAccount.getClient()).thenReturn(stubWrongClient);
         //endregion
 
         //region when
-        SavingAccount sub = new SavingAccount(stubAccountId, stubWrongClient, 1);
-        stubClient.addIdToClientAccountIds(sub);
+        Client sut = new Client(stubClientId, "dummy name");
+        sut.addIdToClientAccountIds(stubSavingAccount);
         //endregion
 
         //region then
         //endregion
     }
+
 }
