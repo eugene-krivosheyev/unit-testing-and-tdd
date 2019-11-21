@@ -40,7 +40,7 @@ public class ProcessingTest {
         when(accounts.findById(account2Id)).thenReturn(account2);
         final ClientRepository clients = mock(ClientRepository.class);
 
-
+/*
         new MockitoClientRepositoryBuilder()
                 .withClient(new MockitoClientBuilder().withId().withName())
                 .withClient(1)
@@ -55,7 +55,7 @@ public class ProcessingTest {
                     .withAccount(2)
                 .build()
             .build();
-
+*/
         final Processing sut = new Processing(clients, accounts);
 
         sut.transfer(100., account1Id, account2Id);
