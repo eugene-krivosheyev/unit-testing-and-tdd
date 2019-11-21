@@ -19,7 +19,6 @@ import static org.mockito.Mockito.mock;
 
 public class RelationshipClientAccountTest {
 
-    private Client stubClient;
     private Client dummyClient;
     private SavingAccount dummySavingAccountOne;
     private SavingAccount dummySavingAccountTwo;
@@ -27,7 +26,6 @@ public class RelationshipClientAccountTest {
 
     @Before
     public void setUp() {
-        stubClient = mock(Client.class);
         dummyClient = mock(Client.class);
         dummySavingAccountOne = mock(SavingAccount.class);
         dummySavingAccountTwo = mock(SavingAccount.class);
@@ -59,10 +57,10 @@ public class RelationshipClientAccountTest {
     public void shouldCreateRelationClientManyAccountWhenManyAccount() {
         setUp();
 
-        RelationshipClientAccount sut = new RelationshipClientAccount(stubClient, stubAccounts);
+        RelationshipClientAccount sut = new RelationshipClientAccount(dummyClient, stubAccounts);
 
         Assert.assertNotNull(sut);
-        Assert.assertEquals(stubClient, sut.getClient());
+        Assert.assertEquals(dummyClient, sut.getClient());
         Assert.assertEquals(stubAccounts, sut.getSavingAccountList());
     }
 
