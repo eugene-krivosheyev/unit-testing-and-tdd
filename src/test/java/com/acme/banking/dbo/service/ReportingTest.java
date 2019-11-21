@@ -11,6 +11,14 @@ public class ReportingTest {
         Reporting sut = new Reporting();
         Branch stubBranch= mock(Branch.class);
         String report  = sut.getReport(stubBranch);
-        assertThat(report).contains("# BrunchName");
+        assertThat(report).contains("## clientName");
+
+    }
+    @Test
+    public void shouldGetReportWhenBranchIsEmpty(){
+        Reporting sut = new Reporting();
+        Branch stubBranch = mock(Branch.class);
+        String report = sut.getReport(stubBranch);
+        assertThat(report).equals("# BrunchName");
     }
 }
