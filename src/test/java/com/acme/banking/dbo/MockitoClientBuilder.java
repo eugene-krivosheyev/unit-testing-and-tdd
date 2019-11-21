@@ -8,6 +8,7 @@ import static org.mockito.Mockito.*;
 public class MockitoClientBuilder {
     private UUID id = UUID.randomUUID();
     private String name = "default name";
+    private Client stubClient = mock(Client.class);
 
 
     public MockitoClientBuilder withId(UUID id) {
@@ -16,13 +17,12 @@ public class MockitoClientBuilder {
 
     }
 
-    public MockitoClientBuilder withName() {
+    public MockitoClientBuilder withName(String name) {
         this.name = name;
         return this;
     }
 
     public Client build() {
-        Client stubClient = mock(Client.class);
         when(stubClient.getId()).thenReturn(this.id);
         when(stubClient.getName()).thenReturn(this.name);
         return stubClient;

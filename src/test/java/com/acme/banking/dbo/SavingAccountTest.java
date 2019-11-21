@@ -18,13 +18,13 @@ public class SavingAccountTest {
     public final ExpectedException exception = ExpectedException.none();
     //todo TestNameRule
     private UUID stubId;
-    private String dummy_client_name;
+    private String dummyClientName;
     private Client stubClient;
 
     @Before
     public void setUp() {
         stubId = UUID.randomUUID();
-        dummy_client_name = "dummy client name";
+        dummyClientName = "dummy client name";
         stubClient = mock(Client.class);
     }
 
