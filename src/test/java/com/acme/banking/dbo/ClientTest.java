@@ -23,7 +23,7 @@ public class ClientTest {
     private String dummy_client_name;
 
     @Before
-    protected void setUp() {
+    public void setUp() {
         stubId = UUID.randomUUID();
         dummy_client_name = "dummy client name";
     }
@@ -106,8 +106,7 @@ public class ClientTest {
         //endregion
 
         //region then
-        assertTrue(sut.getAccounts().contains(stubAccount));
-        //todo  assertThat(containsExactly);
+        org.fest.assertions.api.Assertions.assertThat(sut.getAccounts()).containsExactly(stubAccount);
         //endregion
     }
 

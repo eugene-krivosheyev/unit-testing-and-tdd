@@ -1,6 +1,7 @@
 package com.acme.banking.dbo;
 
 import com.acme.banking.dbo.domain.Client;
+import com.acme.banking.dbo.domain.MokitoClientBuilder;
 import com.acme.banking.dbo.domain.SavingAccount;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -23,7 +24,7 @@ public class SavingAccountTest {
     private Client stubClient;
 
     @Before
-    protected void setUp() {
+    public void setUp() {
         stubId = UUID.randomUUID();
         dummy_client_name = "dummy client name";
         stubClient = mock(Client.class);
@@ -32,7 +33,6 @@ public class SavingAccountTest {
     @Test
     public void shouldExistAndInitializedSavingAccountWhenCreatedWithCorrectArgumentsAndPositiveAmount() {
         //region given
-
         double stubAmount = 1;
         //endregion
 
@@ -122,6 +122,22 @@ public class SavingAccountTest {
     /* Integration test
      */
     public void shouldAddIdToClientAccountIdsWhenSavingAccountCreated() {
+        //region given
+        double stubAmount = 0;
+        //endregion
+
+        //region when
+        final SavingAccount sut = new SavingAccount(stubId, stubClient, stubAmount);
+        //endregion
+
+        //region then
+        verify(stubClient, times(1)).addIdToClientAccountIds(sut);
+        //endregion
+    }
+    @Test
+    /* Integration test
+     */
+    public void shouldAddIdToClientAccountIdsWhenSavingAccountCreatedWithBuilder() {
         //region given
         double stubAmount = 0;
         //endregion
