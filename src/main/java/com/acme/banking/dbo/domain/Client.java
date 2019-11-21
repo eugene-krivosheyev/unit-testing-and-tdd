@@ -2,14 +2,18 @@ package com.acme.banking.dbo.domain;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.UUID;
 
 public class Client {
     private UUID id;
     private String name;
-    private Collection<UUID> accountIds = new ArrayList<>(); //TODO
+    private Collection<SavingAccount> savingAccounts = new ArrayList<>(); //TODO
 
     public Client(UUID id, String name) {
+        if (id == null) throw new IllegalArgumentException("Id is null");
+        if (name == null || "".equals(name)) throw new IllegalArgumentException("Name is empty or null");
+
         this.id = id;
         this.name = name;
     }
@@ -21,4 +25,14 @@ public class Client {
     public String getName() {
         return name;
     }
+
+    public Collection<SavingAccount> getAccountByIds() {
+        return Collections.unmodifiableCollection(savingAccounts);
+    }
+
+    public void addIdToClientAccountIds(SavingAccount account) {
+        if(account.getClient().getId() != this.getId()) throw new IllegalArgumentException("cannot add account to client because it is wrong");
+        this.savingAccounts.add(account);
+    }
+
 }
