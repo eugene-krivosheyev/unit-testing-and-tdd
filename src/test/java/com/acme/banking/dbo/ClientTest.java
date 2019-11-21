@@ -12,8 +12,7 @@ import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class ClientTest {
     @Rule
@@ -95,32 +94,34 @@ public class ClientTest {
 
     @Test
     public void shouldHaveSameClientIdsWhenAddSavingAccountToClient() {
+
         //region given
         UUID stubClientId = UUID.randomUUID();
-        Client stubClient = new Client(stubClientId, "dummy client name");
         UUID stubAccountId = UUID.randomUUID();
+        SavingAccount stubAccount = mock(SavingAccount.class);
+        Client sut = new Client(stubClientId, "dummy client name");
+        when(stubAccount.getClient()).thenReturn(sut);
         //endregion
 
         //region when
-        SavingAccount sut = new SavingAccount(stubAccountId, stubClient, 1);
+        sut.addIdToClientAccountIds(stubAccount);
         //endregion
 
         //region then
-        assertEquals(stubClientId, sut.getClientId());
-
+        assertTrue(sut.getAccounts().contains(stubAccount));
         //endregion
     }
 
     @Test
-    public void shouldThrowIllegalArgumentExceptionWhenAddSavingAccountToClient() {
+    public void shouldThrowIllegalArgumentExceptionWhenAddSavingAccountToWrongClient() {
         //region given
         exception.expect(IllegalArgumentException.class);
         exception.expectMessage("cannot add account to client because it is wrong");
 
         UUID stubClientId = UUID.randomUUID();
-        UUID stubWrongClientId = UUID.randomUUID();
+        UUID stubOtherClientId = UUID.randomUUID();
         Client stubWrongClient = mock(Client.class);
-        when(stubWrongClient.getId()).thenReturn(stubWrongClientId);
+        when(stubWrongClient.getId()).thenReturn(stubOtherClientId);
 
         final SavingAccount stubSavingAccount = mock(SavingAccount.class);
         when(stubSavingAccount.getClient()).thenReturn(stubWrongClient);
