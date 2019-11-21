@@ -4,7 +4,9 @@ import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.domain.RelationshipClientAccount;
 import com.acme.banking.dbo.domain.SavingAccount;
 import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +16,9 @@ import static java.util.Collections.emptyList;
 import static org.mockito.Mockito.mock;
 
 public class RelationshipClientAccountTest {
+
+    @Rule
+    public final ExpectedException thrown = ExpectedException.none();
 
     @Test
     public void shouldCresteReletionClientManyAccountWhenManeAccountNotNull() {
@@ -54,19 +59,21 @@ public class RelationshipClientAccountTest {
         new RelationshipClientAccount(dummyClient, emptyList());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void shouldGetErrorWhenClientIsNull() {
         final SavingAccount dummySavingAccount = mock(SavingAccount.class);
         final List<SavingAccount> stubAccounts = new ArrayList<>();
         stubAccounts.add(dummySavingAccount);
-
+        thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage("client = null");
         new RelationshipClientAccount(null, stubAccounts);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void shouldGetErrorWhenAccountsListIsNull(){
         Client dummyClient = mock(Client.class);
-
+        thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage("savingAccountList = null or empty");
         new RelationshipClientAccount(dummyClient, null);
     }
 }
