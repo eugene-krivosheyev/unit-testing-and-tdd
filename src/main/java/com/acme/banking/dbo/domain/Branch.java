@@ -5,6 +5,16 @@ import java.util.Collection;
 import static java.util.Collections.unmodifiableCollection;
 
 public class Branch {
+    private String name;
+
+    public Branch(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
     private Collection<Account> accounts; //TODO impl
 
     public Branch(Collection<Account> accounts) {

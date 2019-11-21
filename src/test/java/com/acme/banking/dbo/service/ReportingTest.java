@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class ReportingTest {
     @Test
@@ -18,7 +19,8 @@ public class ReportingTest {
     public void shouldGetReportWhenBranchIsEmpty(){
         Reporting sut = new Reporting();
         Branch stubBranch = mock(Branch.class);
+        when(stubBranch.getName()).thenReturn("BrunchName");
         String report = sut.getReport(stubBranch);
-        assertThat(report).isEqualTo("# BrunchName");
+        assertThat(report).containsOnlyOnce("# BrunchName");
     }
 }
