@@ -214,3 +214,6 @@ git clone --depth 1 -b <YYYY-MM-project> https://github.com/eugene-krivosheyev/u
 - План конкретных ближайших действий
 
 ## Буфер (2)
+
+## Reading List
+[Литература](http://tinyurl.com/skilltrekreadinglist)
