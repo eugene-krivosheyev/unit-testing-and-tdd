@@ -38,8 +38,24 @@ public class ProcessingTest {
         when(account2.getAmount()).thenReturn(0.);
         when(accounts.findById(account1Id)).thenReturn(account1);
         when(accounts.findById(account2Id)).thenReturn(account2);
-
         final ClientRepository clients = mock(ClientRepository.class);
+
+
+        new MockitoClientRepositoryBuilder()
+                .withClient(new MockitoClientBuilder().withId().withName())
+                .withClient(1)
+                    .withAccount(2)
+                .build()
+            .build();
+
+        ClientRepository clientsStub = new DbClientRepositoryBuilder()
+                .withClient(new DbClientBuilder().withId().withName())
+                .withClient(1, "name", 100.)
+                    .withAccount(1)
+                    .withAccount(2)
+                .build()
+            .build();
+
         final Processing sut = new Processing(clients, accounts);
 
         sut.transfer(100., account1Id, account2Id);
