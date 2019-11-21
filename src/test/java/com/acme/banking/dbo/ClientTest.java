@@ -88,9 +88,6 @@ public class ClientTest {
         //region when
         new Client(stubId, name);
         //endregion
-
-        //region then
-        //endregion
     }
 
     @Test
@@ -106,15 +103,7 @@ public class ClientTest {
 
         //endregion
 
-        //region then
         assertEquals(stubClientId, sub.getClientId());
-
-//        assertThat(sut.getId(),
-//                allOf(
-//                        equalTo(stubClientId),
-//                        notNullValue()
-//                ));
-        //endregion
     }
 
     @Test
@@ -139,14 +128,29 @@ public class ClientTest {
     }
 
     @Test
-    public void shouldThrowIllegalArgumentExceptionWhenAddSavingAccountToClientUnit() {
+    public void shouldHaveSameClientIdsWhenAddSavingAccountToClient1() {
         //region given
         UUID stubClientId = UUID.randomUUID();
-        UUID stubWrongClientId = UUID.randomUUID();
+        Client stubClient = new Client(stubClientId, "dummy client name");
+        //endregion
+
+        //region when
+        SavingAccount stubAccount = mock(SavingAccount.class);
+        when(stubAccount.getClientId()).thenReturn(stubClientId);
+        //endregion
+
+        assertEquals(stubClient.getId(), stubAccount.getClientId());
+    }
+
+    @Test
+    public void shouldThrowIllegalArgumentExceptionWhenSavingAccountClientIdNotEqualClientId() {
+        //region given
+        UUID stubClientId = UUID.randomUUID();
+        UUID stubOtherClientId = UUID.randomUUID();
         Client stubClient = new Client(stubClientId, "dummy client name");
 
         SavingAccount stubAccount = mock(SavingAccount.class);
-        when(stubAccount.getClient().getId()).thenReturn(stubWrongClientId);
+        when(stubAccount.getClient().getId()).thenReturn(stubOtherClientId);
 
         exception.expect(IllegalArgumentException.class);
         exception.expectMessage("cannot add account to client because it is wrong");
