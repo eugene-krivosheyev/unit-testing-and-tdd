@@ -1,10 +1,8 @@
 package com.acme.banking.dbo;
 
 import com.acme.banking.dbo.domain.Client;
-import com.acme.banking.dbo.domain.MokitoClientBuilder;
 import com.acme.banking.dbo.domain.SavingAccount;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;

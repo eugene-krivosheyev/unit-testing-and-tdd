@@ -116,12 +116,10 @@ public class ClientTest {
         exception.expect(IllegalArgumentException.class);
         exception.expectMessage("cannot add account to client because it is wrong");
 
-        UUID stubOtherClientId = UUID.randomUUID();
-        Client stubWrongClient = mock(Client.class);
-        when(stubWrongClient.getId()).thenReturn(stubOtherClientId);
+        Client stubOtherClient = new MockitoClientBuilder().build();
 
         final SavingAccount stubSavingAccount = mock(SavingAccount.class);
-        when(stubSavingAccount.getClient()).thenReturn(stubWrongClient);
+        when(stubSavingAccount.getClient()).thenReturn(stubOtherClient);
         //endregion
 
         //region when
@@ -132,5 +130,4 @@ public class ClientTest {
         //region then
         //endregion
     }
-
 }
