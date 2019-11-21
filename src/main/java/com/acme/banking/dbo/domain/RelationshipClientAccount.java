@@ -2,6 +2,7 @@ package com.acme.banking.dbo.domain;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 public class RelationshipClientAccount {
     private Client client;
