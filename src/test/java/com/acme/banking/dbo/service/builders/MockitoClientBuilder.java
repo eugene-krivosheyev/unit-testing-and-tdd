@@ -1,4 +1,4 @@
-package com.acme.banking.dbo;
+package com.acme.banking.dbo.service.builders;
 
 import com.acme.banking.dbo.domain.Client;
 

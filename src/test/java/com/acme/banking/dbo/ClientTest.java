@@ -2,6 +2,7 @@ package com.acme.banking.dbo;
 
 import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.domain.SavingAccount;
+import com.acme.banking.dbo.service.builders.MockitoSavingAccountBuilder;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;

@@ -1,4 +1,4 @@
-package com.acme.banking.dbo;
+package com.acme.banking.dbo.service.builders;
 
 import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.domain.SavingAccount;
@@ -17,6 +17,11 @@ public class MockitoSavingAccountBuilder {
 
     public MockitoSavingAccountBuilder withOtherId() {
         when(stubAccount.getClient()).thenReturn(new MockitoClientBuilder().build());
+        return this;
+    }
+
+    public MockitoSavingAccountBuilder withAmount(double amount){
+        when(stubAccount.getAmount()).thenReturn(amount);
         return this;
     }
 

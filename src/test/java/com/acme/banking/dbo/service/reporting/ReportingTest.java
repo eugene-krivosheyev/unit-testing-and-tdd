@@ -3,13 +3,13 @@ package com.acme.banking.dbo.service.reporting;
 import com.acme.banking.dbo.domain.Account;
 import com.acme.banking.dbo.domain.Branch;
 import com.acme.banking.dbo.service.Reporting;
+import com.acme.banking.dbo.service.builders.MockitoAccountCollectionBuilder;
+import com.acme.banking.dbo.service.builders.MockitoClientBuilder;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.UUID;
 
 import static org.fest.assertions.api.Assertions.assertThat;
@@ -28,11 +28,9 @@ public class ReportingTest {
     }
 
     @Test
-    public void shouldGetReportWithNewLinesWhenBranchHasAccount() {
+    public void shouldGetReportWithNewLinesWhenBranchHasAccount() throws ClassNotFoundException {
         //region given
-        Collection<Account> stubAccounts = new ArrayList<>();
-        Account stubAccount1 = mock(Account.class);
-        stubAccounts.add(stubAccount1);
+        Collection<Account> stubAccounts = new MockitoAccountCollectionBuilder().withCount(1).build();
         //endregion
 
         //region when
@@ -47,35 +45,32 @@ public class ReportingTest {
 
     @Test
     @Ignore
-    public void shouldGetReportWithAccountIdWhenBranchHasAccount() {
+    public void shouldGetReportWithAccountIdWhenBranchHasAccount() throws ClassNotFoundException {
         //region given
-        UUID stubClientId= UUID.randomUUID();
-        Collection<Account> stubAccounts = new ArrayList<>();
-        Account stubAccount1 = mock(Account.class);
-        stubAccounts.add(stubAccount1);
+        UUID stubClientId = UUID.randomUUID();
+        Account stubAccount = new MockitoClientBuilder().withId(stubClientId).build();
+        Collection<Account> stubAccounts = new MockitoAccountCollectionBuilder()
+                .withAccount(stubAccount)
+                .build();
         //endregion
 
         //region when
         when(stubBranch.getAccounts()).thenReturn(stubAccounts);
-        when(stubAccount1.getClientId()).thenReturn(stubClientId);
+        when(stubAccount.getClientId()).thenReturn(stubClientId);
         report = sut.getReport(stubBranch);
         //endregion
 
         //region then
-        assertThat(report).isEqualTo("# ## "+ stubClientId);
+        assertThat(report).isEqualTo("# ## " + stubClientId);
         //endregion
     }
 
 
     @Test
     @Ignore
-    public void shouldGetReportWhenBranchHasTwoAccounts() {
+    public void shouldGetReportWhenBranchHasTwoAccounts() throws ClassNotFoundException {
         //region given
-        Collection<Account> stubAccounts = new ArrayList<>();
-        Account stubAccount1 = mock(Account.class);
-        Account stubAccount2 = mock(Account.class);
-        stubAccounts.add(stubAccount1);
-        stubAccounts.add(stubAccount2);
+        Collection<Account> stubAccounts = new MockitoAccountCollectionBuilder().withCount(2).build();
         //endregion
 
         //region when
@@ -90,31 +85,42 @@ public class ReportingTest {
 
     @Test
     public void shouldGetReportWhenBranchHasNoName() {
+        //region when
         when(stubBranch.getName()).thenReturn(null);
-
-
         report = sut.getReport(stubBranch);
+        //endregion
 
-
+        //region then
         assertThat(report).containsOnlyOnce("# ");
+        //endregion
     }
 
     @Test
     public void shouldGetReportWhenBranchIsEmpty() {
+        //region when
         when(stubBranch.getName()).thenReturn("BrunchName");
         report = sut.getReport(stubBranch);
+        //endregion
 
+        //region then
         assertThat(report).containsOnlyOnce("# BrunchName");
+        //endregion
     }
 
     @Test
     public void shouldGetReportWhenBranchClientsCollectionNotEmpty() {
+        //region given
         Collection<Account> stubAccounts = mock(Collection.class);
+        //endregionl
 
+        //region when
         when(stubAccounts.isEmpty()).thenReturn(false);
         when(stubBranch.getAccounts()).thenReturn(stubAccounts);
         report = sut.getReport(stubBranch);
+        //endregion
 
+        //region then
         assertThat(report).contains("## clientName");
+        //endregion
     }
 }
