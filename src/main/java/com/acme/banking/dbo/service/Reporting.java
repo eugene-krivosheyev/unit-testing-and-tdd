@@ -7,14 +7,16 @@ public class Reporting {
      * @return Markdown report for all branches, clients, accounts
      */
     public String getReport(Branch rootBranch) {
-
-        String reportName = rootBranch.getName();
-        if (reportName == null) reportName = "";
-        String report = "# " + reportName;
+        String report = addBranchNameToReport(rootBranch.getName());
 
         if (!rootBranch.getAccounts().isEmpty()) {
             report += report + "## clientName";
         }
         return report;
+    }
+
+    private String addBranchNameToReport(String branchName) {
+        if (branchName == null) return "# ";
+        return "# " + branchName;
     }
 }
