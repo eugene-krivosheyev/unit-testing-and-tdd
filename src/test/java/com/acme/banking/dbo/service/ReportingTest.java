@@ -14,6 +14,7 @@ import static org.mockito.Mockito.when;
 public class ReportingTest {
     private Reporting sut;
     private Branch stubBranch;
+    private  String report;
 
     @Before
     public void setUp() throws Exception {
@@ -22,10 +23,26 @@ public class ReportingTest {
     }
 
     @Test
+    public void shouldGetReportWhenBranchHasTwoAccounts() {
+        //region given
+        //endregion
+
+        //region when
+        report = sut.getReport(stubBranch);
+        //endregion
+
+        //region then
+        assertThat(report).isEqualTo("# ## ClientName1## ClientName2");
+        //endregion
+    }
+
+    @Test
     public void shouldGetReportWhenBranchHasNoName() {
         when(stubBranch.getName()).thenReturn(null);
 
-        String report = sut.getReport(stubBranch);
+
+        report = sut.getReport(stubBranch);
+
 
         assertThat(report).containsOnlyOnce("# ");
     }
@@ -34,7 +51,7 @@ public class ReportingTest {
     public void shouldGetReportWhenBranchIsEmpty() {
         when(stubBranch.getName()).thenReturn("BrunchName");
 
-        String report = sut.getReport(stubBranch);
+        report = sut.getReport(stubBranch);
 
         assertThat(report).containsOnlyOnce("# BrunchName");
     }
@@ -45,7 +62,7 @@ public class ReportingTest {
         when(stubAccounts.isEmpty()).thenReturn(false);
         when(stubBranch.getAccounts()).thenReturn(stubAccounts);
 
-        String report = sut.getReport(stubBranch);
+        report = sut.getReport(stubBranch);
 
         assertThat(report).contains("## clientName");
     }
