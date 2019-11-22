@@ -11,7 +11,6 @@ public class Reporting {
      */
     public String getReport(Branch rootBranch) {
         StringBuilder report = new StringBuilder(addBranchNameToReport(rootBranch.getName()));
-
         final Collection<Account> accounts = rootBranch.getAccounts();
         if (accounts.isEmpty()) return report.toString();
         for (Account eachAccount : accounts) {

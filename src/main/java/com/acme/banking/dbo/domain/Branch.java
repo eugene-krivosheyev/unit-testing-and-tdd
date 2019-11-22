@@ -6,6 +6,7 @@ import static java.util.Collections.unmodifiableCollection;
 
 public class Branch {
     private String name;
+    private Collection<Branch> children;
 
     public Branch(String name) {
         this.name = name;
@@ -26,7 +27,6 @@ public class Branch {
     }
 
     public Collection<Branch> getChildren() {
-        //TODO
-        return null;
+        return unmodifiableCollection(children);
     }
 }
