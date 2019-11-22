@@ -5,7 +5,9 @@ import com.acme.banking.dbo.domain.Branch;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
@@ -22,12 +24,20 @@ public class ReportingTest {
         stubBranch = mock(Branch.class);
     }
 
+
+
     @Test
     public void shouldGetReportWhenBranchHasTwoAccounts() {
         //region given
+        Collection<Account> stubAccounts = new ArrayList<>();
+        Account stubAccount1 = mock(Account.class);
+        Account stubAccount2 = mock(Account.class);
+        stubAccounts.add(stubAccount1);
+        stubAccounts.add(stubAccount2);
         //endregion
 
         //region when
+        when(stubBranch.getAccounts()).thenReturn(stubAccounts);
         report = sut.getReport(stubBranch);
         //endregion
 
