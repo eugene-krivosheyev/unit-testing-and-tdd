@@ -2,6 +2,7 @@ package com.acme.banking.dbo.service.reporting;
 
 import com.acme.banking.dbo.domain.Account;
 import com.acme.banking.dbo.domain.Branch;
+import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.service.Reporting;
 import com.acme.banking.dbo.service.builders.MockitoAccountCollectionBuilder;
 import com.acme.banking.dbo.service.builders.MockitoClientBuilder;
@@ -19,18 +20,22 @@ import static org.mockito.Mockito.when;
 public class ReportingTest {
     private Reporting sut;
     private Branch stubBranch;
+    private Account stubAccount;
     private String report;
+    private UUID stubClientId;
 
     @Before
     public void setUp() {
         sut = new Reporting();
         stubBranch = mock(Branch.class);
+        stubClientId = UUID.randomUUID();
+        stubAccount = new MockitoClientBuilder().withId(stubClientId).build();
     }
 
     @Test
     public void shouldGetReportWithNewLinesWhenBranchHasAccount() throws ClassNotFoundException {
         //region given
-        Collection<Account> stubAccounts = new MockitoAccountCollectionBuilder().withCount(1).build();
+        Collection<Account> stubAccounts = new MockitoAccountCollectionBuilder().withAccount(stubAccount).build();
         //endregion
 
         //region when
@@ -39,7 +44,7 @@ public class ReportingTest {
         //endregion
 
         //region then
-        assertThat(report).isEqualTo("# \n## clientName");
+        assertThat(report).isEqualTo("# \n## "+stubClientId);
         //endregion
     }
 
@@ -47,7 +52,7 @@ public class ReportingTest {
     public void shouldGetReportWithAccountIdWhenBranchHasAccount() throws ClassNotFoundException {
         //region given
         UUID stubClientId = UUID.randomUUID();
-        Account stubAccount = new MockitoClientBuilder().withId(stubClientId).build();
+        stubAccount = new MockitoClientBuilder().withId(stubClientId).build();
         Collection<Account> stubAccounts = new MockitoAccountCollectionBuilder()
                 .withAccount(stubAccount)
                 .build();
@@ -107,19 +112,21 @@ public class ReportingTest {
     }
 
     @Test
-    public void shouldGetReportWhenBranchClientsCollectionNotEmpty() {
+    public void shouldGetReportWhenBranchClientsCollectionNotEmpty() throws ClassNotFoundException {
         //region given
-        Collection<Account> stubAccounts = mock(Collection.class);
+        final Client stubClient = new MockitoClientBuilder().withName("clientName").build();
+        Collection<Account> stubAccounts = new MockitoAccountCollectionBuilder()
+                .withAccount(stubClient)
+                .build();
         //endregionl
 
         //region when
-        when(stubAccounts.isEmpty()).thenReturn(false);
         when(stubBranch.getAccounts()).thenReturn(stubAccounts);
         report = sut.getReport(stubBranch);
         //endregion
 
         //region then
-        assertThat(report).contains("## clientName");
+        assertThat(report).isEqualTo("# \n## "+stubClient.getId());
         //endregion
     }
 }

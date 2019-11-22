@@ -7,7 +7,7 @@ import com.acme.banking.dbo.domain.SavingAccount;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class MockitoAccountCollectionBuilder {
+public class MockitoAccountCollectionBuilder implements MockitoAccountBuilderInterface{
     private Collection<Account> stubAccounts = new ArrayList<>();
     private Object accountClass = Client.class;
     private int count = 0;
