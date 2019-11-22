@@ -10,16 +10,14 @@ public class Reporting {
      * @return Markdown report for all branches, clients, accounts
      */
     public String getReport(Branch rootBranch) {
-        String report = addBranchNameToReport(rootBranch.getName());
+        StringBuilder report = new StringBuilder(addBranchNameToReport(rootBranch.getName()));
 
         final Collection<Account> accounts = rootBranch.getAccounts();
-        if (!accounts.isEmpty()) {
-            for (Account eachAccount : accounts) {
-                report += "## "+ eachAccount.getId();
-            }
-
+        if (accounts.isEmpty()) return report.toString();
+        for (Account eachAccount : accounts) {
+            report.append("## ").append(eachAccount.getId());
         }
-        return report;
+        return report.toString();
     }
 
     private String addBranchNameToReport(String branchName) {
