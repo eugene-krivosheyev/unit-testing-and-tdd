@@ -27,6 +27,11 @@ public class Client implements Account{
         return getId();
     }
 
+    @Override
+    public Client getClient() {
+        return this;
+    }
+
     public String getName() {
         return name;
     }

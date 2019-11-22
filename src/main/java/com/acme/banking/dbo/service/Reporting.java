@@ -2,6 +2,7 @@ package com.acme.banking.dbo.service;
 
 import com.acme.banking.dbo.domain.Account;
 import com.acme.banking.dbo.domain.Branch;
+import com.acme.banking.dbo.domain.SavingAccount;
 
 import java.util.Collection;
 
@@ -15,6 +16,11 @@ public class Reporting {
         if (accounts.isEmpty()) return report.toString();
         for (Account eachAccount : accounts) {
             report.append("## ").append(eachAccount.getId());
+
+            if (eachAccount.getClient()==null || eachAccount.getClient().getAccounts()==null) continue;
+            for (SavingAccount eachSavingAccount : eachAccount.getClient().getAccounts()) {
+                report.append("### savingAccountId");
+            }
         }
         return report.toString();
     }

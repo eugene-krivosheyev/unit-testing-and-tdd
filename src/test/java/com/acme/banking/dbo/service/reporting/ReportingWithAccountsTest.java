@@ -2,15 +2,18 @@ package com.acme.banking.dbo.service.reporting;
 
 import com.acme.banking.dbo.domain.Account;
 import com.acme.banking.dbo.domain.Branch;
+import com.acme.banking.dbo.domain.Client;
+import com.acme.banking.dbo.domain.SavingAccount;
 import com.acme.banking.dbo.service.Reporting;
 import com.acme.banking.dbo.service.builders.MockitoAccountCollectionBuilder;
 import com.acme.banking.dbo.service.builders.MockitoClientBuilder;
+import com.acme.banking.dbo.service.builders.MockitoSavingAccountBuilder;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Collection;
-import java.util.UUID;
+import java.util.*;
 
+import static com.google.inject.matcher.Matchers.any;
 import static org.fest.assertions.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -35,12 +38,22 @@ public class ReportingWithAccountsTest extends ReportingTest {
     }
 
     @Test
-    public void shouldGetReportWhereClientHasSavingAccounts() {
+    public void shouldGetReportWhereClientHasSavingAccounts() throws ClassNotFoundException {
         //region given
+        Client stubClient = new MockitoClientBuilder().build();
+        Collection<Account> stubAccounts1 = new MockitoAccountCollectionBuilder().withAccount(stubAccount).build();
+        SavingAccount stubSavingAccount = new MockitoSavingAccountBuilder().build();
+        Collection<SavingAccount> stubSavingAccounts = new ArrayList<>();
+        stubSavingAccounts.add(stubSavingAccount);
         //endregion
 
         //region when
+
+        when(stubAccount.getClient()).thenReturn(stubClient);
+        when(stubBranch.getAccounts()).thenReturn(stubAccounts1);
+        when(stubClient.getAccounts()).thenReturn(stubSavingAccounts);
         //endregion
+        report = sut.getReport(stubBranch);
 
         //region then
         assertThat(report).endsWith("### savingAccountId");
