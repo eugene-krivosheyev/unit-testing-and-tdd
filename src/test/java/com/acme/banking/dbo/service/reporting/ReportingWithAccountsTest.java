@@ -35,6 +35,19 @@ public class ReportingWithAccountsTest extends ReportingTest {
     }
 
     @Test
+    public void shouldGetReportWhereClientHasSavingAccounts() {
+        //region given
+        //endregion
+
+        //region when
+        //endregion
+
+        //region then
+        assertThat(report).endsWith("### savingAccountId");
+        //endregion
+    }
+
+    @Test
     public void shouldGetReportWithNewLinesWhenBranchHasAccount() {
         //region when
         when(stubBranch.getAccounts()).thenReturn(stubAccounts);
@@ -42,7 +55,7 @@ public class ReportingWithAccountsTest extends ReportingTest {
         //endregion
 
         //region then
-        assertThat(report).isEqualTo("# \n## " + stubClientId);
+        assertThat(report).startsWith("# \n## " + stubClientId);
         //endregion
     }
 
@@ -55,7 +68,7 @@ public class ReportingWithAccountsTest extends ReportingTest {
         //endregion
 
         //region then
-        assertThat(report).isEqualTo("# \n## " + stubClientId);
+        assertThat(report).startsWith("# \n## " + stubClientId);
         //endregion
     }
 
@@ -75,7 +88,7 @@ public class ReportingWithAccountsTest extends ReportingTest {
         //endregion
 
         //region then
-        assertThat(report).isEqualTo("# \n## " + stubClientId + "## " + stubClientId2);
+        assertThat(report).startsWith("# \n## " + stubClientId + "## " + stubClientId2);
         //endregion
     }
 
@@ -87,7 +100,7 @@ public class ReportingWithAccountsTest extends ReportingTest {
         //endregion
 
         //region then
-        assertThat(report).containsOnlyOnce("# ");
+        assertThat(report).startsWith("# ");
         //endregion
     }
 
@@ -99,7 +112,7 @@ public class ReportingWithAccountsTest extends ReportingTest {
         //endregion
 
         //region then
-        assertThat(report).containsOnlyOnce("# BrunchName");
+        assertThat(report).startsWith("# BrunchName");
         //endregion
     }
 
@@ -111,7 +124,7 @@ public class ReportingWithAccountsTest extends ReportingTest {
         //endregion
 
         //region then
-        assertThat(report).isEqualTo("# \n## " + stubClientId);
+        assertThat(report).startsWith("# \n## " + stubClientId);
         //endregion
     }
 }
