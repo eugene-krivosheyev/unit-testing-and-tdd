@@ -8,6 +8,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.UUID;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
@@ -16,7 +17,7 @@ import static org.mockito.Mockito.when;
 public class ReportingTest {
     private Reporting sut;
     private Branch stubBranch;
-    private  String report;
+    private String report;
 
     @Before
     public void setUp() throws Exception {
@@ -24,6 +25,25 @@ public class ReportingTest {
         stubBranch = mock(Branch.class);
     }
 
+    @Test
+    public void shouldGetReportWithAccountIdWhenBranchHasAccount() {
+        //region given
+        UUID stubClientId= UUID.randomUUID();
+        Collection<Account> stubAccounts = new ArrayList<>();
+        Account stubAccount1 = mock(Account.class);
+        stubAccounts.add(stubAccount1);
+        //endregion
+
+        //region when
+        when(stubBranch.getAccounts()).thenReturn(stubAccounts);
+        when(stubAccount1.getClientId()).thenReturn(stubClientId);
+        report = sut.getReport(stubBranch);
+        //endregion
+
+        //region then
+        assertThat(report).isEqualTo("# ## "+ stubClientId);
+        //endregion
+    }
 
 
     @Test
@@ -60,7 +80,6 @@ public class ReportingTest {
     @Test
     public void shouldGetReportWhenBranchIsEmpty() {
         when(stubBranch.getName()).thenReturn("BrunchName");
-
         report = sut.getReport(stubBranch);
 
         assertThat(report).containsOnlyOnce("# BrunchName");
@@ -69,9 +88,9 @@ public class ReportingTest {
     @Test
     public void shouldGetReportWhenBranchClientsCollectionNotEmpty() {
         Collection<Account> stubAccounts = mock(Collection.class);
+
         when(stubAccounts.isEmpty()).thenReturn(false);
         when(stubBranch.getAccounts()).thenReturn(stubAccounts);
-
         report = sut.getReport(stubBranch);
 
         assertThat(report).contains("## clientName");
