@@ -2,12 +2,10 @@ package com.acme.banking.dbo.service.reporting;
 
 import com.acme.banking.dbo.domain.Account;
 import com.acme.banking.dbo.domain.Branch;
-import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.service.Reporting;
 import com.acme.banking.dbo.service.builders.MockitoAccountCollectionBuilder;
 import com.acme.banking.dbo.service.builders.MockitoClientBuilder;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Collection;
@@ -44,7 +42,7 @@ public class ReportingTest {
         //endregion
 
         //region then
-        assertThat(report).isEqualTo("# \n## "+stubClientId);
+        assertThat(report).isEqualTo("# \n## " + stubClientId);
         //endregion
     }
 
@@ -63,10 +61,13 @@ public class ReportingTest {
 
 
     @Test
-    @Ignore
     public void shouldGetReportWhenBranchHasTwoAccounts() throws ClassNotFoundException {
         //region given
-        stubAccounts = new MockitoAccountCollectionBuilder().withCount(2).build();
+        UUID stubClientId2 = UUID.randomUUID();
+        stubAccounts = new MockitoAccountCollectionBuilder()
+                .withAccount(new MockitoClientBuilder().withId(stubClientId).build())
+                .withAccount(new MockitoClientBuilder().withId(stubClientId2).build())
+                .build();
         //endregion
 
         //region when
@@ -75,7 +76,7 @@ public class ReportingTest {
         //endregion
 
         //region then
-        assertThat(report).isEqualTo("# ## ClientName1## ClientName2");
+        assertThat(report).isEqualTo("# \n## " + stubClientId + "## " + stubClientId2);
         //endregion
     }
 
@@ -111,7 +112,7 @@ public class ReportingTest {
         //endregion
 
         //region then
-        assertThat(report).isEqualTo("# \n## "+stubClientId);
+        assertThat(report).isEqualTo("# \n## " + stubClientId);
         //endregion
     }
 }
