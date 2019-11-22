@@ -3,7 +3,9 @@ package com.acme.banking.dbo.service.builders;
 import com.acme.banking.dbo.domain.Client;
 
 import java.util.UUID;
-import static org.mockito.Mockito.*;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class MockitoClientBuilder {
     private UUID id = UUID.randomUUID();

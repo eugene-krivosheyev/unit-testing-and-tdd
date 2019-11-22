@@ -1,6 +1,9 @@
 package com.acme.banking.dbo.service;
 
+import com.acme.banking.dbo.domain.Account;
 import com.acme.banking.dbo.domain.Branch;
+
+import java.util.Collection;
 
 public class Reporting {
     /**
@@ -9,8 +12,12 @@ public class Reporting {
     public String getReport(Branch rootBranch) {
         String report = addBranchNameToReport(rootBranch.getName());
 
-        if (!rootBranch.getAccounts().isEmpty()) {
-            report += "## clientName";
+        final Collection<Account> accounts = rootBranch.getAccounts();
+        if (!accounts.isEmpty()) {
+            for (Account eachAccount : accounts) {
+                report += "## "+ eachAccount.getId();
+            }
+
         }
         return report;
     }

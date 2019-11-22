@@ -44,7 +44,6 @@ public class ReportingTest {
     }
 
     @Test
-    @Ignore
     public void shouldGetReportWithAccountIdWhenBranchHasAccount() throws ClassNotFoundException {
         //region given
         UUID stubClientId = UUID.randomUUID();
@@ -61,7 +60,7 @@ public class ReportingTest {
         //endregion
 
         //region then
-        assertThat(report).isEqualTo("# ## " + stubClientId);
+        assertThat(report).isEqualTo("# \n## " + stubClientId);
         //endregion
     }
 

@@ -21,7 +21,7 @@ public class MockitoSavingAccountBuilder {
     }
 
     public MockitoSavingAccountBuilder withAmount(double amount){
-        when(stubAccount.getAmount()).thenReturn(amount);
+        this.amount=amount;
         return this;
     }
 
