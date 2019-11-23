@@ -118,7 +118,7 @@ public class ClientTest {
         exception.expectMessage("cannot add account to client because it is wrong");
 
         final SavingAccount stubSavingAccount = new MockitoSavingAccountBuilder()
-                .withOtherId()
+                .withClientWithOtherId(UUID.randomUUID())
                 .build();
         //endregion
 

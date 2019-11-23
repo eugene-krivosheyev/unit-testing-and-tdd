@@ -1,6 +1,5 @@
 package com.acme.banking.dbo.service.builders;
 
-import com.acme.banking.dbo.domain.Account;
 import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.domain.SavingAccount;
 
@@ -9,15 +8,21 @@ import java.util.UUID;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class MockitoSavingAccountBuilder implements MockitoAccountBuilderInterface {
+public class MockitoSavingAccountBuilder {
     private UUID id = UUID.randomUUID();
     private Client stubClient = new MockitoClientBuilder().build();
     private double amount = 0.;
     private SavingAccount stubAccount = mock(SavingAccount.class);
 
 
-    public MockitoSavingAccountBuilder withOtherId() {
-        when(stubAccount.getClient()).thenReturn(new MockitoClientBuilder().build());
+    public MockitoSavingAccountBuilder withClientWithOtherId(UUID stubId) {
+        Client stubClient1 = new MockitoClientBuilder().withId(stubId).build();
+        when(stubAccount.getClient()).thenReturn(stubClient1);
+        return this;
+    }
+
+    public MockitoSavingAccountBuilder withClient(Client stubClient) {
+        when(stubAccount.getClient()).thenReturn(stubClient);
         return this;
     }
 
@@ -33,9 +38,4 @@ public class MockitoSavingAccountBuilder implements MockitoAccountBuilderInterfa
         return stubAccount;
     }
 
-    @Override
-    public MockitoSavingAccountBuilder withAccount(Account stubAccount) {
-        if (SavingAccount.class.equals(stubAccount.getClass())) this.stubAccount = (SavingAccount) stubAccount;
-        return this;
-    }
 }

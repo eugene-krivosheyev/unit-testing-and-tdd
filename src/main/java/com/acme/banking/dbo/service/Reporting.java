@@ -2,6 +2,7 @@ package com.acme.banking.dbo.service;
 
 import com.acme.banking.dbo.domain.Account;
 import com.acme.banking.dbo.domain.Branch;
+import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.domain.SavingAccount;
 
 import java.util.Collection;
@@ -12,13 +13,13 @@ public class Reporting {
      */
     public String getReport(Branch rootBranch) {
         StringBuilder report = new StringBuilder(addBranchNameToReport(rootBranch.getName()));
-        final Collection<Account> accounts = rootBranch.getAccounts();
-        if (accounts.isEmpty()) return report.toString();
-        for (Account eachAccount : accounts) {
-            report.append("## ").append(eachAccount.getId());
+        final Collection<Client> clients = rootBranch.getAccounts();
+        if (clients.isEmpty()) return report.toString();
+        for (Client eachClient : clients) {
+            report.append("## ").append(eachClient.getId());
 
-            if (eachAccount.getClient()==null || eachAccount.getClient().getAccounts()==null) continue;
-            for (SavingAccount eachSavingAccount : eachAccount.getClient().getAccounts()) {
+            if (eachClient.getClient()==null || eachClient.getClient().getAccounts()==null) continue;
+            for (SavingAccount eachSavingAccount : eachClient.getClient().getAccounts()) {
                 report.append("### savingAccountId");
             }
         }

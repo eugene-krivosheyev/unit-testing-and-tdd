@@ -1,5 +1,7 @@
 package com.acme.banking.dbo.domain;
 
+import com.sun.xml.internal.ws.client.ClientSchemaValidationTube;
+
 import java.util.Collection;
 
 import static java.util.Collections.unmodifiableCollection;
@@ -7,23 +9,22 @@ import static java.util.Collections.unmodifiableCollection;
 public class Branch {
     private String name;
     private Collection<Branch> children;
+    private Collection<Client> clients; //TODO impl
 
     public Branch(String name) {
         this.name = name;
+    }
+
+    public Branch(Collection<Client> clients) {
+        this.clients = clients;
     }
 
     public String getName() {
         return name;
     }
 
-    private Collection<Account> accounts; //TODO impl
-
-    public Branch(Collection<Account> accounts) {
-        this.accounts = accounts;
-    }
-
-    public Collection<Account> getAccounts() {
-        return unmodifiableCollection(accounts);
+    public Collection<Client> getAccounts() {
+        return unmodifiableCollection(clients);
     }
 
     public Collection<Branch> getChildren() {

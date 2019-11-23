@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.UUID;
 
-public class Client implements Account{
+public class Client{
     private UUID id;
     private String name;
     private Collection<SavingAccount> savingAccounts = new ArrayList<>(); //TODO
@@ -22,12 +22,6 @@ public class Client implements Account{
         return id;
     }
 
-    @Override
-    public UUID getClientId() {
-        return getId();
-    }
-
-    @Override
     public Client getClient() {
         return this;
     }
