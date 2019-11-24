@@ -15,7 +15,7 @@ public class Reporting {
         final Collection<Client> clients = rootBranch.getClients();
         if (clients.isEmpty()) return report.toString();
         for (Client eachClient : clients) {
-            report.append("## ").append(eachClient.getId());
+            report.append("\n").append("## ").append(eachClient.getId());
 
             if (eachClient.getAccounts()==null) continue;
             for (SavingAccount eachSavingAccount : eachClient.getAccounts()) {
@@ -26,7 +26,7 @@ public class Reporting {
     }
 
     private String addBranchNameToReport(String branchName) {
-        if (branchName == null) return "# \n";
-        return "# " + branchName + "\n";
+        if (branchName == null) return "# ";
+        return "# " + branchName + "";
     }
 }
