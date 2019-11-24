@@ -46,19 +46,18 @@ public class ReportingWithAccountsTest extends ReportingTest {
     public void shouldGetReportWhereClientHasSavingAccounts() {
         //region given
         Client stubClient1 = new MockitoClientBuilder().build();
-        Collection<Client> stubAccounts1 = new MockitoClientCollectionBuilder().withClient(stubClient1).build();
+        Collection<Client> stubClients1 = new MockitoClientCollectionBuilder().withClient(stubClient1).build();
         SavingAccount stubSavingAccount = new MockitoSavingAccountBuilder().build();
         Collection<SavingAccount> stubSavingAccounts = new ArrayList<>();
         stubSavingAccounts.add(stubSavingAccount);
         //endregion
 
         //region when
-
         when(this.stubSavingAccount.getClient()).thenReturn(stubClient1);
-        when(stubBranch.getAccounts()).thenReturn(stubAccounts1);
+        when(stubBranch.getClients()).thenReturn(stubClients1);
         when(stubClient1.getAccounts()).thenReturn(stubSavingAccounts);
-        //endregion
         report = sut.getReport(stubBranch);
+        //endregion
 
         //region then
         assertThat(report).endsWith("### savingAccountId");
@@ -68,7 +67,7 @@ public class ReportingWithAccountsTest extends ReportingTest {
     @Test
     public void shouldGetReportWithNewLinesWhenBranchHasAccount() {
         //region when
-        when(stubBranch.getAccounts()).thenReturn(stubClients);
+        when(stubBranch.getClients()).thenReturn(stubClients);
         report = sut.getReport(stubBranch);
         //endregion
 
@@ -80,7 +79,7 @@ public class ReportingWithAccountsTest extends ReportingTest {
     @Test
     public void shouldGetReportWithAccountIdWhenBranchHasAccount() {
         //region when
-        when(stubBranch.getAccounts()).thenReturn(stubClients);
+        when(stubBranch.getClients()).thenReturn(stubClients);
         when(stubSavingAccount.getClientId()).thenReturn(stubClientId);
         report = sut.getReport(stubBranch);
         //endregion
@@ -101,7 +100,7 @@ public class ReportingWithAccountsTest extends ReportingTest {
         //endregion
 
         //region when
-        when(stubBranch.getAccounts()).thenReturn(stubClients);
+        when(stubBranch.getClients()).thenReturn(stubClients);
         report = sut.getReport(stubBranch);
         //endregion
 
@@ -137,7 +136,7 @@ public class ReportingWithAccountsTest extends ReportingTest {
     @Test
     public void shouldGetReportWhenBranchClientsCollectionNotEmpty() {
         //region when
-        when(stubBranch.getAccounts()).thenReturn(stubClients);
+        when(stubBranch.getClients()).thenReturn(stubClients);
         report = sut.getReport(stubBranch);
         //endregion
 

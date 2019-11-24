@@ -23,7 +23,7 @@ public class Branch {
         return name;
     }
 
-    public Collection<Client> getAccounts() {
+    public Collection<Client> getClients() {
         return unmodifiableCollection(clients);
     }
 
