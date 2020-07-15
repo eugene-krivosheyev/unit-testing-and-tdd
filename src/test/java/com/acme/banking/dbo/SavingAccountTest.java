@@ -37,7 +37,7 @@ public class SavingAccountTest {
     public void shouldSavePropertiesWhenCreated() {
         //region given
         long stubId = nextLong();
-        int stubAmount = 5344567;
+        double stubAmount = 5344567;
         //endregion
 
         //region when
