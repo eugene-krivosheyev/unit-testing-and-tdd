@@ -1,5 +1,6 @@
 package demo;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -9,7 +10,9 @@ import static org.junit.Assume.assumeFalse;
 import static org.junit.Assume.assumeTrue;
 
 public class ArrayListTest {
-    @Test //BDD
+
+    @Ignore
+    @Test(timeout = 10_000) //BDD
     public void shouldXSizeIncrementedAndElementContainedWhenElementAdded() {
         //region Fixture | Arrange | Given
         final ArrayList sut = new ArrayList();

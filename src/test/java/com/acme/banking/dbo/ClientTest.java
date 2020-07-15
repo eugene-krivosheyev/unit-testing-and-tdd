@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.util.UUID;
 
+import static org.apache.commons.lang.math.RandomUtils.nextLong;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -14,11 +15,12 @@ public class ClientTest {
     @Test
     public void shouldSavePropertiesWhenCreated() {
         //region given
-        UUID stubId = UUID.randomUUID();
+        long stubId = nextLong();
+        String stubName = "dummy client name";
         //endregion
 
         //region when
-        Client sut = new Client(stubId, "dummy client name");
+        Client sut = new Client(stubId, stubName);
         //endregion
 
         //region then
@@ -26,7 +28,37 @@ public class ClientTest {
             allOf(
                 equalTo(stubId),
                 notNullValue()
-        ));
+            )
+        );
+
+        assertThat(sut.getName(),
+                allOf(
+                        equalTo(stubName),
+                        notNullValue()
+                )
+        );
+
         //endregion
+    }
+
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldGetErrorWhenCreatedWithNullId() {
+        Client sut = new Client(null, "someName");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldGetErrorWhenCreatedWithNullName() {
+        Client sut = new Client((long) 2, null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldGetErrorWhenCreatedWithNegativeId() {
+        Client sut = new Client((long) -3445, "someName");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldGetErrorWhenCreatedWithEmptyName() {
+        Client sut = new Client((long) 2, "");
     }
 }
