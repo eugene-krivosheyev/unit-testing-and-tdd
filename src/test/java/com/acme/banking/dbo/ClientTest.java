@@ -11,14 +11,16 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
 public class ClientTest {
+    private Client sut;
     @Test
     public void shouldSavePropertiesWhenCreated() {
         //region given
-        UUID stubId = UUID.randomUUID();
+        Long stubId = (long) Math.random();
+        String stubName = "dummy client name";
         //endregion
 
         //region when
-        Client sut = new Client(stubId, "dummy client name");
+        Client sut = new Client(stubId, stubName);
         //endregion
 
         //region then
@@ -27,6 +29,56 @@ public class ClientTest {
                 equalTo(stubId),
                 notNullValue()
         ));
+        assertThat(sut.getName(),
+                allOf(
+                        equalTo(stubName),
+                        notNullValue()
+                ));
         //endregion
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldErrorWhenIdIsNull() {
+        //region given
+        Long stubId = null;
+        //endregion
+
+        //region when
+        Client sut = new Client(stubId, "dummy client name");
+        //endregion
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldErrorWhenIdLessThenZero() {
+        //region given
+        Long stubId = (long) -1;
+        //endregion
+
+        //region when
+        Client sut = new Client(stubId, "dummy client name");
+        //endregion
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldErrorWhenNameIsInNull() {
+        //region given
+        String stubName = null;
+        //endregion
+
+        //region when
+        Client sut = new Client( (long) 1, stubName);
+        //endregion
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldErrorWhenNameIsEmpty() {
+        //region given
+        String stubName = "";
+        //endregion
+
+        //region when
+        Client sut = new Client( (long) 1, stubName);
+        //endregion
+    }
+
 }
