@@ -11,7 +11,8 @@ import static org.junit.Assert.assertThat;
 
 public class SavingAccountTest {
 
-    private Client client = new Client((long) 12345, "SomeName");
+    private long stubClId = nextLong();
+    private Client client = new Client((long) stubClId, "SomeName");
 
     @Test(expected = IllegalArgumentException.class)
     public void shouldGetErrorWhenCreatedWithNullId() {
@@ -30,7 +31,12 @@ public class SavingAccountTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void shouldGetErrorWhenCreatedWithNegativeAmount() {
-        SavingAccount sut = new SavingAccount((long) -12245, client, (double) -43435678);
+        SavingAccount sut = new SavingAccount((long) 12245, client, (double) -43435678);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldGetErrorWhenCreatedWithNullClient() {
+        SavingAccount sut = new SavingAccount(3234l, null, 3435678d);
     }
 
     @Test
@@ -41,7 +47,7 @@ public class SavingAccountTest {
         //endregion
 
         //region when
-        SavingAccount sut = new SavingAccount(stubId, client, (double)stubAmount);
+        SavingAccount sut = new SavingAccount(stubId, client, stubAmount);
         //endregion
 
         //region then
@@ -55,6 +61,20 @@ public class SavingAccountTest {
         assertThat(sut.getAmount(),
                 allOf(
                         equalTo(stubAmount),
+                        notNullValue()
+                )
+        );
+
+        assertThat(sut.getClient(),
+                allOf(
+                        equalTo(client),
+                        notNullValue()
+                )
+        );
+
+        assertThat(sut.getClientId(),
+                allOf(
+                        equalTo(stubClId),
                         notNullValue()
                 )
         );
