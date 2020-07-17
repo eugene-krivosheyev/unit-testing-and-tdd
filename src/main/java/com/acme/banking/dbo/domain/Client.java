@@ -11,8 +11,8 @@ public class Client {
     private Collection<Account> accounts = new ArrayList<>(); //TODO
 
     public Client(Long id, String name) {
-        if (isNull(id) || id < 0) throw new IllegalArgumentException();
-        if (isNull(name) || name.equals("")) throw new IllegalArgumentException();
+        if (isNull(id) || id < 0) throw new IllegalArgumentException("Wrong ID");
+        if (isNull(name) || name.equals("")) throw new IllegalArgumentException("Wrong name");
 
         this.id = id;
         this.name = name;
