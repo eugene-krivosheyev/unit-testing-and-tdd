@@ -2,19 +2,22 @@ package com.acme.banking.dbo.domain;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.UUID;
+import static java.util.Objects.isNull;
+
 
 public class Client {
-    private UUID id;
+    private long id;
     private String name;
-    private Collection<UUID> accountIds = new ArrayList<>(); //TODO
+    private Collection<Account> accounts = new ArrayList<>(); //TODO
+    public Client(Long id, String name) {
+        if (isNull(id) || id < 0) throw new IllegalArgumentException();
+        if (isNull(name) || name.equals("")) throw new IllegalArgumentException();
 
-    public Client(UUID id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public UUID getId() {
+    public long getId() {
         return id;
     }
 
