@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 import static org.junit.Assume.assumeTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class ArrayListTest {
     private ArrayList sut;
@@ -35,6 +37,19 @@ public class ArrayListTest {
     @Test(expected = Exception.class)
     public void shouldGetErrorWhenAddNullElement() {
             sut.add(null);
+    }
+
+    @Test
+    public void shouldUseElementsStringRepresentationWhenToString1() {
+        final ArrayList<Object> sut = new ArrayList<>();
+        Object elementStub = mock(Object.class);
+
+    }
+
+    @Test
+    public void shouldUseElementsStringRepresentationWhenToString2() {
+        final ArrayList sut = new ArrayList();
+        Object elementMock = mock(Object.class);
     }
 
     public void smth() {
