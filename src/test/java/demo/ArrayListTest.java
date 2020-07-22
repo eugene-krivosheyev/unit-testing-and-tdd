@@ -1,5 +1,6 @@
 package demo;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -42,7 +43,7 @@ public class ArrayListTest {
             .contains("test string 1");
     }
 
-    @Test
+    @Test @Ignore
     public void shouldUseElementsStringRepresentationWhenToString2() {
         final ArrayList sut = new ArrayList();
         Object elementMock = mock(Object.class);
