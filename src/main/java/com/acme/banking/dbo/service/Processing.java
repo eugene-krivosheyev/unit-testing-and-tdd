@@ -3,24 +3,40 @@ package com.acme.banking.dbo.service;
 import com.acme.banking.dbo.domain.Account;
 import com.acme.banking.dbo.domain.Cash;
 
-import java.util.Collection;
-import java.util.UUID;
-
 public class Processing {
-    public UUID createClient(String name) {
-        return null;
+    private AccountRepository accounts;
+
+    public Processing() {
     }
 
-    public Collection<Account> getAccountsByClientId(UUID clientId) {
-        return null;
+    public Processing(AccountRepository accounts) {
+        this.accounts = accounts;
     }
 
-    public void transfer(double amount, UUID fromAccountId, UUID toAccountId) {
-
+    public long createClient(String name) {
+        return 0;
     }
 
-    public void cash(double amount, UUID fromAccountId) {
+    public void transfer(double amount, Account from, Account to) {
+        if (from==null) throw new IllegalStateException("from account is null");
+        if (to==null) throw new IllegalStateException("to account is null");
+        if (from.getAmount() < amount) throw new IllegalStateException("Not enough money");
 
-        Cash.log(amount, fromAccountId);
+        from.withdraw(amount);
+        to.deposit(amount);
+    }
+
+    public void transfer(double amount, long fromAccountId, long toAccountId) {
+        if (fromAccountId<0) throw new IllegalStateException("account id 'from' less than zero");
+        if (toAccountId<0) throw new IllegalStateException("account id 'to' less than zero");
+
+        Account fromAccount = accounts.findById(fromAccountId);
+        Account toAccount = accounts.findById(toAccountId);
+
+        transfer(amount, fromAccount, toAccount);
+    }
+
+    public void cash(double amount, long fromAccountId) {
+        Cash.log(amount, accounts.findById(fromAccountId));
     }
 }
