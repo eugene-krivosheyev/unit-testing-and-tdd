@@ -48,12 +48,10 @@ public class ProcessingTest {
 
     @Test
     public void shouldAccountsStateUpdatedWhenAccountsExistsInDb() {
-        final SavingAccount mockToAccount = mock(SavingAccount.class);
-        final SavingAccount mockFromAccount = mock(SavingAccount.class);
-        when(mockFromAccount.getAmount()).thenReturn(200.);
-        AccountRepository accounts = mock(AccountRepository.class);
-        when(accounts.findById(0)).thenReturn(mockFromAccount);
-        when(accounts.findById(1)).thenReturn(mockToAccount);
+        AccountRepository accounts = new AccRepoDBBuilder()
+                .withAccount(0, 200.)
+                .withAccount(1)
+            .build();
         final Processing sut = new Processing(accounts);
 
         sut.transfer(100., 0, 1);
