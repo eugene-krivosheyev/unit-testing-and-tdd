@@ -1,16 +1,12 @@
 package com.acme.banking.dbo.domain;
 
+import java.util.UUID;
+
 public class SavingAccount implements Account {
-    private long id;
     private Client client;
     private double amount;
 
-    public SavingAccount(Long id, Client client, Double amount) {
-        if (id == null || id < 0) throw new IllegalArgumentException("Incorrect id!");
-        if (client == null) throw new IllegalArgumentException("Incorrect client!");
-        if (amount == null || amount <= 0) throw new IllegalArgumentException("Incorrect amount!");
-
-        this.id = id;
+    public SavingAccount(Client client, double amount) {
         this.client = client;
         this.amount = amount;
     }
@@ -19,17 +15,25 @@ public class SavingAccount implements Account {
         return client;
     }
 
+    @Override
     public double getAmount() {
         return amount;
     }
 
     @Override
-    public long getId() {
-        return id;
+    public UUID getClientId() {
+        return client.getId();
     }
 
     @Override
-    public long getClientId() {
-        return client.getId();
+    public void withdraw(double amount) {
+        this.amount = this.amount - amount;
     }
+
+    @Override
+    public void deposit(double amount) {
+        this.amount = this.amount + amount;
+    }
+
+
 }
