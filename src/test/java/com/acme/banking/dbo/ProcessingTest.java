@@ -1,6 +1,7 @@
 package com.acme.banking.dbo;
 
 import com.acme.banking.dbo.domain.SavingAccount;
+import com.acme.banking.dbo.service.AccountRepository;
 import com.acme.banking.dbo.service.Processing;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -30,5 +31,21 @@ public class ProcessingTest {
         when(stubAccount.getAmount()).thenReturn(0.);
 
         sut.transfer(100., stubAccount, dummyAccount);
+    }
+
+    @Test
+    public void shouldAccountsStateUpdatedWhenAccountsExistsInDb() {
+        final SavingAccount mockToAccount = mock(SavingAccount.class);
+        final SavingAccount mockFromAccount = mock(SavingAccount.class);
+        when(mockFromAccount.getAmount()).thenReturn(200.);
+        AccountRepository accounts = mock(AccountRepository.class);
+        when(accounts.findById(0)).thenReturn(mockFromAccount);
+        when(accounts.findById(1)).thenReturn(mockToAccount);
+        final Processing sut = new Processing(accounts);
+
+        sut.transfer(100., 0, 1);
+
+        verify(mockFromAccount).withdraw(100.);
+        verify(mockToAccount).deposit(100.);
     }
 }
