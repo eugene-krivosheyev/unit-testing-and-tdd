@@ -10,4 +10,6 @@ public interface Account {
     void charge(Double amount);
 
     Double getBalance();
+
+    Double getAmount();
 }
