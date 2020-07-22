@@ -7,6 +7,15 @@ import java.util.Collection;
 import java.util.UUID;
 
 public class Processing {
+    private AccountRepository accounts;
+
+    public Processing() {
+    }
+
+    public Processing(AccountRepository accounts) {
+        this.accounts = accounts;
+    }
+
     public UUID createClient(String name) {
         return null;
     }
@@ -15,8 +24,18 @@ public class Processing {
         return null;
     }
 
-    public void transfer(double amount, UUID fromAccountId, UUID toAccountId) {
+    public void transfer(double amount, Account from, Account to) {
+        if (from.getAmount() < amount) throw new IllegalStateException("Not enough funds");
 
+        from.withdraw(amount);
+        to.deposit(amount);
+    }
+
+    public void transfer(double amount, int fromAccountFromId, int fromAccountToId) {
+        Account from = accounts.findById(fromAccountFromId);
+        Account to = accounts.findById(fromAccountToId);
+
+        transfer(amount, from, to);
     }
 
     public void cash(double amount, UUID fromAccountId) {

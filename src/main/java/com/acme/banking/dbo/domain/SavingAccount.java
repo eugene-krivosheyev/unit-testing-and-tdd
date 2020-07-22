@@ -3,12 +3,10 @@ package com.acme.banking.dbo.domain;
 import java.util.UUID;
 
 public class SavingAccount implements Account {
-    private UUID id;
     private Client client;
     private double amount;
 
-    public SavingAccount(UUID id, Client client, double amount) {
-        this.id = id;
+    public SavingAccount(Client client, double amount) {
         this.client = client;
         this.amount = amount;
     }
@@ -17,17 +15,25 @@ public class SavingAccount implements Account {
         return client;
     }
 
+    @Override
     public double getAmount() {
         return amount;
-    }
-
-    @Override
-    public UUID getId() {
-        return id;
     }
 
     @Override
     public UUID getClientId() {
         return client.getId();
     }
+
+    @Override
+    public void withdraw(double amount) {
+        this.amount = this.amount - amount;
+    }
+
+    @Override
+    public void deposit(double amount) {
+        this.amount = this.amount + amount;
+    }
+
+
 }
