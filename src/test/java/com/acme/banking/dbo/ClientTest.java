@@ -34,9 +34,7 @@ public class ClientTest {
         allOf(
         equalTo(stubName),
         notNullValue()
-        )
-        );
-
+        ));
         //endregion
         }
 
