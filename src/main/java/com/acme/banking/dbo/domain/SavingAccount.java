@@ -10,7 +10,8 @@ public class SavingAccount implements Account {
 
     public SavingAccount(Long id, Client client, double amount) {
         if(id == null || id < 0) throw new IllegalArgumentException("Wrong id");
-        if(client == null || client.getClass() != Client.class) throw new IllegalArgumentException();
+//        if(client == null || client.getClass() != Client.class) throw new IllegalArgumentException();
+        if(client == null) throw new IllegalArgumentException();
         if(amount < 0) throw new IllegalArgumentException();
         this.id = id;
         this.client = client;
@@ -38,12 +39,12 @@ public class SavingAccount implements Account {
 
     @Override
     public void withdraw(Double amount) {
-
+        this.amount -= amount;
     }
 
     @Override
     public void charge(Double amount) {
-
+        this.amount += amount;
     }
 
     @Override

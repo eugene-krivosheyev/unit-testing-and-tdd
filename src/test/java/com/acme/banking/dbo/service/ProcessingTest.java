@@ -1,49 +1,56 @@
 package com.acme.banking.dbo.service;
 
+import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.domain.SavingAccount;
-import com.acme.banking.dbo.service.Processing;
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 public class ProcessingTest {
+
     @Test
-    public void shouldWithdrawFromAndChargeToWhenTransfer() {
-//    Given
-        Processing sut = new Processing();
-        SavingAccount mockFromAccount = mock(SavingAccount.class);
-        when(mockFromAccount.getAmount()).thenReturn(100.);
-        SavingAccount mockToAccount = mock(SavingAccount.class);
-        Double amount = 100.0;
-
-//    When
-        sut.transfer(amount,mockFromAccount,mockToAccount);
-
-//    Then
-        verify(mockFromAccount, times(1)).withdraw(amount);
-        verify(mockToAccount, times(1)).charge(amount);
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void shouldNotTransferWhenNotEnoughFunds() {
-        Processing sut = new Processing();
-        SavingAccount stubAccount = mock(SavingAccount.class);
-        when(stubAccount.getAmount()).thenReturn(0.);
-        SavingAccount dummyAccount = mock(SavingAccount.class);
-        Double amount = 1.0;
-
-        sut.transfer(amount,stubAccount,dummyAccount);
-
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void shouldErrorWhenTransferAmountIsNegativeOrZero() {
+    public void shoudUpdateAccountStateWhenTransfer() {
+//        Given
         final Processing sut = new Processing();
+        SavingAccount stubAccount = mock(SavingAccount.class);
         SavingAccount dummyAccount = mock(SavingAccount.class);
-        Double amount = -1.0;
+        when(stubAccount.getAmount()).thenReturn(100.0);
 
-        sut.transfer(amount, dummyAccount, dummyAccount);
+//        When
+        sut.transfer(1.0, stubAccount, dummyAccount);
+
+//        Then
+        verify(stubAccount, times(1)).withdraw(1.0);
+        verify(dummyAccount, times(1)).charge(1.0);
+    }
+    @Test
+    public void shoudUpdateAccountStateWhenTransferWithSpy() {
+        Client dummyClient = mock(Client.class);
+        SavingAccount spyFromAccount = spy(new SavingAccount(0L, dummyClient, 100.));
+        SavingAccount spyToAccount = spy(new SavingAccount(1L, dummyClient, 0.));
+        Processing sut = new Processing();
+
+        sut.transfer(1.0, spyFromAccount, spyToAccount);
+
+        assertEquals(99.0, spyFromAccount.getAmount(), 0.001);
+
+        assertEquals(1.0, spyToAccount.getAmount(), 0.001);
+    }
+
+    @Test (expected = IllegalStateException.class)
+    public void shouldNotTransferWhenNotEnoughMoney() {
+//        Given
+        final Processing sut = new Processing();
+        SavingAccount stubAccount = mock(SavingAccount.class);
+        SavingAccount dummyAccount = mock(SavingAccount.class);
+        when(stubAccount.getAmount()).thenReturn(100.0);
+
+//        When
+        sut.transfer(101.0, stubAccount, dummyAccount);
 
     }
+
+    
 
 }
