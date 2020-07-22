@@ -6,18 +6,20 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class ProcessingTest {
     @Test
-    @Ignore
     public void shouldAccountsStateUpdatedWhenTransfer() {
         final Processing sut = new Processing();
-        final SavingAccount fromAccount = mock(SavingAccount.class);
-        final SavingAccount toAccount = mock(SavingAccount.class);
+        final SavingAccount mockToAccount = mock(SavingAccount.class);
+        final SavingAccount mockFromAccount = mock(SavingAccount.class);
+        when(mockFromAccount.getAmount()).thenReturn(200.);
 
-        sut.transfer(100., fromAccount, toAccount);
+        sut.transfer(100., mockFromAccount, mockToAccount);
+
+        verify(mockFromAccount, times(1)).withdraw(100.);
+        verify(mockToAccount).deposit(anyDouble());
     }
 
     @Test(expected = IllegalStateException.class)
