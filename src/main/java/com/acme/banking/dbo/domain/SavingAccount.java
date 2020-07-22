@@ -19,6 +19,7 @@ public class SavingAccount implements Account {
         return client;
     }
 
+    @Override
     public double getAmount() {
         return amount;
     }
@@ -31,5 +32,10 @@ public class SavingAccount implements Account {
     @Override
     public long getClientId() {
         return client.getId();
+    }
+
+    @Override
+    public void changeAmount(double amount) {
+        this.amount += amount;
     }
 }

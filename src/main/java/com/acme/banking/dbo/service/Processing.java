@@ -15,8 +15,12 @@ public class Processing {
         return null;
     }
 
-    public void transfer(double amount, UUID fromAccountId, UUID toAccountId) {
+    public void transfer(double amount, Account fromAccount, Account toAccount) {
+        if (amount <= 0. || amount > 1000_000_000. || fromAccount.getAmount() < amount)
+            throw new IllegalArgumentException("Incorrect amount value");
 
+        fromAccount.changeAmount(-amount);
+        toAccount.changeAmount(amount);
     }
 
     public void cash(double amount, UUID fromAccountId) {
