@@ -16,6 +16,8 @@ public class Processing {
     }
 
     public void transfer(double amount, Account from, Account to) {
+        if (from.getAmount() < amount) throw new IllegalStateException("Not enough funds");
+
         from.withdraw(amount);
         to.deposit(amount);
     }
