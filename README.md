@@ -80,7 +80,7 @@ git clone --depth 1 -b <YYYY-MM-project> https://github.com/eugene-krivosheyev/u
 - [ ] Given legacy codebase with Client and SavingAccount domain types
 - [ ] When developers add consistency rules for linking Client and SavingAccount
 - [ ] And cover these components with maintainable autotests
-- [ ] Then coverage for theses components should be ≥ 90%
+- [ ] Then coverage for these components should be ≥ 90%
 - [ ] And public code review should state for maintainability
 
 #Как писать интеграционные и модульные тесты? (1/0.5)
@@ -98,7 +98,7 @@ git clone --depth 1 -b <YYYY-MM-project> https://github.com/eugene-krivosheyev/u
 - [ ] Given legacy codebase with Processing component
 - [ ] When developers analyse and refactor production codebase for testability
 - [ ] And cover this component with maintainable _unit_ autotests
-- [ ] Then coverage for theses component should be ≥ 90%
+- [ ] Then coverage for these component should be ≥ 90%
 - [ ] And public code review should state for maintainability
 
 Реализация фикстуры для обеспечения поддерживаемости тестов (1.5/1)
