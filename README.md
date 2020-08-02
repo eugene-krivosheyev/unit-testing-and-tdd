@@ -83,7 +83,7 @@ git clone --depth 1 -b <YYYY-MM-project> https://github.com/eugene-krivosheyev/u
 - [ ] Then coverage for these components should be ≥ 90%
 - [ ] And public code review should state for maintainability
 
-#Как писать интеграционные и модульные тесты? (1/0.5)
+Как писать интеграционные и модульные тесты? (1/0.5)
 -----------------------------------------------------
 - [ ] В чем их специфика? Системные vs Интеграционные vs Модульные
 - [ ] Как по коду определить скоуп?
