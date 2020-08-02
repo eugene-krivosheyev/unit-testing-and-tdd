@@ -70,7 +70,7 @@ git clone --depth 1 -b <YYYY-MM-project> https://github.com/eugene-krivosheyev/u
 - [ ] Подключение вспомогательных фреймворков
 - [ ] Простые сравнения средствами основного фреймворка
 - [ ] [Типизированные сравнения средствами встроенного фреймворка](https://github.com/junit-team/junit4/wiki/Matchers-and-assertthat)
-- [ ] [Типизированные сравнения средствами отдельного фреймворка](https://github.com/alexruiz/fest-assert-2.x/wiki/One-minute-starting-guide)
+- [ ] [Типизированные сравнения средствами отдельного фреймворка](https://assertj.github.io/doc/)
 - [ ] [Таймауты](https://github.com/junit-team/junit4/wiki/Timeout-for-tests)
 - [ ] [Исключения](https://github.com/junit-team/junit4/wiki/Exception-testing)
 - [ ] [Параметризованные тесты](https://github.com/junit-team/junit4/wiki/Parameterized-tests)
@@ -156,7 +156,7 @@ git clone --depth 1 -b <YYYY-MM-project> https://github.com/eugene-krivosheyev/u
 
 ### Coding Iteration #06
 - [ ] Given legacy codebase with Reporting component
-- [ ] When developers implement polymorhic testable implementation for Reporting and CheckingAccount
+- [ ] When developers implement polymorphic testable implementation for Reporting and CheckingAccount
 - [ ] Then cross-team code review should state for its testability
 
 Какую ценность дает практика TDD? (0.5/0)
@@ -252,4 +252,7 @@ git clone --depth 1 -b <YYYY-MM-project> https://github.com/eugene-krivosheyev/u
 -------------------------------
 - [ ] План конкретных ближайших действий
 
-## Буфер (2)
+Буфер (2)
+---------
+- [ ] Auto-testing and DB: patterns
+- [ ] Test data generation
