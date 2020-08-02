@@ -1,235 +1,255 @@
-# Тренинг «Unit Testing & TDD»
+Тренинг «Unit Testing & TDD»
+============================
 24 ак. часа, 18 астр. часов
 
-# Цели тренинга
-## После тренинга участники смогут:
-1. Объяснить себе и менеджменту, где им нужны тесты, а где нет
-1. Разрабатывать тесты как «спецификации на примерах» в роли документации
-1. Разрабатывать поддерживаемые тесты и их наборы по модели 
-1. Подменять сложные компоненты системы на время тестирования
-1. Анализировать тестовое покрытие для принятия решений по тест-дизайну
-1. Обеспечивать поддерживаемый дизайн системы при помощи TDD
+Цели тренинга
+============
+После тренинга участники смогут:
+-------------------------------
+- [ ] Объяснить себе и менеджменту, где им нужны тесты, а где нет
+- [ ] Разрабатывать тесты как «спецификации на примерах» в роли документации
+- [ ] Разрабатывать поддерживаемые тесты и их наборы по модели 
+- [ ] Подменять сложные компоненты системы на время тестирования
+- [ ] Анализировать тестовое покрытие для принятия решений по тест-дизайну
+- [ ] Обеспечивать поддерживаемый дизайн системы при помощи TDD
 
-## В итоге бизнес получает:
-1. Контролируемый cycle time задач
-1. Контролируемое качество системы
+В итоге бизнес получает:
+------------------------
+- [ ] Контролируемый cycle time задач
+- [ ] Контролируемое качество системы
 
-# Программа
-## 1. Зачем мы собрались? (1 часа всего / _из них_ 0.5 часа практики)
-1. Обзор тренинга
-1. О тренере
-1. Разбивка по парам и знакомство-представление друг друга
-1. Приоритезация целей тренинга и сбор проблем
+Программа
+=========
+Зачем мы собрались? (1 часа всего / _из них_ 0.5 часа практики)
+---------------------------------------------------------------
+- [ ] Обзор тренинга
+- [ ] О тренере
+- [ ] Разбивка по парам и знакомство-представление друг друга
+- [ ] Приоритезация целей тренинга и сбор проблем
 
 ### Fork and then clone codebase for further development
 ```
 git clone --depth 1 -b <YYYY-MM-project> https://github.com/eugene-krivosheyev/unit-testing-and-tdd
 ```
 
-## 2. Что такое автотест? (1.5/0.5)
-1. Каковы цели и задачи _авто_ тестов?
-1. В чем отличие от отладки?
-1. Определение модуля и возможные виды модулей
+Что такое автотест? (1.5/0.5)
+-----------------------------
+- [ ] Каковы цели и задачи _авто_ тестов?
+- [ ] В чем отличие от отладки?
+- [ ] Определение модуля и возможные виды модулей
 
 ### Live Coding Demo на примере "общеизвестного класса"
-1. [Подключение основного фреймворка](https://github.com/junit-team/junit4/wiki)
-1. Понятие контракта по Б. Мейеру
-1. Именование тест-кейса и теста
-1. Понятие трасс выполнения (flows) и граничные условия
-1. Подход AAA
-1. Подход GWT из BDD
-1. Роль фикстуры
-1. [Забытый полуторный этап](https://github.com/junit-team/junit4/wiki/Assumptions-with-assume)
-1. Тест = фиксированная трасса выполнения
-1. Тестовый набор = спецификация компонента
+- [ ] [Подключение основного фреймворка](https://github.com/junit-team/junit4/wiki)
+- [ ] Понятие контракта по Б. Мейеру
+- [ ] Именование тест-кейса и теста
+- [ ] Понятие трасс выполнения (flows) и граничные условия
+- [ ] Подход AAA
+- [ ] Подход GWT из BDD
+- [ ] Роль фикстуры
+- [ ] [Забытый полуторный этап](https://github.com/junit-team/junit4/wiki/Assumptions-with-assume)
+- [ ] Тест = фиксированная трасса выполнения
+- [ ] Тестовый набор = спецификация компонента
 
 ### Coding Iteration #01
-- Given legacy codebase with Client and SavingAccount domain types
-- When developers add guard clauses for creating Client and SavingAccount
-- And cover these components with maintainable autotests
-- Then coverage for theses components should be ≥ 80%
-- And public code review should state for maintainability
+- [ ] Given legacy codebase with Client and SavingAccount domain types
+- [ ] When developers add guard clauses for creating Client and SavingAccount
+- [ ] And cover these components with maintainable autotests
+- [ ] Then coverage for these components should be ≥ 80%
+- [ ] And public code review should state for maintainability
 
-## 3. Как замерять тестовое покрытие? (0.5/0)
-1. Понятие покрытия
-1. Виды расчета покрытия
-1. Инструменты расчета покрытия
-1. Анализ текущего покрытия
-1. Что покрывать в первую очередь в проектах?
+Как замерять тестовое покрытие? (0.5/0)
+---------------------------------------
+- [ ] Понятие покрытия
+- [ ] Виды расчета покрытия
+- [ ] Инструменты расчета покрытия
+- [ ] Анализ текущего покрытия
+- [ ] Что покрывать в первую очередь в проектах?
 
-## 4. Как ускорить разработку автотестов за счет готовых фреймворков и библиотек? (1/0.5)
-1. Подключение вспомогательных фреймворков
-1. Простые сравнения средствами основного фреймворка
-1. [Типизированные сравнения средствами встроенного фреймворка](https://github.com/junit-team/junit4/wiki/Matchers-and-assertthat)
-1. [Типизированные сравнения средствами отдельного фреймворка](https://github.com/alexruiz/fest-assert-2.x/wiki/One-minute-starting-guide)
-1. [Таймауты](https://github.com/junit-team/junit4/wiki/Timeout-for-tests)
-1. [Исключения](https://github.com/junit-team/junit4/wiki/Exception-testing)
-1. [Параметризованные тесты](https://github.com/junit-team/junit4/wiki/Parameterized-tests)
-1. Расширение поведения тестов с помощью [запускальщиков](https://github.com/junit-team/junit4/wiki/Test-runners) и [правил](https://github.com/junit-team/junit4/wiki/Rules)
+Как ускорить разработку автотестов за счет готовых фреймворков и библиотек? (1/0.5)
+-----------------------------------------------------------------------------------
+- [ ] Подключение вспомогательных фреймворков
+- [ ] Простые сравнения средствами основного фреймворка
+- [ ] [Типизированные сравнения средствами встроенного фреймворка](https://github.com/junit-team/junit4/wiki/Matchers-and-assertthat)
+- [ ] [Типизированные сравнения средствами отдельного фреймворка](https://github.com/alexruiz/fest-assert-2.x/wiki/One-minute-starting-guide)
+- [ ] [Таймауты](https://github.com/junit-team/junit4/wiki/Timeout-for-tests)
+- [ ] [Исключения](https://github.com/junit-team/junit4/wiki/Exception-testing)
+- [ ] [Параметризованные тесты](https://github.com/junit-team/junit4/wiki/Parameterized-tests)
+- [ ] Расширение поведения тестов с помощью [запускальщиков](https://github.com/junit-team/junit4/wiki/Test-runners) и [правил](https://github.com/junit-team/junit4/wiki/Rules)
 
 ### Coding Iteration #02
-- Given legacy codebase with Client and SavingAccount domain types
-- When developers add consistency rules for linking Client and SavingAccount
-- And cover these components with maintainable autotests
-- Then coverage for theses components should be ≥ 90%
-- And public code review should state for maintainability
+- [ ] Given legacy codebase with Client and SavingAccount domain types
+- [ ] When developers add consistency rules for linking Client and SavingAccount
+- [ ] And cover these components with maintainable autotests
+- [ ] Then coverage for theses components should be ≥ 90%
+- [ ] And public code review should state for maintainability
 
-## 5. Как писать интеграционные и модульные тесты? (1/0.5)
-1. В чем их специфика? Системные vs Интеграционные vs Модульные
-1. Как по коду определить скоуп?
-1. Виды тест-дублеров
-1. State-based testing VS Interaction-based testing
-1. [Фреймворк тест-дублеров уровня объектов](https://site.mockito.org)
-1. [Фреймворк тест-дублеров уровня REST-сервисов](http://wiremock.org/docs/getting-started/)
-1. Как среда сборки различает UT и IT
+#Как писать интеграционные и модульные тесты? (1/0.5)
+-----------------------------------------------------
+- [ ] В чем их специфика? Системные vs Интеграционные vs Модульные
+- [ ] Как по коду определить скоуп?
+- [ ] Виды тест-дублеров
+- [ ] State-based testing VS Interaction-based testing
+- [ ] [Фреймворк тест-дублеров уровня объектов](https://site.mockito.org)
+- [ ] [Фреймворк тест-дублеров уровня REST-сервисов](http://wiremock.org/docs/getting-started/)
+- [ ] Как среда сборки различает UT и IT
 
 ### Coding Iteration #03
-- Given legacy codebase with Processing component
-- When developers analyse and refactor production codebase for testability
-- And cover this component with maintainable _unit_ autotests
-- Then coverage for theses component should be ≥ 90%
-- And public code review should state for maintainability
+- [ ] Given legacy codebase with Processing component
+- [ ] When developers analyse and refactor production codebase for testability
+- [ ] And cover this component with maintainable _unit_ autotests
+- [ ] Then coverage for theses component should be ≥ 90%
+- [ ] And public code review should state for maintainability
 
-## 6. Реализация фикстуры для обеспечения поддерживаемости тестов (1.5/1)
-1. Как максимально реюзать фикстуры?
-1. Наследование тест-кейсов
-1. [Методы фреймворка](https://github.com/junit-team/junit4/wiki/Test-fixtures)
-1. Fixture Builders
+Реализация фикстуры для обеспечения поддерживаемости тестов (1.5/1)
+-------------------------------------------------------------------
+- [ ] Как максимально реюзать фикстуры?
+- [ ] Наследование тест-кейсов
+- [ ] [Методы фреймворка](https://github.com/junit-team/junit4/wiki/Test-fixtures)
+- [ ] Fixture Builders
 
 ### Coding Iteration #04
-- Given test codebase
-- When developers analyse and refactor test codebase for maintainability
-- Then public code review should state for tests maintainability 
+- [ ] Given test codebase
+- [ ] When developers analyse and refactor test codebase for maintainability
+- [ ] Then public code review should state for tests maintainability 
 
 ---
 
-## 7. Как группировать тесты в наборы? (0.5/0)
-1. Зачем нужны test suites?
-1. Способы группировки "из коробки" фреймворка: [группы](https://github.com/junit-team/junit4/wiki/aggregating-tests-in-suites) и [категории](https://github.com/junit-team/junit4/wiki/Categories)
-1. Способ группировки средствами среды сборки
+Как группировать тесты в наборы? (0.5/0)
+----------------------------------------
+- [ ] Зачем нужны test suites?
+- [ ] Способы группировки "из коробки" фреймворка: [группы](https://github.com/junit-team/junit4/wiki/aggregating-tests-in-suites) и [категории](https://github.com/junit-team/junit4/wiki/Categories)
+- [ ] Способ группировки средствами среды сборки
 
-## 8. Как поддерживать качество тестов и снижать дублирование? (1/0.5)
+Как поддерживать качество тестов и снижать дублирование? (1/0.5)
+----------------------------------------------------------------
 ### Как обеспечить качество самих тестов?
-1. Сначала поломанный тест
-1. Анализ тестового покрытия
-1. Ревью кода тестов
-1. Mutation coverage
+- [ ] Сначала поломанный тест
+- [ ] Анализ тестового покрытия
+- [ ] Ревью кода тестов
+- [ ] Mutation coverage
 
 ### Анти-паттерны разработки модульных тестов: "вредные советы"
-1. Отношение к тестам не как к обычному коду
-1. Большие расфокусированные тесты
-1. Неговорящие имена
-1. Дублирование фикстуры
-1. Стопроцентное покрытие
+- [ ] Отношение к тестам не как к обычному коду
+- [ ] Большие расфокусированные тесты
+- [ ] Неговорящие имена
+- [ ] Дублирование фикстуры
+- [ ] Стопроцентное покрытие
 
 ### Coding Iteration #05
-- Given test codebase
-- When developers analyse and refactor test codebase for maintainability
-- Then cross-team code review should state for tests maintainability
+- [ ] Given test codebase
+- [ ] When developers analyse and refactor test codebase for maintainability
+- [ ] Then cross-team code review should state for tests maintainability
 
-## 9. Как обеспечить тестопригодность дизайна legacy системы? (1.5/0.5)
-1. Как оценить тестопригодность legacy code?
-1. Метрика Coupling
-1. Метрика Cohesion
-1. Понятность/осознаваемость
-1. Каков тестопригодный дизайн?
+Как обеспечить тестопригодность дизайна legacy системы? (1.5/0.5)
+-----------------------------------------------------------------
+- [ ] Как оценить тестопригодность legacy code?
+- [ ] Метрика Coupling
+- [ ] Метрика Cohesion
+- [ ] Понятность/осознаваемость
+- [ ] Каков тестопригодный дизайн?
 
 ### Live Coding Demo для реализации компонента Reporting и нового CheckingAccount
-1. Принципы проектирования SOLID
-1. Шаблоны Factory и DI
-1. Шаблоны Strategy/State
-1. Ключевая диллема покрытия legacy code?
+- [ ] Принципы проектирования SOLID
+- [ ] Шаблоны Factory и DI
+- [ ] Шаблоны Strategy/State
+- [ ] Ключевая диллема покрытия legacy code?
 
 ### Coding Iteration #06
-- Given legacy codebase with Reporting component
-- When developers implement polymorhic testable implementation for Reporting and CheckingAccount
-- Then cross-team code review should state for its testability
+- [ ] Given legacy codebase with Reporting component
+- [ ] When developers implement polymorhic testable implementation for Reporting and CheckingAccount
+- [ ] Then cross-team code review should state for its testability
 
-## 10. Какую ценность дает практика TDD? (0.5/0)
-1. Что такое TDD?
-1. TDD как практика проектирования
-1. Зачем нужен TDD?
-1. Минимизация отладки
-1. Снижение затрат на инкрементальную разработку
-1. Быстрая обратная связь
-1. Повышение поддерживаемости дизайна
-1. Удобство API "из коробки"
-1. Тесты как документация
-1. Предсказуемость поставки
-1. Чистый работающий код
-1. Управление страхом
+Какую ценность дает практика TDD? (0.5/0)
+-----------------------------------------
+- [ ] Что такое TDD?
+- [ ] TDD как практика проектирования
+- [ ] Зачем нужен TDD?
+- [ ] Минимизация отладки
+- [ ] Снижение затрат на инкрементальную разработку
+- [ ] Быстрая обратная связь
+- [ ] Повышение поддерживаемости дизайна
+- [ ] Удобство API "из коробки"
+- [ ] Тесты как документация
+- [ ] Предсказуемость поставки
+- [ ] Чистый работающий код
+- [ ] Управление страхом
 
-## 11. В каком ритме писать по TDD? (1.5/0.5)
-1. Red – Green – Refactor
-1. Скорость отработки тестового набора как предусловие практики TDD
+В каком ритме писать по TDD? (1.5/0.5)
+--------------------------------------
+- [ ] Red – Green – Refactor
+- [ ] Скорость отработки тестового набора как предусловие практики TDD
 
 ### Live Coding Demo для компонента Branch
-- Операция добавления в branch
+- [ ] Операция добавления в branch
 
 ### Coding Iteration #07
-- Given legacy codebase with Branch domain type
-- When developers implement full-functional Branch implementation
-- And made it through TDD cycles
-- Then coverage for this component should be 100%
-- And public code review should state for maintainability
+- [ ] Given legacy codebase with Branch domain type
+- [ ] When developers implement full-functional Branch implementation
+- [ ] And made it through TDD cycles
+- [ ] Then coverage for this component should be 100%
+- [ ] And public code review should state for maintainability
 
 ---
 
-## 12. [Базовые шаблоны TDD](https://www.dropbox.com/s/iiip3qdny3wwuyd/00.jpg?dl=0) (1.5/1)
-1. Test First
-1. Isolated Tests
-1. Assertion First
-1. Test Data
-1. Child Test
-1. Test List
-1. Mock Object
-1. Crash Test Dummy
+[Базовые шаблоны TDD](https://www.dropbox.com/s/iiip3qdny3wwuyd/00.jpg?dl=0) (1.5/1)
+------------------------------------------------------------------------------------
+- [ ] Test First
+- [ ] Isolated Tests
+- [ ] Assertion First
+- [ ] Test Data
+- [ ] Child Test
+- [ ] Test List
+- [ ] Mock Object
+- [ ] Crash Test Dummy
 
 ### Coding Iteration #08
-- Given legacy codebase with Reporting service
-- When developers implement reporting operation for branch
-- And made it through TDD cycles
-- Then coverage for this component should be 100%
-- And coverage for this component should state this is _unit_ tests
-- And public code review should state for maintainability
+- [ ] Given legacy codebase with Reporting service
+- [ ] When developers implement reporting operation for branch
+- [ ] And made it through TDD cycles
+- [ ] Then coverage for this component should be 100%
+- [ ] And coverage for this component should state this is _unit_ tests
+- [ ] And public code review should state for maintainability
 
-## 13. Шаблоны красной и зеленой полосы (1.5/1)
+Шаблоны красной и зеленой полосы (1.5/1)
+----------------------------------------
 ### Красной полосы
-1. One-step Test
-1. Starter Test
-1. Another Test
-1. Regression Test
+- [ ] One-step Test
+- [ ] Starter Test
+- [ ] Another Test
+- [ ] Regression Test
 
 ### Зеленой полосы
-1. Obvious Implementation
-1. Triangulation
-1. One to Many
+- [ ] Obvious Implementation
+- [ ] Triangulation
+- [ ] One to Many
 
 ### Coding Iteration #09: TDD Ping-pong
-- Given legacy codebase with Reporting service
-- When developers implement reporting operations
-- And made it through TDD cycles in pair ping-pong rules
-- Then coverage for this component should be 100%
-- And coverage for this component should state this is _unit_ tests
-- And public code review should state for maintainability
+- [ ] Given legacy codebase with Reporting service
+- [ ] When developers implement reporting operations
+- [ ] And made it through TDD cycles in pair ping-pong rules
+- [ ] Then coverage for this component should be 100%
+- [ ] And coverage for this component should state this is _unit_ tests
+- [ ] And public code review should state for maintainability
 
-## 14. Как внедрить UT&TDD в процесс разработки? (0.5/0)
+Как внедрить UT&TDD в процесс разработки? (0.5/0)
+-------------------------------------------------
 ### Каковы затраты на UT&TDD?
-1. Постановка экономической задачи
+- [ ] Постановка экономической задачи
+
+### Типовые ошибки TDD
+- [ ] Code First
+- [ ] Too Many Obvious Implementation
+- [ ] Too Many Triangulations
+- [ ] Coverage Affinity
+- [ ] Implementation Testing but not Contract Testing
 
 ### Как внедрить?
-1. Общение с менеджментом
-1. Secure sandbox
-1. Последовательное расширение scope
+- [ ] Общение с менеджментом
+- [ ] Secure sandbox
+- [ ] Последовательное расширение scope
 
-### Типовые ошибки
-1. Code First
-1. Too Many Obvious Implementation
-1. Too Many Triangulations
-1. Coverage Affinity
-1. Implementation Testing but not Contract Testing
-
-## 15. Финальная ретроспектива (1/0.5)
-- План конкретных ближайших действий
+Финальная ретроспектива (1/0.5)
+-------------------------------
+- [ ] План конкретных ближайших действий
 
 ## Буфер (2)
