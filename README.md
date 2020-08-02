@@ -91,6 +91,7 @@ git clone --depth 1 -b <YYYY-MM-project> https://github.com/eugene-krivosheyev/u
 - [ ] State-based testing VS Interaction-based testing
 - [ ] [Фреймворк тест-дублеров уровня объектов](https://site.mockito.org)
 - [ ] [Фреймворк тест-дублеров уровня REST-сервисов](http://wiremock.org/docs/getting-started/)
+- [ ] [Фреймворк тест-дублеров уровня REST-сервисов](https://www.mock-server.com)
 - [ ] Как среда сборки различает UT и IT
 
 ### Coding Iteration #03
@@ -255,4 +256,4 @@ git clone --depth 1 -b <YYYY-MM-project> https://github.com/eugene-krivosheyev/u
 Буфер (2)
 ---------
 - [ ] Auto-testing and DB: patterns
-- [ ] Test data generation
+- [ ] Test data generation: [mockaroo](https://www.mockaroo.com), [generatedata](http://generatedata.com), [10](https://www.softwaretestinghelp.com/test-data-generation-tools/) and [15](https://www.guru99.com/test-data-generation-tools.html) tools, [Faker](https://github.com/joke2k/faker), [PG](https://pgcodekeeper.readthedocs.io/ru/latest/mock_data.html), [not only db](https://quality-lab.ru/blog/8_services_for_data_generation/)
