@@ -27,7 +27,7 @@ public class ArrayListTest {
         //endregion
 
         //region Assert | Then
-        assertEquals(dummy, sut.get(sut.size() - 1));
+        assertEquals("Not so good assert: got assumes", dummy, sut.get(sut.size() - 1));
         assertTrue(sut.contains(dummy));
         assertFalse(sut.isEmpty());
         //endregion
