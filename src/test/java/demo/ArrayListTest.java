@@ -1,19 +1,25 @@
 package demo;
 
 import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Date;
 
 import static org.junit.Assert.*;
+import static org.junit.Assume.assumeTrue;
 
 public class ArrayListTest {
     @Test //BDD = DDD(test)
-    public void shouldSizeIncrementedWhenAddElement() {
+    public void shouldGetElementAtTailAndSizeIncrementedWhenAddNullElement() {
         //region Fixture | Arrange | Given
         final ArrayList<Object> sut = new ArrayList<>();
-        final Object dummy = new Object();
+        final Object dummy = null;
+        //endregion
+        //region Assumptions check
+        assumeTrue(sut.isEmpty());
         //endregion
 
         //region Act | When
@@ -21,8 +27,9 @@ public class ArrayListTest {
         //endregion
 
         //region Assert | Then
-        assertEquals("", 1, sut.size());
-        assertFalse("", sut.isEmpty());
+        assertEquals(dummy, sut.get(sut.size() - 1));
+        assertTrue(sut.contains(dummy));
+        assertFalse(sut.isEmpty());
         //endregion
     }
 }
