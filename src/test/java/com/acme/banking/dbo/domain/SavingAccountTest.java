@@ -48,7 +48,6 @@ public class SavingAccountTest {
         Client client = new Client(clientId, name);
         SavingAccount sut = new SavingAccount(accountId, client, amount);
 
-        expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("UUID can`t be null");
     }
 
@@ -60,7 +59,6 @@ public class SavingAccountTest {
         Client client = null;
         SavingAccount sut = new SavingAccount(accountId, client, amount);
 
-        expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("Client can`t be null");
     }
 
@@ -73,7 +71,6 @@ public class SavingAccountTest {
 
         SavingAccount sut = new SavingAccount(accountId, client, amount);
 
-        expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("Amount can`t be negative");
     }
 }
