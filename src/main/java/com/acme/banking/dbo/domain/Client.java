@@ -10,8 +10,9 @@ public class Client {
     private Collection<Integer> accountIds = new ArrayList<Integer>(); //TODO
 
     public Client(Integer id, String name) {
-        if (id == null) throw new IllegalArgumentException("");
-        if (name == null) throw new IllegalArgumentException("");
+        if (id == null) throw new IllegalArgumentException("Error: id is null");
+        if (name == null) throw new IllegalArgumentException("Error: name is null");
+
         this.id = id;
         this.name = name;
     }
