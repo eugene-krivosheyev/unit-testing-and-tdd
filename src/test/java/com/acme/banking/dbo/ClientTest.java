@@ -1,6 +1,7 @@
 package com.acme.banking.dbo;
 
 import com.acme.banking.dbo.domain.Client;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.UUID;
@@ -11,7 +12,7 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
 public class ClientTest {
-    @Test
+    @Test @Ignore
     public void shouldSavePropertiesWhenCreated() {
         //region given
         UUID stubId = UUID.randomUUID();
