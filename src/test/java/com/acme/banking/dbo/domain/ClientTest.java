@@ -38,14 +38,13 @@ public class ClientTest {
     }
 
     @Rule
-    public ExpectedException expectedException = ExpectedException.none();
+    public final ExpectedException expectedException = ExpectedException.none();
 
     @Test(expected = IllegalArgumentException.class)
     public void shouldThrowExceptionWhenIdIsNull() {
         UUID stubId = null;
         String name = "test";
         Client sut = new Client(stubId, name);
-        expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("UUID can`t be null");
     }
 
@@ -54,7 +53,6 @@ public class ClientTest {
         UUID stubId = UUID.randomUUID();
         String name = null;
         Client sut = new Client(stubId, name);
-        expectedException.expect(IllegalArgumentException.class);
-        expectedException.expectMessage("Name can`t be null");
+        expectedException.expectMessage("Name can`t be null or empty");
     }
 }

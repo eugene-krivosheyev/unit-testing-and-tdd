@@ -1,12 +1,8 @@
 package demo;
 
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import static org.junit.Assert.*;
 import static org.junit.Assume.assumeTrue;

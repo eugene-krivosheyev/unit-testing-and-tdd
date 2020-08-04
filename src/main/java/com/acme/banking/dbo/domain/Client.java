@@ -11,7 +11,7 @@ public class Client {
 
     public Client(UUID id, String name) {
         if (id == null) throw new IllegalArgumentException("UUID can`t be null");
-        if (name == null || name == " ") throw new IllegalArgumentException("Name can`t be null");
+        if (name == null || name.equals(" ")) throw new IllegalArgumentException("Name can`t be null or empty");
 
         this.id = id;
         this.name = name;

@@ -10,7 +10,6 @@ import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assume.assumeTrue;
 
 public class SavingAccountTest {
     @Test
@@ -38,7 +37,7 @@ public class SavingAccountTest {
     }
 
     @Rule
-    public ExpectedException expectedException = ExpectedException.none();
+    public final ExpectedException expectedException = ExpectedException.none();
 
     @Test(expected = IllegalArgumentException.class)
     public void shouldThrowExceptionWhenIdIsNull() {
