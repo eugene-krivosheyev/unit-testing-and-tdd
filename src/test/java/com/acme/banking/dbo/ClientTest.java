@@ -1,6 +1,7 @@
 package com.acme.banking.dbo;
 
 import com.acme.banking.dbo.domain.Client;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Random;
@@ -39,12 +40,35 @@ public class ClientTest {
         //endregion
     }
 
+    @Test(expected = IllegalArgumentException.class)
     public void shouldNotCreateWhenIdIsNull () {
         //region given
-        Integer stubId =  null;
+        Integer sutId =  null;
+        String sutName = "dummy client name";
         //endregion
 
-        //Client
+        //region when subject under test
+        Client sut = new Client(sutId, sutName);
+//            Assert.fail("Error");
+
+        //endregion
 
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldNotCreateWhenNameIsNull () {
+        //region given
+        Integer sutId =  123;
+        String sutName = null;
+        //endregion
+
+        //region when subject under test
+        Client sut = new Client(sutId, sutName);
+//            Assert.fail("Error");
+
+        //endregion
+
+    }
+
+
 }
