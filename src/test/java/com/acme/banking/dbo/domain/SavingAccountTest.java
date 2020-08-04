@@ -31,6 +31,7 @@ public class SavingAccountTest {
         //region Assert | Then
         assertNotNull(sut.getClient());
         assertEquals(client, sut.getClient());
+        assertEquals(clientId, sut.getClientId());
         assertEquals(accountId, sut.getId());
         assertEquals(amount, sut.getAmount(), 0.001);
         //endregion
