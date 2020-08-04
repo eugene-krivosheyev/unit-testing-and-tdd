@@ -11,6 +11,7 @@ public class SavingAccount implements Account {
         if (id == null) throw new IllegalArgumentException("UUID can`t be null");
         if (client == null) throw new IllegalArgumentException("Client can`t be null");
         if (amount < 0) throw new IllegalArgumentException("Amount can`t be negative");
+
         this.id = id;
         this.client = client;
         this.amount = amount;
