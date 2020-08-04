@@ -7,19 +7,19 @@ import java.util.Collection;
 import java.util.UUID;
 
 public class Processing {
-    public UUID createClient(String name) {
+    public Integer createClient(String name) {
         return null;
     }
 
-    public Collection<Account> getAccountsByClientId(UUID clientId) {
+    public Collection<Account> getAccountsByClientId(Integer clientId) {
         return null;
     }
 
-    public void transfer(double amount, UUID fromAccountId, UUID toAccountId) {
+    public void transfer(double amount, Integer fromAccountId, Integer toAccountId) {
 
     }
 
-    public void cash(double amount, UUID fromAccountId) {
+    public void cash(double amount, Integer fromAccountId) {
 
         Cash.log(amount, fromAccountId);
     }
