@@ -41,7 +41,7 @@ public class SavingAccountTest {
     public final ExpectedException expectedException = ExpectedException.none();
 
     @Test(expected = IllegalArgumentException.class)
-    public void shouldThrowExceptionWhenIdIsNull() {
+    public void shouldThrowExceptionWhenSaveAccountIdIsNull() {
         UUID clientId = UUID.randomUUID();
         UUID accountId = null;
         String name = "test";
@@ -53,7 +53,7 @@ public class SavingAccountTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void shouldThrowExceptionWhenClientIsNull() {
+    public void shouldThrowExceptionWhenSaveAccountClientIsNull() {
         UUID accountId = UUID.randomUUID();
         String name = "test";
         double amount = 10;
@@ -64,7 +64,7 @@ public class SavingAccountTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void shouldThrowExceptionWhenAmountIsNegative() {
+    public void shouldThrowExceptionWhenSaveAccountAmountIsNegative() {
         UUID clientId = UUID.randomUUID();
         UUID accountId = UUID.randomUUID();
         Client client = new Client(clientId, "test");

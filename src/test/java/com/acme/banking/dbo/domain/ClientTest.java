@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 
 public class ClientTest {
     @Test
-    public void shouldSavePropertiesWhenCreated() {
+    public void shouldClientSavePropertiesWhenCreated() {
         //region given
         UUID stubId = UUID.randomUUID();
         String name = "test";
@@ -41,7 +41,7 @@ public class ClientTest {
     public final ExpectedException expectedException = ExpectedException.none();
 
     @Test(expected = IllegalArgumentException.class)
-    public void shouldThrowExceptionWhenIdIsNull() {
+    public void shouldThrowExceptionWhenClientIdIsNull() {
         UUID stubId = null;
         String name = "test";
         Client sut = new Client(stubId, name);
@@ -49,7 +49,7 @@ public class ClientTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void shouldThrowExceptionWhenNameIsNull() {
+    public void shouldThrowExceptionWhenClientNameIsNull() {
         UUID stubId = UUID.randomUUID();
         String name = null;
         Client sut = new Client(stubId, name);
