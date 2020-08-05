@@ -12,20 +12,22 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
 public class ClientTest {
-    @Test @Ignore
+    public static final UUID ANY_ID = UUID.fromString("8fe9595d-de6e-4d07-bc56-dacdad16f5c2");
+
+    @Test
     public void shouldSavePropertiesWhenCreated() {
         //region given
-        UUID stubId = UUID.randomUUID();
+        double anyDouble = 0.0;
         //endregion
 
         //region when
-        Client sut = new Client(stubId, "dummy client name");
+        Client sut = new Client(ANY_ID, "dummy client name");
         //endregion
 
         //region then
         assertThat(sut.getId(),
             allOf(
-                equalTo(stubId),
+                equalTo(ANY_ID),
                 notNullValue()
         ));
         //endregion
