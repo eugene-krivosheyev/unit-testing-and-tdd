@@ -9,9 +9,12 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Date;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.hasItem;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assume.assumeTrue;
 
 public class ArrayListTest {
@@ -36,7 +39,10 @@ public class ArrayListTest {
         assertTrue(sut.contains(dummy));
         assertFalse(sut.isEmpty());
 
-        assertThat(sut, allOf(hasItem(dummy)));
+        assertThat(sut)
+                .hasSize(1)
+                .isNotEmpty()
+                .containsExactly(dummy);
         //endregion
     }
 
