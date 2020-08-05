@@ -55,4 +55,12 @@ public class ClientTest {
         Client sut = new Client(stubId, name);
         expectedException.expectMessage("Name can`t be null or empty");
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowExceptionWhenClientNameIsEmpty() {
+        UUID stubId = UUID.randomUUID();
+        String name = " ";
+        Client sut = new Client(stubId, name);
+        expectedException.expectMessage("Name can`t be null or empty");
+    }
 }
