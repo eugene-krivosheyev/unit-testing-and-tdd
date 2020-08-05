@@ -43,6 +43,21 @@ public class ClientTest {
     @Test(expected = IllegalArgumentException.class)
     public void shouldNotCreateWhenIdIsNull() {
         //region given
+        Integer stubId = null;
+        String stubName = "dummy client name";
+        //endregion
+
+        //region when
+        Client sut = new Client(stubId, stubName);
+        //endregion
+
+        //region Assert | Then
+        //endregion
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldNotCreateWhenNameIsNull() {
+        //region given
         Integer stubId = 1;
         String stubName = null;
         //endregion
@@ -54,7 +69,6 @@ public class ClientTest {
         //region Assert | Then
         //endregion
     }
-
 
 
 }
