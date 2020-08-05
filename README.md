@@ -10,8 +10,8 @@
 - [x] Анализировать тестовое покрытие для принятия решений по тест-дизайну
 - [ ] Подменять сложные компоненты системы на время тестирования
 - [ ] Разрабатывать поддерживаемые тесты и их наборы 
-- [ ] Обеспечивать поддерживаемый дизайн системы при помощи TDD
 - [ ] Объяснить себе и менеджменту, где им нужны тесты, а где нет
+- [ ] Обеспечивать поддерживаемый дизайн системы при помощи TDD
 
 В итоге бизнес получает:
 ------------------------
@@ -55,7 +55,7 @@ git clone --depth 1 -b <YYYY-MM-project> https://github.com/eugene-krivosheyev/u
 - [x] When developers add guard clauses for creating Client and SavingAccount
 - [x] And cover these components with maintainable autotests
 - [x] Then coverage for these components should be ≥ 80%
-- [ ] And public code review should state for maintainability
+- [x] And public code review should state for maintainability
 
 Как замерять тестовое покрытие? (0.5/0)
 ---------------------------------------
@@ -67,14 +67,14 @@ git clone --depth 1 -b <YYYY-MM-project> https://github.com/eugene-krivosheyev/u
 
 Как ускорить разработку автотестов за счет готовых фреймворков и библиотек? (1/0.5)
 -----------------------------------------------------------------------------------
-- [ ] Подключение вспомогательных фреймворков
-- [ ] Простые сравнения средствами основного фреймворка
-- [ ] [Типизированные сравнения средствами встроенного фреймворка](https://github.com/junit-team/junit4/wiki/Matchers-and-assertthat)
-- [ ] [Типизированные сравнения средствами отдельного фреймворка](https://assertj.github.io/doc/)
-- [ ] [Таймауты](https://github.com/junit-team/junit4/wiki/Timeout-for-tests)
-- [ ] [Исключения](https://github.com/junit-team/junit4/wiki/Exception-testing)
-- [ ] [Параметризованные тесты](https://github.com/junit-team/junit4/wiki/Parameterized-tests)
-- [ ] Расширение поведения тестов с помощью [запускальщиков](https://github.com/junit-team/junit4/wiki/Test-runners) и [правил](https://github.com/junit-team/junit4/wiki/Rules)
+- [x] Подключение вспомогательных фреймворков
+- [x] Простые сравнения средствами основного фреймворка
+- [x] [Типизированные сравнения средствами встроенного фреймворка](https://github.com/junit-team/junit4/wiki/Matchers-and-assertthat)
+- [x] [Типизированные сравнения средствами отдельного фреймворка](https://assertj.github.io/doc/)
+- [x] [Таймауты](https://github.com/junit-team/junit4/wiki/Timeout-for-tests)
+- [x] [Исключения](https://github.com/junit-team/junit4/wiki/Exception-testing)
+- [x] [Параметризованные тесты](https://github.com/junit-team/junit4/wiki/Parameterized-tests)
+- [x] Расширение поведения тестов с помощью [запускальщиков](https://github.com/junit-team/junit4/wiki/Test-runners) и [правил](https://github.com/junit-team/junit4/wiki/Rules)
 
 ### Coding Iteration #02
 - [ ] Given legacy codebase with Client and SavingAccount domain types
