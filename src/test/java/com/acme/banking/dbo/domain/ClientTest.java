@@ -6,11 +6,10 @@ import org.junit.rules.ExpectedException;
 
 import java.util.UUID;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.*;
+import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
 
 public class ClientTest {
     public static final UUID CLIENT_UUID = UUID.fromString("75852e48-dd5e-4062-921d-bae2bd91a045");
@@ -20,13 +19,12 @@ public class ClientTest {
     public void shouldSavePropertiesWhenClientCreated() {
         Client sut = new Client(CLIENT_UUID, DUMMY_NAME);
 
-        assertEquals(CLIENT_UUID, sut.getId());
-        assertEquals(DUMMY_NAME, sut.getName());
-//        assertThat(sut.getId(),
-//            allOf(
-//                equalTo(stubId),
-//                notNullValue()
-//        ));
+        assertThat(sut,
+                allOf(
+                        hasProperty("id", equalTo(CLIENT_UUID)),
+                        hasProperty("name", equalTo(DUMMY_NAME))
+                )
+        );
     }
 
     @Rule

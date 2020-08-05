@@ -6,8 +6,10 @@ import org.junit.rules.ExpectedException;
 
 import java.util.UUID;
 
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 public class SavingAccountTest {
     public static final UUID CLIENT_UUID = UUID.fromString("75852e48-dd5e-4062-921d-bae2bd91a045");
@@ -20,11 +22,14 @@ public class SavingAccountTest {
     public void shouldSaveAccountWhenGettingNotNullClientWithPositiveAmount() {
         SavingAccount sut = new SavingAccount(ACCOUNT_UUID, client, amount);
 
-        assertNotNull(sut.getClient());
-        assertEquals(client, sut.getClient());
+        assertThat(sut,
+                allOf(
+                        hasProperty("id", equalTo(ACCOUNT_UUID)),
+                        hasProperty("client", equalTo(client)),
+                        hasProperty("amount", equalTo(amount))
+                )
+        );
         assertEquals(CLIENT_UUID, sut.getClientId());
-        assertEquals(ACCOUNT_UUID, sut.getId());
-        assertEquals(amount, sut.getAmount(), 0.001);
     }
 
     @Rule
