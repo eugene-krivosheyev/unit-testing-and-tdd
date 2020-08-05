@@ -14,13 +14,12 @@ public class SavingAccountTest {
     public void shouldSavePropertiesWhenCreated() {
         //region given
 
-        Integer stubId =  100;
-        double stubDouble = 123.3;
+        Integer stubId =  1;
+        double stubDouble = 1.0;
         Client sutClient = new Client(1, "dummy client name");
         //endregion
 
         //region when
-
         SavingAccount sutSaving = new SavingAccount(stubId, sutClient, stubDouble);
         //endregion
 

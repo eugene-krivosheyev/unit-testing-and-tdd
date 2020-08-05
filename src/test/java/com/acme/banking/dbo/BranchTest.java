@@ -16,27 +16,19 @@ import static org.junit.Assert.assertThat;
 
 public class BranchTest {
     @Test
-
-
-    public void shouldGetAccounts() {
+    public void shouldSaveAccountsWhenCreatedBranch() {
         //region given
-        int stubId =  (int)Math.random();
-        double stubDouble = Math.random();
+        int stubId = 11;
+        double stubDouble = 11.5;
 
         List<Account> stubColAccounts = new ArrayList<>();
         Client sutClient = new Client(stubId, "dummy client name");
         SavingAccount sutSaving = new SavingAccount(stubId, sutClient, stubDouble);
         stubColAccounts.add(sutSaving);
-
-
-
-
         //endregion
-        Branch sutBrach = new Branch(stubColAccounts);
+
         //region when
-
-
-
+        Branch sutBrach = new Branch(stubColAccounts);
         //endregion
 
         //region then

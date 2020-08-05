@@ -16,27 +16,20 @@ import static org.junit.Assert.assertThat;
 
 public class ClientTest {
     @Test
-    public void shouldSavePropertiesWhenCreated() {
+    public void shouldSavePropertiesIdAndNameWhenCreatedClient() {
         //region given
 
-        Integer sutId =  100;
-        String sutName = "dummy client name";
+        Integer sutId =  1; //очевидно первое 0 или 1
+        String sutName = "dummy client name"; // очевидное название
         //endregion
 
         //region when subject under test
         Client sut = new Client(sutId,sutName);
         //endregion
 
-        //region then
+        //region when subject under test
         assertEquals(sutId,sut.getId());
         assertEquals(sutName,sut.getName());
-
-        /*
-        assertThat(sut.getId(),
-            allOf(
-                equalTo(stubId),
-                notNullValue()
-        ));*/
         //endregion
     }
 
@@ -49,8 +42,6 @@ public class ClientTest {
 
         //region when subject under test
         Client sut = new Client(sutId, sutName);
-//            Assert.fail("Error");
-
         //endregion
 
     }
@@ -64,10 +55,7 @@ public class ClientTest {
 
         //region when subject under test
         Client sut = new Client(sutId, sutName);
-//            Assert.fail("Error");
-
-        //endregion
-
+        //endregion 
     }
 
 
