@@ -45,9 +45,4 @@ public class ArrayListTest {
                 .containsExactly(dummy);
         //endregion
     }
-
-    @Test
-    public void shouldSuccess() {
-
-    }
 }
