@@ -1,13 +1,15 @@
 package com.acme.banking.dbo.domain;
 
-//import java.util.Integer;
-
 public class SavingAccount implements Account {
     private Integer id;
     private Client client;
     private double amount;
 
     public SavingAccount(Integer id, Client client, double amount) {
+        if ( id == null || id<0) throw new IllegalArgumentException("идентификатор не может быть пустым или меньше 0");
+        if (client == null) throw new IllegalArgumentException("клиент не может быть пустым");
+        if ( amount<0) throw new IllegalArgumentException("остаток на счете должен быть более 0");
+
         this.id = id;
         this.client = client;
         this.amount = amount;

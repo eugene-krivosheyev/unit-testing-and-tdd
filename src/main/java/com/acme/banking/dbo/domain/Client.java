@@ -2,7 +2,7 @@ package com.acme.banking.dbo.domain;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.UUID;
+
 
 
 //import static java.lang.StringLatin1.length;
@@ -11,10 +11,10 @@ import java.util.UUID;
 public class Client {
     private Integer id;
     private String name;
-    private Collection<UUID> accountIds = new ArrayList<>(); //TODO
+    private Collection<Integer> accountIds = new ArrayList<>(); //TODO
 
     public Client(Integer id, String name) {
-        if ( id == null || id<0) throw new IllegalArgumentException("неверное значение id");
+        if ( id == null || id<0) throw new IllegalArgumentException("идентификатор не может быть пустым или меньше 0");
         if (name == null || name.length()>1000 || name.length()<1) throw new IllegalArgumentException("длина строки должна быть более 0 и менее 1000 символов");
 
         this.id = id;
