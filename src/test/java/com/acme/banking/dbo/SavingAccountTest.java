@@ -1,17 +1,19 @@
 package com.acme.banking.dbo;
 
+import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.domain.SavingAccount;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.UUID;
+
 import static org.junit.Assert.fail;
+import static org.mockito.Mockito.mock;
 
 public class SavingAccountTest {
-    @Test
+    @Test(expected = IllegalArgumentException.class, timeout = 10_000)
     public void shouldNotCreateWhenIdIsNull() {
-        try {
-            final SavingAccount sut = new SavingAccount(null, null, 0);
-            fail();
-        } catch (IllegalArgumentException e) { }
+        Client dummy = mock(Client.class);
+        SavingAccount sut = new SavingAccount(null, dummy, 0);
     }
 }
