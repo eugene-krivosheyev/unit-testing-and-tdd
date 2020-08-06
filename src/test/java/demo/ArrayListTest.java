@@ -16,6 +16,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assume.assumeTrue;
+import static org.mockito.Mockito.*;
 
 public class ArrayListTest {
     private ArrayList<Object> sut;
@@ -45,5 +46,26 @@ public class ArrayListTest {
                 .isNotEmpty()
                 .containsExactly(dummy);
         //endregion
+    }
+
+    @Test
+    public void shouldUseElementsStringRepresentationWhenToString() {
+        final ArrayList<Object> sut = new ArrayList<>();
+        Object stubElement = mock(Object.class);
+        when(stubElement.toString()).thenReturn("element string representation");
+        sut.add(stubElement);
+
+        assertThat(sut.toString()).contains("element string representation");
+    }
+
+    @Test
+    public void shouldCallElementsToStringWhenToString() {
+        final ArrayList<Object> sut = new ArrayList<>();
+        final Object mock = mock(Object.class);
+        sut.add(mock);
+
+        sut.toString();
+
+        verify(mock, times(1)).toString(); //any()
     }
 }
