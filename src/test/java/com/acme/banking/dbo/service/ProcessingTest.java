@@ -15,7 +15,7 @@ public class ProcessingTest {
 
         processing.transfer(1., fromAccountMock, toAccountMock);
 
-        verify(fromAccountMock, times(1)).withDraw(1.);
-        verify(toAccountMock, atLeastOnce()).deposit(1.);
+        verify(fromAccountMock).withDraw(1.);
+        verify(toAccountMock).deposit(1.);
     }
 }

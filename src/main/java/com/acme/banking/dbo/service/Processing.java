@@ -17,7 +17,7 @@ public class Processing {
 
     public void transfer(double amount, Account fromAccountId, Account toAccountId) {
         fromAccountId.withDraw(amount);
-        fromAccountId.deposit(amount);
+        toAccountId.deposit(amount);
     }
 
     public void cash(double amount, UUID fromAccountId) {
