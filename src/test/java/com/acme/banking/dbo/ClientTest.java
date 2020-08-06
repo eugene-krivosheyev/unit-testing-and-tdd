@@ -5,6 +5,8 @@ import org.junit.Test;
 
 
 import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
 
 
 public class ClientTest {
@@ -20,8 +22,12 @@ public class ClientTest {
         //endregion
 
         //region then
-        assertEquals(stubId,sut.getId());
-        assertEquals(stubName,sut.getName());
+        assertThat("Свойства объекта должны сохраниться",sut,
+                allOf(
+                        hasProperty("id", is(stubId)),
+                        hasProperty("name", is(stubName))
+                )
+        );
         //endregion
     }
 
@@ -60,6 +66,21 @@ public class ClientTest {
         //region given
         Integer stubId = 1;
         String stubName = null;
+        //endregion
+
+        //region when
+        Client sut = new Client(stubId, stubName);
+        //endregion
+
+        //region Assert | Then
+        //endregion
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldNotCreateWhenNameIsEmpty() {
+        //region given
+        Integer stubId = 1;
+        String stubName = "";
         //endregion
 
         //region when
