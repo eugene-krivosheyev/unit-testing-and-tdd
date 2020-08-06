@@ -18,6 +18,9 @@ public class SavingAccountTest {
     final Client client = new Client(CLIENT_UUID, DUMMY_NAME);
     final double amount = 1;
 
+    @Rule
+    public final ExpectedException expectedException = ExpectedException.none();
+
     @Test
     public void shouldSaveAccountWhenGettingNotNullClientWithPositiveAmount() {
         SavingAccount sut = new SavingAccount(ACCOUNT_UUID, client, amount);
@@ -31,9 +34,6 @@ public class SavingAccountTest {
         );
         assertEquals(CLIENT_UUID, sut.getClientId());
     }
-
-    @Rule
-    public final ExpectedException expectedException = ExpectedException.none();
 
     @Test
     public void shouldNotCreateSaveAccountWhenIdIsNull() {

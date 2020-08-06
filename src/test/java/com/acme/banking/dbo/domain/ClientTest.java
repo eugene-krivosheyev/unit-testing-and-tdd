@@ -15,6 +15,9 @@ public class ClientTest {
     public static final UUID CLIENT_UUID = UUID.fromString("75852e48-dd5e-4062-921d-bae2bd91a045");
     public static final String DUMMY_NAME = "dummy name";
 
+    @Rule
+    public final ExpectedException expectedException = ExpectedException.none();
+
     @Test
     public void shouldSavePropertiesWhenClientCreated() {
         Client sut = new Client(CLIENT_UUID, DUMMY_NAME);
@@ -26,9 +29,6 @@ public class ClientTest {
                 )
         );
     }
-
-    @Rule
-    public final ExpectedException expectedException = ExpectedException.none();
 
     @Test
     public void shouldNotCreateClientWhenIdIsNull() {
