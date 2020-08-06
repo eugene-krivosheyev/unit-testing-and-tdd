@@ -8,11 +8,12 @@ import java.util.Random;
 import java.util.UUID;
 
 import static junit.framework.TestCase.assertEquals;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertThat;
 
 public class ClientTest {
     @Test
@@ -28,6 +29,8 @@ public class ClientTest {
         //endregion
 
         //region when subject under test
+        assertThat(sut.getId()).isEqualTo(sutId);
+
         assertEquals(sutId,sut.getId());
         assertEquals(sutName,sut.getName());
         //endregion
@@ -49,13 +52,13 @@ public class ClientTest {
     @Test(expected = IllegalArgumentException.class)
     public void shouldNotCreateWhenNameIsNull () {
         //region given
-        Integer sutId =  123;
+        Integer sutId =  1;
         String sutName = null;
         //endregion
 
         //region when subject under test
         Client sut = new Client(sutId, sutName);
-        //endregion 
+        //endregion
     }
 
 

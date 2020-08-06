@@ -34,4 +34,15 @@ public class SavingAccount implements Account {
     public Integer getClientId() {
         return client.getId();
     }
+
+    @Override
+    public void withdraw(double amount) {
+
+    }
+    @Override
+    public void deposit(double amount) {
+
+    }
+
+
 }
