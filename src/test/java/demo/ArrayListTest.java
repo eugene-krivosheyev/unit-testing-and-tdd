@@ -1,10 +1,7 @@
 package demo;
 
 import org.hamcrest.CoreMatchers;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,10 +18,19 @@ import static org.mockito.Mockito.*;
 public class ArrayListTest {
     private ArrayList<Object> sut;
 
+    @BeforeClass @AfterClass
+    public static void globalSetUp() {
+
+    }
+
+    @Before @After
+    public void setUp() {
+        sut = new ArrayList<>();
+    }
+
     @Test //BDD = DDD(test)
     public void shouldGetElementAtTailAndSizeIncrementedWhenAddNullElement() {
         //region Fixture | Arrange | Given
-        sut = new ArrayList<>();
         final Object dummy = null;
         //endregion
         //region Assumptions check
@@ -50,7 +56,6 @@ public class ArrayListTest {
 
     @Test
     public void shouldUseElementsStringRepresentationWhenToString() {
-        final ArrayList<Object> sut = new ArrayList<>();
         Object stubElement = mock(Object.class);
         when(stubElement.toString()).thenReturn("element string representation");
         sut.add(stubElement);
@@ -60,7 +65,6 @@ public class ArrayListTest {
 
     @Test @Ignore
     public void shouldCallElementsToStringWhenToString() {
-        final ArrayList<Object> sut = new ArrayList<>();
         final Object mock = mock(Object.class);
         sut.add(mock);
 
