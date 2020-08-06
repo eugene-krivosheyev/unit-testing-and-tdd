@@ -1,14 +1,15 @@
 package com.acme.banking.dbo.domain;
 
-import com.acme.banking.dbo.domain.Client;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import java.util.UUID;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.hamcrest.CoreMatchers.allOf;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
 
 public class ClientTest {
     @Test
@@ -23,31 +24,34 @@ public class ClientTest {
         //endregion
 
         //region then
-        assertNotNull(sut.getId());
-        assertNotNull(sut.getName());
-        assertEquals(stubId, sut.getId());
-        assertEquals(name, sut.getName());
+        assertThat(sut,
+                allOf(
+                        hasProperty("id", equalTo(stubId)),
+                        hasProperty("name", equalTo(name))
+                )
+        );
+
         //endregion
     }
 
     @Rule
     public ExpectedException exceptionRule = ExpectedException.none();
 
-    @Test(expected = IllegalArgumentException.class)
-    public void shouldThrowExceptionWhenNameIsNull() {
+    @Test
+    public void shouldNotCreateWhenNameIsNull() {
+        exceptionRule.expect(IllegalArgumentException.class);
+        exceptionRule.expectMessage("name cant be null");
         UUID stubId = UUID.randomUUID();
         String name = null;
         Client sut = new Client(stubId, name);
-        exceptionRule.expect(IllegalArgumentException.class);
-        exceptionRule.expectMessage("name cant be null");
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void shouldThrowExceptionWhenIdIsNull() {
+    @Test
+    public void shouldNotCreateWhenIdIsNull() {
+        exceptionRule.expect(IllegalArgumentException.class);
+        exceptionRule.expectMessage("UUID cant be null");
         UUID stubId = null;
         String name = "name";
         Client sut = new Client(stubId, name);
-        exceptionRule.expect(IllegalArgumentException.class);
-        exceptionRule.expectMessage("UUID cant be null");
     }
 }
