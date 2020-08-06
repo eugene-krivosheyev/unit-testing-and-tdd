@@ -29,10 +29,10 @@ public class SavingAccountTest {
                 allOf(
                         hasProperty("id", equalTo(ACCOUNT_UUID)),
                         hasProperty("client", equalTo(client)),
-                        hasProperty("amount", equalTo(amount))
+                        hasProperty("amount", equalTo(amount)),
+                        hasProperty("clientId", equalTo(CLIENT_UUID))
                 )
         );
-        assertEquals(CLIENT_UUID, sut.getClientId());
     }
 
     @Test
