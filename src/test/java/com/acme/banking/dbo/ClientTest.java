@@ -9,6 +9,7 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
 
 
+
 public class ClientTest {
     @Test
     public void shouldSavePropertiesWhenCreated() {
