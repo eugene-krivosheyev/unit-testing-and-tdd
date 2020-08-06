@@ -5,6 +5,7 @@ import com.acme.banking.dbo.domain.SavingAccount;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.mockito.Mockito;
 
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -12,6 +13,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.*;
 
 public class SavingAccountTest {
 
@@ -22,12 +24,12 @@ public class SavingAccountTest {
     public void savePropertiesWhenCreatedSavingAccount() {
         //region given
         int stubId = 1;
-        Client stubClient = new Client(1, "Dummy");
+        Client dummyClient = new Client(1, "Dummy");
         double stubAmount = 1.0;
         //endregion
 
         //region when
-        SavingAccount sut = new SavingAccount(stubId, stubClient, stubAmount);
+        SavingAccount sut = new SavingAccount(stubId, dummyClient, stubAmount);
         //endregion
 
         //region then
@@ -39,7 +41,7 @@ public class SavingAccountTest {
 
         assertThat(sut.getClient(),
                 allOf(
-                        is(stubClient),
+                        is(dummyClient),
                         notNullValue()
                 ));
         assertThat(sut.getAmount(), equalTo(stubAmount));
@@ -50,12 +52,12 @@ public class SavingAccountTest {
     public void shouldGetAccountIdWhenCreated() {
         //region given
         int stubId = 1;
-        Client stubClient = new Client(1, "Dummy");
+        Client dummyClient = new Client(1, "Dummy");
         double stubAmount = 1.0;
         //endregion
 
         //region when
-        SavingAccount sut = new SavingAccount(stubId, stubClient, stubAmount);
+        SavingAccount sut = new SavingAccount(stubId, dummyClient, stubAmount);
         //endregion
 
         //region then
@@ -67,16 +69,17 @@ public class SavingAccountTest {
     public void shouldGetClientIdWhenCreated() {
         //region given
         int stubId = 1;
-        Client stubClient = new Client(1, "Dummy");
+        Client stubClient = mock(Client.class);
         double stubAmount = 1.0;
         //endregion
 
         //region when
         SavingAccount sut = new SavingAccount(stubId, stubClient, stubAmount);
+        when(stubClient.getId()).thenReturn(1);
         //endregion
 
         //region then
-        assertThat("Get invalid client id when account created", stubClient.getId(), equalTo(sut.getClientId()));
+        assertThat("Get invalid client id when account created", 1, equalTo(sut.getClientId()));
         //endregion
     }
 
@@ -84,12 +87,12 @@ public class SavingAccountTest {
     public void shouldGetAmountWhenCreated() {
         //region given
         int stubId = 1;
-        Client stubClient = new Client(1, "Dummy");
+        Client dummyClient = new Client(1, "Dummy");
         double stubAmount = 1.0;
         //endregion
 
         //region when
-        SavingAccount sut = new SavingAccount(stubId, stubClient, stubAmount);
+        SavingAccount sut = new SavingAccount(stubId, dummyClient, stubAmount);
         //endregion
 
         //region then
@@ -101,16 +104,16 @@ public class SavingAccountTest {
     public void shouldGetClientWhenCreated() {
         //region given
         int stubId = 1;
-        Client stubClient = new Client(1, "Dummy");
+        Client dummyClient = new Client(1, "Dummy");
         double stubAmount = 1.0;
         //endregion
 
         //region when
-        SavingAccount sut = new SavingAccount(stubId, stubClient, stubAmount);
+        SavingAccount sut = new SavingAccount(stubId, dummyClient, stubAmount);
         //endregion
 
         //region then
-        assertThat("Get invalid client when account created", stubClient, equalTo(sut.getClient()));
+        assertThat("Get invalid client when account created", dummyClient, equalTo(sut.getClient()));
         //endregion
     }
 
@@ -119,12 +122,12 @@ public class SavingAccountTest {
         exception.expect(IllegalArgumentException.class);
         //region given
         int stubId = 0;
-        Client stubClient = new Client(1, "Dummy");
+        Client dummyClient = new Client(1, "Dummy");
         double stubAmount = 1.0;
         //endregion
 
         //region when
-        SavingAccount sut = new SavingAccount(stubId, stubClient, stubAmount);
+        SavingAccount sut = new SavingAccount(stubId, dummyClient, stubAmount);
         //endregion
     }
 
@@ -133,12 +136,12 @@ public class SavingAccountTest {
         exception.expect(IllegalArgumentException.class);
         //region given
         int stubId = -1;
-        Client stubClient = new Client(1, "Dummy");
+        Client dummyClient = new Client(1, "Dummy");
         double stubAmount = 1.0;
         //endregion
 
         //region when
-        SavingAccount sut = new SavingAccount(stubId, stubClient, stubAmount);
+        SavingAccount sut = new SavingAccount(stubId, dummyClient, stubAmount);
         //endregion
     }
 
@@ -147,12 +150,12 @@ public class SavingAccountTest {
         exception.expect(IllegalArgumentException.class);
         //region given
         int stubId = 1;
-        Client stubClient = null;
+        Client dummyClient = null;
         double stubAmount = 1.0;
         //endregion
 
         //region when
-        SavingAccount sut = new SavingAccount(stubId, stubClient, stubAmount);
+        SavingAccount sut = new SavingAccount(stubId, dummyClient, stubAmount);
         //endregion
     }
 
@@ -161,13 +164,13 @@ public class SavingAccountTest {
         exception.expect(IllegalArgumentException.class);
         //region given
         int stubId = 1;
-        Client stubClient = new Client(1, "Dummy");
+        Client dummyClient = new Client(1, "Dummy");
 
         double stubAmount = -1.0;
         //endregion
 
         //region when
-        SavingAccount sut = new SavingAccount(stubId, stubClient, stubAmount);
+        SavingAccount sut = new SavingAccount(stubId, dummyClient, stubAmount);
         //endregion
     }
 }

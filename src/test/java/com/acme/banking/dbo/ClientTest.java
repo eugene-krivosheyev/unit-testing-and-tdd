@@ -9,6 +9,8 @@ import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.Matchers.hasProperty;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 public class ClientTest {
@@ -40,6 +42,11 @@ public class ClientTest {
                         notNullValue(),
                         not("")
                 ));
+        //java-hamcrest
+        assertThat(sut, allOf(
+                hasProperty("id", is(stubId)),
+                hasProperty("name", is(stubName))
+        ));
         //endregion
     }
 
