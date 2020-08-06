@@ -7,6 +7,5 @@ public interface Account {
     UUID getClientId(); //TODO reference integrity
 
     void withDraw(double amount);
-
     void deposit(double amount);
 }
