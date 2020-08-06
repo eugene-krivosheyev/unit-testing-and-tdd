@@ -34,4 +34,14 @@ public class SavingAccount implements Account {
     public UUID getClientId() {
         return client.getId();
     }
+
+    @Override
+    public void withdraw(double amount) {
+        //TODO
+    }
+
+    @Override
+    public void deposit(double amount) {
+        //TODO
+    }
 }
