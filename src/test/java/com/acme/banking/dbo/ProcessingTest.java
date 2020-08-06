@@ -6,7 +6,6 @@ import com.acme.banking.dbo.service.Processing;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import static com.sun.tools.doclint.Entity.times;
 import static org.mockito.Mockito.*;
 
 public class ProcessingTest {

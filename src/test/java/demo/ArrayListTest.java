@@ -58,7 +58,7 @@ public class ArrayListTest {
         assertThat(sut.toString()).contains("element string representation");
     }
 
-    @Test
+    @Test @Ignore
     public void shouldCallElementsToStringWhenToString() {
         final ArrayList<Object> sut = new ArrayList<>();
         final Object mock = mock(Object.class);
