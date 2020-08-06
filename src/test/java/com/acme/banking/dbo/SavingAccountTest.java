@@ -2,8 +2,9 @@ package com.acme.banking.dbo;
 
 import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.domain.SavingAccount;
-import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -13,12 +14,16 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
 public class SavingAccountTest {
+
+    @Rule
+    public final ExpectedException exception = ExpectedException.none();
+
     @Test
     public void savePropertiesWhenCreatedSavingAccount() {
         //region given
         int stubId = 1;
-        Client stubClient = new Client(5, "Dummy");
-        double stubAmount = 1.5;
+        Client stubClient = new Client(1, "Dummy");
+        double stubAmount = 1.0;
         //endregion
 
         //region when
@@ -42,11 +47,11 @@ public class SavingAccountTest {
     }
 
     @Test
-    public void shouldGetAcountIdWhenCreated() {
+    public void shouldGetAccountIdWhenCreated() {
         //region given
         int stubId = 1;
-        Client stubClient = new Client(5, "Dummy");
-        double stubAmount = 1.5;
+        Client stubClient = new Client(1, "Dummy");
+        double stubAmount = 1.0;
         //endregion
 
         //region when
@@ -54,7 +59,7 @@ public class SavingAccountTest {
         //endregion
 
         //region then
-        Assert.assertEquals(stubId, sut.getId());
+        assertThat("Get invalid id when account created", stubId, equalTo(sut.getId()));
         //endregion
     }
 
@@ -62,8 +67,8 @@ public class SavingAccountTest {
     public void shouldGetClientIdWhenCreated() {
         //region given
         int stubId = 1;
-        Client stubClient = new Client(5, "Dummy");
-        double stubAmount = 1.5;
+        Client stubClient = new Client(1, "Dummy");
+        double stubAmount = 1.0;
         //endregion
 
         //region when
@@ -71,7 +76,7 @@ public class SavingAccountTest {
         //endregion
 
         //region then
-        Assert.assertEquals(stubClient.getId(), sut.getClientId().intValue());
+        assertThat("Get invalid client id when account created", stubClient.getId(), equalTo(sut.getClientId()));
         //endregion
     }
 
@@ -79,8 +84,8 @@ public class SavingAccountTest {
     public void shouldGetAmountWhenCreated() {
         //region given
         int stubId = 1;
-        Client stubClient = new Client(5, "Dummy");
-        double stubAmount = 1.5;
+        Client stubClient = new Client(1, "Dummy");
+        double stubAmount = 1.0;
         //endregion
 
         //region when
@@ -88,7 +93,7 @@ public class SavingAccountTest {
         //endregion
 
         //region then
-        Assert.assertEquals(stubAmount, sut.getAmount(), 0.00000001);
+        assertThat("Get invalid amount when account created", stubAmount, equalTo(sut.getAmount()));
         //endregion
     }
 
@@ -96,8 +101,8 @@ public class SavingAccountTest {
     public void shouldGetClientWhenCreated() {
         //region given
         int stubId = 1;
-        Client stubClient = new Client(5, "Dummy");
-        double stubAmount = 1.5;
+        Client stubClient = new Client(1, "Dummy");
+        double stubAmount = 1.0;
         //endregion
 
         //region when
@@ -105,16 +110,60 @@ public class SavingAccountTest {
         //endregion
 
         //region then
-        Assert.assertEquals(stubClient, sut.getClient());
+        assertThat("Get invalid client when account created", stubClient, equalTo(sut.getClient()));
         //endregion
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void shouldThrowExceptionWhenCreatedWithInvalidId() {
+    @Test
+    public void shouldNotCreateWhenIdEqualsZero() {
+        exception.expect(IllegalArgumentException.class);
         //region given
         int stubId = 0;
-        Client stubClient = new Client(5, "Dummy");
-        double stubAmount = 1.5;
+        Client stubClient = new Client(1, "Dummy");
+        double stubAmount = 1.0;
+        //endregion
+
+        //region when
+        SavingAccount sut = new SavingAccount(stubId, stubClient, stubAmount);
+        //endregion
+    }
+
+    @Test
+    public void shouldNotCreateWhenIdLessZero() {
+        exception.expect(IllegalArgumentException.class);
+        //region given
+        int stubId = -1;
+        Client stubClient = new Client(1, "Dummy");
+        double stubAmount = 1.0;
+        //endregion
+
+        //region when
+        SavingAccount sut = new SavingAccount(stubId, stubClient, stubAmount);
+        //endregion
+    }
+
+    @Test
+    public void shouldNotCreateWhenClientIsNull() {
+        exception.expect(IllegalArgumentException.class);
+        //region given
+        int stubId = 1;
+        Client stubClient = null;
+        double stubAmount = 1.0;
+        //endregion
+
+        //region when
+        SavingAccount sut = new SavingAccount(stubId, stubClient, stubAmount);
+        //endregion
+    }
+
+    @Test
+    public void shouldNotCreateWhenAmountLessZero() {
+        exception.expect(IllegalArgumentException.class);
+        //region given
+        int stubId = 1;
+        Client stubClient = new Client(1, "Dummy");
+
+        double stubAmount = -1.0;
         //endregion
 
         //region when
