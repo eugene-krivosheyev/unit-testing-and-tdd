@@ -39,6 +39,7 @@ public class ArrayListTest {
         assertTrue(sut.contains(dummy));
         assertFalse(sut.isEmpty());
 
+        //https://stackoverflow.com/questions/57476351/junit5-how-to-assert-several-properties-of-an-object-with-a-single-assert-call
         assertThat(sut)
                 .hasSize(1)
                 .isNotEmpty()

@@ -6,9 +6,8 @@ import org.junit.Test;
 
 import java.util.UUID;
 
-import static org.hamcrest.CoreMatchers.allOf;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
 import static org.junit.Assert.assertThat;
 
 public class ClientTest {
@@ -30,6 +29,10 @@ public class ClientTest {
                 equalTo(ANY_ID),
                 notNullValue()
         ));
+
+        assertThat(sut, allOf(
+                hasProperty("name", is("dummy client name")))
+        );
         //endregion
     }
 }
