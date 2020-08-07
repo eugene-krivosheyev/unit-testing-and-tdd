@@ -16,7 +16,7 @@ public class SavingAccountTest {
     public static final UUID CLIENT_UUID = UUID.fromString("75852e48-dd5e-4062-921d-bae2bd91a045");
     public static final UUID ACCOUNT_UUID = UUID.fromString("c4bf82eb-b982-47bb-9df6-76a6ebc7b707");
     final Client client = mock(Client.class);
-    final double amount = 1;
+    final double amount = 0;
 
     @Rule
     public final ExpectedException expectedException = ExpectedException.none();
