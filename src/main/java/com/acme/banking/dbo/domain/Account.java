@@ -4,9 +4,12 @@ import java.util.UUID;
 
 public interface Account {
     Integer getId();
-    Integer getClientId(); //TODO reference integrity
+    //double amount();
+    //Integer getClientId(); //TODO reference integrity
 
     void withdraw(double amount);
 
     void deposit(double amount);
+
+    double getAmount();
 }

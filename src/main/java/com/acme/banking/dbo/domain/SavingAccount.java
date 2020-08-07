@@ -30,10 +30,10 @@ public class SavingAccount implements Account {
         return id;
     }
 
-    @Override
-    public Integer getClientId() {
-        return client.getId();
-    }
+//    @Override
+//    public Integer getClientId() {
+//        return client.getId();
+//    }
 
     @Override
     public void withdraw(double amount) {
