@@ -1,0 +1,12 @@
+branch
+  client
+    account 1 0,12
+            2 100,17
+
+
+                public String getAccountReport(Account account) {
+
+                    System.out.print(account.getId().toString() + " " + Double.toString(account.getAmount()) );
+
+                    return null;
+                }

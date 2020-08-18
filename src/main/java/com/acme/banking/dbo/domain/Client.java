@@ -11,7 +11,7 @@ import java.util.Collection;
 public class Client {
     private Integer id;
     private String name;
-    private Collection<Integer> accountIds = new ArrayList<>(); //TODO
+    private Collection<Account> accounts = new ArrayList<>(); //TODO
 
     public Client(Integer id, String name) {
         if ( id == null || id<0) throw new IllegalArgumentException("идентификатор не может быть пустым или меньше 0");
@@ -27,5 +27,21 @@ public class Client {
 
     public String getName() {
         return name;
+    }
+
+    public Collection<Account> getAccounts() {
+        return accounts;
+    }
+
+    public void addAccount(Account account) {
+        accounts.add(account);
+    }
+
+    public void getClientReport() {
+        // foreach
+        for (Account account : accounts) {
+            account.getAccountReport();
+        }
+
     }
 }

@@ -32,4 +32,22 @@ public class SavingAccount implements Account {
     public Integer getClientId() {
         return client.getId();
     }
+
+    @Override
+    public void withdraw(double amount){
+        this.amount = this.amount - amount;
+    }
+
+    @Override
+    public void deposit(double amount){
+        this.amount = this.amount + amount;
+    }
+
+    @Override
+    public void getAccountReport() {
+
+        System.out.print(id.toString() + " " + Double.toString(amount) );
+
+    }
+
 }

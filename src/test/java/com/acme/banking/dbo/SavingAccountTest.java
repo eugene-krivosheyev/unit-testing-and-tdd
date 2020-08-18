@@ -17,9 +17,7 @@ public class SavingAccountTest {
         Integer accId = 1;
         Integer clientId=1;
         Client accClient = mock(Client.class);
-//        Client accClient = spy( new Client(clientId,"dummy client name"));
         double accAmount= 1.0;
-//        when(accClient.getId()).thenThrow(new IllegalStateException());
         //endregion
 
         //region when
@@ -34,8 +32,6 @@ public class SavingAccountTest {
                         hasProperty("amount", is(accAmount))
                 )
         );
-
-//        assertThat("Id клиента должен сохраниться",clientId ,is(equalTo(sut.getClientId())));
        //endregion
     }
 
