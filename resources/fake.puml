@@ -1,0 +1,7 @@
+@startuml
+Test -> SUT
+database Fake
+SUT -> Fake
+Fake --> SUT
+SUT --> Test
+@enduml

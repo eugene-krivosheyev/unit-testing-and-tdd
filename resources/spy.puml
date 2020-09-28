@@ -1,0 +1,9 @@
+@startuml
+Test -> SUT
+SUT -> Spy
+Spy -> Dependent
+Dependent --> Spy
+Spy --> SUT
+SUT --> Test
+Test -> Spy
+@enduml

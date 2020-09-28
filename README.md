@@ -85,9 +85,9 @@ git clone --depth 1 -b <YYYY-MM-project> https://github.com/eugene-krivosheyev/u
 
 Как писать интеграционные и модульные тесты? (1/0.5)
 -----------------------------------------------------
-- [ ] В чем их специфика? Системные vs Интеграционные vs Модульные
+- [ ] В чем их специфика? [Системные vs Интеграционные vs Модульные](http://www.plantuml.com/plantuml/svg/JP112y8m38Nl-HLXT_-2Z3d4iw8NwI5sGOPREzgeYEo_cuuoUobvVL_w7gsZK93dEC14za5tnceVl1DsNOLVGBmUo7K31wEpzUFa7Jl1Iy_lnLPWftZmWy7D5ZEinWmpa1KVy1pr8Xq9o310Hq8tYenjyuzkT5YJyrkwjMRa7gLSx1E7Ls_P860XadFaoSTUQtpIOYaNkssCzgmrKx_W1m00)
 - [ ] Как по коду определить скоуп?
-- [ ] Виды тест-дублеров
+- [ ] Виды тест-дублеров: [dummy](http://www.plantuml.com/plantuml/svg/SoWkIImgAStDuGf9BIvHqBLJ20uDuG9Y8BD2mQKqDxSImWFAW5HmEQJcfG2L0m00), [stub](http://www.plantuml.com/plantuml/svg/SoWkIImgAStDuGf9BIvHqBLJ20uDuG9YCBEaD8aBH2Ze8YJ0R91YBeVKl1IWJW00), [fake](http://www.plantuml.com/plantuml/svg/SoWkIImgAStDuGf9BIvHqBLJ20uDuKf9B4bCIYnELN1Bp4xb0ee09I1i4A6W2rK6n60sI2kNGsfU2j0S0000), [mock](http://www.plantuml.com/plantuml/svg/SoWkIImgAStDuGf9BIvHqBLJ20uDuG9Y4DCtFpaRB0xdEAJcfG0L0m00), [spy](http://www.plantuml.com/plantuml/svg/SoWkIImgAStDuGf9BIvHqBLJ20uDuG9YCBEWaWk8GKoNr8BKl9JKl18k60ke65a9GYUO3J8DOYHKaGDG4z0Q0000)
 - [ ] State-based testing VS Interaction-based testing
 - [ ] [Фреймворк тест-дублеров уровня объектов](https://site.mockito.org)
 - [ ] [Фреймворк тест-дублеров уровня REST-сервисов](http://wiremock.org/docs/getting-started/)

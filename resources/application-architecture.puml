@@ -1,0 +1,18 @@
+@startuml
+package "Frontend" {
+  [Handler]
+  component View {
+    [Control] -> Handler
+  }
+}
+actor User
+User -> Control
+
+database DB
+package "Backend" {
+  Handler -> [Controller]
+  [Controller] -> [Service]
+  [Service] -> [Repository]
+  [Repository] -> [DB]
+}
+@enduml

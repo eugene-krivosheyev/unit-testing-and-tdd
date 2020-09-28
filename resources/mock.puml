@@ -1,0 +1,5 @@
+@startuml
+Test -> SUT
+SUT -> Mock
+Test -> Mock
+@enduml

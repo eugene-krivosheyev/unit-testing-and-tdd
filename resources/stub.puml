@@ -1,0 +1,6 @@
+@startuml
+Test -> SUT
+SUT -> Stub
+Stub --> SUT
+SUT --> Test
+@enduml

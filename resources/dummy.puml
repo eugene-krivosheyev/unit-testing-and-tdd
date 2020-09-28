@@ -1,0 +1,5 @@
+@startuml
+Test -> SUT
+SUT ->x Dummy
+SUT --> Test
+@enduml
