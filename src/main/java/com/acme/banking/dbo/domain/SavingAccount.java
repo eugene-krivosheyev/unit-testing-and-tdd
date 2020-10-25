@@ -13,10 +13,7 @@ public class SavingAccount implements Account {
         this.amount = amount;
     }
 
-    public Client getClient() {
-        return client;
-    }
-
+    @Override
     public double getAmount() {
         return amount;
     }
@@ -27,7 +24,7 @@ public class SavingAccount implements Account {
     }
 
     @Override
-    public UUID getClientId() {
-        return client.getId();
+    public Client getClient() {
+        return client;
     }
 }

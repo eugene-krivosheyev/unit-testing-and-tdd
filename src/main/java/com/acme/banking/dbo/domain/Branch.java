@@ -5,7 +5,7 @@ import java.util.Collection;
 import static java.util.Collections.unmodifiableCollection;
 
 public class Branch {
-    private Collection<Account> accounts; //TODO impl
+    private Collection<Account> accounts; //TODO
 
     public Branch(Collection<Account> accounts) {
         this.accounts = accounts;
@@ -16,7 +16,6 @@ public class Branch {
     }
 
     public Collection<Branch> getChildren() {
-        //TODO
-        return null;
+        return null; //TODO
     }
 }

@@ -7,7 +7,7 @@ import java.util.UUID;
 public class Client {
     private UUID id;
     private String name;
-    private Collection<UUID> accountIds = new ArrayList<>(); //TODO
+    private Collection<Account> accounts = new ArrayList<>(); //TODO
 
     public Client(UUID id, String name) {
         this.id = id;

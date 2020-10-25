@@ -20,7 +20,6 @@ public class Processing {
     }
 
     public void cash(double amount, UUID fromAccountId) {
-
         Cash.log(amount, fromAccountId);
     }
 }
