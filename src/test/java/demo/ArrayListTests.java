@@ -1,11 +1,15 @@
 package demo;
 
 import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
+import static org.junit.Assume.assumeFalse;
+import static org.junit.Assume.assumeTrue;
 
 /**
  * Test Case
@@ -16,6 +20,7 @@ public class ArrayListTests {
         //region Fixture | Arrange | Given
         final ArrayList<Object> sut = new ArrayList<>();
         final Object dummy = new Object();
+        assumeTrue(sut.isEmpty());
         //endregion
 
         //region Act | When
@@ -23,11 +28,13 @@ public class ArrayListTests {
         //endregion
 
         //region Assert | Then
-//        assertFalse("", sut.isEmpty());
-//        assertEquals(2, sut.size());
+        assertFalse(sut.isEmpty());
+        assertEquals(1, sut.size());
 //
 //        assertSame(dummy, sut.get(0));
         assertTrue(sut.contains(dummy));
         //endregion
     }
+
+
 }
