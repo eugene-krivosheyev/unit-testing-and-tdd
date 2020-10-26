@@ -16,10 +16,10 @@ import static org.junit.Assume.assumeTrue;
  */
 public class ArrayListTests {
     @Test
-    public void shouldSizeIncrementedAndElementContainedWhenAddElement() {
+    public void shouldSizeIncrementedAndElementContainedWhenAddNullElement() {
         //region Fixture | Arrange | Given
         final ArrayList<Object> sut = new ArrayList<>();
-        final Object dummy = new Object();
+        final Object dummy = null;
         assumeTrue(sut.isEmpty());
         //endregion
 
@@ -31,10 +31,8 @@ public class ArrayListTests {
         assertFalse(sut.isEmpty());
         assertEquals(1, sut.size());
 //
-//        assertSame(dummy, sut.get(0));
         assertTrue(sut.contains(dummy));
+        assertSame(dummy, sut.get(0));
         //endregion
     }
-
-
 }
