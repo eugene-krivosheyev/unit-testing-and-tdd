@@ -51,7 +51,7 @@ public class SavingAccountTest {
     @Test(expected = IllegalArgumentException.class)
     public void shouldThrowIllegalArgumentExceptionWhenAmountIsNegative() {
         //region when
-        SavingAccount sut = new SavingAccount(ID_STUB, null, -5.0);
+        SavingAccount sut = new SavingAccount(ID_STUB, CLIENT_STUB, -5.0);
         //endregion
     }
 }
