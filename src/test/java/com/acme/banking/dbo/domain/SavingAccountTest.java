@@ -16,6 +16,9 @@ public class SavingAccountTest {
     private static final Client CLIENT = new Client(ID_STUB, CLIENT_NAME);
     private static final double AMOUNT = 10;
 
+    @Rule
+    public ExpectedException expectedEx = ExpectedException.none();
+    
     @Test
     public void shouldStorePropertiesWhenCreated() {
         //region when
@@ -34,18 +37,24 @@ public class SavingAccountTest {
         //endregion
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void shouldNotCreateWhenIdNull() {
+        expectedEx.expect(IllegalArgumentException.class);
+        expectedEx.expectMessage("id can't be null");
         SavingAccount sut = new SavingAccount(null, CLIENT, AMOUNT);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void shouldNotCreateWhenClientNull() {
+        expectedEx.expect(IllegalArgumentException.class);
+        expectedEx.expectMessage("client can't be null");
         SavingAccount sut = new SavingAccount(ID_STUB, null, AMOUNT);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void shouldNotCreateWhenAmountNegative() {
+        expectedEx.expect(IllegalArgumentException.class);
+        expectedEx.expectMessage("amount can't be negative");
         SavingAccount sut = new SavingAccount(ID_STUB, CLIENT, -2);
     }
 
