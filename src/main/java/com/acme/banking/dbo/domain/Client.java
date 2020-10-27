@@ -9,9 +9,14 @@ public class Client {
     private String name;
     private Collection<Account> accounts = new ArrayList<>(); //TODO
 
-    public Client(UUID id, String name) {
+    public Client(UUID id, String name, Collection<? extends Account> accounts) {
+        if (id == null) throw new IllegalArgumentException("id");
+        if (name == null) throw new IllegalArgumentException("name");
+        if (accounts == null) throw new IllegalArgumentException("accounts");
+
         this.id = id;
         this.name = name;
+        this.accounts = new ArrayList<>(accounts);
     }
 
     public UUID getId() {
@@ -20,5 +25,9 @@ public class Client {
 
     public String getName() {
         return name;
+    }
+
+    public Collection<Account> getAccounts() {
+        return accounts;
     }
 }
