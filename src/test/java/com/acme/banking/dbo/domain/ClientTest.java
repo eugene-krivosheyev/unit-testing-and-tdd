@@ -31,17 +31,17 @@ public class ClientTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void shouldThrowExceptionWhenIdNull() {
+    public void shouldNotCreateWhenIdNull() {
         Client sut = new Client(null, CLIENT_NAME);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void shouldThrowExceptionWhenNameNull() {
+    public void shouldNotCreateWhenNameNull() {
         Client sut = new Client(ID_STUB, null);
     }
     
     @Test(expected = IllegalArgumentException.class)
-    public void shouldThrowExceptionWhenNameIsBlank() {
+    public void shouldNotCreateWhenNameIsBlank() {
         Client sut = new Client(ID_STUB, EMPTY_STRING);
     }
 
