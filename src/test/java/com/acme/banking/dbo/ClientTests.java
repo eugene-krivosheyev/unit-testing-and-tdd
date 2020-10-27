@@ -18,12 +18,8 @@ public class ClientTests {
         assertEquals(sut.getName(), VALID_NAME);
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void shouldFailWhenCreateClientWithNullId() {
-        try {
-            new Client(VALID_ID, VALID_NAME);
-        } catch (IllegalArgumentException exception) {
-            assertNotNull(exception);
-        }
+        new Client(null, VALID_NAME);
     }
 }
