@@ -2,7 +2,9 @@ package com.acme.banking.dbo;
 
 import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.domain.SavingAccount;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import java.util.UUID;
 
@@ -52,11 +54,13 @@ public class SavingAccountTest {
                 .hasMessageContaining("amount must be > 0");
     }
 
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
     @Test
     public void shouldThrownIllegalArgumentExceptionWhenAmountIsZero() {
-        assertThatThrownBy(() -> {
-            SavingAccount sut = new SavingAccount(ID_STUB, CLIENT_STUB, 0);
-        }).isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("amount must be > 0");
+        thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage("amount must be > 0");
+        SavingAccount sut = new SavingAccount(ID_STUB, CLIENT_STUB, 0);
     }
 }
