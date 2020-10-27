@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 
 public class SavingAccountTest {
 
-    private static final UUID ID_STUB = UUID.randomUUID();
+    private static final UUID ID_STUB = UUID.fromString("8fe9595d-de6e-4d07-bc56-dacdad16f5c2");
     private static final String CLIENT_NAME = "dummy client name";
     private static final Client CLIENT = new Client(ID_STUB, CLIENT_NAME);
     private static final double AMOUNT = 10;
