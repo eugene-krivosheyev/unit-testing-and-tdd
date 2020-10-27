@@ -3,9 +3,9 @@ package com.acme.banking.dbo.domain;
 import java.util.UUID;
 
 public class SavingAccount implements Account {
-    private UUID id;
-    private Client client;
-    private double amount;
+    private final UUID id;
+    private final Client client;
+    private final double amount;
 
     public SavingAccount(UUID id, Client client, double amount) {
         if (id == null) throw new IllegalArgumentException("id can't be null");

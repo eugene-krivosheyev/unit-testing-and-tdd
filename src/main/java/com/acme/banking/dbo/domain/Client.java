@@ -5,9 +5,9 @@ import java.util.Collection;
 import java.util.UUID;
 
 public class Client {
-    private UUID id;
-    private String name;
-    private Collection<Account> accounts = new ArrayList<>(); //TODO
+    private final UUID id;
+    private final String name;
+    private final Collection<Account> accounts = new ArrayList<>(); //TODO
 
     public Client(UUID id, String name) {
         if (id == null) throw new IllegalArgumentException("id can't be null");
