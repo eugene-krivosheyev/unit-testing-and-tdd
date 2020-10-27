@@ -8,8 +8,8 @@ import java.util.UUID;
 import static org.junit.Assert.*;
 
 public class ClientTests {
-    private static final UUID DUMMY_ID = UUID.randomUUID();
-    private static final String DUMMY_NAME = "DUMMY_NAME";
+    private final UUID DUMMY_ID = UUID.randomUUID();
+    private final String DUMMY_NAME = "DUMMY_NAME";
 
 
     @Test
