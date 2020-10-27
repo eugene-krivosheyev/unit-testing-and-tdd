@@ -4,6 +4,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import java.util.Collections;
 import java.util.UUID;
 
 import static org.hamcrest.CoreMatchers.*;
@@ -15,7 +16,7 @@ public class SavingAccountTest {
 
     private static final UUID ID_STUB = UUID.fromString("8fe9595d-de6e-4d07-bc56-dacdad16f5c2");
     private static final String CLIENT_NAME = "dummy client name";
-    private static final Client CLIENT = new Client(ID_STUB, CLIENT_NAME);
+    private static final Client CLIENT = new Client(ID_STUB, CLIENT_NAME, Collections.emptyList());
     private static final double AMOUNT = 10;
 
     @Rule
