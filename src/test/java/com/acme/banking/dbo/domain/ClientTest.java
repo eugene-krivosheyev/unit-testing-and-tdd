@@ -12,6 +12,7 @@ import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
 public class ClientTest {
     private static final UUID ID_STUB = UUID.randomUUID();
     private static final String CLIENT_NAME = "dummy client name";
+    private static final String EMPTY_STRING = "";
 
     @Test
     public void shouldStorePropertiesWhenCreated() {
@@ -37,6 +38,11 @@ public class ClientTest {
     @Test(expected = IllegalArgumentException.class)
     public void shouldThrowExceptionWhenNameNull() {
         Client sut = new Client(ID_STUB, null);
+    }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowExceptionWhenNameIsBlank() {
+        Client sut = new Client(ID_STUB, EMPTY_STRING);
     }
 
     @Test
