@@ -8,7 +8,7 @@ import java.util.UUID;
 public class Client {
     private final UUID id;
     private final String name;
-    private Collection<Account> accounts = new ArrayList<>();
+    private List<Account> accounts = new ArrayList<>();
 
     public Client(UUID id, String name, List<Account> accounts) {
         if (id == null) throw new IllegalArgumentException("id can't be null");
@@ -27,7 +27,7 @@ public class Client {
         return name;
     }
 
-    public Collection<Account> getAccounts() {
+    public List<Account> getAccounts() {
         return accounts;
     }
 }
