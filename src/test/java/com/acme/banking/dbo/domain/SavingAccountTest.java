@@ -35,17 +35,17 @@ public class SavingAccountTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void shouldThrowExceptionWhenIdNull() {
+    public void shouldNotCreateWhenIdNull() {
         SavingAccount sut = new SavingAccount(null, CLIENT, AMOUNT);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void shouldThrowExceptionWhenClientNull() {
+    public void shouldNotCreateWhenClientNull() {
         SavingAccount sut = new SavingAccount(ID_STUB, null, AMOUNT);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void shouldThrowExceptionWhenAmountNegative() {
+    public void shouldNotCreateWhenAmountNegative() {
         SavingAccount sut = new SavingAccount(ID_STUB, CLIENT, -2);
     }
 
