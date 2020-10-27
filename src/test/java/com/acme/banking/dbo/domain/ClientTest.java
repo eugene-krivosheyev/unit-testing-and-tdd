@@ -13,6 +13,9 @@ public class ClientTest {
     private static final UUID ID_STUB = UUID.randomUUID();
     private static final String CLIENT_NAME = "dummy client name";
     private static final String EMPTY_STRING = "";
+    
+    @Rule
+    public ExpectedException expectedEx = ExpectedException.none();
 
     @Test
     public void shouldStorePropertiesWhenCreated() {
@@ -30,18 +33,24 @@ public class ClientTest {
         //endregion
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void shouldNotCreateWhenIdNull() {
+        expectedEx.expect(IllegalArgumentException.class);
+        expectedEx.expectMessage("id can't be null");
         Client sut = new Client(null, CLIENT_NAME);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void shouldNotCreateWhenNameNull() {
+        expectedEx.expect(IllegalArgumentException.class);
+        expectedEx.expectMessage("name can't be null or blank");
         Client sut = new Client(ID_STUB, null);
     }
     
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void shouldNotCreateWhenNameIsBlank() {
+        expectedEx.expect(IllegalArgumentException.class);
+        expectedEx.expectMessage("name can't be null or blank");
         Client sut = new Client(ID_STUB, EMPTY_STRING);
     }
 
