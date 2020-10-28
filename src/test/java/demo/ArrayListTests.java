@@ -1,5 +1,6 @@
 package demo;
 
+import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Ignore;
@@ -7,6 +8,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 import static org.junit.Assume.assumeFalse;
 import static org.junit.Assume.assumeTrue;
@@ -33,6 +35,12 @@ public class ArrayListTests {
 //
         assertTrue(sut.contains(dummy));
         assertSame(dummy, sut.get(0));
+
+        assertThat(sut,
+                allOf(
+                    hasItems(dummy),
+                    notNullValue()
+            ));
         //endregion
     }
 }
