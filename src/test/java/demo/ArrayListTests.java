@@ -1,5 +1,6 @@
 package demo;
 
+import org.assertj.core.api.Assertions;
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -41,6 +42,13 @@ public class ArrayListTests {
                     hasItems(dummy),
                     notNullValue()
             ));
+
+        Assertions.assertThat(sut)
+                .hasSize(1)
+                .containsExactly(dummy)
+                .isNotNull();
+
+        Assertions.assertThat("abc").isNotNull().contains("a").containsIgnoringCase("C");
         //endregion
     }
 }
