@@ -18,7 +18,7 @@ import static org.junit.Assume.assumeTrue;
  * Test Case
  */
 public class ArrayListTests {
-    @Test
+    @Test(timeout = 10_000)
     public void shouldSizeIncrementedAndElementContainedWhenAddNullElement() {
         //region Fixture | Arrange | Given
         final ArrayList<Object> sut = new ArrayList<>();
