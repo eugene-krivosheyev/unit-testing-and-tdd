@@ -61,6 +61,6 @@ public class SavingAccountTest {
 
         assertEquals(savingAccountId, savingAccount.getId());
         assertSame(client, savingAccount.getClient());
-        assertEquals(100, savingAccount.getAmount(), 1e-5);
+        assertEquals(amount, savingAccount.getAmount(), 1e-5);
     }
 }
