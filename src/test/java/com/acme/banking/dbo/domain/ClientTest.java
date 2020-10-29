@@ -1,81 +1,60 @@
-package com.acme.banking.dbo;
+package com.acme.banking.dbo.domain;
 
-import com.acme.banking.dbo.domain.Client;
-import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import java.util.UUID;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.assertThat;
-import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
+import static org.junit.Assert.assertEquals;
 
 public class ClientTest {
-    public static final UUID ID_STUB = UUID.fromString("8fe9595d-de6e-4d07-bc56-dacdad16f5c2");
 
-    @Test
-    public void shouldStorePropertiesWhenCreated() {
-        //region when
-        Client sut = new Client(ID_STUB, "dummy client name");
-        //endregion
+    @Rule
+    public final ExpectedException thrown = ExpectedException.none();
 
-        //region then
-        assertThat(sut,
-            allOf(
-                hasProperty("id", notNullValue()),
-                hasProperty("id", equalTo(ID_STUB)),
-                hasProperty("name", is("dummy client name"))
-        ));
-        //endregion
+    @Before
+    public void setUp() {
+        thrown.expect(IllegalArgumentException.class);
     }
 
     @Test
-    public void shouldThrowIllegalArgumentExceptionForIdWhenPassNullId() {
-        Exception exception = null;
-        try {
-            new Client(null, "Some client name");
-        } catch (IllegalArgumentException e) {
-            exception = e;
-        }
+    public void shouldNotCreatedWhenPassNullId() {
+        thrown.expectMessage("Id is null");
+        final UUID idNull = null;
+        final String name = "Some client name";
 
-        Assert.assertNotNull(exception);
-        Assert.assertEquals("Id is null", exception.getMessage());
+        new Client(idNull, name);
     }
 
     @Test
-    public void shouldThrowIllegalArgumentExceptionForNameWhenPassNullName() {
-        Exception exception = null;
-        try {
-            new Client(UUID.randomUUID(), null);
-        } catch (IllegalArgumentException e) {
-            exception = e;
-        }
+    public void shouldNotCreatedWhenPassNullName() {
+        thrown.expectMessage("Name is null");
+        final UUID id = UUID.randomUUID();
+        final String nameNull = null;
 
-        Assert.assertNotNull(exception);
-        Assert.assertEquals("Name is null", exception.getMessage());
+        new Client(id, nameNull);
     }
 
     @Test
-    public void shouldThrowIllegalArgumentExceptionForNameWhenPassBlankName() {
-        Exception exception = null;
-        try {
-            new Client(UUID.randomUUID(), "   ");
-        } catch (IllegalArgumentException e) {
-            exception = e;
-        }
+    public void shouldNotCreatedWhenPassBlankName() {
+        thrown.expectMessage("Name is blank");
+        final UUID id = UUID.randomUUID();
+        final String nameBlank = "   ";
 
-        Assert.assertNotNull(exception);
-        Assert.assertEquals("Name is blank", exception.getMessage());
+        new Client(id, nameBlank);
     }
 
     @Test
     public void shouldCreateClientWhenPassValidIdAndName() {
-        UUID uuid = UUID.randomUUID();
-        String name = "Some client name";
+        //TODO тут есть проблемы с рулами
+        final UUID uuid = UUID.randomUUID();
+        final String name = "Some client name";
 
         Client sut = new Client(uuid, name);
 
-        Assert.assertEquals(uuid, sut.getId());
-        Assert.assertEquals(name, sut.getName());
+        assertEquals(uuid, sut.getId());
+        assertEquals(name, sut.getName());
     }
 }

@@ -1,58 +1,61 @@
 package com.acme.banking.dbo.domain;
 
+import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import java.util.UUID;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 
 public class SavingAccountTest {
 
-    @Test
-    public void shouldThrowIllegalArgumentExceptionForIdWhenPassNullId() {
-        Exception exception = null;
-        try {
-            new SavingAccount(null, new Client(UUID.randomUUID(), "Some client name"), 100);
-        } catch (IllegalArgumentException e) {
-            exception = e;
-        }
+    @Rule
+    public final ExpectedException thrown = ExpectedException.none();
 
-        assertNotNull(exception);
-        assertEquals("Id is null", exception.getMessage());
+    @Before
+    public void setUp() {
+        thrown.expect(IllegalArgumentException.class);
     }
 
     @Test
-    public void shouldThrowIllegalArgumentExceptionForClientWhenPassNullClient() {
-        Exception exception = null;
-        try {
-            new SavingAccount(UUID.randomUUID(), null, 100);
-        } catch (IllegalArgumentException e) {
-            exception = e;
-        }
+    public void shouldNotCreatedWhenPassNullId() {
+        thrown.expectMessage("Id is null");
+        final UUID idNull = null;
+        final Client client = new Client(UUID.randomUUID(), "Some client name");
+        final int amount = 100;
 
-        assertNotNull(exception);
-        assertEquals("Client is null", exception.getMessage());
+        new SavingAccount(idNull, client, amount);
     }
 
     @Test
-    public void shouldThrowIllegalArgumentExceptionForAmountWhenPassNegativeAmount() {
-        Exception exception = null;
-        try {
-            new SavingAccount(UUID.randomUUID(), new Client(UUID.randomUUID(), "Some client name"), -100);
-        } catch (IllegalArgumentException e) {
-            exception = e;
-        }
+    public void shouldNotCreatedWhenPassNullClient() {
+        thrown.expectMessage("Client is null");
+        final UUID id = UUID.randomUUID();
+        final Client clientNull = null;
+        final int amount = 100;
 
-        assertNotNull(exception);
-        assertEquals("Amount is negative", exception.getMessage());
+        new SavingAccount(id, clientNull, amount);
+    }
+
+    @Test
+    public void shouldNotCreatedWhenPassNegativeAmount() {
+        thrown.expectMessage("Amount is negative");
+        final UUID accountId = UUID.randomUUID();
+        final Client client = new Client(UUID.randomUUID(), "Some client name");
+        final int negativeAmount = -100;
+
+        new SavingAccount(accountId, client, negativeAmount);
     }
 
     @Test
     public void shouldCreateSavingAccountWhenPassValidIdAndClientAndAmount() {
-        UUID savingAccountId = UUID.randomUUID();
-        UUID clientId = UUID.randomUUID();
-        Client client = new Client(clientId, "Some client name");
-        double amount = 100;
+        final UUID savingAccountId = UUID.randomUUID();
+        final UUID clientId = UUID.randomUUID();
+        final Client client = new Client(clientId, "Some client name");
+        final double amount = 100;
 
         SavingAccount savingAccount = new SavingAccount(savingAccountId, client, amount);
 
