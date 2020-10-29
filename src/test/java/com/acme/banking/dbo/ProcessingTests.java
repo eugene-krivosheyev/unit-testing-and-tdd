@@ -1,6 +1,7 @@
 package com.acme.banking.dbo;
 
 import com.acme.banking.dbo.domain.Account;
+import com.acme.banking.dbo.domain.SavingAccount;
 import com.acme.banking.dbo.service.AccountRepository;
 import com.acme.banking.dbo.service.Processing;
 import org.junit.Test;
@@ -12,6 +13,7 @@ import static org.mockito.Mockito.*;
 public class ProcessingTests {
     @Test
     public void shouldXXXXWhenTransfer() {
+        Account accountSpy = spy(new SavingAccount(null, null, 0));
         Account fromAccountMock = mock(Account.class);
         Account toAccountMock = mock(Account.class);
         AccountRepository accountRepoMock = mock(AccountRepository.class);
