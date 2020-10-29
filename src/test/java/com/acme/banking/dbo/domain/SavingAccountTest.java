@@ -44,25 +44,19 @@ public class SavingAccountTest {
 
     @Test
     public void shouldNotCreateWhenIdNull() {
-        Exception ex = assertThrows(IllegalArgumentException.class, () -> {
-            new SavingAccount(null, CLIENT, AMOUNT);
-        });
+        Exception ex = assertThrows(IllegalArgumentException.class, () -> new SavingAccount(null, CLIENT, AMOUNT));
         assertEquals("id can't be null", ex.getMessage());
     }
 
     @Test
     public void shouldNotCreateWhenClientNull() {
-        Exception ex = assertThrows(IllegalArgumentException.class, () -> {
-            new SavingAccount(ID_STUB, null, AMOUNT);
-        });
+        Exception ex = assertThrows(IllegalArgumentException.class, () -> new SavingAccount(ID_STUB, null, AMOUNT));
         assertEquals("client can't be null", ex.getMessage());
     }
 
     @Test
     public void shouldNotCreateWhenAmountNegative() {
-        Exception ex = assertThrows(IllegalArgumentException.class, () -> {
-            new SavingAccount(ID_STUB, CLIENT, -2);
-        });
+        Exception ex = assertThrows(IllegalArgumentException.class, () -> new SavingAccount(ID_STUB, CLIENT, -2));
         assertEquals("amount can't be negative", ex.getMessage());
     }
 
