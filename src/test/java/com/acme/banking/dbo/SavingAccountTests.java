@@ -2,7 +2,9 @@ package com.acme.banking.dbo;
 
 import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.domain.SavingAccount;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import static org.junit.Assert.*;
 
@@ -16,6 +18,9 @@ public class SavingAccountTests {
     private final double DOUBLE_DELTA = 0.00001;
     private final double NEGATIVE_AMOUNT = -0.;
 
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
     @Test
     public void shouldCreateSavingAccountWhenValidArguments() {
         SavingAccount sut = new SavingAccount(DUMMY_ID, DUMMY_CLIENT, DUMMY_AMOUNT);
@@ -25,18 +30,24 @@ public class SavingAccountTests {
         assertEquals(DUMMY_AMOUNT, sut.getAmount(), DOUBLE_DELTA);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void shouldFailCreateAccountWhenIdIsNull() {
+    @Test
+    public void shouldNotCreateAccountWhenIdIsNull() {
+        thrown.expect(IllegalArgumentException.class);
+
         new SavingAccount(null, DUMMY_CLIENT, DUMMY_AMOUNT);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void shouldFailCreateAccountWhenClientIsNull() {
+    @Test
+    public void shouldNotCreateAccountWhenClientIsNull() {
+        thrown.expect(IllegalArgumentException.class);
+
         new SavingAccount(DUMMY_ID, null, DUMMY_AMOUNT);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void shouldFailCreateAccountWhenAmountIsNegative() {
+    @Test
+    public void shouldNotCreateAccountWhenAmountIsNegative() {
+        thrown.expect(IllegalArgumentException.class);
+
         new SavingAccount(null, DUMMY_CLIENT, NEGATIVE_AMOUNT);
     }
 }
