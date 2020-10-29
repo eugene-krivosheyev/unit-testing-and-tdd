@@ -1,5 +1,6 @@
 package com.acme.banking.dbo.domain;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Collections;
@@ -13,10 +14,18 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class SavingAccountTest {
 
-    private static final UUID ID_STUB = UUID.fromString("8fe9595d-de6e-4d07-bc56-dacdad16f5c2");
-    private static final String CLIENT_NAME = "dummy client name";
-    private static final Client CLIENT = new Client(ID_STUB, CLIENT_NAME, Collections.emptyList());
-    private static final double AMOUNT = 10;
+    private static UUID ID_STUB;
+    private static String CLIENT_NAME;
+    private static Client CLIENT;
+    private static double AMOUNT;
+
+    @Before
+    public void init() {
+        ID_STUB = UUID.fromString("8fe9595d-de6e-4d07-bc56-dacdad16f5c2");
+        CLIENT_NAME = "dummy client name";
+        CLIENT = new Client(ID_STUB, CLIENT_NAME, Collections.emptyList());
+        AMOUNT = 10;
+    }
 
     @Test
     public void shouldStorePropertiesWhenCreated() {
