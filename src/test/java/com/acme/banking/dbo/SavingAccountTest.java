@@ -31,7 +31,6 @@ public class SavingAccountTest {
 
     @Test
     public void shouldStorePropertiesWhenCreated(){
-
         sut = builderSut.UUID(ID_STUB).client(CLIENT_STUB).amount(AMOUNT_STUB).build();
         assertThat(sut,
                 allOf(
@@ -52,24 +51,25 @@ public class SavingAccountTest {
 
     @Test
     public void shouldGetExceptionWhenClientIsNull() {
-        assertThatThrownBy(() -> {
-            SavingAccount sut = new SavingAccount(ID_STUB, null, AMOUNT_STUB);
-        }).isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("client must be not null");
+        thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage("client must be not null");
+
+        sut = builderSut.UUID(ID_STUB).client(null).amount(AMOUNT_STUB).build();
     }
 
     @Test
     public void shouldGetExceptionWhenAmountIsNegative() {
-        assertThatThrownBy(() -> {
-            SavingAccount sut = new SavingAccount(ID_STUB, CLIENT_STUB, -1);
-        }).isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("amount must be > 0");
+        thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage("amount must be > 0");
+
+        sut = builderSut.UUID(ID_STUB).client(CLIENT_STUB).amount(-1).build();
     }
 
     @Test
     public void shouldGetExceptionWhenAmountIsZero() {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("amount must be > 0");
-        SavingAccount sut = new SavingAccount(ID_STUB, CLIENT_STUB, 0);
+
+        sut = builderSut.UUID(ID_STUB).client(CLIENT_STUB).amount(0).build();
     }
 }
