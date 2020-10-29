@@ -32,7 +32,7 @@ public class ClientTest {
         UUID dummyId = ID_STUB;
         String dummyName = "dummy";
         Collection<Account> dummyAccounts = Collections.EMPTY_LIST;
-//        Client sut = new Client(ID_STUB, "dummy client name", dummyAccounts);
+
         Client sut = new ClientBuilder()
                 .withId(dummyId) //accumulate
                 .withName(dummyName) //accumulate
