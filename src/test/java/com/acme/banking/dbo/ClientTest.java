@@ -49,6 +49,6 @@ public class ClientTest {
         assertThatThrownBy(() -> {
             Client sut = new Client(ID_STUB, "");
         }).isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("name must be not null or empty");
+                .hasMessageContaining("name must be not null or empty1");
     }
 }
