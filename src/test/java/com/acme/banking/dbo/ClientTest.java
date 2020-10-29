@@ -8,6 +8,7 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.notification.StoppedByUserException;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
@@ -25,84 +26,83 @@ public class ClientTest {
     @Rule
     public ExpectedException exception = ExpectedException.none();
 
-//    @Test
-//    public void shouldStorePropertiesWhenCreated() {
-//        //region when
-//        Client sut = new Client(ID_STUB, "dummy client name");
-//
-//        //endregion
-//
-//        //region then
-//        assertThat(sut,
-//            allOf(
-//                hasProperty("id", notNullValue()),
-//                hasProperty("id", equalTo(ID_STUB)),
-//                hasProperty("name", is("dummy client name"))
-//        ));
-//        //endregion
-//    }
-//
-//    @Test
-//    public void shouldNotCreateClientWhenNullId() {
-//        //region Given
-//        UUID dummy = null;
-//        //endregion
-//
-//        //region When
-//        Client sut;
-//        //endregion
-//
-//        //region Then
-//        try {
-//            sut = new Client(dummy, "Jhon Doe");
-//            assertFalse("SUT not null", true);
-//        } catch (IllegalArgumentException ex) {
-//            assertEquals("id", ex.getMessage());
-//        }
-//        //endregion
-//    }
-//
-//    @Test
-//    public void shouldNotCreateClientWhenNullName() {
-//        //region Given
-//        UUID id = ID_STUB;
-//        String name = null;
-//        //endregion
-//
-//        //region When
-//        Client sut;
-//        //endregion
-//
-//        //region Then
-//        try {
-//            sut =new Client(id, name);
-//            assertFalse("SUT not null", true);
-//        } catch (IllegalArgumentException ex) {
-//            assertEquals("name", ex.getMessage());
-//        }
-//        //endregion
-//    }
-//
-//    @Test
-//    public void shouldNotCreateClientWhenEmptyName() {
-//        //region Given
-//        UUID id = ID_STUB;
-//        String name = "";
-//        //endregion
-//
-//        //region When
-//        Client sut;
-//        //endregion
-//
-//        //region Then
-//        try {
-//            sut =new Client(id, name);
-//            assertFalse("SUT not null", true);
-//        } catch (IllegalArgumentException ex) {
-//            assertEquals("name", ex.getMessage());
-//        }
-//        //endregion
-//    }
+    @Test
+    public void shouldStorePropertiesWhenCreated() {
+        //region when
+        Collection<Account> dummyAccounts = Collections.EMPTY_LIST;
+        Client sut = new Client(ID_STUB, "dummy client name", dummyAccounts);
+
+        //endregion
+
+        //region then
+        assertThat(sut,
+                allOf(
+                        hasProperty("id", notNullValue()),
+                        hasProperty("id", equalTo(ID_STUB)),
+                        hasProperty("name", is("dummy client name"))
+
+                ));
+        //endregion
+    }
+
+    @Test
+    public void shouldNotCreateClientWhenNullId() {
+        exception.expect(IllegalArgumentException.class);
+        exception.expectMessage("id is null");
+        Collection<Account> dummyAccounts = Collections.EMPTY_LIST;
+
+        //region Given
+        UUID dummy = null;
+        //endregion
+
+        //region When
+        Client sut;
+        //endregion
+
+        //region Then
+        sut = new Client(dummy, "Jhon Doe", dummyAccounts);
+        //endregion
+    }
+
+    @Test
+    public void shouldNotCreateClientWhenNullName() {
+        exception.expect(IllegalArgumentException.class);
+        exception.expectMessage("name is null");
+
+        //region Given
+        UUID id = ID_STUB;
+        String name = null;
+        Collection<Account> dummyAccounts = Collections.EMPTY_LIST;
+        //endregion
+
+        //region When
+        Client sut;
+        //endregion
+
+        //region Then
+        sut = new Client(id, name, dummyAccounts);
+        //endregion
+    }
+
+    @Test
+    public void shouldNotCreateClientWhenEmptyName() {
+        exception.expect(IllegalArgumentException.class);
+        exception.expectMessage("name is empty");
+
+        //region Given
+        UUID id = ID_STUB;
+        String name = "";
+        Collection<Account> dummyAccounts = Collections.EMPTY_LIST;
+        //endregion
+
+        //region When
+        Client sut;
+        //endregion
+
+        //region Then
+        sut = new Client(id, name, dummyAccounts);
+        //endregion
+    }
 
     @Test
     public void shouldNotCreateClientWhenEmptyAccounts() {

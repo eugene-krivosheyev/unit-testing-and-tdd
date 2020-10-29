@@ -10,8 +10,9 @@ public class Client {
     private Collection<Account> accounts;
 
     public Client(UUID id, String name, Collection<Account> accounts) {
-        if (id == null)  throw new IllegalArgumentException("id is null");
-        if (name == null || "".equals(name))  throw new IllegalArgumentException("name is null");
+        if (id == null) throw new IllegalArgumentException("id is null");
+        if (name == null) throw new IllegalArgumentException("name is null");
+        if ("".equals(name)) throw new IllegalArgumentException("name is empty");
         if (accounts == null) throw new IllegalArgumentException("accounts is null");
 
         this.id = id;
