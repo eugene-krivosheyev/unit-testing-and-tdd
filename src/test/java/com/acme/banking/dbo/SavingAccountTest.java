@@ -1,5 +1,6 @@
 package com.acme.banking.dbo;
 
+import com.acme.banking.dbo.Factories.SavingAccountBuider;
 import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.domain.SavingAccount;
 import org.junit.Assert;
@@ -21,7 +22,8 @@ public class SavingAccountTest {
 
     @Test
     public void shouldSavingAccountCreatedWhenCorrectParams() {
-        SavingAccount sut = new SavingAccount(ID_STUB, new Client(ID_STUB, "example"), 1);
+        SavingAccount sut = new SavingAccountBuider()
+                .Build();
 
         Assert.assertEquals(ID_STUB, sut.getId());
         Assert.assertEquals(1, sut.getAmount(), 0000);
@@ -32,20 +34,27 @@ public class SavingAccountTest {
     public void shouldNotCreateWhenIdIsNull() {
         exception.expect(IllegalArgumentException.class);
         exception.expectMessage("id is Null");
-        SavingAccount sut = new SavingAccount(null, new Client(ID_STUB, "example"), 1);
+
+        SavingAccount sut = new SavingAccountBuider()
+                .SetId(null)
+                .Build();
     }
 
     @Test
     public void shouldNotCreateWhenClientIsNull() {
         exception.expect(IllegalArgumentException.class);
         exception.expectMessage("client is Null");
-        SavingAccount sut = new SavingAccount(ID_STUB, null, 1);
+        SavingAccount sut = new SavingAccountBuider()
+                .SetClient(null)
+                .Build();
     }
 
     @Test
     public void shouldNotCreateWhenAmountIsNotCorrect() {
         exception.expect(IllegalArgumentException.class);
         exception.expectMessage("amount is not correct");
-        SavingAccount sut = new SavingAccount(ID_STUB, new Client(ID_STUB, "example"), -1);
+        SavingAccount sut = new SavingAccountBuider()
+                .SetAmount(-1)
+                .Build();
     }
 }
