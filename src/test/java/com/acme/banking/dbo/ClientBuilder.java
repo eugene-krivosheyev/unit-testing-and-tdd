@@ -5,12 +5,13 @@ import com.acme.banking.dbo.domain.Account;
 import com.acme.banking.dbo.domain.Client;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.UUID;
 
 public class ClientBuilder {
-    private UUID id;
-    private String name;
-    private Collection<Account> accounts;
+    private UUID id = UUID.fromString("8fe9595d-de6e-4d07-bc56-dacdad16f5c2");
+    private String name = "dummy";
+    private Collection<Account> accounts = Collections.EMPTY_LIST;
 
     public ClientBuilder withId(UUID id) {
         this.id = id;

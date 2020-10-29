@@ -29,14 +29,7 @@ public class ClientTest {
     @Test
     public void shouldStorePropertiesWhenCreated() {
         //region when
-        UUID dummyId = ID_STUB;
-        String dummyName = "dummy";
-        Collection<Account> dummyAccounts = Collections.EMPTY_LIST;
-
         Client sut = new ClientBuilder()
-                .withId(dummyId) //accumulate
-                .withName(dummyName) //accumulate
-                .withAccounts(dummyAccounts) //accumulate
                 .build(); //new | mock()
         //endregion
 
@@ -45,7 +38,7 @@ public class ClientTest {
                 allOf(
                         hasProperty("id", notNullValue()),
                         hasProperty("id", equalTo(ID_STUB)),
-                        hasProperty("name", is(dummyName)),
+                        hasProperty("name", is("dummy")),
                         hasProperty("accounts", notNullValue())
                 ));
         //endregion
@@ -58,8 +51,6 @@ public class ClientTest {
 
         //region Given
         UUID id = null;
-        String dummyName = "dummy";
-        Collection<Account> dummyAccounts = Collections.EMPTY_LIST;
         //endregion
 
         //region When
@@ -69,8 +60,6 @@ public class ClientTest {
         //region Then
         sut = new ClientBuilder()
                 .withId(id) //accumulate
-                .withName(dummyName) //accumulate
-                .withAccounts(dummyAccounts) //accumulate
                 .build(); //new | mock()
         //endregion
     }
@@ -81,9 +70,7 @@ public class ClientTest {
         exception.expectMessage("name is null");
 
         //region Given
-        UUID dummyId = ID_STUB;
         String name = null;
-        Collection<Account> dummyAccounts = Collections.EMPTY_LIST;
         //endregion
 
         //region When
@@ -92,9 +79,7 @@ public class ClientTest {
 
         //region Then
         sut = new ClientBuilder()
-                .withId(dummyId) //accumulate
                 .withName(name) //accumulate
-                .withAccounts(dummyAccounts) //accumulate
                 .build(); //new | mock()
         //endregion
     }
@@ -105,9 +90,7 @@ public class ClientTest {
         exception.expectMessage("name is empty");
 
         //region Given
-        UUID dummyId = ID_STUB;
         String name = "";
-        Collection<Account> dummyAccounts = Collections.EMPTY_LIST;
         //endregion
 
         //region When
@@ -116,9 +99,7 @@ public class ClientTest {
 
         //region Then
         sut = new ClientBuilder()
-                .withId(dummyId) //accumulate
                 .withName(name) //accumulate
-                .withAccounts(dummyAccounts) //accumulate
                 .build(); //new | mock()
         //endregion
     }
@@ -129,8 +110,6 @@ public class ClientTest {
         exception.expectMessage("accounts is null");
 
         //region Given
-        UUID dummyId = ID_STUB;
-        String dummyName = "dummy";
         Collection<Account> accounts = null;
         //endregion
 
@@ -140,8 +119,6 @@ public class ClientTest {
 
         //region Then
         sut = new ClientBuilder()
-                .withId(dummyId) //accumulate
-                .withName(dummyName) //accumulate
                 .withAccounts(accounts) //accumulate
                 .build(); //new | mock()
         //endregion
