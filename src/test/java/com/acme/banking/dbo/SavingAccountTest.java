@@ -45,33 +45,46 @@ public class SavingAccountTest {
         thrown.expectMessage("id must be not null");
 
         sut = builderSut
-                .UUID(null)
-                .client(CLIENT_STUB)
-                .amount(AMOUNT_STUB)
+                .SetUUID(null)
+                .SetClient(CLIENT_STUB)
+                .SetAmount(AMOUNT_STUB)
                 .build();
 
    }
 
     @Test
     public void shouldGetExceptionWhenClientIsNull() {
-        assertThatThrownBy(() -> {
-            SavingAccount sut = new SavingAccount(ID_STUB, null, AMOUNT_STUB);
-        }).isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("client must be not null");
+        thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage("client must be not null");
+
+        sut = builderSut
+                .SetUUID(ID_STUB)
+                .SetClient(null)
+                .SetAmount(AMOUNT_STUB)
+                .build();
     }
 
     @Test
     public void shouldGetExceptionWhenAmountIsNegative() {
-        assertThatThrownBy(() -> {
-            SavingAccount sut = new SavingAccount(ID_STUB, CLIENT_STUB, -1);
-        }).isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("amount must be > 0");
+        thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage("amount must be > 0");
+
+        sut = builderSut
+                .SetUUID(ID_STUB)
+                .SetClient(CLIENT_STUB)
+                .SetAmount(-1)
+                .build();
     }
 
     @Test
     public void shouldGetExceptionWhenAmountIsZero() {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("amount must be > 0");
-        SavingAccount sut = new SavingAccount(ID_STUB, CLIENT_STUB, 0);
+
+        sut = builderSut
+                .SetUUID(ID_STUB)
+                .SetClient(CLIENT_STUB)
+                .SetAmount(0)
+                .build();
     }
 }
