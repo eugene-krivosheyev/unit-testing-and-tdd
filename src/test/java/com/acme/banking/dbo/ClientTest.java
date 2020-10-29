@@ -32,12 +32,12 @@ public class ClientTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void shouldThrownIllegalArgumentExceptionWhenUUIDNull() {
+    public void shouldGetExceptionWhenUUIDNull() {
         Client sut = new Client(null, "dummy client name");
     }
 
     @Test
-    public void shouldThrownIllegalArgumentExceptionWhenNameNull() {
+    public void shouldGetExceptionWhenNameNull() {
         assertThatThrownBy(() -> {
             Client sut = new Client(ID_STUB, null);
         }).isInstanceOf(IllegalArgumentException.class)
@@ -45,7 +45,7 @@ public class ClientTest {
     }
 
     @Test
-    public void shouldThrownIllegalArgumentExceptionWhenNameIsEmpty() {
+    public void shouldTGetExceptionWhenNameIsEmpty() {
         assertThatThrownBy(() -> {
             Client sut = new Client(ID_STUB, "");
         }).isInstanceOf(IllegalArgumentException.class)

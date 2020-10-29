@@ -17,9 +17,18 @@ public class SavingAccountTest {
     public static final UUID ID_STUB = UUID.fromString("8fe9595d-de6e-4d07-bc56-dacdad16f5c2");
     public static final Client CLIENT_STUB = new Client(ID_STUB,"dummy client name");
     public static final double AMOUNT_STUB = 10000;
+    public SavingAccount sut;
+    public SavingAcountBuilder builderSut = new SavingAcountBuilder();
+
+
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
 
     @Test
     public void shouldStorePropertiesWhenCreated(){
+
         SavingAccount sut = new SavingAccount(ID_STUB, CLIENT_STUB, AMOUNT_STUB);
         assertThat(sut,
                 allOf(
@@ -31,15 +40,20 @@ public class SavingAccountTest {
     }
 
     @Test
-    public void shouldThrownIllegalArgumentExceptionWhenUUIDIsNull() {
-        assertThatThrownBy(() -> {
-            SavingAccount sut = new SavingAccount(null, CLIENT_STUB, AMOUNT_STUB);
-        }).isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("id must be not null");
-    }
+    public void shouldGettExceptionWhenUUIDIsNull() {
+        thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage("id must be not null");
+
+        sut = builderSut
+                .UUID(null)
+                .client(CLIENT_STUB)
+                .amount(AMOUNT_STUB)
+                .build();
+
+   }
 
     @Test
-    public void shouldThrownIllegalArgumentExceptionWhenClientIsNull() {
+    public void shouldGetExceptionWhenClientIsNull() {
         assertThatThrownBy(() -> {
             SavingAccount sut = new SavingAccount(ID_STUB, null, AMOUNT_STUB);
         }).isInstanceOf(IllegalArgumentException.class)
@@ -47,18 +61,15 @@ public class SavingAccountTest {
     }
 
     @Test
-    public void shouldThrownIllegalArgumentExceptionWhenAmountIsNegative() {
+    public void shouldGetExceptionWhenAmountIsNegative() {
         assertThatThrownBy(() -> {
             SavingAccount sut = new SavingAccount(ID_STUB, CLIENT_STUB, -1);
         }).isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("amount must be > 0");
     }
 
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-
     @Test
-    public void shouldThrownIllegalArgumentExceptionWhenAmountIsZero() {
+    public void shouldGetExceptionWhenAmountIsZero() {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("amount must be > 0");
         SavingAccount sut = new SavingAccount(ID_STUB, CLIENT_STUB, 0);
