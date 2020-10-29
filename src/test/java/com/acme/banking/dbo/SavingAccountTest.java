@@ -2,6 +2,7 @@ package com.acme.banking.dbo;
 
 import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.domain.SavingAccount;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -20,16 +21,18 @@ public class SavingAccountTest {
     public SavingAccount sut;
     public SavingAcountBuilder builderSut = new SavingAcountBuilder();
 
+    @Before
+    void SavingAccount(){
 
+    }
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-
     @Test
     public void shouldStorePropertiesWhenCreated(){
 
-        SavingAccount sut = new SavingAccount(ID_STUB, CLIENT_STUB, AMOUNT_STUB);
+        sut = builderSut.UUID(ID_STUB).client(CLIENT_STUB).amount(AMOUNT_STUB).build();
         assertThat(sut,
                 allOf(
                         hasProperty("id", notNullValue()),
@@ -44,12 +47,7 @@ public class SavingAccountTest {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("id must be not null");
 
-        sut = builderSut
-                .UUID(null)
-                .client(CLIENT_STUB)
-                .amount(AMOUNT_STUB)
-                .build();
-
+        sut = builderSut.UUID(null).client(CLIENT_STUB).amount(AMOUNT_STUB).build();
    }
 
     @Test

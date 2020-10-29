@@ -10,15 +10,18 @@ public class SavingAcountBuilder {
     private Client client;
     private double amount;
 
-    public void UUID(UUID id){
+    public SavingAcountBuilder UUID(UUID id){
         this.id=id;
+        return this;
     }
 
-    public void client(Client client){
+    public SavingAcountBuilder client(Client client){
         this.client=client;
+        return this;
     }
-    public void amount(double amount){
+    public SavingAcountBuilder amount(double amount){
         this.amount=amount;
+        return this;
     }
 
     public SavingAccount build(){
