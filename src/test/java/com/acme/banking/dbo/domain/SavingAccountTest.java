@@ -16,12 +16,14 @@ public class SavingAccountTest {
     private static UUID ID_STUB;
     private static Client CLIENT;
     private static double AMOUNT;
+    private static double NEGATIVE_AMOUNT;
 
     @Before
     public void init() {
         ID_STUB = UUID.fromString("8fe9595d-de6e-4d07-bc56-dacdad16f5c2");
         CLIENT = new ClientBuilder().build();
         AMOUNT = 10;
+        NEGATIVE_AMOUNT = -2;
     }
 
     @Test
@@ -56,7 +58,7 @@ public class SavingAccountTest {
 
     @Test
     public void shouldNotCreateWhenAmountNegative() {
-        Exception ex = assertThrows(IllegalArgumentException.class, () -> new SavingAccount(ID_STUB, CLIENT, -2));
+        Exception ex = assertThrows(IllegalArgumentException.class, () -> new SavingAccount(ID_STUB, CLIENT, NEGATIVE_AMOUNT));
         assertEquals("amount can't be negative", ex.getMessage());
     }
 
