@@ -16,10 +16,12 @@ public class SavingAccountTest {
     public final ExpectedException thrown = ExpectedException.none();
 
     private Client client;
+    private double amount;
 
     @Before
     public void setUp() {
         client = new Client(UUID.randomUUID(), "Some client name");
+        amount = 100;
     }
 
     @Test
@@ -27,7 +29,6 @@ public class SavingAccountTest {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("Id is null");
         final UUID idNull = null;
-        final int amount = 100;
 
         new SavingAccount(idNull, client, amount);
     }
@@ -38,7 +39,6 @@ public class SavingAccountTest {
         thrown.expectMessage("Client is null");
         final UUID id = UUID.randomUUID();
         final Client clientNull = null;
-        final int amount = 100;
 
         new SavingAccount(id, clientNull, amount);
     }
@@ -56,7 +56,6 @@ public class SavingAccountTest {
     @Test
     public void shouldCreateSavingAccountWhenPassValidIdAndClientAndAmount() {
         final UUID savingAccountId = UUID.randomUUID();
-        final double amount = 100;
 
         SavingAccount savingAccount = new SavingAccount(savingAccountId, client, amount);
 
