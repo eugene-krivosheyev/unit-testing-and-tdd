@@ -56,7 +56,7 @@ public class ClientTest {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("name must be not null or empty");
 
-        sut = builderSut.UUID(null).name(null).accounts(ACCOUNT_STUB).build();
+        sut = builderSut.UUID(ID_STUB).name(null).accounts(ACCOUNT_STUB).build();
     }
 
     @Test
@@ -64,6 +64,14 @@ public class ClientTest {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("name must be not null or empty");
 
-        sut = builderSut.UUID(null).name("").accounts(ACCOUNT_STUB).build();
+        sut = builderSut.UUID(ID_STUB).name("").accounts(ACCOUNT_STUB).build();
+    }
+
+    @Test
+    public void shouldTGetExceptionWhenAccountsIsNull() {
+        thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage("accounts must be not null");
+
+        sut = builderSut.UUID(ID_STUB).name("dummy client name").accounts(null).build();
     }
 }
