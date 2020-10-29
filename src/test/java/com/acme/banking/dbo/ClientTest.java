@@ -21,8 +21,9 @@ import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
 public class ClientTest {
     public static final UUID ID_STUB = UUID.fromString("8fe9595d-de6e-4d07-bc56-dacdad16f5c2");
     public static final Collection<Account> ACCOUNT_STUB = new ArrayList<>();
+
     Client sut;
-    ClientBuilder builderSut;
+    ClientBuilder builderSut = new ClientBuilder();
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -43,7 +44,7 @@ public class ClientTest {
         //endregion
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void shouldGetExceptionWhenUUIDNull() {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("id must be not null");
