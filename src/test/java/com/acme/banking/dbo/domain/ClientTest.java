@@ -14,8 +14,13 @@ public class ClientTest {
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
 
+    private String name;
+    private UUID id;
+
     @Before
     public void setUp() {
+        name = "Some client name";
+        id = UUID.randomUUID();
     }
 
     @Test
@@ -23,7 +28,6 @@ public class ClientTest {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("Id is null");
         final UUID idNull = null;
-        final String name = "Some client name";
 
         new Client(idNull, name);
     }
@@ -32,7 +36,6 @@ public class ClientTest {
     public void shouldNotCreatedWhenPassNullName() {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("Name is null");
-        final UUID id = UUID.randomUUID();
         final String nameNull = null;
 
         new Client(id, nameNull);
@@ -42,7 +45,6 @@ public class ClientTest {
     public void shouldNotCreatedWhenPassBlankName() {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("Name is blank");
-        final UUID id = UUID.randomUUID();
         final String nameBlank = "   ";
 
         new Client(id, nameBlank);
@@ -50,12 +52,9 @@ public class ClientTest {
 
     @Test
     public void shouldCreateClientWhenPassValidIdAndName() {
-        final UUID uuid = UUID.randomUUID();
-        final String name = "Some client name";
+        Client sut = new Client(id, name);
 
-        Client sut = new Client(uuid, name);
-
-        assertEquals(uuid, sut.getId());
+        assertEquals(id, sut.getId());
         assertEquals(name, sut.getName());
     }
 }
