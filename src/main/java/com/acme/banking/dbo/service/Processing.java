@@ -7,6 +7,13 @@ import java.util.Collection;
 import java.util.UUID;
 
 public class Processing {
+    private AccountRepository accounts;
+
+    public Processing(AccountRepository accounts) {
+        this.accounts = accounts;
+    }
+
+
     public UUID createClient(String name) {
         return null;
     }
@@ -16,7 +23,14 @@ public class Processing {
     }
 
     public void transfer(double amount, UUID fromAccountId, UUID toAccountId) {
+        Account from = accounts.findById(fromAccountId);
+        Account to = accounts.findById(toAccountId);
 
+        from.withdraw(amount);
+        to.deposit(amount);
+
+        accounts.save(from);
+        accounts.save(to);
     }
 
     public void cash(double amount, UUID fromAccountId) {

@@ -29,4 +29,14 @@ public class SavingAccount implements Account {
     public Client getClient() {
         return client;
     }
+
+    @Override
+    public void withdraw(double amount) {
+        //TODO
+    }
+
+    @Override
+    public void deposit(double amount) {
+        //TODO
+    }
 }
