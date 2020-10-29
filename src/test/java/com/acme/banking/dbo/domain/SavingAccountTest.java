@@ -3,7 +3,6 @@ package com.acme.banking.dbo.domain;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Collections;
 import java.util.UUID;
 
 import static org.hamcrest.CoreMatchers.*;
@@ -15,15 +14,13 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class SavingAccountTest {
 
     private static UUID ID_STUB;
-    private static String CLIENT_NAME;
     private static Client CLIENT;
     private static double AMOUNT;
 
     @Before
     public void init() {
         ID_STUB = UUID.fromString("8fe9595d-de6e-4d07-bc56-dacdad16f5c2");
-        CLIENT_NAME = "dummy client name";
-        CLIENT = new Client(ID_STUB, CLIENT_NAME, Collections.emptyList());
+        CLIENT = new ClientBuilder().build();
         AMOUNT = 10;
     }
 
