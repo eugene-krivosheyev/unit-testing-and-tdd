@@ -61,6 +61,11 @@ public class ClientTest {
 
         //region Then
         sut = new Client(dummy, "Jhon Doe", dummyAccounts);
+        sut = new ClientBuilder()
+                .withId(dummy) //accumulate
+                .withName("Jhon Doe") //accumulate
+                .withAccounts(dummyAccounts) //accumulate
+                .build(); //new | mock()
         //endregion
     }
 
@@ -80,7 +85,11 @@ public class ClientTest {
         //endregion
 
         //region Then
-        sut = new Client(id, name, dummyAccounts);
+        sut = new ClientBuilder()
+                .withId(id) //accumulate
+                .withName(name) //accumulate
+                .withAccounts(dummyAccounts) //accumulate
+                .build(); //new | mock()
         //endregion
     }
 
@@ -100,7 +109,11 @@ public class ClientTest {
         //endregion
 
         //region Then
-        sut = new Client(id, name, dummyAccounts);
+        sut = new ClientBuilder()
+                .withId(id) //accumulate
+                .withName(name) //accumulate
+                .withAccounts(dummyAccounts) //accumulate
+                .build(); //new | mock()
         //endregion
     }
 
