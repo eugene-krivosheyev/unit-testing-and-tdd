@@ -1,8 +1,6 @@
 package com.acme.banking.dbo.domain;
 
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 import java.util.Collections;
 import java.util.UUID;
@@ -11,6 +9,7 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
 import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class SavingAccountTest {
 
@@ -19,9 +18,6 @@ public class SavingAccountTest {
     private static final Client CLIENT = new Client(ID_STUB, CLIENT_NAME, Collections.emptyList());
     private static final double AMOUNT = 10;
 
-    @Rule
-    public ExpectedException expectedEx = ExpectedException.none();
-    
     @Test
     public void shouldStorePropertiesWhenCreated() {
         //region when
@@ -42,23 +38,26 @@ public class SavingAccountTest {
 
     @Test
     public void shouldNotCreateWhenIdNull() {
-        expectedEx.expect(IllegalArgumentException.class);
-        expectedEx.expectMessage("id can't be null");
-        SavingAccount sut = new SavingAccount(null, CLIENT, AMOUNT);
+        Exception ex = assertThrows(IllegalArgumentException.class, () -> {
+            new SavingAccount(null, CLIENT, AMOUNT);
+        });
+        assertEquals("id can't be null", ex.getMessage());
     }
 
     @Test
     public void shouldNotCreateWhenClientNull() {
-        expectedEx.expect(IllegalArgumentException.class);
-        expectedEx.expectMessage("client can't be null");
-        SavingAccount sut = new SavingAccount(ID_STUB, null, AMOUNT);
+        Exception ex = assertThrows(IllegalArgumentException.class, () -> {
+            new SavingAccount(ID_STUB, null, AMOUNT);
+        });
+        assertEquals("client can't be null", ex.getMessage());
     }
 
     @Test
     public void shouldNotCreateWhenAmountNegative() {
-        expectedEx.expect(IllegalArgumentException.class);
-        expectedEx.expectMessage("amount can't be negative");
-        SavingAccount sut = new SavingAccount(ID_STUB, CLIENT, -2);
+        Exception ex = assertThrows(IllegalArgumentException.class, () -> {
+            new SavingAccount(ID_STUB, CLIENT, -2);
+        });
+        assertEquals("amount can't be negative", ex.getMessage());
     }
 
     @Test

@@ -13,6 +13,7 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ClientTest {
 
@@ -50,30 +51,34 @@ public class ClientTest {
 
     @Test
     public void shouldNotCreateWhenIdNull() {
-        expectedEx.expect(IllegalArgumentException.class);
-        expectedEx.expectMessage("id can't be null");
-        Client sut = new Client(null, CLIENT_NAME, LIST_ACCOUNT);
+        Exception ex = assertThrows(IllegalArgumentException.class, () -> {
+            new Client(null, CLIENT_NAME, LIST_ACCOUNT);
+        });
+        assertEquals("id can't be null", ex.getMessage());
     }
 
     @Test
     public void shouldNotCreateWhenNameNull() {
-        expectedEx.expect(IllegalArgumentException.class);
-        expectedEx.expectMessage("name can't be null or blank");
-        Client sut = new Client(ID_STUB, null, LIST_ACCOUNT);
+        Exception ex = assertThrows(IllegalArgumentException.class, () -> {
+            new Client(ID_STUB, null, LIST_ACCOUNT);
+        });
+        assertEquals("name can't be null or blank", ex.getMessage());
     }
 
     @Test
     public void shouldNotCreateWhenNameIsBlank() {
-        expectedEx.expect(IllegalArgumentException.class);
-        expectedEx.expectMessage("name can't be null or blank");
-        Client sut = new Client(ID_STUB, EMPTY_STRING, LIST_ACCOUNT);
+        Exception ex = assertThrows(IllegalArgumentException.class, () -> {
+            new Client(ID_STUB, EMPTY_STRING, LIST_ACCOUNT);
+        });
+        assertEquals("name can't be null or blank", ex.getMessage());
     }
 
     @Test
     public void shouldNotCreateWhenAccountsNull() {
-        expectedEx.expect(IllegalArgumentException.class);
-        expectedEx.expectMessage("accounts can't be null");
-        Client sut = new Client(ID_STUB, CLIENT_NAME, null);
+        Exception ex = assertThrows(IllegalArgumentException.class, () -> {
+            new Client(ID_STUB, CLIENT_NAME, null);
+        });
+        assertEquals("accounts can't be null", ex.getMessage());
     }
 
     @Test
