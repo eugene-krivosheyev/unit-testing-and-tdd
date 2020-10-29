@@ -1,5 +1,6 @@
 package com.acme.banking.dbo.domain;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -14,10 +15,19 @@ import static org.junit.Assert.assertThat;
 import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
 
 public class ClientTest {
-    private static final UUID ID_STUB = UUID.fromString("8fe9595d-de6e-4d07-bc56-dacdad16f5c2");
-    private static final String CLIENT_NAME = "dummy client name";
-    private static final String EMPTY_STRING = "";
-    private static final List<Account> LIST_ACCOUNT = Collections.emptyList();
+
+    private static UUID ID_STUB;
+    private static String CLIENT_NAME;
+    private static String EMPTY_STRING;
+    private static List<Account> LIST_ACCOUNT;
+
+    @Before
+    public void init() {
+        ID_STUB = UUID.fromString("8fe9595d-de6e-4d07-bc56-dacdad16f5c2");
+        CLIENT_NAME = "dummy client name";
+        EMPTY_STRING = "";
+        LIST_ACCOUNT = Collections.emptyList();
+    }
 
     @Rule
     public ExpectedException expectedEx = ExpectedException.none();
