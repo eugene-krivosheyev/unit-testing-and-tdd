@@ -9,31 +9,30 @@ public class SavingAccountBuider {
     public static final UUID ID_STUB = UUID.fromString("8fe9595d-de6e-4d07-bc56-dacdad16f5c2");
 
     private UUID _id = ID_STUB;
-    private Client _client =  new Client(ID_STUB, "example");;
+    private Client _client = new Client(ID_STUB, "example");
     private double _amount = 1;
 
-
-    public SavingAccountBuider SetId(UUID id)
+    public static SavingAccountBuider Create()
     {
+        return new SavingAccountBuider();
+    }
+
+    public SavingAccountBuider SetId(UUID id) {
         _id = id;
         return this;
     }
 
-    public SavingAccountBuider SetAmount(double amount)
-    {
+    public SavingAccountBuider SetAmount(double amount) {
         _amount = amount;
         return this;
     }
 
-    public SavingAccountBuider SetClient(Client client)
-    {
+    public SavingAccountBuider SetClient(Client client) {
         _client = client;
         return this;
     }
 
-
-    public SavingAccount Build ()
-    {
+    public SavingAccount Build() {
         return new SavingAccount(_id, _client, _amount);
     }
 }

@@ -1,17 +1,12 @@
 package com.acme.banking.dbo;
 
 import com.acme.banking.dbo.Factories.SavingAccountBuider;
-import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.domain.SavingAccount;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-
 import java.util.UUID;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 
 public class SavingAccountTest {
 
@@ -26,7 +21,7 @@ public class SavingAccountTest {
                 .Build();
 
         Assert.assertEquals(ID_STUB, sut.getId());
-        Assert.assertEquals(1, sut.getAmount(), 0000);
+        Assert.assertEquals(1, sut.getAmount(), 0.001);
         Assert.assertNotNull(sut.getClient());
     }
 
@@ -35,7 +30,7 @@ public class SavingAccountTest {
         exception.expect(IllegalArgumentException.class);
         exception.expectMessage("id is Null");
 
-        SavingAccount sut = new SavingAccountBuider()
+        SavingAccount sut = SavingAccountBuider.Create()
                 .SetId(null)
                 .Build();
     }
@@ -44,7 +39,8 @@ public class SavingAccountTest {
     public void shouldNotCreateWhenClientIsNull() {
         exception.expect(IllegalArgumentException.class);
         exception.expectMessage("client is Null");
-        SavingAccount sut = new SavingAccountBuider()
+
+        SavingAccount sut = SavingAccountBuider.Create()
                 .SetClient(null)
                 .Build();
     }
@@ -53,7 +49,8 @@ public class SavingAccountTest {
     public void shouldNotCreateWhenAmountIsNotCorrect() {
         exception.expect(IllegalArgumentException.class);
         exception.expectMessage("amount is not correct");
-        SavingAccount sut = new SavingAccountBuider()
+
+        SavingAccount sut = SavingAccountBuider.Create()
                 .SetAmount(-1)
                 .Build();
     }

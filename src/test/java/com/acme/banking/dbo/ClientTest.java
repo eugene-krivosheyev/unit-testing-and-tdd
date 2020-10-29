@@ -17,12 +17,12 @@ public class ClientTest {
     public final ExpectedException exception = ExpectedException.none();
 
     @Test
-    public void shouldClientNormallyCreatedWhenCorrectParams() {
-        Client sut = new ClientBuilder()
+    public void shouldClientCreatedWhenCorrectParams() {
+        Client sut = ClientBuilder.Create()
                 .Build();
 
         Assert.assertEquals(ID_STUB, sut.getId());
-        Assert.assertEquals("example", sut.getName());
+        Assert.assertEquals("dummy", sut.getName());
     }
 
     @Test
@@ -30,9 +30,8 @@ public class ClientTest {
         exception.expect(IllegalArgumentException.class);
         exception.expectMessage("id is Nul");
 
-        Client sut = new ClientBuilder()
+        Client sut = ClientBuilder.Create()
                 .SetId(null)
-                .SetName("dummy")
                 .Build();
     }
 
@@ -41,8 +40,7 @@ public class ClientTest {
         exception.expect(IllegalArgumentException.class);
         exception.expectMessage("name is Null");
 
-        Client sut = new ClientBuilder()
-                .SetId(ID_STUB)
+        Client sut = ClientBuilder.Create()
                 .SetName(null)
                 .Build();
     }
@@ -52,8 +50,7 @@ public class ClientTest {
         exception.expect(IllegalArgumentException.class);
         exception.expectMessage("name is Empty");
 
-        Client sut = new ClientBuilder()
-                .SetId(ID_STUB)
+        Client sut = ClientBuilder.Create()
                 .SetName("")
                 .Build();
     }
