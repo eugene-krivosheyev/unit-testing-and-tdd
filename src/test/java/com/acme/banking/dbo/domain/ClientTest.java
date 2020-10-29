@@ -16,11 +16,11 @@ public class ClientTest {
 
     @Before
     public void setUp() {
-        thrown.expect(IllegalArgumentException.class);
     }
 
     @Test
     public void shouldNotCreatedWhenPassNullId() {
+        thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("Id is null");
         final UUID idNull = null;
         final String name = "Some client name";
@@ -30,6 +30,7 @@ public class ClientTest {
 
     @Test
     public void shouldNotCreatedWhenPassNullName() {
+        thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("Name is null");
         final UUID id = UUID.randomUUID();
         final String nameNull = null;
@@ -39,6 +40,7 @@ public class ClientTest {
 
     @Test
     public void shouldNotCreatedWhenPassBlankName() {
+        thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("Name is blank");
         final UUID id = UUID.randomUUID();
         final String nameBlank = "   ";
@@ -48,7 +50,6 @@ public class ClientTest {
 
     @Test
     public void shouldCreateClientWhenPassValidIdAndName() {
-        //TODO тут есть проблемы с рулами
         final UUID uuid = UUID.randomUUID();
         final String name = "Some client name";
 
