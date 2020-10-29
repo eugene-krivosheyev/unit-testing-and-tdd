@@ -1,9 +1,15 @@
 package com.acme.banking.dbo;
 
+import com.acme.banking.dbo.builder.ClientBuilder;
+import com.acme.banking.dbo.domain.Account;
 import com.acme.banking.dbo.domain.Client;
 import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.*;
@@ -14,11 +20,17 @@ import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
 
 public class ClientTest {
     public static final UUID ID_STUB = UUID.fromString("8fe9595d-de6e-4d07-bc56-dacdad16f5c2");
+    public static final Collection<Account> ACCOUNT_STUB = new ArrayList<>();
+    Client sut;
+    ClientBuilder builderSut;
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     @Test
     public void shouldStorePropertiesWhenCreated() {
         //region when
-        Client sut = new Client(ID_STUB, "dummy client name");
+        sut = builderSut.UUID(ID_STUB).name("dummy client name").accounts(ACCOUNT_STUB).build();
         //endregion
 
         //region then
@@ -33,22 +45,33 @@ public class ClientTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void shouldGetExceptionWhenUUIDNull() {
-        Client sut = new Client(null, "dummy client name");
+        thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage("id must be not null");
+
+        sut = builderSut.UUID(null).name("dummy client name").accounts(ACCOUNT_STUB).build();
     }
 
     @Test
     public void shouldGetExceptionWhenNameNull() {
-        assertThatThrownBy(() -> {
-            Client sut = new Client(ID_STUB, null);
-        }).isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("name must be not null or empty");
+        thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage("name must be not null or empty");
+
+        sut = builderSut.UUID(ID_STUB).name(null).accounts(ACCOUNT_STUB).build();
     }
 
     @Test
     public void shouldTGetExceptionWhenNameIsEmpty() {
-        assertThatThrownBy(() -> {
-            Client sut = new Client(ID_STUB, "");
-        }).isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("name must be not null or empty1");
+        thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage("name must be not null or empty");
+
+        sut = builderSut.UUID(ID_STUB).name("").accounts(ACCOUNT_STUB).build();
+    }
+
+    @Test
+    public void shouldTGetExceptionWhenAccountsIsNull() {
+        thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage("accounts must be not null");
+
+        sut = builderSut.UUID(ID_STUB).name("dummy client name").accounts(null).build();
     }
 }
