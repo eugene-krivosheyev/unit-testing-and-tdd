@@ -36,7 +36,7 @@ public class ClientTest {
     @Test
     public void shouldStorePropertiesWhenCreated() {
         //region when
-        Client sut = new Client(ID_STUB, CLIENT_NAME, LIST_ACCOUNT);
+        Client sut = new ClientBuilder().build();
         //endregion
 
         //region then
@@ -51,51 +51,43 @@ public class ClientTest {
 
     @Test
     public void shouldNotCreateWhenIdNull() {
-        Exception ex = assertThrows(IllegalArgumentException.class, () -> {
-            new Client(null, CLIENT_NAME, LIST_ACCOUNT);
-        });
+        Exception ex = assertThrows(IllegalArgumentException.class, () -> new ClientBuilder().setId(null).build());
         assertEquals("id can't be null", ex.getMessage());
     }
 
     @Test
     public void shouldNotCreateWhenNameNull() {
-        Exception ex = assertThrows(IllegalArgumentException.class, () -> {
-            new Client(ID_STUB, null, LIST_ACCOUNT);
-        });
+        Exception ex = assertThrows(IllegalArgumentException.class, () -> new ClientBuilder().setName(null).build());
         assertEquals("name can't be null or blank", ex.getMessage());
     }
 
     @Test
     public void shouldNotCreateWhenNameIsBlank() {
-        Exception ex = assertThrows(IllegalArgumentException.class, () -> {
-            new Client(ID_STUB, EMPTY_STRING, LIST_ACCOUNT);
-        });
+        Exception ex = assertThrows(IllegalArgumentException.class, () -> new ClientBuilder().setName(EMPTY_STRING).build());
         assertEquals("name can't be null or blank", ex.getMessage());
     }
 
     @Test
     public void shouldNotCreateWhenAccountsNull() {
-        Exception ex = assertThrows(IllegalArgumentException.class, () -> {
-            new Client(ID_STUB, CLIENT_NAME, null);
-        });
+        Exception ex = assertThrows(IllegalArgumentException.class, () -> new ClientBuilder().setAccounts(null).build());
         assertEquals("accounts can't be null", ex.getMessage());
     }
 
     @Test
     public void shouldGetId() {
-        Client sut = new Client(ID_STUB, CLIENT_NAME, LIST_ACCOUNT);
+        Client sut = new ClientBuilder().setId(ID_STUB).build();
         assertEquals(ID_STUB, sut.getId());
     }
 
     @Test
     public void shouldGetName() {
-        Client sut = new Client(ID_STUB, CLIENT_NAME, LIST_ACCOUNT);
+        Client sut = new ClientBuilder().setName(CLIENT_NAME).build();
         assertEquals(CLIENT_NAME, sut.getName());
     }
 
     @Test
     public void shouldGetAccounts() {
-        Client sut = new Client(ID_STUB, CLIENT_NAME, LIST_ACCOUNT);
+        Client sut = new ClientBuilder().setAccounts(LIST_ACCOUNT).build();
         assertEquals(LIST_ACCOUNT, sut.getAccounts());
     }
 
