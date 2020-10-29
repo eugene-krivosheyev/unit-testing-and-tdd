@@ -19,8 +19,6 @@ public class ClientTest {
     @Test
     public void shouldClientNormallyCreatedWhenCorrectParams() {
         Client sut = new ClientBuilder()
-                .SetId(ID_STUB)
-                .SetName("example")
                 .Build();
 
         Assert.assertEquals(ID_STUB, sut.getId());

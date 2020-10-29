@@ -8,8 +8,8 @@ public class ClientBuilder {
 
     public static final UUID ID_STUB = UUID.fromString("8fe9595d-de6e-4d07-bc56-dacdad16f5c2");
 
-    private UUID _id;
-    private String _name;
+    private UUID _id = ID_STUB;
+    private String _name = "example";
 
     public ClientBuilder SetId(UUID id)
     {
