@@ -3,14 +3,14 @@ package com.acme.banking.dbo.domain;
 import java.util.UUID;
 
 public class SavingAccount implements Account {
-    private UUID id;
-    private Client client;
-    private double amount;
+    private final UUID id;
+    private final Client client;
+    private final double amount;
 
     public SavingAccount(UUID id, Client client, double amount) {
-        if (id == null) throw new IllegalArgumentException("id");
-        if (client == null) throw new IllegalArgumentException("client");
-        if (amount < 0) throw new IllegalArgumentException("amount");
+        if (id == null) throw new IllegalArgumentException("id is null");
+        if (client == null) throw new IllegalArgumentException("client is null");
+        if (amount < 0) throw new IllegalArgumentException("amount is negative");
 
         this.id = id;
         this.client = client;
