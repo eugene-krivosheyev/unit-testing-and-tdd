@@ -16,6 +16,15 @@ public class Processing {
     }
 
     public void transfer(double amount, UUID fromAccountId, UUID toAccountId) {
+        Account from = accounts.findByID(fromAccountId);
+        Account to = accounts.findByID(toAccountId);
+
+        from.withDraw(amount);
+        to.deposit(amount);
+
+        accounts.save(from);
+        accounts.save(to);
+
 
     }
 
