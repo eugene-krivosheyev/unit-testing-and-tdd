@@ -31,4 +31,16 @@ public class SavingAccount implements Account {
     public Client getClient() {
         return client;
     }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
 }

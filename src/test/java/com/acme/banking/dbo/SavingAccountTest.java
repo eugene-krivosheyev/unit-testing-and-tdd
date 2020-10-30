@@ -1,6 +1,6 @@
 package com.acme.banking.dbo;
 
-import com.acme.banking.dbo.Factories.SavingAccountBuider;
+import com.acme.banking.dbo.Factories.SavingAccountBuilder;
 import com.acme.banking.dbo.domain.SavingAccount;
 import org.junit.Assert;
 import org.junit.Rule;
@@ -11,14 +11,15 @@ import java.util.UUID;
 public class SavingAccountTest {
 
     public static final UUID ID_STUB = UUID.fromString("8fe9595d-de6e-4d07-bc56-dacdad16f5c2");
+    public static final int NEGATIVE_AMOUNT = -1;
 
     @Rule
     public final ExpectedException exception = ExpectedException.none();
 
     @Test
     public void shouldSavingAccountCreatedWhenCorrectParams() {
-        SavingAccount sut = new SavingAccountBuider()
-                .Build();
+        SavingAccount sut = new SavingAccountBuilder()
+                .build();
 
         Assert.assertEquals(ID_STUB, sut.getId());
         Assert.assertEquals(1, sut.getAmount(), 0.001);
@@ -30,9 +31,9 @@ public class SavingAccountTest {
         exception.expect(IllegalArgumentException.class);
         exception.expectMessage("id is Null");
 
-        SavingAccount sut = SavingAccountBuider.Create()
-                .SetId(null)
-                .Build();
+        SavingAccount sut = SavingAccountBuilder.create()
+                .setId(null)
+                .build();
     }
 
     @Test
@@ -40,9 +41,9 @@ public class SavingAccountTest {
         exception.expect(IllegalArgumentException.class);
         exception.expectMessage("client is Null");
 
-        SavingAccount sut = SavingAccountBuider.Create()
-                .SetClient(null)
-                .Build();
+        SavingAccountBuilder.create()
+                .setClient(null)
+                .build();
     }
 
     @Test
@@ -50,8 +51,8 @@ public class SavingAccountTest {
         exception.expect(IllegalArgumentException.class);
         exception.expectMessage("amount is not correct");
 
-        SavingAccount sut = SavingAccountBuider.Create()
-                .SetAmount(-1)
-                .Build();
+        SavingAccountBuilder.create()
+                .setAmount(NEGATIVE_AMOUNT)
+                .build();
     }
 }
