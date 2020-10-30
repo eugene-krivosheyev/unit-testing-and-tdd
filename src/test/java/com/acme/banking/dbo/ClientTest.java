@@ -19,7 +19,7 @@ import static org.mockito.Mockito.mock;
 public class ClientTest {
     private static final UUID DUMMY_ID = UUID.fromString("8fe9595d-de6e-4d07-bc56-dacdad16f5c2");
     private static final String DUMMY_CLIENT_NAME = "dummy client name";
-    private static Collection<? extends Account> accounts;
+    private static Collection<? extends Account> DUMMY_ACCOUNTS;
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -27,18 +27,18 @@ public class ClientTest {
     @Before
     public void setUp() {
         Account account = mock(Account.class);
-        accounts = Collections.singletonList(account);
+        DUMMY_ACCOUNTS = Collections.singletonList(account);
     }
 
     @Test
     public void shouldStorePropertiesWhenCreated() {
-        Client sut = new Client(DUMMY_ID, DUMMY_CLIENT_NAME, accounts);
+        Client sut = new Client(DUMMY_ID, DUMMY_CLIENT_NAME, DUMMY_ACCOUNTS);
 
         assertThat(sut,
                 allOf(
                         hasProperty("id", equalTo(DUMMY_ID)),
                         hasProperty("name", is(DUMMY_CLIENT_NAME)),
-                        hasProperty("accounts", equalTo(accounts))
+                        hasProperty("accounts", equalTo(DUMMY_ACCOUNTS))
                 ));
     }
 
@@ -46,21 +46,21 @@ public class ClientTest {
     public void shouldNotCreateInstanceWhenIdIsNull() {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage(equalTo("id is null"));
-        new Client(null, DUMMY_CLIENT_NAME, accounts);
+        new Client(null, DUMMY_CLIENT_NAME, DUMMY_ACCOUNTS);
     }
 
     @Test
     public void shouldNotCreateInstanceWhenNameIsNull() {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage(equalTo("name is null"));
-        new Client(DUMMY_ID, null, accounts);
+        new Client(DUMMY_ID, null, DUMMY_ACCOUNTS);
     }
 
     @Test
     public void shouldNotCreateInstanceWhenNameIsEmpty() {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage(equalTo("name is empty"));
-        new Client(DUMMY_ID, "", accounts);
+        new Client(DUMMY_ID, "", DUMMY_ACCOUNTS);
     }
 
     @Test
