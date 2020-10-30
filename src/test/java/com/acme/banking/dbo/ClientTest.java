@@ -2,8 +2,6 @@ package com.acme.banking.dbo;
 
 import com.acme.banking.dbo.domain.Account;
 import com.acme.banking.dbo.domain.Client;
-import com.acme.banking.dbo.domain.SavingAccount;
-import org.hamcrest.CoreMatchers;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -16,22 +14,19 @@ import java.util.UUID;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.contains;
 import static org.mockito.Mockito.mock;
 
 public class ClientTest {
     private static final UUID DUMMY_ID = UUID.fromString("8fe9595d-de6e-4d07-bc56-dacdad16f5c2");
     private static final String DUMMY_CLIENT_NAME = "dummy client name";
-    private static final double DUMMY_DOUBLE = 1;
     private static Collection<? extends Account> accounts;
-    private static final Client CLIENT_MOCK = mock(Client.class);
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     @Before
     public void setUp() {
-        Account account = new SavingAccount(DUMMY_ID, CLIENT_MOCK, DUMMY_DOUBLE);
+        Account account = mock(Account.class);
         accounts = Collections.singletonList(account);
     }
 
@@ -41,7 +36,6 @@ public class ClientTest {
 
         assertThat(sut,
                 allOf(
-                        hasProperty("id", notNullValue()),
                         hasProperty("id", equalTo(DUMMY_ID)),
                         hasProperty("name", is(DUMMY_CLIENT_NAME)),
                         hasProperty("accounts", equalTo(accounts))
