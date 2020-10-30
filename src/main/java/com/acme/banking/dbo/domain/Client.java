@@ -1,21 +1,22 @@
 package com.acme.banking.dbo.domain;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 public class Client {
     private UUID id;
     private String name;
-    private Collection<Account> accounts = new ArrayList<>(); //TODO
+    private List<Account> accounts;
 
-    public Client(UUID id, String name) {
+    public Client(UUID id, String name, List<Account> accounts) {
         if (id == null) throw new IllegalArgumentException("id is Null");
         if (name == null) throw new IllegalArgumentException("name is Null");
         if (name.isEmpty()) throw new IllegalArgumentException("name is Empty");
+        if (accounts == null) throw new IllegalArgumentException("accounts is Null");
 
         this.id = id;
         this.name = name;
+        this.accounts = accounts;
     }
 
     public UUID getId() {
@@ -24,5 +25,9 @@ public class Client {
 
     public String getName() {
         return name;
+    }
+
+    public List<Account> getAccounts() {
+        return accounts;
     }
 }

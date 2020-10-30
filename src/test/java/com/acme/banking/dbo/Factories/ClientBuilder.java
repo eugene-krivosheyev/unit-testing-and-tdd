@@ -1,6 +1,10 @@
 package com.acme.banking.dbo.Factories;
 
+import com.acme.banking.dbo.domain.Account;
 import com.acme.banking.dbo.domain.Client;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class ClientBuilder {
@@ -9,6 +13,7 @@ public class ClientBuilder {
 
     private UUID _id = ID_STUB;
     private String _name = "dummy";
+    private List<Account> _accounts = new ArrayList<>();
 
     public static ClientBuilder Create()
     {
@@ -25,7 +30,12 @@ public class ClientBuilder {
         return this;
     }
 
+    public ClientBuilder SetAccounts(List<Account> accounts) {
+        _accounts = accounts;
+        return this;
+    }
+
     public Client Build() {
-        return new Client(_id, _name);
+        return new Client(_id, _name, _accounts);
     }
 }

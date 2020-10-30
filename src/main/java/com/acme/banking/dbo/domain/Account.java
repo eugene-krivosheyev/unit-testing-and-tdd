@@ -6,4 +6,6 @@ public interface Account {
     UUID getId();
     double getAmount();
     Client getClient(); //TODO reference integrity
+
+    void withdraw(double amount);
 }

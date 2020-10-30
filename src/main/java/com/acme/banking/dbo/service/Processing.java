@@ -1,12 +1,19 @@
 package com.acme.banking.dbo.service;
 
 import com.acme.banking.dbo.domain.Account;
-import com.acme.banking.dbo.domain.Cash;
+import com.acme.banking.dbo.repo.AccountRepository;
 
 import java.util.Collection;
 import java.util.UUID;
 
 public class Processing {
+
+    private AccountRepository accountRepository;
+
+    public Processing(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
+    }
+
     public UUID createClient(String name) {
         return null;
     }
@@ -20,6 +27,10 @@ public class Processing {
     }
 
     public void cash(double amount, UUID fromAccountId) {
-        Cash.log(amount, fromAccountId);
+        Account account = accountRepository.findById(fromAccountId);
+
+        account.withdraw(amount);
+
+        accountRepository.save(account);
     }
 }
