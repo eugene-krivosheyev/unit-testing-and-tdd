@@ -31,4 +31,6 @@ public class Client {
     public Collection<Account> getAccounts() {
         return accounts;
     }
+    //создать клиента, добавить заглушки для акк: null, пусто, 1, более 1
+
 }
