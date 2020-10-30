@@ -7,16 +7,18 @@ import com.acme.banking.dbo.domain.SavingAccount;
 import java.util.UUID;
 
 public class AccountBuilder {
-    private UUID id;
+
+    private UUID clientId = UUID.fromString("8fe9595d-de6e-4d07-bc56-dacdad16f5c3");
+    private UUID accountId = UUID.fromString("8fe9595d-de6e-4d07-bc56-dacdad16f5c2");
     private Client client;
-    private double amount;
+    private double amount = .0;
 
     static AccountBuilder builder() {
         return new AccountBuilder();
     }
 
     AccountBuilder withId(UUID id) {
-        this.id = id;
+        accountId = id;
         return this;
     }
 
@@ -31,6 +33,6 @@ public class AccountBuilder {
     }
 
     Account build() {
-        return new SavingAccount(id, client, amount);
+        return new SavingAccount(accountId, client, amount);
     }
 }

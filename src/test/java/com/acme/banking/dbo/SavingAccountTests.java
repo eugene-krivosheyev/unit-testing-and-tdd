@@ -2,22 +2,29 @@ package com.acme.banking.dbo;
 
 import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.domain.SavingAccount;
+import org.hamcrest.Matchers;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.runners.MockitoJUnitRunner;
 
+import static org.hamcrest.Matchers.closeTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
-import static org.hamcrest.beans.HasPropertyWithValue.*;
 import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.assertThat;
+import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
 
 import java.util.UUID;
 
 @SuppressWarnings("FieldCanBeLocal")
+@RunWith(MockitoJUnitRunner.class)
 public class SavingAccountTests {
     private final UUID DUMMY_ID = UUID.randomUUID();
-    private final Client DUMMY_CLIENT = new Client(DUMMY_ID, "DUMMY_NAME_CLIENT");
     private final double DUMMY_AMOUNT = 0.;
     private final double DOUBLE_DELTA = 0.00001;
     private final double NEGATIVE_AMOUNT = -1;
@@ -25,22 +32,29 @@ public class SavingAccountTests {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
+    @Mock
+    Client mockClient;
+
     @Test
     public void shouldCreateSavingAccountWhenValidArguments() {
-        SavingAccount sut = new SavingAccount(DUMMY_ID, DUMMY_CLIENT, DUMMY_AMOUNT);
+        SavingAccount sut = new SavingAccount(DUMMY_ID, mockClient, DUMMY_AMOUNT);
 
-        assertEquals(DUMMY_ID, sut.getId());
-        assertEquals(DUMMY_CLIENT, sut.getClient());
-        assertEquals(DUMMY_AMOUNT, sut.getAmount(), DOUBLE_DELTA);
+        assertThat(
+                sut,
+                allOf(
+                        hasProperty("id", equalTo(DUMMY_ID)),
+                        hasProperty("client", equalTo(mockClient)),
+                        hasProperty("amount", closeTo(DUMMY_AMOUNT, DOUBLE_DELTA))
+                )
+        );
     }
 
     @Test
     public void shouldNotCreateAccountWhenIdIsNull() {
         thrown.expect(IllegalArgumentException.class);
         AccountBuilder.builder()
+                .withClient(mockClient)
                 .withId(null)
-                .withClient(DUMMY_CLIENT)
-                .withAmount(DUMMY_AMOUNT)
                 .build();
     }
 
@@ -49,9 +63,8 @@ public class SavingAccountTests {
         thrown.expect(IllegalArgumentException.class);
 
         AccountBuilder.builder()
-                .withId(DUMMY_ID)
+                .withClient(mockClient)
                 .withClient(null)
-                .withAmount(DUMMY_AMOUNT)
                 .build();
     }
 
@@ -60,8 +73,7 @@ public class SavingAccountTests {
         thrown.expect(IllegalArgumentException.class);
 
         AccountBuilder.builder()
-                .withId(DUMMY_ID)
-                .withClient(DUMMY_CLIENT)
+                .withClient(mockClient)
                 .withAmount(NEGATIVE_AMOUNT)
                 .build();
     }
