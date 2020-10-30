@@ -12,7 +12,7 @@ public class Client {
 
     public Client(UUID id, String name, List<Account> accounts) {
         if (id == null) throw new IllegalArgumentException("id can't be null");
-        if (name == null || name.isBlank()) throw new IllegalArgumentException("name can't be null or blank");
+        if (name == null || name.trim().isEmpty()) throw new IllegalArgumentException("name can't be null or blank");
         if (accounts == null) throw new IllegalArgumentException("accounts can't be null");
         this.id = id;
         this.name = name;
