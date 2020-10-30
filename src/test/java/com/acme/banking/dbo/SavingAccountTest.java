@@ -16,16 +16,18 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
 
 public class SavingAccountTest {
     public static final UUID ID_STUB = UUID.fromString("8fe9595d-de6e-4d07-bc56-dacdad16f5c2");
-    public static final Collection<Account> ACCOUNT_STUB = new ArrayList<>();
-    public static final Client CLIENT_STUB = new Client(ID_STUB,"dummy client name", ACCOUNT_STUB);
+//    public static final Collection<Account> ACCOUNT_STUB = new ArrayList<>();
     public static final double AMOUNT_STUB = 10000;
     public SavingAccount sut;
     public SavingAcountBuilder builderSut = new SavingAcountBuilder();
 
+    //public static final Client CLIENT_STUB = new Client(ID_STUB,"dummy client name", ACCOUNT_STUB);
 
+    public Client CLIENT_STUB =  mock(Client.class);
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -42,6 +44,8 @@ public class SavingAccountTest {
                         hasProperty("client", equalTo(CLIENT_STUB)),
                         hasProperty("amount", equalTo(AMOUNT_STUB))
                 ));
+
+
     }
 
     @Test

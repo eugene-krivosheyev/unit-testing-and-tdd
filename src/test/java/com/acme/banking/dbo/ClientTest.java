@@ -3,6 +3,7 @@ package com.acme.banking.dbo;
 import com.acme.banking.dbo.builder.ClientBuilder;
 import com.acme.banking.dbo.domain.Account;
 import com.acme.banking.dbo.domain.Client;
+import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -19,6 +20,7 @@ import static org.hamcrest.CoreMatchers.allOf;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
 
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
 public class ClientTest {
@@ -30,7 +32,6 @@ public class ClientTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
-
 
 
     @Test
@@ -50,9 +51,33 @@ public class ClientTest {
     }
 
     @Test
+    public void shouldStorePropertiesWithNullClientWhenCreated() {
+        //region when
+        Account account = mock(Account.class);
+        // ACCOUNT_STUB.add(account);
+
+        sut = builderSut.UUID(ID_STUB).name("dummy client name").accounts(ACCOUNT_STUB).build();
+        //endregion
+
+        //region then
+        assertThat(sut,
+                allOf(
+                        hasProperty("id", notNullValue()),
+                        hasProperty("id", equalTo(ID_STUB)),
+                        hasProperty("name", is("dummy client name"))
+                ));
+
+        assertTrue(sut.getAccounts().isEmpty());
+
+        //endregion
+
+    }
+
+    @Test
     public void shouldStorePropertiesWithNotNullClientWhenCreated() {
         //region when
         Account account = mock(Account.class);
+        //Account account1 = mock(Account.class);
         ACCOUNT_STUB.add(account);
 
         sut = builderSut.UUID(ID_STUB).name("dummy client name").accounts(ACCOUNT_STUB).build();
@@ -66,7 +91,75 @@ public class ClientTest {
                         hasProperty("name", is("dummy client name"))
                 ));
 
+        assertThat(sut.getAccounts().size(), is(1));
+        assertThat(sut.getAccounts(), hasItem(account));
         //endregion
+
+    }
+
+    @Test
+    public void AllGoodWhenCreated() {
+        //region when
+        Account account = mock(Account.class);
+        when(account.getId()).
+                thenReturn(ID_STUB);
+
+        //Account account1 = mock(Account.class);
+        ACCOUNT_STUB.add(account);
+
+        sut = builderSut.UUID(ID_STUB).name("dummy client name").accounts(ACCOUNT_STUB).build();
+        //endregion
+
+        //region then
+        assertThat(sut,
+                allOf(
+                        hasProperty("id", notNullValue()),
+                        hasProperty("id", equalTo(ID_STUB)),
+                        hasProperty("name", is("dummy client name"))
+                ));
+        //assertThat(sut.getAccounts(), isNull());
+
+        //assertThat(sut.getAccounts(), hasItem(account));
+        assertThat(sut.getAccounts().size(), is(1));
+        assertThat(sut.getAccounts(), hasItem(account));
+        assertTrue(sut.getAccounts().iterator().next().getId().equals(account.getId()));
+
+        //endregion
+
+    }
+
+
+
+    @Test
+    public void shouldStorePropertiesWithTwoClientWhenCreated() {
+        //region when
+        Account account = mock(Account.class);
+        Account account1 = mock(Account.class);
+        ACCOUNT_STUB.add(account);
+        ACCOUNT_STUB.add(account1);
+
+
+        sut = builderSut.UUID(ID_STUB).name("dummy client name").accounts(ACCOUNT_STUB).build();
+        //endregion
+
+        //region then
+        assertThat(sut,
+                allOf(
+                        hasProperty("id", notNullValue()),
+                        hasProperty("id", equalTo(ID_STUB)),
+                        hasProperty("name", is("dummy client name"))
+                ));
+        //assertThat(sut.getAccounts(), isNull());
+
+        //assertThat(sut.getAccounts(), hasItem(account));
+        assertThat(sut.getAccounts().size(), is(2));
+        assertThat(sut.getAccounts(), hasItems(account1,account));
+        // assertThat(sut.getAccounts(), hasItems(account1,account2));
+
+//        account.size = null
+//client.account = account.client
+        //endregion
+
     }
 
     @Test
