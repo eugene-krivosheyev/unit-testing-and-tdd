@@ -38,6 +38,7 @@ public class ClientTest {
                 allOf(
                         hasProperty("id", notNullValue()),
                         hasProperty("id", equalTo(ID_STUB)),
+                        hasProperty("name", notNullValue()),
                         hasProperty("name", is("dummy")),
                         hasProperty("accounts", notNullValue())
                 ));
@@ -49,17 +50,9 @@ public class ClientTest {
         exception.expect(IllegalArgumentException.class);
         exception.expectMessage("id is null");
 
-        //region Given
-        UUID id = null;
-        //endregion
-
-        //region When
-        Client sut;
-        //endregion
-
         //region Then
-        sut = new ClientBuilder()
-                .withId(id) //accumulate
+        Client sut = new ClientBuilder()
+                .withId(null) //accumulate
                 .build(); //new | mock()
         //endregion
     }
@@ -69,17 +62,9 @@ public class ClientTest {
         exception.expect(IllegalArgumentException.class);
         exception.expectMessage("name is null");
 
-        //region Given
-        String name = null;
-        //endregion
-
-        //region When
-        Client sut;
-        //endregion
-
         //region Then
-        sut = new ClientBuilder()
-                .withName(name) //accumulate
+        Client sut = new ClientBuilder()
+                .withName(null) //accumulate
                 .build(); //new | mock()
         //endregion
     }
@@ -89,17 +74,9 @@ public class ClientTest {
         exception.expect(IllegalArgumentException.class);
         exception.expectMessage("name is empty");
 
-        //region Given
-        String name = "";
-        //endregion
-
-        //region When
-        Client sut;
-        //endregion
-
         //region Then
-        sut = new ClientBuilder()
-                .withName(name) //accumulate
+        Client sut = new ClientBuilder()
+                .withName("") //accumulate
                 .build(); //new | mock()
         //endregion
     }
@@ -109,17 +86,9 @@ public class ClientTest {
         exception.expect(IllegalArgumentException.class);
         exception.expectMessage("accounts is null");
 
-        //region Given
-        Collection<Account> accounts = null;
-        //endregion
-
-        //region When
-        Client sut;
-        //endregion
-
         //region Then
-        sut = new ClientBuilder()
-                .withAccounts(accounts) //accumulate
+        Client sut = new ClientBuilder()
+                .withAccounts(null) //accumulate
                 .build(); //new | mock()
         //endregion
     }
