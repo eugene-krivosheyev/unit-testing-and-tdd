@@ -52,6 +52,8 @@ public class SavingAccountTests {
     @Test
     public void shouldNotCreateAccountWhenIdIsNull() {
         thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage("ID is null");
+
         AccountBuilder.builder()
                 .withClient(mockClient)
                 .withId(null)
@@ -61,6 +63,7 @@ public class SavingAccountTests {
     @Test
     public void shouldNotCreateAccountWhenClientIsNull() {
         thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage("Client is null");
 
         AccountBuilder.builder()
                 .withClient(mockClient)
@@ -71,6 +74,7 @@ public class SavingAccountTests {
     @Test
     public void shouldNotCreateAccountWhenAmountIsNegative() {
         thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage("Amount is negative");
 
         AccountBuilder.builder()
                 .withClient(mockClient)
