@@ -10,6 +10,9 @@ public class Client {
     private Collection<Account> accounts = new ArrayList<>(); //TODO
 
     public Client(UUID id, String name) {
+        if (id == null) throw new IllegalArgumentException();
+        if (name == null) throw new IllegalArgumentException();
+
         this.id = id;
         this.name = name;
     }
