@@ -9,7 +9,11 @@ public class Client {
     private String name;
     private Collection<Account> accounts = new ArrayList<>(); //TODO
 
-    public Client(UUID id, String name) {
+    public Client(UUID id, String name) throws IllegalArgumentException {
+        if (id == null) throw new IllegalArgumentException("Id can not be null");
+        if (name == null) throw new IllegalArgumentException("Id can not be null");
+        if (name.isEmpty()) throw new IllegalArgumentException("Id can not be empty");
+
         this.id = id;
         this.name = name;
     }
