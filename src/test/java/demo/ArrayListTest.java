@@ -21,6 +21,7 @@ public class ArrayListTest {
      */
     @Test // -> config (xml, json)
     //@Ignore | @Disable
+    //Multiple Spec by Example
     public void shouldSizeIncrementedAndContainsElementWhenAddElement() {
         //region Arrange | Given | Fixture
         final Object dummy = new Object();
