@@ -19,13 +19,15 @@ class SavingAccountTest {
     }
 
     @Test
-    void savingsAccountInitialStateShouldBeZero() {
-        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(UUID.randomUUID(), null, 100));
+    void savingsAccountInitialStateShouldBeLessThanMaxValue() {
+        Client client = new Client(UUID.randomUUID(), "Client name");
+        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(UUID.randomUUID(), client, Double.MAX_VALUE));
     }
 
     @Test
-    void savingsAccountInitialStateShouldNotBeNegative() {
-        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(UUID.randomUUID(), null, -1));
+    void savingsAccountInitialStateShouldNotBeGreaterThanMinValue() {
+        Client client = new Client(UUID.randomUUID(), "Client name");
+        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(UUID.randomUUID(), client, Double.MAX_VALUE));
     }
 
     @Test
