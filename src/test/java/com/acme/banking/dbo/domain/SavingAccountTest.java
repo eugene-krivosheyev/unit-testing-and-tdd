@@ -27,7 +27,7 @@ class SavingAccountTest {
     @Test
     void savingsAccountInitialStateShouldNotBeGreaterThanMinValue() {
         Client client = new Client(UUID.randomUUID(), "Client name");
-        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(UUID.randomUUID(), client, Double.MAX_VALUE));
+        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(UUID.randomUUID(), client, Double.MIN_VALUE));
     }
 
     @Test
