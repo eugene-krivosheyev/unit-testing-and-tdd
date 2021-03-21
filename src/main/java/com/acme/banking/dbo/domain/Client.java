@@ -5,19 +5,19 @@ import java.util.Collection;
 import java.util.UUID;
 
 public class Client {
-    private UUID id;
+    private int id;
     private String name;
     private Collection<Account> accounts = new ArrayList<>(); //TODO
 
-    public Client(UUID id, String name) {
-        if (id == null) throw new IllegalArgumentException();
+    public Client(int id, String name) {
+        if (id <= 0) throw new IllegalArgumentException();
         if (name == null) throw new IllegalArgumentException();
 
         this.id = id;
         this.name = name;
     }
 
-    public UUID getId() {
+    public int getId() {
         return id;
     }
 
