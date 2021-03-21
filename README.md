@@ -39,14 +39,14 @@ git clone --depth 1 -b <YYYY-MM-project> https://github.com/eugene-krivosheyev/u
 - [ ] Определение модуля и возможные виды модулей
 
 ### Live Coding Demo на примере "общеизвестного класса"
-- [ ] [Подключение основного фреймворка](https://github.com/junit-team/junit4/wiki)
+- [ ] [Подключение основного фреймворка](https://junit.org/junit5/docs/current/user-guide/#running-tests-build-maven)
 - [ ] Понятие контракта по Б. Мейеру
 - [ ] Именование тест-кейса и теста
 - [ ] Понятие трасс выполнения (flows) и граничные условия
 - [ ] Подход AAA
 - [ ] Подход GWT из BDD
 - [ ] Роль фикстуры
-- [ ] [Забытый полуторный этап](https://github.com/junit-team/junit4/wiki/Assumptions-with-assume)
+- [ ] [Забытый полуторный этап](https://junit.org/junit5/docs/current/user-guide/#writing-tests-assumptions)
 - [ ] Тест = фиксированная трасса выполнения
 - [ ] Тестовый набор = спецификация компонента
 
@@ -67,14 +67,15 @@ git clone --depth 1 -b <YYYY-MM-project> https://github.com/eugene-krivosheyev/u
 
 Как ускорить разработку автотестов за счет готовых фреймворков и библиотек? (1/0.5)
 -----------------------------------------------------------------------------------
-- [ ] Подключение вспомогательных фреймворков
-- [ ] Простые сравнения средствами основного фреймворка
-- [ ] [Типизированные сравнения средствами встроенного фреймворка](https://github.com/junit-team/junit4/wiki/Matchers-and-assertthat)
+- [ ] Подключение вспомогательных фреймворков: build tool
+- [ ] [Условное выполнение тестов](https://junit.org/junit5/docs/current/user-guide/#writing-tests-conditional-execution)
+- [ ] [Типизированные сравнения средствами основного фреймворка](https://junit.org/junit5/docs/current/user-guide/#writing-tests-assertions) средствами основного фреймворка
+- [ ] [Типизированные сравнения средствами отдельного фреймворка](https://hamcrest.org/JavaHamcrest/tutorial)
 - [ ] [Типизированные сравнения средствами отдельного фреймворка](https://assertj.github.io/doc/)
-- [ ] [Таймауты](https://github.com/junit-team/junit4/wiki/Timeout-for-tests)
-- [ ] [Исключения](https://github.com/junit-team/junit4/wiki/Exception-testing)
-- [ ] [Параметризованные тесты](https://github.com/junit-team/junit4/wiki/Parameterized-tests)
-- [ ] Расширение поведения тестов с помощью [запускальщиков](https://github.com/junit-team/junit4/wiki/Test-runners) и [правил](https://github.com/junit-team/junit4/wiki/Rules)
+- [ ] [Исключения](https://junit.org/junit5/docs/current/user-guide/#writing-tests-assertions)
+- [ ] [Таймауты](https://junit.org/junit5/docs/current/user-guide/#writing-tests-assertions)
+- [ ] [Параметризованные тесты](https://junit.org/junit5/docs/current/user-guide/#writing-tests-parameterized-tests)
+- [ ] [Расширения](https://junit.org/junit5/docs/current/user-guide/#extensions), в том числе [готовые](https://junit.org/junit5/docs/current/user-guide/#writing-tests-built-in-extensions)
 
 ### Coding Iteration #02
 - [ ] Given legacy codebase with Client and SavingAccount domain types
@@ -89,7 +90,7 @@ git clone --depth 1 -b <YYYY-MM-project> https://github.com/eugene-krivosheyev/u
 - [ ] Как по коду определить скоуп?
 - [ ] Виды тест-дублеров: [dummy](http://www.plantuml.com/plantuml/svg/SoWkIImgAStDuGf9BIvHqBLJ20uDuG9Y8BD2mQKqDxSImWFAW5HmEQJcfG2L0m00), [stub](http://www.plantuml.com/plantuml/svg/SoWkIImgAStDuGf9BIvHqBLJ20uDuG9YCBEaD8aBH2Ze8YJ0R91YBeVKl1IWJW00), [fake](http://www.plantuml.com/plantuml/svg/SoWkIImgAStDuGf9BIvHqBLJ20uDuKf9B4bCIYnELN1Bp4xb0ee09I1i4A6W2rK6n60sI2kNGsfU2j0S0000), [mock](http://www.plantuml.com/plantuml/svg/SoWkIImgAStDuGf9BIvHqBLJ20uDuG9Y4DCtFpaRB0xdEAJcfG0L0m00), [spy](http://www.plantuml.com/plantuml/svg/SoWkIImgAStDuGf9BIvHqBLJ20uDuG9YCBEWaWk8GKoNr8BKl9JKl18k60ke65a9GYUO3J8DOYHKaGDG4z0Q0000)
 - [ ] State-based testing VS Interaction-based testing
-- [ ] [Фреймворк тест-дублеров уровня объектов](https://site.mockito.org)
+- [ ] [Фреймворк тест-дублеров уровня объектов](https://site.mockito.org) и [интеграция с основным тестовым фреймворком](https://www.baeldung.com/mockito-junit-5-extension)
 - [ ] [Фреймворк тест-дублеров уровня REST-сервисов](http://wiremock.org/docs/getting-started/)
 - [ ] [Фреймворк тест-дублеров уровня REST-сервисов](https://www.mock-server.com)
 - [ ] Как среда сборки различает UT и IT
@@ -105,7 +106,7 @@ git clone --depth 1 -b <YYYY-MM-project> https://github.com/eugene-krivosheyev/u
 -------------------------------------------------------------------
 - [ ] Как максимально реюзать фикстуры?
 - [ ] Наследование тест-кейсов
-- [ ] [Методы фреймворка](https://github.com/junit-team/junit4/wiki/Test-fixtures)
+- [ ] [Аннотации фреймворка](https://junit.org/junit5/docs/current/user-guide/#writing-tests-annotations)
 - [ ] Fixture Builders
 
 ### Coding Iteration #04
@@ -118,8 +119,8 @@ git clone --depth 1 -b <YYYY-MM-project> https://github.com/eugene-krivosheyev/u
 Как группировать тесты в наборы? (0.5/0)
 ----------------------------------------
 - [ ] Зачем нужны test suites?
-- [ ] Способы группировки "из коробки" фреймворка: [группы](https://github.com/junit-team/junit4/wiki/aggregating-tests-in-suites) и [категории](https://github.com/junit-team/junit4/wiki/Categories)
-- [ ] Способ группировки средствами среды сборки
+- [ ] Способы группировки ["из коробки" фреймворка](https://junit.org/junit5/docs/current/user-guide/#writing-tests-tagging-and-filtering) и [запуска набора](https://www.baeldung.com/junit-filtering-tests)
+- [ ] Способ фильтрации средствами среды сборки [модульных](https://maven.apache.org/surefire/maven-surefire-plugin/examples/inclusion-exclusion.html) и [интеграционных](https://maven.apache.org/surefire/maven-failsafe-plugin/examples/inclusion-exclusion.html) тестов
 
 Как поддерживать качество тестов и снижать дублирование? (1/0.5)
 ----------------------------------------------------------------
@@ -160,6 +161,8 @@ git clone --depth 1 -b <YYYY-MM-project> https://github.com/eugene-krivosheyev/u
 - [ ] When developers implement polymorphic testable implementation for Reporting and CheckingAccount
 - [ ] Then cross-team code review should state for its testability
 
+---
+
 Какую ценность дает практика TDD? (0.5/0)
 -----------------------------------------
 - [ ] Что такое TDD?
@@ -190,9 +193,7 @@ git clone --depth 1 -b <YYYY-MM-project> https://github.com/eugene-krivosheyev/u
 - [ ] Then coverage for this component should be 100%
 - [ ] And public code review should state for maintainability
 
----
-
-[Базовые шаблоны TDD](https://www.dropbox.com/s/iiip3qdny3wwuyd/00.jpg?dl=0) (1.5/1)
+[Базовые шаблоны TDD](https://gist.github.com/jameshwang/5335032) (1.5/1)
 ------------------------------------------------------------------------------------
 - [ ] Test First
 - [ ] Isolated Tests

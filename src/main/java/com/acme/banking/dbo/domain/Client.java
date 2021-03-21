@@ -2,19 +2,18 @@ package com.acme.banking.dbo.domain;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.UUID;
 
 public class Client {
-    private UUID id;
+    private int id;
     private String name;
     private Collection<Account> accounts = new ArrayList<>(); //TODO
 
-    public Client(UUID id, String name) {
+    public Client(int id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public UUID getId() {
+    public int getId() {
         return id;
     }
 
