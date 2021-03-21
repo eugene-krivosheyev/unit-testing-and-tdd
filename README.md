@@ -41,10 +41,9 @@ git clone --depth 1 -b <YYYY-MM-project> https://github.com/eugene-krivosheyev/u
 ### Live Coding Demo на примере "общеизвестного класса"
 - [ ] [Подключение основного фреймворка](https://junit.org/junit5/docs/current/user-guide/#running-tests-build-maven)
 - [ ] Понятие контракта по Б. Мейеру
-- [ ] Именование тест-кейса и теста
+- [ ] Именование [тест-кейса/тест-класса и теста/тест-метода](https://junit.org/junit5/docs/current/user-guide/#writing-tests-classes-and-methods)
 - [ ] Понятие трасс выполнения (flows) и граничные условия
-- [ ] Подход AAA
-- [ ] Подход GWT из BDD
+- [ ] Подходы AAA и GWT из BDD
 - [ ] Роль фикстуры
 - [ ] [Забытый полуторный этап](https://junit.org/junit5/docs/current/user-guide/#writing-tests-assumptions)
 - [ ] Тест = фиксированная трасса выполнения
@@ -104,10 +103,11 @@ git clone --depth 1 -b <YYYY-MM-project> https://github.com/eugene-krivosheyev/u
 
 Реализация фикстуры для обеспечения поддерживаемости тестов (1.5/1)
 -------------------------------------------------------------------
+- [ ] [Когда и сколько раз создается объект тестового класса?](https://junit.org/junit5/docs/current/user-guide/#writing-tests-test-instance-lifecycle) 
 - [ ] Как максимально реюзать фикстуры?
-- [ ] Наследование тест-кейсов
-- [ ] [Аннотации фреймворка](https://junit.org/junit5/docs/current/user-guide/#writing-tests-annotations)
-- [ ] Fixture Builders
+- Наследование тест-кейсов
+- [Методы жизненного цикла теста](https://junit.org/junit5/docs/current/user-guide/#writing-tests-annotations)
+- Fixture Builders
 
 ### Coding Iteration #04
 - [ ] Given test codebase
@@ -119,7 +119,8 @@ git clone --depth 1 -b <YYYY-MM-project> https://github.com/eugene-krivosheyev/u
 Как группировать тесты в наборы? (0.5/0)
 ----------------------------------------
 - [ ] Зачем нужны test suites?
-- [ ] Способы группировки ["из коробки" фреймворка](https://junit.org/junit5/docs/current/user-guide/#writing-tests-tagging-and-filtering) и [запуска набора](https://www.baeldung.com/junit-filtering-tests)
+- [ ] [Вложенные тесты](https://junit.org/junit5/docs/current/user-guide/#writing-tests-nested)
+- [ ] [Теги](https://junit.org/junit5/docs/current/user-guide/#writing-tests-tagging-and-filtering) и [запуска набора](https://www.baeldung.com/junit-filtering-tests)
 - [ ] Способ фильтрации средствами среды сборки [модульных](https://maven.apache.org/surefire/maven-surefire-plugin/examples/inclusion-exclusion.html) и [интеграционных](https://maven.apache.org/surefire/maven-failsafe-plugin/examples/inclusion-exclusion.html) тестов
 
 Как поддерживать качество тестов и снижать дублирование? (1/0.5)
