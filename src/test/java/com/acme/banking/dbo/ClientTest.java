@@ -6,8 +6,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -56,5 +55,17 @@ public class ClientTest {
                 .hasFieldOrPropertyWithValue("id", clientId)
                 .hasFieldOrPropertyWithValue("name", clientName);
         //endregion
+    }
+
+    @Test
+    public void shouldGetErrorWhenCreateWithNullName() {
+        final int DUMMY_ID = 1;
+
+        final IllegalArgumentException expectedException = assertThrows(
+                IllegalArgumentException.class,
+                () -> new Client(DUMMY_ID, null)
+        );
+
+        assertEquals("name is not null", expectedException.getMessage());
     }
 }
