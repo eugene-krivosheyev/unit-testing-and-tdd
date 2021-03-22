@@ -1,12 +1,12 @@
 package com.acme.banking.dbo;
 
 import com.acme.banking.dbo.domain.Client;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 
 import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
 
 public class ClientTest {
