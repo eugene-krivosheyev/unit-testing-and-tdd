@@ -5,6 +5,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.*;
@@ -15,7 +18,10 @@ import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
 
 
 @DisplayName("Test suite")
+//@ExtendWith(MockitoExtension.class)
 public class ClientTest {
+//    @Mock Object stub;
+
     @Test @Disabled //@Ignore
     @DisplayName("Test case")
     public void shouldStorePropertiesWhenCreated() {
