@@ -1,13 +1,13 @@
 package com.acme.banking.dbo.domain;
 
-import org.junit.Test;
+import org.assertj.core.data.Offset;
+import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 public class SavingAccountTest {
 
@@ -19,10 +19,11 @@ public class SavingAccountTest {
 
         SavingAccount actual = new SavingAccount(id, client, amount);
 
-        assertNotNull(actual);
-        assertEquals(id, actual.getId());
-        assertEquals(client, actual.getClient());
-        assertEquals(amount, actual.getAmount(), 0.01d);
+        assertThat(actual).isNotNull()
+                .hasFieldOrPropertyWithValue("id", id)
+                .hasFieldOrPropertyWithValue("client", client);
+        // Type of double is erased in assertj chain, so we have to use separate assert
+        assertThat(actual.getAmount()).isEqualTo(amount, Offset.offset(0.01d));
     }
 
     @Test

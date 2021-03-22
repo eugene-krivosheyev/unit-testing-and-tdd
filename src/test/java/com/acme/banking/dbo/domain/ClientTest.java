@@ -1,13 +1,12 @@
 package com.acme.banking.dbo.domain;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 public class ClientTest {
 
@@ -18,9 +17,9 @@ public class ClientTest {
 
         Client actual = new Client(id, name);
 
-        assertNotNull(actual);
-        assertEquals(id, actual.getId());
-        assertEquals(name, actual.getName());
+        assertThat(actual).isNotNull()
+                .hasFieldOrPropertyWithValue("id", id)
+                .hasFieldOrPropertyWithValue("name", name);
     }
 
     @Test
