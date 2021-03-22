@@ -1,4 +1,4 @@
-package com.acme.banking.dbo;
+package com.acme.banking.dbo.domain;
 
 import com.acme.banking.dbo.domain.Client;
 import org.junit.jupiter.api.Assertions;

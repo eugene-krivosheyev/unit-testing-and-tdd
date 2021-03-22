@@ -73,10 +73,10 @@
 				</dependencies>
 				<configuration>
 					<targetClasses>
-						<param>com.acme.*</param>
+						<param>com.acme.banking.dbo.domain.*</param>
 					</targetClasses>
 					<targetTests>
-						<param>com.acme.*</param>
+						<param>com.acme.banking.dbo.domain.*</param>
 					</targetTests>
 				</configuration>
 				<executions>
