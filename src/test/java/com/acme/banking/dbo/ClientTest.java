@@ -1,54 +1,53 @@
 package com.acme.banking.dbo;
 
 import com.acme.banking.dbo.domain.Client;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
-import java.util.UUID;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assumptions.*;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
-import static org.junit.Assert.*;
 
+
+@DisplayName("Test suite")
 public class ClientTest {
-    private final UUID ID_STUB = UUID.fromString("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa");
-
-    @Test
+    @Test @Disabled("temporary disabled")
+    @DisplayName("Test case")
     public void shouldStorePropertiesWhenCreated() {
-        Client sut = new Client(ID_STUB, "Dummy");
+        //region given
+        final int clientId = 1;
+        final String clientName = "dummy client name";
+        //endregion
 
+        //region when
+        Client sut = new Client(clientId, clientName);
+        assumeTrue(sut != null);
+        //endregion
+
+        //region then
+        //Junit5:
+        assertAll("Client store its properties",
+                () -> assertEquals(clientId, sut.getId()),
+                () -> assertEquals(clientName, sut.getName())
+        );
+
+        //Hamcrest:
         assertThat(sut,
             allOf(
-
-                hasProperty("id", equalTo(ID_STUB)),
-                hasProperty("name", is("Dummy"))
+                hasProperty("id", notNullValue()),
+                hasProperty("id", equalTo(clientId)),
+                hasProperty("name", is(clientName))
         ));
+
+        //AssertJ:
+        org.assertj.core.api.Assertions.assertThat(sut)
+                .hasFieldOrPropertyWithValue("id", clientId)
+                .hasFieldOrPropertyWithValue("name", clientName);
+        //endregion
     }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void clientIdShouldBeEqual36Symbols() {
-        new Client(
-                UUID.fromString("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaaTOCUT"), "Dummy"
-        );
-    }
-
-    @Test
-    public void clientNameShouldStartsWithCapitalLetterAndEndsWithLowercaseLetter() {
-        Client sut = new Client(
-                ID_STUB, "Dummy"
-        );
-
-        assertThat(sut,
-                allOf(
-                        hasProperty("name", startsWith("D")),
-                        hasProperty("name", endsWith("y"))
-                ));
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void clientNameShouldBeLongerThen1Letter() {
-        Client sut = new Client(
-                ID_STUB, "D"
-        );
-    }
-
 }
