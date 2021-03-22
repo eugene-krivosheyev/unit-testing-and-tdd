@@ -10,8 +10,7 @@ import java.util.UUID;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 public class SavingAccountTest {
     private final UUID ID_STUB = UUID.randomUUID();
@@ -22,30 +21,21 @@ public class SavingAccountTest {
 
     @Test
     public void shouldStorePropertiesWhenCreated() {
-        //region when
         double amount = 10000;
         SavingAccount sut = new SavingAccount(ID_STUB, client, amount);
-        //endregion
 
-        //region then
         assertThat(sut,
                 allOf(
-                        hasProperty("id", notNullValue()),
                         hasProperty("id", equalTo(ID_STUB)),
-                        hasProperty("client", notNullValue()),
                         hasProperty("client", instanceOf(Client.class)),
                         hasProperty("amount", equalTo(amount))
                 ));
-        //endregion
     }
 
     @Test
     public void amountShuntBeLessThenZero(){
         double amount = -10;
-        try {
-            SavingAccount sut = new SavingAccount(ID_STUB, client, amount);
-        } catch (IllegalArgumentException e) {
-            assertEquals("Amount can't be negative", e.getMessage());
-        }
+        expectedEx.expectMessage("Amount can't be negative");
+        new SavingAccount(ID_STUB, client, amount);
     }
 }

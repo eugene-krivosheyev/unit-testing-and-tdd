@@ -10,65 +10,45 @@ import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
 import static org.junit.Assert.*;
 
 public class ClientTest {
-    private final UUID ID_STUB = UUID.fromString("8fe9595d-de6e-4d07-bc56-dacdad16f5c2");
+    private final UUID ID_STUB = UUID.fromString("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa");
 
     @Test
     public void shouldStorePropertiesWhenCreated() {
-        //region when
         Client sut = new Client(ID_STUB, "Dummy");
-        //endregion
 
-        //region then
         assertThat(sut,
             allOf(
-                hasProperty("id", notNullValue()),
+
                 hasProperty("id", equalTo(ID_STUB)),
                 hasProperty("name", is("Dummy"))
         ));
-        //endregion
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void clientIdShouldBeEqual36Symbols() {
-        //region when
-        Client sut = new Client(
-                UUID.fromString("8fe9595d-de6e-4d07-bc56-dacdad16f5c2TOCUT"), "Dummy"
+        new Client(
+                UUID.fromString("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaaTOCUT"), "Dummy"
         );
-        //endregion
-
-        //region then
-        // TODO try to brainstorm correct assert
-        //endregion
     }
 
     @Test
     public void clientNameShouldStartsWithCapitalLetterAndEndsWithLowercaseLetter() {
-        //region when
         Client sut = new Client(
                 ID_STUB, "Dummy"
         );
-        //endregion
 
-        //region then
         assertThat(sut,
                 allOf(
-                        hasProperty("name", startsWith("[A-Z]")),
-                        hasProperty("name", endsWith("[a-z]"))
+                        hasProperty("name", startsWith("D")),
+                        hasProperty("name", endsWith("y"))
                 ));
-        //endregion
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void clientNameShouldBeLongerThen1Letter() {
-        //region when
         Client sut = new Client(
-                ID_STUB, "Dummy"
+                ID_STUB, "D"
         );
-        //endregion
-
-        //region then
-        assertTrue("Name is less then two letters",sut.getName().length() > 1);
-        //endregion
     }
 
 }
