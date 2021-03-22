@@ -1,4 +1,4 @@
-package com.acme.banking.dbo;
+package com.acme.banking.dbo.domain;
 
 import com.acme.banking.dbo.domain.Client;
 import org.junit.jupiter.api.Assertions;
@@ -22,7 +22,8 @@ import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
 public class ClientTest {
 //    @Mock Object stub;
 
-    @Test @Disabled //@Ignore
+    @Test
+//    @Disabled //@Ignore
     @DisplayName("Test case")
     public void shouldStorePropertiesWhenCreated() {
         //region given
@@ -72,6 +73,26 @@ public class ClientTest {
                 () -> new Client(DUMMY_ID, null)
         );
 
-        assertEquals("name is not null", expectedException.getMessage());
+        assertEquals("name == null", expectedException.getMessage());
+    }
+
+    @Test
+    public void shouldThrowExceptionWhenIdIsZero() {
+        assertThrows(IllegalArgumentException.class, () -> new Client(0, "dummy name"));
+    }
+
+    @Test
+    public void shouldThrowExceptionWhenNameIsNull() {
+        assertThrows(IllegalArgumentException.class, () -> new Client(1, null));
+    }
+
+    @Test
+    public void shouldThrowExceptionWhenNameIsEmpty() {
+        assertThrows(IllegalArgumentException.class, () -> new Client(1, ""));
+    }
+
+    @Test
+    public void shouldThrowExceptionWhenNameContainsIllegalCharacters() {
+        assertThrows(IllegalArgumentException.class, () -> new Client(1, "123"));
     }
 }

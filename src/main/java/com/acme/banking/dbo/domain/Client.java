@@ -9,8 +9,10 @@ public class Client {
     private Collection<Account> accounts = new ArrayList<>(); //TODO
 
     public Client(int id, String name) {
-        if (id <= 0) throw new IllegalArgumentException();
-        if (name == null) throw new IllegalArgumentException("name is not null");
+        if (id <= 0) throw new IllegalArgumentException("id <= 0");
+        if (name == null) throw new IllegalArgumentException("name == null");
+        if (name.isEmpty()) throw new IllegalArgumentException("name.isEmpty()");
+        if (!name.matches("^[a-zA-Z- ]+$")) throw new IllegalArgumentException("!name.matches('^[a-zA-Z- ]+$')");
 
         this.id = id;
         this.name = name;
