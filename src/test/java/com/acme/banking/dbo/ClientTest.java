@@ -5,11 +5,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assumptions.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -18,11 +16,11 @@ import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
 
 
 @DisplayName("Test suite")
-//@ExtendWith(MockitoExtension.class)
 public class ClientTest {
-//    @Mock Object stub;
+    private final int ID_STUB = 1;
+    private final String CLIENT_NAME = "Dummy";
 
-    @Test @Disabled //@Ignore
+    @Test
     @DisplayName("Test case")
     public void shouldStorePropertiesWhenCreated() {
         //region given
@@ -37,41 +35,54 @@ public class ClientTest {
 
         //region then
         //Junit5:
-        Assertions.assertNotEquals(.3, .1 + .2, "Surprise!!!");
-        Assertions.assertSame("a", "a"); // o1 == o2
-
-        //комбинатор
-        assertAll("Client successfully store its properties",
-//                noName() { assertEquals(clientId, sut.getId()) }
+        assertAll("Client store its properties",
                 () -> assertEquals(clientId, sut.getId()),
                 () -> assertEquals(clientName, sut.getName())
         );
 
-        //Hamcrest: matchers
+        //Hamcrest:
         assertThat(sut,
-            allOf( //anyOf
-                not(hasProperty("id", nullValue())),
+            allOf(
+                hasProperty("id", notNullValue()),
                 hasProperty("id", equalTo(clientId)),
                 hasProperty("name", is(clientName))
         ));
 
-        //AssertJ: fluent API
+        //AssertJ:
         org.assertj.core.api.Assertions.assertThat(sut)
-                .isNotNull()
                 .hasFieldOrPropertyWithValue("id", clientId)
                 .hasFieldOrPropertyWithValue("name", clientName);
         //endregion
     }
 
     @Test
-    public void shouldGetErrorWhenCreateWithNullName() {
-        final int DUMMY_ID = 1;
+    public void shouldGetErrorWhenNameIsNull() {
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> new Client(ID_STUB, null));
+    }
+    @Test
+    public void shouldGetErrorWhenIdIsNegative() {
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> new Client(-1, CLIENT_NAME));
+    }
+    @Test
+    public void shouldGetErrorWhenIdIsZero() {
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> new Client(0, CLIENT_NAME));
+    }
+    @Test
+    public void shouldReturnId() {
+        Client client = new Client(ID_STUB, CLIENT_NAME);
+        int sut = client.getId();
 
-        final IllegalArgumentException expectedException = assertThrows(
-                IllegalArgumentException.class,
-                () -> new Client(DUMMY_ID, null)
-        );
+        assertEquals(ID_STUB, sut);
+    }
 
-        assertEquals("name is not null", expectedException.getMessage());
+    @Test
+    public void shouldReturnName() {
+        Client client = new Client(ID_STUB, CLIENT_NAME);
+        String sut = client.getName();
+
+        assertEquals(CLIENT_NAME, sut);
     }
 }
