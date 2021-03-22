@@ -50,11 +50,11 @@ public class ClientTest {
 
         //Hamcrest: matchers
         assertThat(sut,
-            allOf( //anyOf
-                not(hasProperty("id", nullValue())),
-                hasProperty("id", equalTo(clientId)),
-                hasProperty("name", is(clientName))
-        ));
+                allOf( //anyOf
+                        not(hasProperty("id", nullValue())),
+                        hasProperty("id", equalTo(clientId)),
+                        hasProperty("name", is(clientName))
+                ));
 
         //AssertJ: fluent API
         org.assertj.core.api.Assertions.assertThat(sut)
@@ -78,21 +78,36 @@ public class ClientTest {
 
     @Test
     public void shouldThrowExceptionWhenIdIsZero() {
-        assertThrows(IllegalArgumentException.class, () -> new Client(0, "dummy name"));
+        Exception e = assertThrows(IllegalArgumentException.class,
+                () -> new Client(0, "dummy name"));
+        assertThat(e.getMessage(), is("id <= 0"));
+    }
+
+    @Test
+    public void shouldThrowExceptionWhenIdIsNegative() {
+        Exception e = assertThrows(IllegalArgumentException.class,
+                () -> new Client(-1, "dummy name"));
+        assertThat(e.getMessage(), is("id <= 0"));
     }
 
     @Test
     public void shouldThrowExceptionWhenNameIsNull() {
-        assertThrows(IllegalArgumentException.class, () -> new Client(1, null));
+        Exception e = assertThrows(IllegalArgumentException.class,
+                () -> new Client(1, null));
+        assertThat(e.getMessage(), is("name == null"));
     }
 
     @Test
     public void shouldThrowExceptionWhenNameIsEmpty() {
-        assertThrows(IllegalArgumentException.class, () -> new Client(1, ""));
+        Exception e = assertThrows(IllegalArgumentException.class,
+                () -> new Client(1, ""));
+        assertThat(e.getMessage(), is("name.isEmpty()"));
     }
 
     @Test
     public void shouldThrowExceptionWhenNameContainsIllegalCharacters() {
-        assertThrows(IllegalArgumentException.class, () -> new Client(1, "123"));
+        Exception e = assertThrows(IllegalArgumentException.class,
+                () -> new Client(1, "123"));
+        assertThat(e.getMessage(), is("!name.matches('^[a-zA-Z- ]+$')"));
     }
 }

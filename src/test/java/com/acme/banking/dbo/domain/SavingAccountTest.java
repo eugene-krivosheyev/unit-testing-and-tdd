@@ -29,23 +29,36 @@ class SavingAccountTest {
 
     @Test
     public void shouldThrowExceptionWhenIdIsZero() {
-        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(0, DUMMY_CLIENT, 1.0));
+        Exception e = assertThrows(IllegalArgumentException.class,
+                () -> new SavingAccount(0, DUMMY_CLIENT, 1.0));
+        assertThat(e.getMessage(), is("id <= 0"));
+    }
+
+    @Test
+    public void shouldThrowExceptionWhenIdIsNegative() {
+        Exception e = assertThrows(IllegalArgumentException.class,
+                () -> new SavingAccount(-1, DUMMY_CLIENT, 1.0));
+        assertThat(e.getMessage(), is("id <= 0"));
     }
 
     @Test
     public void shouldThrowExceptionWhenClientIsNull() {
-        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(1, null, 1.0));
+        Exception e = assertThrows(IllegalArgumentException.class,
+                () -> new SavingAccount(1, null, 1.0));
+        assertThat(e.getMessage(), is("client == null"));
     }
 
     @Test
     public void shouldThrowExceptionWhenAmountIsNegative() {
-        assertThrows(IllegalArgumentException.class,
+        Exception e = assertThrows(IllegalArgumentException.class,
                 () -> new SavingAccount(1, DUMMY_CLIENT, -1.0));
+        assertThat(e.getMessage(), is("amount <= 0"));
     }
 
     @Test
     public void shouldThrowExceptionWhenAmountIsZero() {
-        assertThrows(IllegalArgumentException.class,
+        Exception e = assertThrows(IllegalArgumentException.class,
                 () -> new SavingAccount(1, DUMMY_CLIENT, 0.0));
+        assertThat(e.getMessage(), is("amount <= 0"));
     }
 }
