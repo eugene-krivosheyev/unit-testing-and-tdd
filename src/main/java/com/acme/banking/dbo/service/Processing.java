@@ -2,24 +2,24 @@ package com.acme.banking.dbo.service;
 
 import com.acme.banking.dbo.domain.Account;
 import com.acme.banking.dbo.domain.Cash;
+import com.acme.banking.dbo.domain.Client;
 
 import java.util.Collection;
-import java.util.UUID;
 
 public class Processing {
-    public UUID createClient(String name) {
-        return null;
+    public Client createClient(String name) {
+        return null; //TODO
     }
 
-    public Collection<Account> getAccountsByClientId(UUID clientId) {
-        return null;
+    public Collection<Account> getAccountsByClientId(int clientId) {
+        return null; //TODO
     }
 
-    public void transfer(double amount, UUID fromAccountId, UUID toAccountId) {
-
+    public void transfer(int fromAccountId, int toAccountId, double amount) {
+        //TODO
     }
 
-    public void cash(double amount, UUID fromAccountId) {
+    public void cash(double amount, int fromAccountId) {
         Cash.log(amount, fromAccountId);
     }
 }
