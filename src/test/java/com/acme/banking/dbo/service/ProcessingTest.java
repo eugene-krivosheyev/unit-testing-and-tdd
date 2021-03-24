@@ -43,6 +43,9 @@ public class ProcessingTest {
 
     @Test
     public void shouldBeErrorWhenAmountIsNegative() {
-        assertThrows(IllegalArgumentException.class, () -> processing.transfer(anyInt(), anyInt(), -1));
+        int dummyAccountId1 = 1;
+        int dummyAccountId2 = 2;
+
+        assertThrows(IllegalArgumentException.class, () -> processing.transfer(dummyAccountId1, dummyAccountId2, -1));
     }
 }
