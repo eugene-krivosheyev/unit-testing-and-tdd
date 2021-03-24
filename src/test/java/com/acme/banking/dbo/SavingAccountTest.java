@@ -6,8 +6,6 @@ import com.acme.banking.dbo.domain.SavingAccount;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.UUID;
-
 
 import static org.hamcrest.CoreMatchers.*;
 
@@ -15,7 +13,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
 
 public class SavingAccountTest {
-    public static final UUID ID_STUB = UUID.fromString("8fe9595d-de6e-4d07-bc56-dacdad16f5c2");
+    public static final int ID_STUB = 1;
 
     @Test
     public void shouldStorePropertiesWhenCreated() throws IllegalAccessException {
@@ -27,7 +25,6 @@ public class SavingAccountTest {
         //region then
         assertThat(sut,
                 allOf(
-                        hasProperty("id", notNullValue()),
                         hasProperty("id", equalTo(ID_STUB)),
                         hasProperty("client", notNullValue()),
                         hasProperty("amount", equalTo(1000.00))
@@ -37,49 +34,49 @@ public class SavingAccountTest {
 
     @Test
     public void GetErrorNullIdWhenCreated() {
-        final Client DUMMI_CLIENT = new Client(ID_STUB, "dummy client name");
-        final double DIMMY_AMOUNT = 1000.00;
+        final Client DUMMY_CLIENT = new Client(ID_STUB, "dummy client name");
+        final double DUMMY_AMOUNT = 1000.00;
 
         Assertions.assertThrows(IllegalArgumentException.class,
-                () -> new SavingAccount(null, DUMMI_CLIENT, DIMMY_AMOUNT));
+                () -> new SavingAccount(0, DUMMY_CLIENT, DUMMY_AMOUNT));
     }
 
     @Test
     public void GetErrorNullClientWhenCreated() {
-        final double DIMMY_AMOUNT = 1000.00;
+        final double DUMMY_AMOUNT = 1000.00;
         Assertions.assertThrows(IllegalArgumentException.class,
-                () -> new SavingAccount(ID_STUB, null, DIMMY_AMOUNT) );
+                () -> new SavingAccount(ID_STUB, null, DUMMY_AMOUNT) );
     }
 
     @Test
     public void GetErrorLessThanMaxValueAmountWhenCreated() {
-        final Client DUMMI_CLIENT = new Client(ID_STUB, "dummy client name");
-        final double DIMMY_AMOUNT = Double.POSITIVE_INFINITY;
+        final Client DUMMY_CLIENT = new Client(ID_STUB, "dummy client name");
+        final double DUMMY_AMOUNT = Double.POSITIVE_INFINITY;
         Assertions.assertThrows(IllegalArgumentException.class,
-                () ->  new SavingAccount(ID_STUB, DUMMI_CLIENT, DIMMY_AMOUNT));
+                () ->  new SavingAccount(ID_STUB, DUMMY_CLIENT, DUMMY_AMOUNT));
     }
 
     @Test
     public void GetErrorMoreThanMinMaxValueAmountWhenCreated() {
-        final Client DUMMI_CLIENT = new Client(ID_STUB, "dummy client name");
-        final double DIMMY_AMOUNT = Double.NEGATIVE_INFINITY;
+        final Client DUMMY_CLIENT = new Client(ID_STUB, "dummy client name");
+        final double DUMMY_AMOUNT = Double.NEGATIVE_INFINITY;
         Assertions.assertThrows(IllegalArgumentException.class,
-                () ->  new SavingAccount(ID_STUB, DUMMI_CLIENT, DIMMY_AMOUNT));
+                () ->  new SavingAccount(ID_STUB, DUMMY_CLIENT, DUMMY_AMOUNT));
     }
 
     @Test
     public void GetErrorThanMaxValueAmountWhenCreated() {
-        final Client DUMMI_CLIENT = new Client(ID_STUB, "dummy client name");
-        final double DIMMY_AMOUNT = Double.MAX_VALUE;
+        final Client DUMMY_CLIENT = new Client(ID_STUB, "dummy client name");
+        final double DUMMY_AMOUNT = Double.MAX_VALUE;
         Assertions.assertThrows(IllegalArgumentException.class,
-                () ->  new SavingAccount(ID_STUB, DUMMI_CLIENT, DIMMY_AMOUNT));
+                () ->  new SavingAccount(ID_STUB, DUMMY_CLIENT, DUMMY_AMOUNT));
     }
 
     @Test
     public void GetErrorThanMinValueAmountWhenCreated() {
-        final Client DUMMI_CLIENT = new Client(ID_STUB, "dummy client name");
-        final double DIMMY_AMOUNT = -Double.MAX_VALUE;
+        final Client DUMMY_CLIENT = new Client(ID_STUB, "dummy client name");
+        final double DUMMY_AMOUNT = -Double.MAX_VALUE;
         Assertions.assertThrows(IllegalArgumentException.class,
-                () ->  new SavingAccount(ID_STUB, DUMMI_CLIENT, DIMMY_AMOUNT));
+                () ->  new SavingAccount(ID_STUB, DUMMY_CLIENT, DUMMY_AMOUNT));
     }
 }
