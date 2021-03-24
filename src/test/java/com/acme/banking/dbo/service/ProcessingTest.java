@@ -34,6 +34,8 @@ public class ProcessingTest {
         processing.transfer(1, 2, 100.0);
 
         assertAll(
+            () -> verify(accountRepository).findById(1),
+            () -> verify(accountRepository).findById(2),
             () -> verify(account1).setAmount(100),
             () -> verify(account2).setAmount(200),
             () -> verify(accountRepository, times(1)).save(account1),
