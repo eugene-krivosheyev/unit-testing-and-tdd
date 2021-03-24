@@ -67,13 +67,28 @@ public class ArrayListTest {
     public void shouldCallsElementsStringRepresentationWhenToString() { //Interaction-based testing | Mockist
         final ArrayList<Object> sut = new ArrayList<>();
         final Object mock = mock(Object.class);
-//        final Object spy = spy(new Object());
-//        when(spy.hashCode()).thenReturn(1_000);
         sut.add(mock);
 
         sut.toString();
 
         verify(mock, times(1)).toString(); //any(MyParam.class)
-//        verify(spy, atLeastOnce()).equals("exact string");
+    }
+
+    @Test
+    @Disabled
+    public void spyDemo() {
+        final Object spy = spy(new Object());
+        when(spy.hashCode()).thenReturn(1_000);
+
+        verify(spy, atLeastOnce()).equals("exact string");
+    }
+
+    @Test
+    @Disabled
+    public void stubExceptionDemo() {
+        final Object stub = mock(Object.class);
+
+        when(stub.toString()).thenThrow(new IllegalArgumentException("arg"));
+        doThrow(new IllegalArgumentException("arg")).when(stub).toString();
     }
 }
