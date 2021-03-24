@@ -4,4 +4,7 @@ public interface Account {
     int getId();
     double getAmount();
     Client getClient(); //TODO reference integrity
+
+    void setAmount(double v);
+
 }

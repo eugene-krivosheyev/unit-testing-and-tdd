@@ -23,13 +23,13 @@ public class Processing {
     }
 
     public void transfer(int fromAccountId, int toAccountId, double amount) {
-        if (amount <= 0) throw new IllegalArgumentException();
+        if (amount <= 0) throw new IllegalArgumentException("Negative amount");
 
         Account from = accounts.findById(fromAccountId);
         Account to = accounts.findById(toAccountId);
 
-//        from.setAmount(from.getAmount() - amount);
-//        to.setAmount(to.getAmount() + amount);
+        from.setAmount(from.getAmount() - amount);
+        to.setAmount(to.getAmount() + amount);
 
 //        from.withdraw(amount);
 //        to.deposit(amount);
