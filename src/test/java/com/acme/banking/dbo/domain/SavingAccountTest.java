@@ -1,5 +1,6 @@
 package com.acme.banking.dbo.domain;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.assertj.core.data.Offset;
 import org.junit.jupiter.api.Test;
 
@@ -79,5 +80,41 @@ public class SavingAccountTest {
         assertThatThrownBy(() -> new SavingAccount(id, client, amount))
                 .isExactlyInstanceOf(IllegalArgumentException.class)
                 .hasMessage("amount must not be negative or zero");
+    }
+
+    @Test
+    void withdrawShouldReturnNewSavingAccountWithAmountLessThanOriginalByGivenAmount() {
+        SavingAccount savingAccount1 = new SavingAccount(
+                UUID.randomUUID(),
+                new Client(UUID.randomUUID(), RandomStringUtils.randomAlphabetic(16)),
+                3.0d);
+        double amount = 1.5d;
+        double expectedAmount = savingAccount1.getAmount() - amount;
+
+        SavingAccount savingAccount2 = savingAccount1.withdraw(amount);
+
+        assertThat(savingAccount2).isNotNull().isNotSameAs(savingAccount1)
+                .hasFieldOrPropertyWithValue("id", savingAccount1.getId())
+                .hasFieldOrPropertyWithValue("client", savingAccount1.getClient())
+                .hasFieldOrPropertyWithValue("amount", expectedAmount);
+//        assertEquals(expectedAmount, savingAccount2.getAmount(), 0.01d);
+    }
+
+    @Test
+    void depositShouldReturnNewSavingAccountWithAmountMoreThanOriginalByGivenAmount() {
+        SavingAccount savingAccount1 = new SavingAccount(
+                UUID.randomUUID(),
+                new Client(UUID.randomUUID(), RandomStringUtils.randomAlphabetic(16)),
+                3.0d);
+        double amount = 1.5d;
+        double expectedAmount = savingAccount1.getAmount() + amount;
+
+        SavingAccount savingAccount2 = savingAccount1.deposit(amount);
+
+        assertThat(savingAccount2).isNotNull().isNotSameAs(savingAccount1)
+                .hasFieldOrPropertyWithValue("id", savingAccount1.getId())
+                .hasFieldOrPropertyWithValue("client", savingAccount1.getClient())
+                .hasFieldOrPropertyWithValue("amount", expectedAmount);
+//        assertEquals(expectedAmount, savingAccount2.getAmount(), 0.01d);
     }
 }

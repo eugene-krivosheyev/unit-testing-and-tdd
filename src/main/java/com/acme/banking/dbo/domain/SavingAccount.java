@@ -32,4 +32,14 @@ public class SavingAccount implements Account {
     public Client getClient() {
         return client;
     }
+
+    @Override
+    public SavingAccount withdraw(double amount) {
+        return new SavingAccount(this.id, this.client, this.amount - amount);
+    }
+
+    @Override
+    public SavingAccount deposit(double amount) {
+        return new SavingAccount(this.id, this.client, this.amount + amount);
+    }
 }
