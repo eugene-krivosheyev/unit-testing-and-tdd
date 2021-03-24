@@ -10,8 +10,8 @@ public class SavingAccount implements Account {
     public SavingAccount(UUID id, Client client, double amount) {
         if(id == null) throw new IllegalArgumentException("id = null");
         if(client == null) throw new IllegalArgumentException("client = null");
-        if (amount > Double.MAX_VALUE) throw new IllegalArgumentException("amount > Double.MAX_VALUE");
-        if (amount < Double.MIN_VALUE) throw new IllegalArgumentException("amount < Double.MIN_VALUE");
+        if (amount >= Double.MAX_VALUE) throw new IllegalArgumentException("amount > Double.MAX_VALUE");
+        if (amount <= -Double.MAX_VALUE) throw new IllegalArgumentException("amount < Double.MIN_VALUE");
 
         this.id = id;
         this.client = client;

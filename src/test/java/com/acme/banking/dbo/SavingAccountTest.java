@@ -52,18 +52,34 @@ public class SavingAccountTest {
     }
 
     @Test
-    public void GetErrorLessThanMinValueAmountWhenCreated() {
+    public void GetErrorLessThanMaxValueAmountWhenCreated() {
         final Client DUMMI_CLIENT = new Client(ID_STUB, "dummy client name");
-        final double DIMMY_AMOUNT = Double.MIN_VALUE - 1;
+        final double DIMMY_AMOUNT = Double.POSITIVE_INFINITY;
         Assertions.assertThrows(IllegalArgumentException.class,
-                () ->  new SavingAccount(null, DUMMI_CLIENT, DIMMY_AMOUNT));
+                () ->  new SavingAccount(ID_STUB, DUMMI_CLIENT, DIMMY_AMOUNT));
     }
 
     @Test
-    public void GetErrorMoreThanMaxValueAmountWhenCreated() {
+    public void GetErrorMoreThanMinMaxValueAmountWhenCreated() {
+        final Client DUMMI_CLIENT = new Client(ID_STUB, "dummy client name");
+        final double DIMMY_AMOUNT = Double.NEGATIVE_INFINITY;
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () ->  new SavingAccount(ID_STUB, DUMMI_CLIENT, DIMMY_AMOUNT));
+    }
+
+    @Test
+    public void GetErrorThanMaxValueAmountWhenCreated() {
         final Client DUMMI_CLIENT = new Client(ID_STUB, "dummy client name");
         final double DIMMY_AMOUNT = Double.MAX_VALUE;
         Assertions.assertThrows(IllegalArgumentException.class,
-                () ->  new SavingAccount(null, DUMMI_CLIENT, DIMMY_AMOUNT));
+                () ->  new SavingAccount(ID_STUB, DUMMI_CLIENT, DIMMY_AMOUNT));
+    }
+
+    @Test
+    public void GetErrorThanMinValueAmountWhenCreated() {
+        final Client DUMMI_CLIENT = new Client(ID_STUB, "dummy client name");
+        final double DIMMY_AMOUNT = -Double.MAX_VALUE;
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () ->  new SavingAccount(ID_STUB, DUMMI_CLIENT, DIMMY_AMOUNT));
     }
 }
