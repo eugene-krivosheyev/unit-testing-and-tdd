@@ -5,12 +5,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assumptions.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -58,12 +52,12 @@ public class ClientTest {
         ));
     }
 
-        //AssertJ: fluent API
-        org.assertj.core.api.Assertions.assertThat(sut)
-                .isNotNull()
-                .hasFieldOrPropertyWithValue("id", clientId)
-                .hasFieldOrPropertyWithValue("name", clientName);
-        //endregion
+//        //AssertJ: fluent API
+//        org.assertj.core.api.Assertions.assertThat(sut)
+//                .isNotNull()
+//                .hasFieldOrPropertyWithValue("id", clientId)
+//                .hasFieldOrPropertyWithValue("name", clientName);
+//        //endregion
     @Test
     public void idShuntBeZero() {
         final int clientId = 0;

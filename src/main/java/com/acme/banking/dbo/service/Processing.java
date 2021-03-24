@@ -28,14 +28,14 @@ public class Processing {
         Account from = accounts.findById(fromAccountId);
         Account to = accounts.findById(toAccountId);
 
-//        from.setAmount(from.getAmount() - amount);
-//        to.setAmount(to.getAmount() + amount);
+        from.setAmount(from.getAmount() - amount);
+        to.setAmount(to.getAmount() + amount);
 
 //        from.withdraw(amount);
 //        to.deposit(amount);
 
 //        Account updatedFrom = from.withdraw(amount);
-//        Account updatedTo = from.deposit(amount);
+//        Account updatedTo = to.deposit(amount);
 
         accounts.save(from);
         accounts.save(to);
