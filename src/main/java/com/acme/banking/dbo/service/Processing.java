@@ -6,6 +6,7 @@ import com.acme.banking.dbo.domain.Cash;
 import com.acme.banking.dbo.domain.Client;
 
 import java.util.Collection;
+import java.util.Collections;
 
 public class Processing {
     private AccountRepository accounts;
@@ -15,11 +16,11 @@ public class Processing {
     }
 
     public Client createClient(String name) {
-        return null; //TODO
+        return new Client(accounts.getLastId() + 1, name);
     }
 
     public Collection<Account> getAccountsByClientId(int clientId) {
-        return null; //TODO
+        return Collections.singleton(accounts.findById(clientId));
     }
 
     public void transfer(int fromAccountId, int toAccountId, double amount) {
@@ -28,8 +29,8 @@ public class Processing {
         Account from = accounts.findById(fromAccountId);
         Account to = accounts.findById(toAccountId);
 
-//        from.setAmount(from.getAmount() - amount);
-//        to.setAmount(to.getAmount() + amount);
+        from.setAmount(from.getAmount() - amount);
+        to.setAmount(to.getAmount() + amount);
 
 //        from.withdraw(amount);
 //        to.deposit(amount);
