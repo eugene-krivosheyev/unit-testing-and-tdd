@@ -1,15 +1,15 @@
 package demo;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
-import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 
 /**
@@ -46,8 +46,8 @@ public class ArrayListTest {
         //region given
         final ArrayList<Object> sut = new ArrayList<>();
         Object stub = mock(Object.class); // spy()
-        when(stub.toString()).thenReturn("test string");
-        when(stub.equals(any(String.class))).thenReturn(true);
+        when(stub.toString()).thenReturn("test string"); //State-based testing | Classicist
+//        when(stub.equals("abc")).thenReturn(true);
         sut.add(stub);
         //endregion
 
@@ -60,5 +60,20 @@ public class ArrayListTest {
         //assertFalse(stub.equals("not abc"));
         assertTrue(sutToString.contains("test string"));
         //endregion
+    }
+
+    @Test
+    @Disabled
+    public void shouldCallsElementsStringRepresentationWhenToString() { //Interaction-based testing | Mockist
+        final ArrayList<Object> sut = new ArrayList<>();
+        final Object mock = mock(Object.class);
+//        final Object spy = spy(new Object());
+//        when(spy.hashCode()).thenReturn(1_000);
+        sut.add(mock);
+
+        sut.toString();
+
+        verify(mock, times(1)).toString(); //any(MyParam.class)
+//        verify(spy, atLeastOnce()).equals("exact string");
     }
 }
