@@ -2,49 +2,57 @@ package com.acme.banking.dbo;
 
 import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.domain.SavingAccount;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
-import java.util.UUID;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
+import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@DisplayName("Test suite Saving Account")
 public class SavingAccountTest {
-    public static final int ID_STUB = 0;
+    public static final int ID_STUB = 1;
 
     @Test
     public void shouldCreatedAccountWhenCreated() {
         Client fixture = new Client(ID_STUB, "dummy client name");
-        SavingAccount sut = new SavingAccount(ID_STUB, fixture, 0);
+        SavingAccount sut = new SavingAccount(ID_STUB, fixture, 0.0);
 
         assertAll("SavingAccount its properties",
-                () -> Assert.assertTrue(sut.getId() != 0),
-                () -> Assert.assertTrue(sut.getClient() != null),
-                () -> Assert.assertTrue(sut.getAmount() >= 0));
+                () -> assertTrue(sut.getId() != 0),
+                () -> assertTrue(sut.getClient() != null),
+                () -> assertTrue(sut.getAmount() >= 0.0));
     }
 
+    @Test
+    public void shouldCreatedAccountWhenGetAmountPositive() {
+        Client fixture = new Client(ID_STUB, "dummy client name");
+        SavingAccount sut = new SavingAccount(ID_STUB, fixture, 0.1);
 
-//    @Test
-//    public void shouldGetErrorWhenIncorrectProperties() {
-//        Client fixture = new Client(0, null);
-//        SavingAccount sut = new SavingAccount(0, fixture, 0);
-//
-//        assertAll("Client store its properties",
-//                () -> Assert.assertTrue(sut.getId() == 0)
-////                () -> Assert.assertFalse(fixture.getName==null)
-//        );
-//
-////        assertThat(sut,
-////                allOf(
-////                        hasProperty("id",
-////                        hasProperty("client", notNullValue()),
-//////                        hasProperty("id", equalTo(clientId)),
-//////                        hasProperty("name", is(clientName))
-////                ));
-//    }
+        assertTrue(sut.getAmount() == 0.1);
+    }
+
+    @Test
+    public void shouldGetErrorWhenIdZero() {
+        final int id = 0;
+        final int amount = 1;
+        Client fixture = new Client(ID_STUB, "dummy client name");
+
+        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(id, fixture, amount));
+    }
+
+    @Test
+    public void shouldGetErrorWhenClientNull() {
+        final int amount = 1;
+
+        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(ID_STUB, null, amount));
+    }
+
+    @Test
+    public void shouldGetErrorWhenAmountNegative() {
+        final int amount = -1;
+        Client fixture = new Client(ID_STUB, "dummy client name");
+
+        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(ID_STUB, fixture, amount));
+    }
 }
