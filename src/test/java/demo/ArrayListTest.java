@@ -67,7 +67,8 @@ public class ArrayListTest {
 //        when(account.getClient()).thenReturn(clientStub);
 
         /*
-        new FakeInMemoryDbRepoBuilder("db url")
+        new PreProdDbRepoBuilder("db url jdbc:derby://host/testdb")
+        new FakeInMemoryDbRepoBuilder("db url jdbc:derby:memory:testdb")
         new MockitoRepoBuilder()
                 .withAccount("")
                     .withId(1)
