@@ -1,5 +1,7 @@
 package demo;
 
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -17,16 +19,30 @@ import static org.mockito.Mockito.*;
  * Test -> documentation
  */
 public class ArrayListTest {
+    private ArrayList<Object> sut;
+
     /**
      * BDD = DDD(tests)
      */
+
+    @BeforeAll //@AfterAll
+    public static void globalSetUp() {
+
+    }
+
+    @BeforeEach //AfterEach
+    public void setUp() {
+        sut = new ArrayList<>();
+    }
+
+
     @Test // -> config (xml, json)
     //@Ignore | @Disable
     //Multiple Spec by Example
     public void shouldSizeIncrementedAndContainsElementWhenAddElement() {
         //region Arrange | Given | Fixture
         final Object dummy = new Object();
-        final ArrayList<Object> sut = new ArrayList<>();
+
         assumeTrue(sut.isEmpty());
         //endregion
 
@@ -44,7 +60,32 @@ public class ArrayListTest {
     @Test
     public void shouldUseElementsStringRepresentationWhenToString() {
         //region given
-        final ArrayList<Object> sut = new ArrayList<>();
+//        Repository accounts = mock(...);
+//        Account from = mock();
+//        when(from.withdraw()).thenReturn(20);
+//        when(accounts.getById(1)).thenReturn(from);
+//        when(account.getClient()).thenReturn(clientStub);
+
+        /*
+        new FakeInMemoryDbRepoBuilder("db url")
+        new MockitoRepoBuilder()
+                .withAccount("")
+                    .withId(1)
+                    .withAmount(100)
+                    .withClient("")
+                        .withId(1)
+                        .withName("name")
+                        .withAddress()
+                            .error()
+                        .build()
+                    .build()
+                .withAccount("")
+                    .withAmount(100)
+                    .withNoClient()
+                    .build()
+                .build();
+        */
+
         Object stub = mock(Object.class); // spy()
         when(stub.toString()).thenReturn("test string"); //State-based testing | Classicist
 //        when(stub.equals("abc")).thenReturn(true);
@@ -65,7 +106,7 @@ public class ArrayListTest {
     @Test
     @Disabled
     public void shouldCallsElementsStringRepresentationWhenToString() { //Interaction-based testing | Mockist
-        final ArrayList<Object> sut = new ArrayList<>();
+
         final Object mock = mock(Object.class);
         sut.add(mock);
 
