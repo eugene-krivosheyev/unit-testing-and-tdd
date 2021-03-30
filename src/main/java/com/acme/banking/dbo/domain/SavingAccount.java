@@ -21,13 +21,13 @@ public class SavingAccount implements Account {
     }
 
     @Override
-    public double getAmount() {
-        return amount;
+    public int getId() {
+        return id;
     }
 
     @Override
-    public int getId() {
-        return id;
+    public double getAmount() {
+        return amount;
     }
 
     @Override
@@ -36,14 +36,17 @@ public class SavingAccount implements Account {
     }
 
     @Override
-    @Ignore
     public void withdraw(double amount) {
 
     }
 
     @Override
-    @Ignore
     public void deposit(double amount) {
 
+    }
+
+    @Override
+    public String getName() {
+        return client.getName();
     }
 }

@@ -1,5 +1,6 @@
 package com.acme.banking.dbo.domain;
 
+import java.util.Collection;
 import java.util.UUID;
 
 public interface Account {
@@ -10,4 +11,6 @@ public interface Account {
     void withdraw(double amount);
 
     void deposit(double amount);
+
+    String getName();
 }

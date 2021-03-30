@@ -50,9 +50,6 @@ public class ProcessingTest {
         AccountRepository accountRepositoryStub = mock(AccountRepository.class);
         Processing sut = new Processing(accountRepositoryStub);
 
-        //when
-        ;
-
         Assertions.assertThrows(IllegalArgumentException.class,
                 () ->sut.transfer(DUMMY_FROM_ACCOUNT, DUMMY_TO_ACCOUNT, 0));
     }
@@ -60,14 +57,10 @@ public class ProcessingTest {
     @Test
     public void GetErrorWhenSameAccount() {
 
-        // given
         final int DUMMY_ACCOUNT_ID = 1;
         final double DUMMY_AMOUNT = 123.;
         AccountRepository accountRepositoryStub = mock(AccountRepository.class);
         Processing sut = new Processing(accountRepositoryStub);
-
-        //when
-        ;
 
         Assertions.assertThrows(IllegalArgumentException.class,
                 () ->sut.transfer(DUMMY_ACCOUNT_ID, DUMMY_ACCOUNT_ID, DUMMY_AMOUNT));
