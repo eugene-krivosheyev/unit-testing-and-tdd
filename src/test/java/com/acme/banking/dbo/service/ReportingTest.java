@@ -2,9 +2,13 @@ package com.acme.banking.dbo.service;
 
 import com.acme.banking.dbo.domain.Account;
 import com.acme.banking.dbo.domain.Branch;
+import com.acme.banking.dbo.domain.Client;
+import com.acme.banking.dbo.domain.SavingAccount;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -34,6 +38,8 @@ class ReportingTest {
     void shouldReturnReportWithEmptyBranch_when_branchIsEmpty() {
         Reporting sut = new Reporting();
         Branch branchStub = mock(Branch.class);
+        when(branchStub.getName()).thenReturn("1");
+        when(branchStub.getAccounts()).thenReturn(Collections.emptyList());
 
         String report = sut.getReport(branchStub);
 
@@ -49,9 +55,17 @@ class ReportingTest {
 
         List<Account> accounts = Lists.newArrayList(account1, account2);
 
+        when(branchStub.getName()).thenReturn("1");
         when(branchStub.getAccounts()).thenReturn(accounts);
+
         String report = sut.getReport(branchStub);
-        assertEquals("# Branch #1## Account #1 (100.)### Client #1### Client #1### Client #1## Account #2 (100.)", report);
+
+        assertEquals(
+                "# Branch #1\n" +
+                        "## Account #" + account1.getId() + " (100.0)\n" +
+                        "## Account #" + account2.getId() + " (200.0)",
+                sut.getReport(branchStub)
+        );
     }
 
 //    @Test

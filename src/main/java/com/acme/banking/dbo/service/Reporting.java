@@ -8,7 +8,12 @@ public class Reporting {
      * @return Markdown report for all branches, clients, accounts
      */
     public String getReport(Branch rootBranch) {
-        return "# Branch #1";
+        StringBuilder result = new StringBuilder("# Branch #" + rootBranch.getName());
+        for (Account account : rootBranch.getAccounts()) {
+            result.append("\n## Account #").append(account.getId())
+                    .append(" (").append(account.getAmount()).append(")");
+        }
+        return result.toString();
     }
 
 //    /**
