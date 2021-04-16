@@ -7,6 +7,12 @@ import com.acme.banking.dbo.domain.Client;
 
 import java.util.Collection;
 
+
+/**
+ * SOLID :
+ * SRP + OCP + LSP + ISP + DIP
+ * => internal quality model
+ */
 public class Processing {
     private AccountRepository accounts;
     private Cash cash;
