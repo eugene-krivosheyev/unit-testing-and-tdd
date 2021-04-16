@@ -39,6 +39,20 @@ class ReportingTest {
 
         assertEquals("# Branch #1", report);
     }
+    
+    @Test
+    void shouldReturnReportWithAllAccountsInBranch_when_branchHasAccounts() {
+        Reporting sut = new Reporting();
+        Branch branchStub = mock(Branch.class);
+        Account account1 = new SavingAccount(UUID.randomUUID(), new Client(UUID.randomUUID(), "Client1"),  100.0d);
+        Account account2 = new SavingAccount(UUID.randomUUID(), new Client(UUID.randomUUID(), "Client2"),  200.0d);
+
+        List<Account> accounts = Lists.newArrayList(account1, account2);
+
+        when(branchStub.getAccounts()).thenReturn(accounts);
+        String report = sut.getReport(branchStub);
+        assertEquals("# Branch #1## Account #1 (100.)### Client #1### Client #1### Client #1## Account #2 (100.)", report);
+    }
 
 //    @Test
 //    void shouldGetReportWhenBranchWithAccountsWithNoClients() {
