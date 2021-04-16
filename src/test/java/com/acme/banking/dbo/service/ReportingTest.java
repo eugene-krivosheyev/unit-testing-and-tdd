@@ -18,21 +18,21 @@ import static org.mockito.Mockito.when;
 
 class ReportingTest {
 
-    @Test
-    public void shouldGetReportWhenBranchWithAccountsWithClients() {
-        Reporting sut = new Reporting();
-        Branch branchStub = mock(Branch.class);
-
-        assertEquals(
-                "# Branch #1" +
-                        "## Account #1 (100.)" +
-                        "### Client #1" +
-                        "### Client #1" +
-                        "### Client #1" +
-                        "## Account #2 (100.)",
-                sut.getReport(branchStub)
-        );
-    }
+//    @Test
+//    public void shouldGetReportWhenBranchWithAccountsWithClients() {
+//        Reporting sut = new Reporting();
+//        Branch branchStub = mock(Branch.class);
+//
+//        assertEquals(
+//                "# Branch #1" +
+//                        "## Account #1 (100.)" +
+//                        "### Client #1" +
+//                        "### Client #1" +
+//                        "### Client #1" +
+//                        "## Account #2 (100.)",
+//                sut.getReport(branchStub)
+//        );
+//    }
 
     @Test
     void shouldReturnReportWithEmptyBranch_when_branchIsEmpty() {
@@ -64,7 +64,7 @@ class ReportingTest {
                 "# Branch #1\n" +
                         "## Account #" + account1.getId() + " (100.0)\n" +
                         "## Account #" + account2.getId() + " (200.0)",
-                sut.getReport(branchStub)
+                report
         );
     }
 
