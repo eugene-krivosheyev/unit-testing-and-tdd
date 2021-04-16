@@ -9,13 +9,19 @@ import java.util.Collection;
 
 public class Processing {
     private AccountRepository accounts;
+    private Cash cash;
+//    private Cash cash = new Cash(); // Creator [GRASP]
+//    private Cash cash = ConfigurableCashFactory.create(); // Factory Method [GoF]
+//    private Cash cash = TestConfigurableCashFactory.create(); // Abstract Factory [GoF]
 
-    //DI: constructor
-    public Processing(AccountRepository accounts) {
+    //DI: constructor (+field, setter, method)
+    public Processing(AccountRepository accounts, Cash cash) {
         this.accounts = accounts;
+        this.cash = cash;
     }
 
-    public Client createClient(String name) {
+//    @Endpoint DI: method injection
+    public Client createClient(/*@RequsetBody @Validate*/ String name) {
         return null; //TODO
     }
 
@@ -43,6 +49,18 @@ public class Processing {
     }
 
     public void cash(double amount, int fromAccountId) {
-        Cash.log(amount, fromAccountId);
+        cash.log(amount, fromAccountId);
+        log();
+    }
+
+    /**
+     *  Public API, Contract, Interface
+     *  ==== vs =====
+     *  Implementation -> хрупкость тестов
+     */
+    // FEST Reflect
+    private int state;
+    private void log() {
+
     }
 }
