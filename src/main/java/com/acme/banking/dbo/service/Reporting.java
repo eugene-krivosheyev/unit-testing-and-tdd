@@ -13,6 +13,13 @@ public class Reporting {
             result.append("\n## Account #").append(account.getId())
                     .append(" (").append(account.getAmount()).append(")");
         }
+        for (Branch child : rootBranch.getChildren()) {
+            result.append("\n## Branch #").append(child.getName());
+            for (Account account : child.getAccounts()) {
+                result.append("\n### Account #").append(account.getId())
+                        .append(" (").append(account.getAmount()).append(")");
+            }
+        }
         return result.toString();
     }
 
