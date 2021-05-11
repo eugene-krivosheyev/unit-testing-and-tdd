@@ -2,6 +2,10 @@
 ============================
 24 ак. часа, 18 астр. часов
 
+Записи
+======
+- [11.05](https://us02web.zoom.us/rec/share/_nV4q0yROE5bqef9MOtCogp2A3XcNIR7eke1f9Q5l59R82OXOv1n3PYJZgrpFX-X.fHtbHb-sAS9ghCTZ)
+
 Цели тренинга
 ============
 После тренинга участники смогут:
