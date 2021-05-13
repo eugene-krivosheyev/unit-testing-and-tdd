@@ -1,3 +1,6 @@
+https://github.com/eugene-krivosheyev/unit-testing-and-tdd/pull/66
+
+
 Тренинг «Unit Testing & TDD»
 ============================
 24 ак. часа, 18 астр. часов
