@@ -8,16 +8,16 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class SavingAccountTest {
-    private final int id = 10;
-    private final double amount = 1.0;
-    private final Client client = new Client(1, "client");
+    private final int dummyId = 10;
+    private final double dummyAmount = 1.0;
+    private final Client dummyClient = new Client(1, "client");
 
     @Test
     public void idShouldBeNonNegative() {
         final int negativeId = -1;
 
         assertThrows(IllegalArgumentException.class,
-                () -> new SavingAccount(negativeId, client, amount),
+                () -> new SavingAccount(negativeId, dummyClient, dummyAmount),
                 "Expected non-negative id");
     }
 
@@ -26,7 +26,7 @@ public class SavingAccountTest {
         final double negativeAmount = -1.0;
 
         assertThrows(IllegalArgumentException.class,
-                () -> new SavingAccount(id, client, negativeAmount),
+                () -> new SavingAccount(dummyId, dummyClient, negativeAmount),
                 "Expected non-negative amount");
     }
 
@@ -35,7 +35,7 @@ public class SavingAccountTest {
         final Client nullClient = null;
 
         assertThrows(IllegalArgumentException.class,
-                () -> new SavingAccount(id, nullClient, amount),
+                () -> new SavingAccount(dummyId, nullClient, dummyAmount),
                 "Expected non-null client");
     }
 }

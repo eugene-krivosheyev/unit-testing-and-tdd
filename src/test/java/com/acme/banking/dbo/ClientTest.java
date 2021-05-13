@@ -55,23 +55,23 @@ public class ClientTest {
     @Test
     public void idShouldBeNonNegative() {
         final int negativeId = -1;
-        final String name = "name";
+        final String dummy = "name";
 
         assertThrows(IllegalArgumentException.class,
-                () -> new Client(negativeId, name),
+                () -> new Client(negativeId, dummy),
                 "Expected non-negative id");
     }
 
     @Test
     public void nameShouldBeNotNullAndNotEmpty() {
-        final int id = 1;
+        final int dummy = 1;
         final String nullName = null;
         final String emptyName = "";
         assertThrows(IllegalArgumentException.class,
-                () -> new Client(id, nullName),
-                "Expected non-negative id");
+                () -> new Client(dummy, nullName),
+                "Expected non-null name");
         assertThrows(IllegalArgumentException.class,
-                () -> new Client(id, emptyName),
-                "Expected non-negative id");
+                () -> new Client(dummy, emptyName),
+                "Expected non-empty name");
     }
 }
