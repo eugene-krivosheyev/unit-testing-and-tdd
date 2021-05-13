@@ -67,4 +67,23 @@ public class ClientTest {
                 "Client name should be not null!");
         //endregion
     }
+
+    @Test
+    public void shouldThrowIllegalArgumentExceptionWhenNameIsEmpty() {
+        //region given
+        final int clientId = 1;
+        final String clientName = "";
+        //endregion
+
+        //region when
+        Executable sut = () -> new Client(clientId, clientName);
+        //endregion
+
+        //region then
+        assertThrows(
+                IllegalArgumentException.class,
+                sut,
+                "Client name should be not empty!");
+        //endregion
+    }
 }
