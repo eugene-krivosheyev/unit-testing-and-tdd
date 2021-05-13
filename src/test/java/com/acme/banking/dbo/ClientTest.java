@@ -42,7 +42,10 @@ public class ClientTest {
         //endregion
 
         //region then
-        assertThrows(IllegalArgumentException.class, sut);
+        assertThrows(
+                IllegalArgumentException.class,
+                sut,
+                "Client id should be positive!");
         //endregion
     }
 
@@ -58,7 +61,10 @@ public class ClientTest {
         //endregion
 
         //region then
-        assertThrows(IllegalArgumentException.class, sut);
+        assertThrows(
+                IllegalArgumentException.class,
+                sut,
+                "Client name should be not null!");
         //endregion
     }
 }

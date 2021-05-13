@@ -46,7 +46,10 @@ public class SavingAccountTest {
         //endregion
 
         //region then
-        assertThrows(IllegalArgumentException.class, sut);
+        assertThrows(
+                IllegalArgumentException.class,
+                sut,
+                "Account id should be positive!");
         //endregion
     }
 
@@ -63,7 +66,10 @@ public class SavingAccountTest {
         //endregion
 
         //region then
-        assertThrows(IllegalArgumentException.class, sut);
+        assertThrows(
+                IllegalArgumentException.class,
+                sut,
+                "Account client should be not null!");
         //endregion
     }
 
@@ -80,7 +86,10 @@ public class SavingAccountTest {
         //endregion
 
         //region then
-        assertThrows(IllegalArgumentException.class, sut);
+        IllegalArgumentException e = assertThrows(
+                IllegalArgumentException.class,
+                sut,
+                "Account amount should be positive!");
         //endregion
     }
 }
