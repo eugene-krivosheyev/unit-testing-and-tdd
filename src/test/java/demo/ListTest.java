@@ -1,9 +1,11 @@
 package demo;
 
+import com.acme.banking.dbo.domain.Client;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +31,13 @@ public class ListTest {
         //region Assert | Then
         assertEquals(1, sut.size()); //assertFalse(sut.isEmpty());
         assertTrue(sut.contains(dummy)); //assertEquals(dummy, sut.get(0));
+
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> new Client(-1, "dummy name"),
+                "id!"
+        );
+
         //endregion
     }
 
