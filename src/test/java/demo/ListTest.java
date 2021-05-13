@@ -23,6 +23,7 @@ public class ListTest {
 
         //region Act | When
         sut.add(dummy);
+        //if (true) throw new RuntimeException("!!!");
         //endregion
 
         //region Assert | Then
