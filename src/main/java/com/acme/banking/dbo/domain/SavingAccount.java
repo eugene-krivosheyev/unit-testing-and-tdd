@@ -6,9 +6,15 @@ public class SavingAccount implements Account {
     private double amount;
 
     public SavingAccount(int id, Client client, double amount) {
-        this.id = id;
-        this.client = client;
-        this.amount = amount;
+        if (id >= 0) {
+            if (client != null) {
+                if (amount >= 0) {
+                    this.id = id;
+                    this.client = client;
+                    this.amount = amount;
+                }
+            }
+        }
     }
 
     @Override

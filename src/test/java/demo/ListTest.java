@@ -31,4 +31,9 @@ public class ListTest {
         assertTrue(sut.contains(dummy)); //assertEquals(dummy, sut.get(0));
         //endregion
     }
+
+    @Test
+    public void shouldPass() {
+
+    }
 }
