@@ -1,6 +1,7 @@
 package com.acme.banking.dbo;
 
 import com.acme.banking.dbo.domain.Client;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,7 +17,8 @@ import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
 
 @DisplayName("Test suite")
 public class ClientTest {
-    @Test @Disabled("temporary disabled")
+    @Test
+//    @Disabled("temporary disabled")
     @DisplayName("Test case")
     public void shouldStorePropertiesWhenCreated() {
         //region given
@@ -50,4 +52,19 @@ public class ClientTest {
                 .hasFieldOrPropertyWithValue("name", clientName);
         //endregion
     }
+
+    @Test
+    public void shouldThrowExceptionWhenIdIsNegative(){
+        final int clientId = -1;
+        final String clientName = "dummy client name";
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new Client(clientId, clientName));
+    }
+
+    @Test
+    public void shouldThrowExceptionWhenNameIsNull(){
+        final int clientId = 1;
+        final String clientName = null;
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new Client(clientId, clientName));
+    }
+
 }
