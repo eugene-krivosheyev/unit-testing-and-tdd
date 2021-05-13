@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 public class ListTest {
     @Test //BDD
-    @Disabled //@Ignore
+    //@Disabled //@Ignore
     public void shouldSizeIncrementedAndContainsItemWhenAddItem() {
         //region Arrange | Fixture | Given
         final List<Object> sut = new ArrayList<>();
@@ -21,6 +21,7 @@ public class ListTest {
 
         //region Act | When
         sut.add(dummy);
+        //if (true) throw new RuntimeException();
         //endregion
 
         //region Assert | Then
