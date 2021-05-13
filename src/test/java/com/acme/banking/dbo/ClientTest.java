@@ -1,7 +1,6 @@
 package com.acme.banking.dbo;
 
 import com.acme.banking.dbo.domain.Client;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,10 +13,10 @@ import static org.hamcrest.Matchers.*;
 import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
 
 
-@DisplayName("Test suite")
+@DisplayName("Test Client")
 public class ClientTest {
-    @Test @Disabled("temporary disabled")
-    @DisplayName("Test case")
+    @Test
+    @DisplayName("Test shouldStorePropertiesWhenCreated")
     public void shouldStorePropertiesWhenCreated() {
         //region given
         final int clientId = 1;
@@ -50,4 +49,50 @@ public class ClientTest {
                 .hasFieldOrPropertyWithValue("name", clientName);
         //endregion
     }
+
+    @Test
+    @DisplayName("Test shouldThrowExceptionWhenIdNegative")
+    public void shouldThrowExceptionWhenIdNegative() {
+
+        final int clientId = -1;
+        final String clientName = "dummy client name";
+
+        try {
+            Client sut = new Client(clientId, clientName);
+        } catch (IllegalArgumentException e){
+            assumeTrue( true, "Catch IllegalArgumentException when Id negative");
+        }
+
+    }
+
+    @Test
+    @DisplayName("Test shouldThrowExceptionWhenNameIsEmpty")
+    public void shouldThrowExceptionWhenNameIsEmpty() {
+
+        final int clientId = 1;
+        final String clientName = "";
+
+        try {
+            Client sut = new Client(clientId, clientName);
+        } catch (IllegalArgumentException e){
+            assumeTrue( true, "Catch IllegalArgumentException when Name is empty");
+        }
+
+    }
+
+    @Test
+    @DisplayName("Test shouldThrowExceptionWhenNameIsNull")
+    public void shouldThrowExceptionWhenNameIsNull() {
+
+        final int clientId = 1;
+        final String clientName = null;
+
+        try {
+            Client sut = new Client(clientId, clientName);
+        } catch (IllegalArgumentException e){
+            assumeTrue( true, "Catch IllegalArgumentException when Name is Null");
+        }
+
+    }
+
 }
