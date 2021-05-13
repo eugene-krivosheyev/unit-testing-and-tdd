@@ -1,23 +1,16 @@
 package com.acme.banking.dbo;
 
 import com.acme.banking.dbo.domain.Client;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.*;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
-import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
-
-
-@DisplayName("Test suite")
+@DisplayName("Client class tests")
 public class ClientTest {
-    @Test @Disabled("temporary disabled")
-    @DisplayName("Test case")
+    @Test
     public void shouldStorePropertiesWhenCreated() {
         //region given
         final int clientId = 1;
@@ -30,24 +23,42 @@ public class ClientTest {
         //endregion
 
         //region then
-        //Junit5:
         assertAll("Client store its properties",
                 () -> assertEquals(clientId, sut.getId()),
                 () -> assertEquals(clientName, sut.getName())
         );
+        //endregion
+    }
 
-        //Hamcrest:
-        assertThat(sut,
-            allOf(
-                hasProperty("id", notNullValue()),
-                hasProperty("id", equalTo(clientId)),
-                hasProperty("name", is(clientName))
-        ));
+    @Test
+    public void shouldThrowIllegalArgumentExceptionWhenIdIsNegative() {
+        //region given
+        final int clientId = -1;
+        final String clientName = "dummy client name";
+        //endregion
 
-        //AssertJ:
-        org.assertj.core.api.Assertions.assertThat(sut)
-                .hasFieldOrPropertyWithValue("id", clientId)
-                .hasFieldOrPropertyWithValue("name", clientName);
+        //region when
+        Executable sut = () -> new Client(clientId, clientName);
+        //endregion
+
+        //region then
+        assertThrows(IllegalArgumentException.class, sut);
+        //endregion
+    }
+
+    @Test
+    public void shouldThrowIllegalArgumentExceptionWhenNameIsNull() {
+        //region given
+        final int clientId = 1;
+        final String clientName = null;
+        //endregion
+
+        //region when
+        Executable sut = () -> new Client(clientId, clientName);
+        //endregion
+
+        //region then
+        assertThrows(IllegalArgumentException.class, sut);
         //endregion
     }
 }
