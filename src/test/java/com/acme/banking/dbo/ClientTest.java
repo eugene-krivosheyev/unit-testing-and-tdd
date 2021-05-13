@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assumptions.*;
@@ -16,6 +17,22 @@ import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
 
 @DisplayName("Test suite")
 public class ClientTest {
+    @Test
+    public void shouldFaildWhenNegativeId() {
+	int clientId = -10;
+	String dummyClientName = "legal name";
+
+	assertThrows(IllegalArgumentException.class, () -> new Client(clientId, dummyClientName));
+    }
+
+    @Test
+    public void shouldFaildWhenEmptyClientName() {
+	int dummyClientId = 10;
+	String emptyName = "";
+
+	assertThrows(IllegalArgumentException.class, () -> new Client(dummyClientId, emptyName));
+    }
+
     @Test @Disabled("temporary disabled")
     @DisplayName("Test case")
     public void shouldStorePropertiesWhenCreated() {
