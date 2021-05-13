@@ -1,12 +1,12 @@
 package com.acme.banking.dbo;
 
 import com.acme.banking.dbo.domain.Client;
+import com.acme.banking.dbo.domain.SavingAccount;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -39,16 +39,39 @@ public class ClientTest {
 
         //Hamcrest:
         assertThat(sut,
-            allOf(
-                hasProperty("id", notNullValue()),
-                hasProperty("id", equalTo(clientId)),
-                hasProperty("name", is(clientName))
-        ));
+                allOf(
+                        hasProperty("id", notNullValue()),
+                        hasProperty("id", equalTo(clientId)),
+                        hasProperty("name", is(clientName))
+                ));
 
         //AssertJ:
         org.assertj.core.api.Assertions.assertThat(sut)
                 .hasFieldOrPropertyWithValue("id", clientId)
                 .hasFieldOrPropertyWithValue("name", clientName);
         //endregion
+    }
+
+    @Test
+    public void idShouldBeNonNegative() {
+        final int negativeId = -1;
+        final String name = "name";
+
+        assertThrows(IllegalArgumentException.class,
+                () -> new Client(negativeId, name),
+                "Expected non-negative id");
+    }
+
+    @Test
+    public void nameShouldBeNotNullAndNotEmpty() {
+        final int id = 1;
+        final String nullName = null;
+        final String emptyName = "";
+        assertThrows(IllegalArgumentException.class,
+                () -> new Client(id, nullName),
+                "Expected non-negative id");
+        assertThrows(IllegalArgumentException.class,
+                () -> new Client(id, emptyName),
+                "Expected non-negative id");
     }
 }
