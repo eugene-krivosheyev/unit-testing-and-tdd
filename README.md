@@ -5,6 +5,7 @@
 Записи
 ======
 - [11.05](https://us02web.zoom.us/rec/share/2vRzXSFTwDM6VktJwc1wv3mIYkYyqSRqYs_8au88aHl4QRycu5QamZ80Gc_-BFna.7tHYrRjX_5uut_e2)
+- [13.05](https://us02web.zoom.us/rec/share/jAPIhDZUnianKQM26d0GeCACvqdhRmN21KYMBEK7RzmYEB9EgupLVOHt45kP5TIK.MCTFNPY_4ehudgqJ)
 
 Цели тренинга
 ============
