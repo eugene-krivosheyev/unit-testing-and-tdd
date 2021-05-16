@@ -31,11 +31,10 @@ public class ClientTest {
         final String clientName = null;
         assertThrows(IllegalArgumentException.class, () -> new Client(clientId, clientName));
     }
-}
 
-    /*@Test
-    @Disabled("temporary disabled")
-    @DisplayName("Test case")
+    @Test
+    //@Disabled("temporary disabled")
+    //@DisplayName("Test case")
     public void shouldStorePropertiesWhenCreated() {
         //region given
         final int clientId = 1;
@@ -56,11 +55,11 @@ public class ClientTest {
 
         //Hamcrest:
         assertThat(sut,
-            allOf(
-                hasProperty("id", notNullValue()),
-                hasProperty("id", equalTo(clientId)),
-                hasProperty("name", is(clientName))
-        ));
+                allOf(
+                        hasProperty("id", notNullValue()),
+                        hasProperty("id", equalTo(clientId)),
+                        hasProperty("name", is(clientName))
+                ));
 
         //AssertJ:
         org.assertj.core.api.Assertions.assertThat(sut)
@@ -68,7 +67,8 @@ public class ClientTest {
                 .hasFieldOrPropertyWithValue("name", clientName);
         //endregion
     }
-    */
+}
+
 
 
 
