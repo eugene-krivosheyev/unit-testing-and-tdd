@@ -1,14 +1,18 @@
 package com.acme.banking.dbo.domain;
 
 public class SavingAccount implements Account {
-    private int id;
-    private Client client;
-    private double amount;
+    final static String ARG_EXCEPTION_MESSAGE_ID_NEGATIVE = "ID is expected to be positive int";
+    final static String ARG_EXCEPTION_MESSAGE_AMOUNT_NEGATIVE = "Amount is expected to be positive double";
+    final static String ARG_EXCEPTION_MESSAGE_CLIENT_NULL = "Client is NULL";
+
+    final private int id;
+    final private Client client;
+    final private double amount;
 
     public SavingAccount(int id, Client client, double amount) {
-        if (id < 0) throw new IllegalArgumentException("ID is expected to be positive int");
-        if (amount < 0) throw new IllegalArgumentException("Amount is expected to be positive double");
-        if (client == null) throw new IllegalArgumentException("Client is NULL");
+        if (id < 0) throw new IllegalArgumentException(ARG_EXCEPTION_MESSAGE_ID_NEGATIVE);
+        if (amount < 0) throw new IllegalArgumentException(ARG_EXCEPTION_MESSAGE_AMOUNT_NEGATIVE);
+        if (client == null) throw new IllegalArgumentException(ARG_EXCEPTION_MESSAGE_CLIENT_NULL);
 
         this.id = id;
         this.client = client;
