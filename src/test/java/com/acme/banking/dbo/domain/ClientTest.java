@@ -5,14 +5,15 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ClientTest {
-  final String clientValidName = "client name";
-  final int clientValidId = 123;
+  public static final int negativeId = -1;
+  final String dummyName = "client name";
+  final int dummyId = 123;
 
   @Test
   public void shouldNotBeCreatedWhenNegativeId(){
     IllegalArgumentException thrown =
             assertThrows(IllegalArgumentException.class, () ->
-      new Client(-1, clientValidName));
+      new Client(negativeId, dummyName));
     assertEquals(thrown.getMessage(), "id!");
   }
 
@@ -20,13 +21,13 @@ public class ClientTest {
   public void shouldNotBeCreatedWhenNameNotProvided(){
     IllegalArgumentException thrown =
             assertThrows(IllegalArgumentException.class, () ->
-                    new Client(clientValidId, null));
+                    new Client(dummyId, null));
 
     assertEquals(thrown.getMessage(), "name!");
 
 
     thrown = assertThrows(IllegalArgumentException.class, () ->
-                    new Client(clientValidId, ""));
+                    new Client(dummyId, ""));
 
     assertEquals(thrown.getMessage(), "name is empty!");
   }
@@ -34,17 +35,17 @@ public class ClientTest {
   @Test
   public void getId() {
     Client sut = getTestClient();
-    assertEquals(clientValidId, sut.getId());
+    assertEquals(dummyId, sut.getId());
   }
 
   @Test
   public void getName() {
     Client sut = getTestClient();
-    assertEquals(clientValidName, sut.getName());
+    assertEquals(dummyName, sut.getName());
   }
 
   private Client getTestClient() {
-    Client sut = new Client(clientValidId, clientValidName);
+    Client sut = new Client(dummyId, dummyName);
 
     return sut;
   }
