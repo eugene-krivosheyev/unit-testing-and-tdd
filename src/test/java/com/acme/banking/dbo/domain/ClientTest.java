@@ -38,32 +38,23 @@ class ClientTest extends AbstractTest {
     }
 
     @Test
-    public void getIdWhenCreatedCorrectlyAndRequested() {
+    public void getFieldsWhenCreatedCorrectlyAndRequested() {
         // region Given
-        final Client client = new Client(1, "Test Name");
+        final int expectedId = 1;
+        final String expectedName = "Test Name";
+        final Client client = new Client(expectedId, expectedName);
         // endregion
 
         // region When
         final int id = client.getId();
-        // endregion
-
-        // region Then
-        assertEquals(1, id, "Getter for 'id' seems isn't working");
-        // endregion
-    }
-
-    @Test
-    public void getNameWhenCreatedCorrectlyAndRequested() {
-        // region Given
-        final Client client = new Client(1, "Test Name");
-        // endregion
-
-        // region When
         final String name = client.getName();
         // endregion
 
         // region Then
-        assertEquals("Test Name", name, "Getter for 'name' seems isn't working");
+        assertAll(
+                () -> assertEquals(expectedId, id, "Getter for 'id' seems isn't working"),
+                () -> assertEquals(expectedName, name, "Getter for 'name' seems isn't working")
+        );
         // endregion
     }
 }

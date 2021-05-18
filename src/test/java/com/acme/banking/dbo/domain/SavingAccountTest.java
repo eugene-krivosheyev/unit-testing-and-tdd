@@ -38,50 +38,26 @@ class SavingAccountTest extends AbstractTest {
     }
 
     @Test
-    public void getAmountWhenCreatedCorrectlyAndRequested() {
+    public void getFieldsWhenCreatedCorrectlyAndRequested() {
         // region Given
+        final int expectedId = 1;
+        final double expectedAmount = 1.0;
         final Client client = new Client(1, "Test Name");
-        final Account account = new SavingAccount(1, client, 1.0);
+        final Account account = new SavingAccount(expectedId, client, expectedAmount);
         // endregion
 
         // region When
         final double amount = account.getAmount();
-        // endregion
-
-        // region Then
-        assertEquals(1.0, amount, "Getter for 'amount' seems isn't working");
-        // endregion
-    }
-
-    @Test
-    public void getIdWhenCreatedCorrectlyAndRequested() {
-        // region Given
-        final Client client = new Client(1, "Test Name");
-        final Account account = new SavingAccount(1, client, 1.0);
-        // endregion
-
-        // region When
+        final Client actualClient = account.getClient();
         final int id = account.getId();
         // endregion
 
         // region Then
-        assertEquals(1, id, "Getter for 'id' seems isn't working");
-        // endregion
-    }
-
-    @Test
-    public void getClientWhenCreatedCorrectlyAndRequested() {
-        // region Given
-        final Client client = new Client(1, "Test Name");
-        final Account account = new SavingAccount(1, client, 1.0);
-        // endregion
-
-        // region When
-        final Client actualClient = account.getClient();
-        // endregion
-
-        // region Then
-        assertSame(client, actualClient, "Getter for 'client' seems isn't working");
+        assertAll(
+                () -> assertEquals(expectedId, id, "Getter for 'id' seems isn't working"),
+                () -> assertSame(client, actualClient, "Getter for 'client' seems isn't working"),
+                () -> assertEquals(expectedAmount, amount, "Getter for 'amount' seems isn't working")
+        );
         // endregion
     }
 }
