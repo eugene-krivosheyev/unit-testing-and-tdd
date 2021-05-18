@@ -6,6 +6,7 @@
 ======
 - [11.05](https://us02web.zoom.us/rec/share/_nV4q0yROE5bqef9MOtCogp2A3XcNIR7eke1f9Q5l59R82OXOv1n3PYJZgrpFX-X.fHtbHb-sAS9ghCTZ)
 - [13.05](https://us02web.zoom.us/rec/share/J_ZUu2EqQU9L6v7bcLDGktCf01gbDnnPrxHDqMZcsb3BmllXsZuuiKi5pEeW_zJK.5JOaOjeaw7pjvWHU)
+- [18.05](https://us02web.zoom.us/rec/share/u8fSwCZRL9OfW7s3mmXfirT9fgCW0J6KiC2ReuGKeYapVN5sTzH3cPXSr9Vd1XR_.8NTPGkQGEhmWx44J)
 
 Цели тренинга
 ============
