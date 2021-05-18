@@ -130,8 +130,7 @@ public class ClientTest {
         SavingAccount account = new SavingAccount(accountId, client, amount);
         SavingAccount secondAccount = new SavingAccount(accountId, client, amount);
 
-
-        assertArrayEquals(client.getAccounts().toArray(), new SavingAccount[]{account, secondAccount});//List.of(account, secondAccount).toArray());
+        assertArrayEquals(client.getAccounts().toArray(), new SavingAccount[]{account, secondAccount});
 
     }
 }
