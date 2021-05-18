@@ -1,5 +1,6 @@
 package com.acme.banking.dbo;
 
+import com.acme.banking.dbo.domain.Account;
 import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.domain.SavingAccount;
 import org.junit.jupiter.api.DisplayName;
@@ -67,5 +68,14 @@ public class SavingAccountTest {
                 IllegalArgumentException.class,
                 sut,
                 "Account amount should be positive!");
+    }
+
+    @Test
+    public void shouldClientContainsAccountWhenAccountForClientWasCreated() {
+        final Client dummyClient = new Client(1, "dummy");
+
+        final Account sut = new SavingAccount(1, dummyClient, 1.0);
+
+        assertTrue(dummyClient.getAccounts().contains(sut));
     }
 }

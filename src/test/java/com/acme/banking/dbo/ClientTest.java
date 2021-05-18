@@ -64,14 +64,4 @@ public class ClientTest {
                 sut,
                 "Client name should be not empty!");
     }
-
-    @Test
-    public void shouldContainsAccountWhenAccountForClientWasCreated() {
-        final Client dummyClient = new Client(1, "dummy");
-
-        final Account sut = new SavingAccount(1, dummyClient, 1.0);
-        assumeFalse(dummyClient.getAccounts().isEmpty());
-
-        assertTrue(dummyClient.getAccounts().contains(sut));
-    }
 }
