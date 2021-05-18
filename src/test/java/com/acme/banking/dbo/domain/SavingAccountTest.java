@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SavingAccountTest extends AbstractTest {
     @Test
-    void shouldNotBeCreatedWhenNegativeId() {
+    public void shouldNotBeCreatedWhenNegativeId() {
         // region Given
         final Executable producer = () -> new SavingAccount(-1, new Client(1, "Name"), 1.0);
         // endregion
@@ -16,7 +16,7 @@ class SavingAccountTest extends AbstractTest {
     }
 
     @Test
-    void shouldNotBeCreatedWhenClientIsNull() {
+    public void shouldNotBeCreatedWhenClientIsNull() {
         // region Given
         final Executable producer = () -> new SavingAccount(1, null, 1.0);
         // endregion
@@ -27,7 +27,7 @@ class SavingAccountTest extends AbstractTest {
     }
 
     @Test
-    void shouldNotBeCreatedWhenNameIsEmpty() {
+    public void shouldNotBeCreatedWhenNameIsEmpty() {
         // region Given
         final Executable producer = () -> new SavingAccount(1, new Client(1, "Name"), -1.0);
         // endregion
@@ -38,7 +38,7 @@ class SavingAccountTest extends AbstractTest {
     }
 
     @Test
-    void getAmountWhenCreatedCorrectlyAndRequested() {
+    public void getAmountWhenCreatedCorrectlyAndRequested() {
         // region Given
         final Client client = new Client(1, "Test Name");
         final Account account = new SavingAccount(1, client, 1.0);
@@ -54,7 +54,7 @@ class SavingAccountTest extends AbstractTest {
     }
 
     @Test
-    void getIdWhenCreatedCorrectlyAndRequested() {
+    public void getIdWhenCreatedCorrectlyAndRequested() {
         // region Given
         final Client client = new Client(1, "Test Name");
         final Account account = new SavingAccount(1, client, 1.0);
@@ -70,7 +70,7 @@ class SavingAccountTest extends AbstractTest {
     }
 
     @Test
-    void getClientWhenCreatedCorrectlyAndRequested() {
+    public void getClientWhenCreatedCorrectlyAndRequested() {
         // region Given
         final Client client = new Client(1, "Test Name");
         final Account account = new SavingAccount(1, client, 1.0);

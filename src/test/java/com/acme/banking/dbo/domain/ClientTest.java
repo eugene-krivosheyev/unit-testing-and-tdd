@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ClientTest extends AbstractTest {
     @Test
-    void shouldNotBeCreatedWhenNegativeId() {
+    public void shouldNotBeCreatedWhenNegativeId() {
         // region Given
         final Executable producer = () -> new Client(-1, null);
         // endregion
@@ -16,7 +16,7 @@ class ClientTest extends AbstractTest {
     }
 
     @Test
-    void shouldNotBeCreatedWhenNameIsNull() {
+    public void shouldNotBeCreatedWhenNameIsNull() {
         // region Given
         final Executable producer = () -> new Client(1, null);
         // endregion
@@ -27,7 +27,7 @@ class ClientTest extends AbstractTest {
     }
 
     @Test
-    void shouldNotBeCreatedWhenNameIsEmpty() {
+    public void shouldNotBeCreatedWhenNameIsEmpty() {
         // region Given
         final Executable producer = () -> new Client(1, "");
         // endregion
@@ -38,7 +38,7 @@ class ClientTest extends AbstractTest {
     }
 
     @Test
-    void getIdWhenCreatedCorrectlyAndRequested() {
+    public void getIdWhenCreatedCorrectlyAndRequested() {
         // region Given
         final Client client = new Client(1, "Test Name");
         // endregion
@@ -53,7 +53,7 @@ class ClientTest extends AbstractTest {
     }
 
     @Test
-    void getNameWhenCreatedCorrectlyAndRequested() {
+    public void getNameWhenCreatedCorrectlyAndRequested() {
         // region Given
         final Client client = new Client(1, "Test Name");
         // endregion
