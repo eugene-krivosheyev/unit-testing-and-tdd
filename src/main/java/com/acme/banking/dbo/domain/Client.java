@@ -1,7 +1,6 @@
 package com.acme.banking.dbo.domain;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class Client {
@@ -31,6 +30,6 @@ public class Client {
 
     public void addAccount(Account account) {
         if (account.getClient() != this) throw new IllegalArgumentException("Incorrect client! FRAUD!");
-        accounts.add(account);
+        this.accounts.add(account);
     }
 }
