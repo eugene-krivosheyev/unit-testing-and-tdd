@@ -13,83 +13,59 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
 public class SavingAccountTest {
     @Test
     public void shouldStorePropertiesWhenCreated() {
-        //region given
         final int accountId = 1;
         final Client accountClient = new Client(1, "dummy client name");
         final double accountAmount = 1;
-        //endregion
 
-        //region when
         SavingAccount sut = new SavingAccount(accountId, accountClient, accountAmount);
         assumeTrue(sut != null);
-        //endregion
 
-        //region then
         assertAll("SavingAccount store its properties",
                 () -> assertEquals(accountId, sut.getId()),
                 () -> assertSame(accountClient, sut.getClient()),
                 () -> assertEquals(accountAmount, sut.getAmount())
         );
-        //endregion
     }
 
     @Test
     public void shouldThrowIllegalArgumentExceptionWhenIdIsNegative() {
-        //region given
         final int accountId = -1;
         final Client accountClient = new Client(1, "dummy client name");
         final double accountAmount = 1;
-        //endregion
 
-        //region when
         Executable sut = () -> new SavingAccount(accountId, accountClient, accountAmount);
-        //endregion
 
-        //region then
         assertThrows(
                 IllegalArgumentException.class,
                 sut,
                 "Account id should be positive!");
-        //endregion
     }
 
     @Test
     public void shouldThrowIllegalArgumentExceptionWhenClientIsNull() {
-        //region given
         final int accountId = 1;
         final Client accountClient = null;
         final double accountAmount = 1;
-        //endregion
 
-        //region when
         Executable sut = () -> new SavingAccount(accountId, accountClient, accountAmount);
-        //endregion
 
-        //region then
         assertThrows(
                 IllegalArgumentException.class,
                 sut,
                 "Account client should be not null!");
-        //endregion
     }
 
     @Test
     public void shouldThrowIllegalArgumentExceptionWhenAmountIsNegative() {
-        //region given
         final int accountId = 1;
         final Client accountClient = new Client(1, "dummy client name");;
         final double accountAmount = -1;
-        //endregion
 
-        //region when
         Executable sut = () -> new SavingAccount(accountId, accountClient, accountAmount);
-        //endregion
 
-        //region then
         IllegalArgumentException e = assertThrows(
                 IllegalArgumentException.class,
                 sut,
                 "Account amount should be positive!");
-        //endregion
     }
 }

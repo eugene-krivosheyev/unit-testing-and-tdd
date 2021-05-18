@@ -1,6 +1,8 @@
 package com.acme.banking.dbo;
 
+import com.acme.banking.dbo.domain.Account;
 import com.acme.banking.dbo.domain.Client;
+import com.acme.banking.dbo.domain.SavingAccount;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
@@ -12,78 +14,64 @@ import static org.junit.jupiter.api.Assumptions.*;
 public class ClientTest {
     @Test
     public void shouldStorePropertiesWhenCreated() {
-        //region given
         final int clientId = 1;
         final String clientName = "dummy client name";
-        //endregion
 
-        //region when
         Client sut = new Client(clientId, clientName);
         assumeTrue(sut != null);
-        //endregion
 
-        //region then
         assertAll("Client store its properties",
                 () -> assertEquals(clientId, sut.getId()),
                 () -> assertEquals(clientName, sut.getName())
         );
-        //endregion
     }
 
     @Test
     public void shouldThrowIllegalArgumentExceptionWhenIdIsNegative() {
-        //region given
         final int clientId = -1;
         final String clientName = "dummy client name";
-        //endregion
 
-        //region when
         Executable sut = () -> new Client(clientId, clientName);
-        //endregion
 
-        //region then
         assertThrows(
                 IllegalArgumentException.class,
                 sut,
                 "Client id should be positive!");
-        //endregion
     }
 
     @Test
     public void shouldThrowIllegalArgumentExceptionWhenNameIsNull() {
-        //region given
         final int clientId = 1;
         final String clientName = null;
-        //endregion
 
-        //region when
         Executable sut = () -> new Client(clientId, clientName);
-        //endregion
 
-        //region then
         assertThrows(
                 IllegalArgumentException.class,
                 sut,
                 "Client name should be not null!");
-        //endregion
     }
 
     @Test
     public void shouldThrowIllegalArgumentExceptionWhenNameIsEmpty() {
-        //region given
         final int clientId = 1;
         final String clientName = "";
-        //endregion
 
-        //region when
         Executable sut = () -> new Client(clientId, clientName);
-        //endregion
 
-        //region then
         assertThrows(
                 IllegalArgumentException.class,
                 sut,
                 "Client name should be not empty!");
-        //endregion
+    }
+
+    @Test
+    public void shouldContainsAccountWhenAccountForClientWasCreated() {
+        final Client dummyClient = new Client(1, "dummy");
+
+        final Account sut = new SavingAccount(1, dummyClient, 1.0);
+        assumeFalse(dummyClient.getAccounts().isEmpty());
+
+        assertTrue(dummyClient.getAccounts().contains(sut));
     }
 }

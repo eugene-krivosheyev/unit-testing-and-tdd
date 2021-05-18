@@ -2,11 +2,12 @@ package com.acme.banking.dbo.domain;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 
 public class Client {
     private int id;
     private String name;
-    private Collection<Account> accounts = new ArrayList<>(); //TODO
+    private Collection<Account> accounts = new ArrayList<>();
 
     public Client(int id, String name) {
         if (id < 0) { throw new IllegalArgumentException("Client id should be positive!"); }
@@ -22,5 +23,13 @@ public class Client {
 
     public String getName() {
         return name;
+    }
+
+    public Collection<Account> getAccounts() {
+        return Collections.unmodifiableCollection(accounts);
+    }
+
+    public void addAccount(Account account) {
+        this.accounts.add(account);
     }
 }
