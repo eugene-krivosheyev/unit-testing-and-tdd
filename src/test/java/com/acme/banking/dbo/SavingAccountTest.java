@@ -9,22 +9,24 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 public class SavingAccountTest {
+
+    public static final int ACCOUNT_ID = 1;
+    public static final int CLIENT_ID = 1;
+    public static final double AMOUNT = 0.5;
+
     @Test
     @DisplayName("Test case")
     public void shouldStorePropertiesWhenCreated() {
-        final int accountId = 1;
-        final int clientId = 1;
-        final Client client = new Client(clientId, "dummy client name");
-        final double amount = 0.5;
+        final Client client = new Client(CLIENT_ID, "dummy client name");
 
-        SavingAccount sut = new SavingAccount(accountId, client, amount);
+        SavingAccount sut = new SavingAccount(ACCOUNT_ID, client, AMOUNT);
 
         assumeTrue(sut != null);
 
         assertAll("SavingAccount store its properties",
                 () -> assertEquals(client, sut.getClient()),
-                () -> assertEquals(clientId, sut.getId()),
-                () -> assertEquals(amount, sut.getAmount())
+                () -> assertEquals(CLIENT_ID, sut.getId()),
+                () -> assertEquals(AMOUNT, sut.getAmount())
         );
     }
 
@@ -32,12 +34,10 @@ public class SavingAccountTest {
     @DisplayName("Test case")
     public void shouldNotCreateWhenNegativeId() {
         final int accountId = -1;
-        final int clientId = 1;
-        final Client client = new Client(clientId, "dummy client name");
-        final double amount = 0.5;
+        final Client client = new Client(CLIENT_ID, "dummy client name");
 
         try {
-            SavingAccount sut = new SavingAccount(accountId, client, amount);
+            SavingAccount sut = new SavingAccount(accountId, client, AMOUNT);
         } catch (IllegalArgumentException e) {
             assertNotNull(e);
             assertEquals(e.getMessage(), "id < 0");
@@ -47,11 +47,9 @@ public class SavingAccountTest {
     @Test
     @DisplayName("Test case")
     public void shouldNotCreateWhenNullClient() {
-        final int accountId = 1;
-        final double amount = 0.5;
 
         try {
-            SavingAccount sut = new SavingAccount(accountId, null, amount);
+            SavingAccount sut = new SavingAccount(ACCOUNT_ID, null, AMOUNT);
         } catch (IllegalArgumentException e) {
             assertNotNull(e);
             assertEquals(e.getMessage(), "Bad client");
@@ -61,16 +59,23 @@ public class SavingAccountTest {
     @Test
     @DisplayName("Test case")
     public void shouldNotCreateWhenBadAmount() {
-        final int accountId = 1;
-        final int clientId = 1;
-        final Client client = new Client(clientId, "dummy client name");
+        final Client client = new Client(CLIENT_ID, "dummy client name");
         final double negativeAmount = -0.5;
 
         try {
-            SavingAccount sut = new SavingAccount(accountId, client, negativeAmount);
+            SavingAccount sut = new SavingAccount(ACCOUNT_ID, client, negativeAmount);
         } catch (IllegalArgumentException e) {
             assertNotNull(e);
             assertEquals(e.getMessage(), "amount < 0");
         }
+    }
+
+    @Test
+    @DisplayName("Test case")
+    public void clientShouldContainAccountWhenAccountCreated() {
+        final Client client = new Client(CLIENT_ID, "dummy client name");
+
+        SavingAccount sut = new SavingAccount(ACCOUNT_ID, client, AMOUNT);
+        assertEquals(sut, client.getAccounts().get(0));
     }
 }
