@@ -10,8 +10,8 @@ public class Client {
     private Collection<Account> accounts = new ArrayList<>();
 
     public Client(int id, String name) {
-        if (id < 0) { throw new IllegalArgumentException("Client id should be positive!"); }
-        if (name == null || name.isEmpty()) { throw new IllegalArgumentException("Client name should be not null and not empty!"); }
+        if (id < 0) throw new IllegalArgumentException("Client id should be positive!");
+        if (name == null || name.isEmpty()) throw new IllegalArgumentException("Client name should be not null and not empty!");
 
         this.id = id;
         this.name = name;
