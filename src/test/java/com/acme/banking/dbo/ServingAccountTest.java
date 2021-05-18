@@ -6,17 +6,56 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assumptions.*;
 
 
 @DisplayName("Test ServingAccount")
 public class ServingAccountTest {
     @Test
+    @DisplayName("Test shouldReturnAmountWhenCallGetAmount")
+    public void shouldReturnAmountWhenCallGetAmount() {
+
+        final int SavingAccountId = 1;
+        final double amount = 1;
+        Client dummyClient = new Client(1,"Dummy");
+
+        SavingAccount sut = new SavingAccount(SavingAccountId, dummyClient, amount);
+        assertEquals(amount, sut.getAmount());
+    }
+
+    @Test
+    @DisplayName("Test shouldReturnIdWhenCallGetID")
+    public void shouldReturnIdWhenCallGetID() {
+
+        final int SavingAccountId = 1;
+        final double amount = 1;
+        Client dummyClient = new Client(1,"Dummy");
+
+        SavingAccount sut = new SavingAccount(SavingAccountId, dummyClient, amount);
+        assertEquals(SavingAccountId, sut.getId());
+     }
+
+    @Test
+    @DisplayName("Test shouldReturnClientWhenCallGetClient")
+    public void shouldReturnClientWhenCallGetClient() {
+
+        final int SavingAccountId = 1;
+        final double amount = 1;
+        Client dummyClient = new Client(1,"Dummy");
+
+        SavingAccount sut = new SavingAccount(SavingAccountId, dummyClient, amount);
+        assertEquals(dummyClient, sut.getClient());
+
+    }
+
+    @Test
     @DisplayName("Test shouldThrowExceptionWhenIdNegative")
     public void shouldThrowExceptionWhenIdNegative() {
 
         final int SavingAccountId = -1;
-        final int amount = 1;
+        final double amount = 1;
         Client dummyClient = new Client(1,"Dummy");
 
         Assertions.assertThrows(IllegalArgumentException.class, () -> new SavingAccount(SavingAccountId, dummyClient, amount));
@@ -27,7 +66,7 @@ public class ServingAccountTest {
     public void shouldThrowExceptionWhenAmountNegative() {
 
         final int SavingAccountId = 1;
-        final int amount = -1;
+        final double amount = -1;
         Client dummyClient = new Client(1, "Dummy");
 
         Assertions.assertThrows(IllegalArgumentException.class, () -> new SavingAccount(SavingAccountId, dummyClient, amount));
@@ -39,23 +78,28 @@ public class ServingAccountTest {
     public void shouldThrowExceptionWhenClientIsNull() {
 
         final int SavingAccountId = -1;
-        final int amount = 1;
+        final double amount = 1;
         Client dummyClient = null;
 
         Assertions.assertThrows(IllegalArgumentException.class, () -> new SavingAccount(SavingAccountId, dummyClient, amount));
 
     }
 
+
     @Test
-    @DisplayName("Test shouldThrowExceptionWhenAccountNotLinkedToClient")
-    public void shouldThrowExceptionWhenAccountNotLinkedToClient() {
+    @DisplayName("Test shouldAddAccountWhenCreated")
+    public void shouldAddAccountWhenCallAddAccount() {
 
+        final int clientId = 1;
+        final String clientName = "Client";
         final int SavingAccountId = 1;
-        final int amount = 1;
-        Client dummyClient = new Client(1,"Dummy");
+        final double amount = 1;
 
-        Assertions.assertThrows(IllegalStateException.class, () -> new SavingAccount(SavingAccountId, dummyClient, amount));
+        Client dummyClient = new Client(clientId, clientName);
+        SavingAccount sut = new SavingAccount(SavingAccountId, dummyClient, amount );
+
+        assertFalse(sut.getClient().getAccounts().isEmpty());
+
     }
-
 
 }

@@ -7,13 +7,14 @@ public class SavingAccount implements Account {
 
     public SavingAccount(int id, Client client, double amount) {
         if ( id < 0) { throw new IllegalArgumentException(); }
-        if ( client == null) { throw new IllegalArgumentException(); }
+        if ( client.equals(null)) { throw new IllegalArgumentException(); }
         if ( amount < 0 ) { throw new IllegalArgumentException(); }
-        if ( ! client.checkAccount(this)){ throw new IllegalStateException();}
 
         this.id = id;
         this.client = client;
         this.amount = amount;
+
+        this.client.addAccount(this);
     }
 
     @Override

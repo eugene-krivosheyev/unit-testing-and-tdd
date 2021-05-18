@@ -5,8 +5,7 @@ import com.acme.banking.dbo.domain.SavingAccount;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -80,6 +79,21 @@ public class ClientTest {
 
         Assertions.assertThrows(IllegalArgumentException.class, () -> new Client(clientId, clientName));
 
+    }
+
+    @Test
+    @DisplayName("Test shouldReturnTrueWhenAccountAccountAdded")
+    public void shouldReturnTrueWhenAccountAccountAdded() {
+
+        final int clientId = 1;
+        final String clientName = "Client";
+        final int SavingAccountId = 1;
+        final double amount = 1;
+
+        Client sut = new Client(clientId, clientName);
+        SavingAccount dummyAccount = new SavingAccount(SavingAccountId, sut, amount );
+
+        assertFalse(sut.getAccounts().isEmpty());
     }
 
 }
