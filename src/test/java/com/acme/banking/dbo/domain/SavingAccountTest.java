@@ -41,11 +41,11 @@ class SavingAccountTest extends AbstractTest {
     void getAmountWhenCreatedCorrectlyAndRequested() {
         // region Given
         final Client client = new Client(1, "Test Name");
-        final SavingAccount savingAccount = new SavingAccount(1, client, 1.0);
+        final Account account = new SavingAccount(1, client, 1.0);
         // endregion
 
         // region When
-        final double amount = savingAccount.getAmount();
+        final double amount = account.getAmount();
         // endregion
 
         // region Then
@@ -57,11 +57,11 @@ class SavingAccountTest extends AbstractTest {
     void getIdWhenCreatedCorrectlyAndRequested() {
         // region Given
         final Client client = new Client(1, "Test Name");
-        final SavingAccount savingAccount = new SavingAccount(1, client, 1.0);
+        final Account account = new SavingAccount(1, client, 1.0);
         // endregion
 
         // region When
-        final int id = savingAccount.getId();
+        final int id = account.getId();
         // endregion
 
         // region Then
@@ -73,11 +73,11 @@ class SavingAccountTest extends AbstractTest {
     void getClientWhenCreatedCorrectlyAndRequested() {
         // region Given
         final Client client = new Client(1, "Test Name");
-        final SavingAccount savingAccount = new SavingAccount(1, client, 1.0);
+        final Account account = new SavingAccount(1, client, 1.0);
         // endregion
 
         // region When
-        final Client actualClient = savingAccount.getClient();
+        final Client actualClient = account.getClient();
         // endregion
 
         // region Then
