@@ -36,24 +36,14 @@ public class SavingAccountTest {
         final int accountId = -1;
         final Client client = new Client(CLIENT_ID, "dummy client name");
 
-        try {
-            SavingAccount sut = new SavingAccount(accountId, client, AMOUNT);
-        } catch (IllegalArgumentException e) {
-            assertNotNull(e);
-            assertEquals(e.getMessage(), "id < 0");
-        }
+        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(accountId, client, AMOUNT), "id < 0");
     }
 
     @Test
     @DisplayName("Test case")
     public void shouldNotCreateWhenNullClient() {
 
-        try {
-            SavingAccount sut = new SavingAccount(ACCOUNT_ID, null, AMOUNT);
-        } catch (IllegalArgumentException e) {
-            assertNotNull(e);
-            assertEquals(e.getMessage(), "Bad client");
-        }
+        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(ACCOUNT_ID, null, AMOUNT), "Bad client");
     }
 
     @Test
@@ -62,12 +52,7 @@ public class SavingAccountTest {
         final Client client = new Client(CLIENT_ID, "dummy client name");
         final double negativeAmount = -0.5;
 
-        try {
-            SavingAccount sut = new SavingAccount(ACCOUNT_ID, client, negativeAmount);
-        } catch (IllegalArgumentException e) {
-            assertNotNull(e);
-            assertEquals(e.getMessage(), "amount < 0");
-        }
+        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(ACCOUNT_ID, client, negativeAmount), "amount < 0");
     }
 
     @Test

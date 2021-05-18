@@ -2,7 +2,6 @@ package com.acme.banking.dbo;
 
 import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.domain.SavingAccount;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -59,12 +58,7 @@ public class ClientTest {
         final int negativeClientId = -1;
         final String clientName = "dummy client name";
 
-        try {
-            Client sut = new Client(negativeClientId, clientName);
-        } catch (IllegalArgumentException e) {
-            assertNotNull(e);
-            assertEquals(e.getMessage(), "id < 0");
-        }
+        assertThrows(IllegalArgumentException.class, () ->  new Client(negativeClientId, clientName), "id < 0");
     }
 
     @Test
@@ -72,12 +66,7 @@ public class ClientTest {
     public void shouldNotCreateWhenEmptyClientName() {
         final String emptyClientName = "";
 
-        try {
-            Client sut = new Client(CLIENT_ID, emptyClientName);
-        } catch (IllegalArgumentException e) {
-            assertNotNull(e);
-            assertEquals(e.getMessage(), "Bad name");
-        }
+        assertThrows(IllegalArgumentException.class, () ->  new Client(CLIENT_ID, emptyClientName), "Bad name");
     }
 
     @Test
@@ -85,27 +74,9 @@ public class ClientTest {
     public void shouldNotCreateWhenNullClientName() {
         final int clientId = 1;
 
-        try {
-            Client sut = new Client(clientId, null);
-        } catch (IllegalArgumentException e) {
-            assertNotNull(e);
-            assertEquals(e.getMessage(), "Bad name");
-        }
+        assertThrows(IllegalArgumentException.class, () ->  new Client(clientId, null), "Bad name");
     }
 
-    @Test
-    @DisplayName("Test case")
-    public void shouldXXX() {
-        final int negativeClientId = -1;
-        final String clientName = "dummy client name";
-
-        try {
-            Client sut = new Client(negativeClientId, clientName);
-        } catch (IllegalArgumentException e) {
-            assertNotNull(e);
-            assertEquals(e.getMessage(), "id < 0");
-        }
-    }
 
     @Test
     @DisplayName("Test case")
