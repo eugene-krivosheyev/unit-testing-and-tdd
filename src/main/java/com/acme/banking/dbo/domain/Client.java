@@ -22,4 +22,8 @@ public class Client {
     public String getName() {
         return name;
     }
+
+    public boolean checkAccount(Account account){
+        return this.accounts.contains(accounts);
+    }
 }

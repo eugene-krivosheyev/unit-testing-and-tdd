@@ -1,17 +1,17 @@
 package com.acme.banking.dbo;
 
 import com.acme.banking.dbo.domain.Client;
+import com.acme.banking.dbo.domain.SavingAccount;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assumptions.*;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
-
+import org.junit.jupiter.api.Assertions;
 
 @DisplayName("Test Client")
 public class ClientTest {
@@ -57,12 +57,7 @@ public class ClientTest {
         final int clientId = -1;
         final String clientName = "dummy client name";
 
-        try {
-            Client sut = new Client(clientId, clientName);
-        } catch (IllegalArgumentException e){
-            assumeTrue( true, "Catch IllegalArgumentException when Id negative");
-        }
-
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new Client(clientId, clientName));
     }
 
     @Test
@@ -72,11 +67,7 @@ public class ClientTest {
         final int clientId = 1;
         final String clientName = "";
 
-        try {
-            Client sut = new Client(clientId, clientName);
-        } catch (IllegalArgumentException e){
-            assumeTrue( true, "Catch IllegalArgumentException when Name is empty");
-        }
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new Client(clientId, clientName));
 
     }
 
@@ -87,11 +78,7 @@ public class ClientTest {
         final int clientId = 1;
         final String clientName = null;
 
-        try {
-            Client sut = new Client(clientId, clientName);
-        } catch (IllegalArgumentException e){
-            assumeTrue( true, "Catch IllegalArgumentException when Name is Null");
-        }
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new Client(clientId, clientName));
 
     }
 

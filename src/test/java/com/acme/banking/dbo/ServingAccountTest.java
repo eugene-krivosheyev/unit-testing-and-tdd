@@ -4,6 +4,7 @@ import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.domain.SavingAccount;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Assertions;
 
 import static org.junit.jupiter.api.Assumptions.*;
 
@@ -14,34 +15,22 @@ public class ServingAccountTest {
     @DisplayName("Test shouldThrowExceptionWhenIdNegative")
     public void shouldThrowExceptionWhenIdNegative() {
 
-        final int clientId = 1;
         final int SavingAccountId = -1;
         final int amount = 1;
-        final String clientName = "dummy client name";
-        Client dummyClient = new Client(clientId, clientName);
+        Client dummyClient = new Client(1,"Dummy");
 
-        try {
-            SavingAccount sut = new SavingAccount(SavingAccountId, dummyClient, amount);
-        } catch (IllegalArgumentException e){
-            assumeTrue( true, "Catch IllegalArgumentException when Id negative");
-        }
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new SavingAccount(SavingAccountId, dummyClient, amount));
 
     }
     @Test
     @DisplayName("Test shouldThrowExceptionWhenAmountNegative")
     public void shouldThrowExceptionWhenAmountNegative() {
 
-        final int clientId = 1;
         final int SavingAccountId = 1;
         final int amount = -1;
-        final String clientName = "dummy client name";
-        Client dummyClient = new Client(clientId, clientName);
+        Client dummyClient = new Client(1, "Dummy");
 
-        try {
-            SavingAccount sut = new SavingAccount(SavingAccountId, dummyClient, amount);
-        } catch (IllegalArgumentException e){
-            assumeTrue( true, "Catch IllegalArgumentException when Amount negative");
-        }
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new SavingAccount(SavingAccountId, dummyClient, amount));
 
     }
 
@@ -53,12 +42,20 @@ public class ServingAccountTest {
         final int amount = 1;
         Client dummyClient = null;
 
-        try {
-            SavingAccount sut = new SavingAccount(SavingAccountId, dummyClient, amount);
-        } catch (IllegalArgumentException e){
-            assumeTrue( true, "Catch IllegalArgumentException when Client is Null ");
-        }
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new SavingAccount(SavingAccountId, dummyClient, amount));
 
     }
+
+    @Test
+    @DisplayName("Test shouldThrowExceptionWhenAccountNotLinkedToClient")
+    public void shouldThrowExceptionWhenAccountNotLinkedToClient() {
+
+        final int SavingAccountId = 1;
+        final int amount = 1;
+        Client dummyClient = new Client(1,"Dummy");
+
+        Assertions.assertThrows(IllegalStateException.class, () -> new SavingAccount(SavingAccountId, dummyClient, amount));
+    }
+
 
 }

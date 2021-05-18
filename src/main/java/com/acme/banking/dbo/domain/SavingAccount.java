@@ -9,6 +9,7 @@ public class SavingAccount implements Account {
         if ( id < 0) { throw new IllegalArgumentException(); }
         if ( client == null) { throw new IllegalArgumentException(); }
         if ( amount < 0 ) { throw new IllegalArgumentException(); }
+        if ( ! client.checkAccount(this)){ throw new IllegalStateException();}
 
         this.id = id;
         this.client = client;
@@ -29,4 +30,6 @@ public class SavingAccount implements Account {
     public Client getClient() {
         return client;
     }
+
+
 }
