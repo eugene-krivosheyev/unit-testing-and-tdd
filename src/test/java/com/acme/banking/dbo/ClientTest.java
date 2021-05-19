@@ -18,55 +18,40 @@ import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
 public class ClientTest {
 
     @Test
-    public void shouldThrowWhenClientIdLessZero(){
-        //given
-        int clientId = -1;
-        String clientName = "Client Name";
+    public void shouldNotCreatedWhenIdIsNegaitve(){
+        int negativeId = -1;
+        String dummyName = "Dummy name";
 
-        //when
-        //then
-        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> new Client(clientId, clientName),
+        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> new Client(negativeId, dummyName),
                 "Expected IllegalArgumentException to be thrown if ClientId is less than 0.");
         assertEquals(thrown.getMessage(), "Client ID is less than 0.");
     }
 
     @Test
-    public void shouldThrowWhenClientNameIsNull(){
-        //given
-        int clientId = 1;
-        String clientName = null;
-
-        //when
-        //then
-        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> new Client(clientId, clientName),
+    public void shouldNotCreatedWhenNameIsNull(){
+        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> new Client(1, null),
                 "Expected IllegalArgumentException to be thrown if ClientName is NULL.");
         assertEquals(thrown.getMessage(), "Client Name is null.");
     }
 
     @Test
-    public void shouldThrowWhenClientNameIsEmpty(){
-        //given
-        int clientId = 1;
-        String clientName = "";
+    public void shouldNotCreatedWhenNameIsEmpty(){
+        int dummyId = 1;
+        String emptyName = "";
 
-        //when
-        //then
-        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> new Client(clientId, clientName),
+        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> new Client(dummyId, emptyName),
                 "Expected IllegalArgumentException to be thrown if ClientName is empty.");
         assertEquals(thrown.getMessage(), "Client Name is empty.");
     }
 
     @Test
-    public void shouldSetClientIdNameWhenValid(){
-        //given
-        int clientId = 1;
-        String clientName = "Client Name #1";
+    public void shouldStorePropertiesWhenCreated(){
+        int validId = 1;
+        String validName = "Client name";
+        Client sut = new Client(validId, validName);
 
-        //when
-        Client sut = new Client(clientId, clientName);
-        //then
-        assertEquals(sut.getId(), clientId);
-        assertEquals(sut.getName(), clientName);
+        assertEquals(validId, sut.getId());
+        assertEquals(validName, sut.getName());
     }
 
 /*

@@ -9,27 +9,26 @@ import static org.junit.jupiter.api.Assertions.*;
 public class SavingAccountTest {
 
     @Test
-    public void shouldThrowWhenIdIsNegative(){
-        //given
-        int accountId = -1;
-        Client clientUnderTest = new Client(1, "Client Name #1");
-        double amountValue = 100;
+    public void shouldNotCreatedWhenIdIsNegative(){
+        int negativeId = -1;
+        Client dummyClient = new Client(1, "Client name");
+        double dummyAmount = 0;
 
-        //when
-        //then
-        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> new SavingAccount(accountId, clientUnderTest, amountValue),
+        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> new SavingAccount(negativeId, dummyClient, dummyAmount),
                 "Expected IllegalArgumentException to be thrown if Saving Account Id is less than 0.");
         assertEquals(thrown.getMessage(), "Saving Account Id is less than 0.");
     }
 
     @Test
-    public void shouldSetIdWhenValid(){
-        int accountId = 1;
-        Client clientUnderTest = new Client(1, "Client Name #1");
-        double amountValue = 1;
+    public void shouldStoreWhenCreated(){
+        int validId = 1;
+        Client validClient = new Client(1, "Client name");
+        double validAmount = 0;
 
-        SavingAccount sut = new SavingAccount(accountId, clientUnderTest, amountValue);
-
-        assertEquals(sut.getId(), accountId);
+        SavingAccount sut = new SavingAccount(validId, validClient, validAmount);
+        assertAll("",
+                () -> assertEquals(validId, sut.getId()),
+                () -> assertEquals(validClient, sut.getClient()),
+                () -> assertEquals(validAmount, sut.getAmount()));
     }
 }
