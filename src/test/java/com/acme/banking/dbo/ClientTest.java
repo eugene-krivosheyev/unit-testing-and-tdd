@@ -24,14 +24,14 @@ public class ClientTest {
 
         IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> new Client(negativeId, dummyName),
                 "Expected IllegalArgumentException to be thrown if ClientId is less than 0.");
-        assertEquals(thrown.getMessage(), "Client ID is less than 0.");
+        assertEquals("Client ID is less than 0.", thrown.getMessage());
     }
 
     @Test
     public void shouldNotCreatedWhenNameIsNull(){
         IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> new Client(1, null),
                 "Expected IllegalArgumentException to be thrown if ClientName is NULL.");
-        assertEquals(thrown.getMessage(), "Client Name is null.");
+        assertEquals("Client Name is null.", thrown.getMessage());
     }
 
     @Test
@@ -41,7 +41,7 @@ public class ClientTest {
 
         IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> new Client(dummyId, emptyName),
                 "Expected IllegalArgumentException to be thrown if ClientName is empty.");
-        assertEquals(thrown.getMessage(), "Client Name is empty.");
+        assertEquals("Client Name is empty.", thrown.getMessage());
     }
 
     @Test
