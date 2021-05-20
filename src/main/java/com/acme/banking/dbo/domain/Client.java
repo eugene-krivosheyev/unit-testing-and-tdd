@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class Client {
-    final static String ARG_EXCEPTION_MESSAGE_ID_NEGATIVE = "ID is expected to be positive int";
-    final static String ARG_EXCEPTION_MESSAGE_NAME_NULL = "Name is NULL";
-    final static String ARG_EXCEPTION_MESSAGE_NAME_EMPTY = "Name is empty";
+    private final static String ARG_EXCEPTION_MESSAGE_ID_NEGATIVE = "ID is expected to be positive int";
+    private final static String ARG_EXCEPTION_MESSAGE_NAME_NULL = "Name is NULL";
+    private final static String ARG_EXCEPTION_MESSAGE_NAME_EMPTY = "Name is empty";
 
     private final int id;
     private final String name;

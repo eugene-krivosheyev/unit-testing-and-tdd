@@ -1,9 +1,9 @@
 package com.acme.banking.dbo.domain;
 
 public class SavingAccount implements Account {
-    final static String ARG_EXCEPTION_MESSAGE_ID_NEGATIVE = "ID is expected to be positive int";
-    final static String ARG_EXCEPTION_MESSAGE_AMOUNT_NEGATIVE = "Amount is expected to be positive double";
-    final static String ARG_EXCEPTION_MESSAGE_CLIENT_NULL = "Client is NULL";
+    private final static String ARG_EXCEPTION_MESSAGE_ID_NEGATIVE = "ID is expected to be positive int";
+    private final static String ARG_EXCEPTION_MESSAGE_AMOUNT_NEGATIVE = "Amount is expected to be positive double";
+    private final static String ARG_EXCEPTION_MESSAGE_CLIENT_NULL = "Client is NULL";
 
     final private int id;
     final private Client client;
