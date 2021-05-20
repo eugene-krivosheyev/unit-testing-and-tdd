@@ -43,6 +43,6 @@ public class ListTest {
 
     @Test
     public void shouldPass() {
-
+        System.getProperties().forEach((k,v) -> System.out.println(k + " : " + v));
     }
 }

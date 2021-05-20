@@ -31,6 +31,7 @@ public class ClientTest {
 
         //region then
         //Junit5:
+        /*
         assertAll("Client store its properties",
                 () -> assertEquals(clientId, sut.getId()),
                 () -> assertEquals(clientName, sut.getName())
@@ -38,14 +39,16 @@ public class ClientTest {
 
         //Hamcrest:
         assertThat(sut,
-            allOf(
+            anyOf(
                 hasProperty("id", notNullValue()),
                 hasProperty("id", equalTo(clientId)),
-                hasProperty("name", is(clientName))
+                hasProperty("name", not(is(clientName)))
         ));
+        */
 
         //AssertJ:
-        org.assertj.core.api.Assertions.assertThat(sut)
+        org.assertj.core.api.Assertions.assertThat(sut) //allOf, AND
+                .isNotNull().hasNoNullFieldsOrProperties() //not | OR
                 .hasFieldOrPropertyWithValue("id", clientId)
                 .hasFieldOrPropertyWithValue("name", clientName);
         //endregion
