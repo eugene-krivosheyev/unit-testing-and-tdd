@@ -4,9 +4,12 @@ import com.acme.banking.dbo.domain.Client;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -32,7 +35,7 @@ public class ClientTest {
         //region then
         //Junit5:
         /*
-        assertAll("Client store its properties",
+        assertAll("Client store its properties", // -> allOf
                 () -> assertEquals(clientId, sut.getId()),
                 () -> assertEquals(clientName, sut.getName())
         );
@@ -46,11 +49,58 @@ public class ClientTest {
         ));
         */
 
-        //AssertJ:
+        //AssertJ: хуже с anyOf + сложнее писать custom "matchers"
         org.assertj.core.api.Assertions.assertThat(sut) //allOf, AND
                 .isNotNull().hasNoNullFieldsOrProperties() //not | OR
                 .hasFieldOrPropertyWithValue("id", clientId)
                 .hasFieldOrPropertyWithValue("name", clientName);
         //endregion
+    }
+
+    @ParameterizedTest
+    @MethodSource("dataProvider")
+    public void shouldNotCreatedWhenIncorrectData(TestData currentTestData) {
+        final IllegalArgumentException error = assertThrows(
+                IllegalArgumentException.class,
+                () -> new Client(currentTestData.getId(), currentTestData.getName()));
+
+        assertEquals(currentTestData.getExceptionMessage(), error.getMessage());
+    }
+
+    static Stream<TestData> dataProvider() {
+        return Stream.of(
+                new TestData(-1, "dummy name", "id!"),
+                new TestData(1, "", "name!"),
+                new TestData(1, null, "name!")
+        );
+    }
+}
+
+class TestData {
+    private int id;
+    private String name;
+    private String exceptionMessage;
+
+    public TestData(int id, String name, String exceptionMessage) {
+        this.id = id;
+        this.name = name;
+        this.exceptionMessage = exceptionMessage;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getExceptionMessage() {
+        return exceptionMessage;
+    }
+
+    @Override
+    public String toString() {
+        return "Test Case for id " + id;
     }
 }
