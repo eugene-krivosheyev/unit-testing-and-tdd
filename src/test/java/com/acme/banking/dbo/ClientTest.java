@@ -50,8 +50,12 @@ public class ClientTest {
         String validName = "Client name";
         Client sut = new Client(validId, validName);
 
-        assertEquals(validId, sut.getId());
-        assertEquals(validName, sut.getName());
+        assertThat(sut,
+                allOf(
+                        hasProperty("id", equalTo(validId)),
+                        hasProperty("name", notNullValue()),
+                        hasProperty("name", equalTo(validName))
+                ));
     }
 
 /*
