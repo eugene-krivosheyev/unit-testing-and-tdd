@@ -32,6 +32,8 @@ public class ClientTest {
     assertEquals(thrown.getMessage(), "name is empty!");
   }
 
+
+
   @Test
   public void getId() {
     Client sut = getTestClient();
@@ -45,8 +47,6 @@ public class ClientTest {
   }
 
   private Client getTestClient() {
-    Client sut = new Client(dummyId, dummyName);
-
-    return sut;
+    return new Client(dummyId, dummyName);
   }
 }
