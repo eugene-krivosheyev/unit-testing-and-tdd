@@ -8,10 +8,11 @@ public class SavingAccount implements Account {
     public SavingAccount(int id, Client client, double amount) {
         if (id < 0) throw new IllegalArgumentException("id should be positive");
         if (amount < 0) throw new IllegalArgumentException("amount should be positive");
-        if (client == null) throw new IllegalArgumentException("client should not be null or empty");
+        if (client == null) throw new IllegalArgumentException("client should not be null");
         this.id = id;
         this.client = client;
         this.amount = amount;
+        client.addAccount(this);
     }
 
     @Override

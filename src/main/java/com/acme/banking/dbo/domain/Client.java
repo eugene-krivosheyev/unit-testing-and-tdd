@@ -2,6 +2,7 @@ package com.acme.banking.dbo.domain;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 
 public class Client {
     private int id;
@@ -21,5 +22,14 @@ public class Client {
 
     public String getName() {
         return name;
+    }
+
+    public void addAccount(Account account){
+        if(account.getClient() != this ) throw new IllegalArgumentException("This account has another client!");
+        accounts.add(account);
+    }
+
+    public Collection<Account> getAccounts(){
+        return Collections.unmodifiableCollection(accounts);
     }
 }
