@@ -1,6 +1,7 @@
 package com.acme.banking.dbo;
 
 import com.acme.banking.dbo.domain.Client;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -9,14 +10,11 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assumptions.*;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
-import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
 
 
 @DisplayName("Test suite")
 public class ClientTest {
-    @Test @Disabled("temporary disabled")
+    @Test
     @DisplayName("Test case")
     public void shouldStorePropertiesWhenCreated() {
         //region given
@@ -35,7 +33,7 @@ public class ClientTest {
                 () -> assertEquals(clientId, sut.getId()),
                 () -> assertEquals(clientName, sut.getName())
         );
-
+/*
         //Hamcrest:
         assertThat(sut,
             allOf(
@@ -43,11 +41,14 @@ public class ClientTest {
                 hasProperty("id", equalTo(clientId)),
                 hasProperty("name", is(clientName))
         ));
-
+*/
         //AssertJ:
-        org.assertj.core.api.Assertions.assertThat(sut)
+        Assertions.assertThat(sut)
                 .hasFieldOrPropertyWithValue("id", clientId)
-                .hasFieldOrPropertyWithValue("name", clientName);
+                .hasFieldOrPropertyWithValue("name", clientName)
+        ;
         //endregion
     }
+
+
 }

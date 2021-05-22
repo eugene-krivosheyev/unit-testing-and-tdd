@@ -12,20 +12,17 @@ import static org.junit.jupiter.api.Assumptions.*;
 public class Client1Test {
     @Test
     public void shouldStoreArtifactsWhenCreated() {
-        //region Given
+
         final int clientId = 1;
         final String clientName = "name";
-        //endregion
 
-        //region When
         Client sut = new Client(clientId, clientName);
         assumeTrue(sut != null);
-        //endregion
 
-        //region Then
+
         assertEquals( clientId,sut.getId());
         assertEquals(clientName, sut.getName());
-        //endregion
+
     }
 
     @Test

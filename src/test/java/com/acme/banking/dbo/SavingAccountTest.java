@@ -13,22 +13,25 @@ import static org.junit.jupiter.api.Assumptions.*;
 public class SavingAccountTest {
     @Test
     public void shouldStoreArtifactsWhenCreated() {
-        // region Given
+
         final int accountId = 1;
         final double accountAmount = 2;
         final Client dummy = new Client(3, "TestClient");
-        // endregion
 
-        // region When
         SavingAccount sut = new SavingAccount(1, dummy, 2);
         assumeTrue(sut != null);
-        // endregion
-
-        // region Then
-        assertEquals(accountId, sut.getId());
-        assertEquals(accountAmount, sut.getAmount());
-        assertEquals(dummy, sut.getClient());
-        // endregion
+ /*
+        Assertions.assertAll("Saving Acount should store its properties",
+                ()-> assertEquals(accountId, sut.getId()),
+                ()-> assertEquals(accountAmount, sut.getAmount()),
+                ()-> assertEquals(dummy, sut.getClient())
+        );
+ */
+        org.assertj.core.api.Assertions.assertThat(sut)
+                .hasFieldOrPropertyWithValue("id",accountId)
+                .hasFieldOrPropertyWithValue("amount", accountAmount)
+                .hasFieldOrPropertyWithValue("client", dummy)
+        ;
     }
 
     @Test
