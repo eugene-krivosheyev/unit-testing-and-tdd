@@ -17,7 +17,7 @@ public class Client {
         this.name = name;
 
         //==========
-
+/*
         if (id >= 0) {
             if (name != null && !name.isEmpty()) {
                 this.id = id;
@@ -28,6 +28,7 @@ public class Client {
         } else {
             throw new IllegalArgumentException("id!");
         }
+ */
     }
 
     public int getId() {

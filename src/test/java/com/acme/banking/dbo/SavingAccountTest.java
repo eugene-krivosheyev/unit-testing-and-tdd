@@ -6,6 +6,10 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.*;
@@ -33,7 +37,7 @@ public class SavingAccountTest {
                 .hasFieldOrPropertyWithValue("client", dummy)
         ;
     }
-
+/*
     @Test
     public void shouldNotCreatedWhenNegativeAccountId() {
         final int negativeAccountId = -1;
@@ -65,7 +69,7 @@ public class SavingAccountTest {
     }
 
     @Test
-    public void shouldNotCreatedWhenNegativeNullClient() {
+    public void shouldNotCreatedWhenClientIsNull() {
         final int dummyAccountId = 1;
         final double dummyAccountAmount = 1;
         final Client nullName = null;
@@ -75,4 +79,49 @@ public class SavingAccountTest {
                 () -> new SavingAccount(dummyAccountId, nullName, dummyAccountAmount),
                 "client is null");
     }
+*/
+    @ParameterizedTest
+    @MethodSource("paramsProvider")
+    public void shouldNotCreatedWhenNegativeAccountIdOrNegativeAmountIdOrClientIsNull(ComplexTestParams complexTestParams) {
+        final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class,
+                ()-> new SavingAccount(complexTestParams.getAccountId(), complexTestParams.getClient(), complexTestParams.getAccountAmount()));
+        assertEquals(complexTestParams.getMessageException(), thrown.getMessage());
+    }
+
+    static Stream<ComplexTestParams> paramsProvider () {
+        return Stream.of(
+                new ComplexTestParams(-1,1,new Client(1,"dummy"), "id < 0"),
+                new ComplexTestParams(1,-1,new Client(1,"dummy"), "amount < 0"),
+                new ComplexTestParams(1,1,null,"client is null")
+        );
+    }
 }
+
+class ComplexTestParams {
+    private int accountId;
+    private double accountAmount;
+    private String messageException;
+    private Client client;
+
+    public ComplexTestParams (int accountId, double accountAmount, Client client, String messageException) {
+        this.accountId = accountId;
+        this.accountAmount = accountAmount;
+        this.messageException = messageException;
+        this.client = client;
+    }
+
+    public int getAccountId () {
+        return this.accountId;
+    }
+    public double getAccountAmount() {
+        return this.accountAmount;
+    }
+    public String getMessageException() {
+        return this.messageException;
+    }
+    public Client getClient() {
+        return this.client;
+    }
+}
+
+
