@@ -5,6 +5,10 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assumptions.*;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
@@ -59,6 +63,7 @@ public class ClientTest {
 
         //region then
         //Junit5:
+        /*
         assertAll("Client store its properties",
                 () -> assertEquals(clientId, sut.getId()),
                 () -> assertEquals(clientName, sut.getName())
@@ -66,6 +71,12 @@ public class ClientTest {
 
         //Hamcrest:
         assertThat(sut,
+            allOf(
+                hasProperty("id", notNullValue()),
+                hasProperty("id", equalTo(clientId)),
+                hasProperty("name", is(clientName))
+        ));
+        */
                 allOf(
                         hasProperty("id", notNullValue()),
                         hasProperty("id", equalTo(clientId)),
@@ -74,6 +85,7 @@ public class ClientTest {
 
         //AssertJ:
         org.assertj.core.api.Assertions.assertThat(sut)
+//                .isNotNull().hasNoNullFieldsOrProperties()
                 .hasFieldOrPropertyWithValue("id", clientId)
                 .hasFieldOrPropertyWithValue("name", clientName);
         //endregion
