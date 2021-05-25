@@ -72,4 +72,9 @@ class TestParams {
     public String getExceptionMessage() {
         return exceptionMessage;
     }
+
+    @Override
+    public String toString() {
+        return "case for: " + id + ", " + name + ". Waiting for message: " + exceptionMessage;
+    }
 }
