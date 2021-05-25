@@ -1,35 +1,39 @@
 package com.acme.banking.dbo;
 
 import com.acme.banking.dbo.domain.Client;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 @DisplayName("Client test")
 public class ClientTest {
 
-    @Test
-    public void shouldNotCreateClientWhenIdIsNegative() {
-        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> new Client(-1, "Name"));
-        assertEquals(thrown.getMessage(), "id!");
+
+    @ParameterizedTest
+    @MethodSource("getClientInputParams")
+    public void verifyInputParams(ClientInputParams params) {
+        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> new Client(params.getId(), params.getName()));
+        assertEquals(thrown.getMessage(), params.getExpectedExceptionMessage(), params.getExceptionMessage());
     }
 
-    @Test
-    public void shouldNotCreateClientWhenNameIsNull() {
-        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> new Client(20, null));
-        assertEquals(thrown.getMessage(), "name!");
-    }
-
-    @Test
-    public void shouldNotCreateClientWhenNameIsEmpty() {
-        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> new Client(20, new String()));
-        assertEquals(thrown.getMessage(), "name!");
+    static Stream<ClientInputParams> getClientInputParams() {
+        return Stream.of(
+                new ClientInputParams("Name", -1, "id!", "shouldNotCreateClientWhenIdIsNegative"),
+                new ClientInputParams(null, 1, "name!", "shouldNotCreateClientWhenNameIsNull"),
+                new ClientInputParams("", 1, "name!", "shouldNotCreateClientWhenNameIsEmpty")
+        );
     }
 
     @Test
@@ -37,10 +41,9 @@ public class ClientTest {
         int id = 1;
         String name = "Test Client";
         Client client = new Client(id, name);
-        assertAll("SavingAccount store its properties",
-                () -> assertEquals(id, client.getId()),
-                () -> assertEquals(name, client.getName())
-        );
+        Assertions.assertThat(client)
+                .hasFieldOrPropertyWithValue("id", id)
+                .hasFieldOrPropertyWithValue("name", name);
     }
 
     @Test
@@ -59,11 +62,12 @@ public class ClientTest {
 
         //region then
         //Junit5:
+        /*
         assertAll("Client store its properties",
                 () -> assertEquals(clientId, sut.getId()),
                 () -> assertEquals(clientName, sut.getName())
         );
-
+        */
         //Hamcrest:
         assertThat(sut,
                 allOf(
@@ -72,10 +76,42 @@ public class ClientTest {
                         hasProperty("name", is(clientName))
                 ));
 
+
         //AssertJ:
         org.assertj.core.api.Assertions.assertThat(sut)
+//                .isNotNull().hasNoNullFieldsOrProperties()
                 .hasFieldOrPropertyWithValue("id", clientId)
                 .hasFieldOrPropertyWithValue("name", clientName);
         //endregion
+    }
+}
+
+class ClientInputParams {
+    private String name;
+    private int id;
+    private String expectedExceptionMessage;
+    private String exceptionMessage;
+
+    public String getName() {
+        return name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getExpectedExceptionMessage() {
+        return expectedExceptionMessage;
+    }
+
+    public String getExceptionMessage() {
+        return exceptionMessage;
+    }
+
+    public ClientInputParams(String name, int id, String expectedExceptionMessage, String exceptionMessage) {
+        this.name = name;
+        this.id = id;
+        this.expectedExceptionMessage = expectedExceptionMessage;
+        this.exceptionMessage = exceptionMessage;
     }
 }
