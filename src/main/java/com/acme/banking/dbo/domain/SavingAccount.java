@@ -10,11 +10,11 @@ public class SavingAccount implements Account {
         if (amount < 0) throw new IllegalArgumentException("id " + amount + " is negative");
         if (client == null) throw new IllegalArgumentException("client is null");
 
+        client.addAccount(this);
+
         this.id = id;
         this.client = client;
         this.amount = amount;
-
-        this.client.addAccount(this);
     }
 
     @Override

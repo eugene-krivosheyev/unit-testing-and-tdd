@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 public class SavingAccountTest {
     private final int dummyId = 10;
@@ -37,5 +38,18 @@ public class SavingAccountTest {
         assertThrows(IllegalArgumentException.class,
                 () -> new SavingAccount(dummyId, nullClient, dummyAmount),
                 "Expected non-null client");
+    }
+
+    @Test
+    public void whenSavingAccountIsCreatedItsClientShouldContainThisSavingAccount() {
+        int dummyClientId = 1;
+        int dummySavingAccountId = 11;
+        double dummyAmount = 1.;
+        String dummyClientName = "dummyName";
+
+        final Client dummyClient = new Client(dummyClientId, dummyClientName);
+        final SavingAccount savingAccount = new SavingAccount(dummySavingAccountId, dummyClient, dummyAmount);
+
+        assert(savingAccount.getClient().getAccounts().contains(savingAccount));
     }
 }
