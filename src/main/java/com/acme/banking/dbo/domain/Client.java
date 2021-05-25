@@ -16,6 +16,10 @@ public class Client {
         this.name = name;
     }
 
+    public void addAccount(Account account) {
+        accounts.add(account);
+    }
+
     public int getId() {
         return id;
     }

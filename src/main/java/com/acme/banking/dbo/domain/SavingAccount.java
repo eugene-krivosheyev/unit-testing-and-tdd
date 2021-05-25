@@ -13,6 +13,8 @@ public class SavingAccount implements Account {
         this.id = id;
         this.client = client;
         this.amount = amount;
+
+        this.client.addAccount(this);
     }
 
     @Override
