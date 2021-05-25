@@ -1,6 +1,8 @@
 package com.acme.banking.dbo;
 
+import com.acme.banking.dbo.domain.Account;
 import com.acme.banking.dbo.domain.Client;
+import com.acme.banking.dbo.domain.SavingAccount;
 import com.acme.banking.dbo.repository.ClientRepository;
 import com.acme.banking.dbo.service.Processing;
 import org.junit.jupiter.api.Test;
@@ -8,8 +10,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class ProcessingTest {
     @Test
@@ -23,7 +24,7 @@ public class ProcessingTest {
 
         ClientRepository clientRepoStub = mock(ClientRepository.class);
 //        when(clientRepoStub.save(any(Client.class))).thenReturn(savedClient);
-        when(clientRepoStub.save(clientInfoToSave)).thenReturn(savedClient)
+        when(clientRepoStub.save(clientInfoToSave)).thenReturn(savedClient);
 //                .thenReturn(null);
 
         final Processing sut = new Processing(clientRepoStub);
@@ -53,5 +54,18 @@ public class ProcessingTest {
 
         assertThrows(IllegalArgumentException.class,
                 () -> sut.createClient(clientInfo));
+    }
+
+    @Test
+    public void shouldSaveUpdatedAccountsWhenValidTransfer() {
+        ClientRepository accountsRepoMock = mock(ClientRepository.class);
+        final Processing sut = new Processing(accountsRepoMock);
+
+        sut.transfer(1, 2, 100);
+
+        verify(accountsRepoMock, times(1)).findById(1);
+        verify(accountsRepoMock, atLeastOnce()).findById(2);
+
+        verify(accountsRepoMock).update(any(Account.class)); //https://stackoverflow.com/questions/1142837/verify-object-attribute-value-with-mockito
     }
 }
