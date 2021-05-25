@@ -5,17 +5,14 @@ import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.domain.SavingAccount;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
-import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assumptions.*;
+import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assumptions.*;
+import static org.assertj.core.api.ThrowableAssert.*;
 
 @DisplayName("Client class tests")
 public class ClientTest {
@@ -25,12 +22,11 @@ public class ClientTest {
         final String clientName = "dummy client name";
 
         Client sut = new Client(clientId, clientName);
-        assumeTrue(sut != null);
+        assumeThat(sut).isNotNull();
 
-        assertAll("Client store its properties",
-                () -> assertEquals(clientId, sut.getId()),
-                () -> assertEquals(clientName, sut.getName())
-        );
+        assertThat(sut)
+                .hasFieldOrPropertyWithValue("id", clientId)
+                .hasFieldOrPropertyWithValue("name", clientName);
     }
 
     @Test
@@ -39,30 +35,26 @@ public class ClientTest {
         final Account dummyAccount = new SavingAccount(1, dummyClient, 1.0);
         final Client anotherDummyClient = new Client(2, "dummy");
 
-        Executable sut = () -> anotherDummyClient.addAccount(dummyAccount);
+        ThrowingCallable sut = () -> anotherDummyClient.addAccount(dummyAccount);
 
-        assertThrows(
-                IllegalArgumentException.class,
-                sut,
-                "The account belongs to another client!");
+        assertThatIllegalArgumentException().isThrownBy(sut)
+                .withMessageMatching("The account belongs to another client!");
     }
 
     @ParameterizedTest
     @MethodSource("provideInvalidClientTestData")
     public void shouldThrowIllegalArgumentExceptionWhenFieldIsInvalid(ClientInvalidTestData invalidData) {
-        Executable sut = () -> new Client(invalidData.getId(), invalidData.getName());
+        ThrowingCallable sut = () -> new Client(invalidData.getId(), invalidData.getName());
 
-        assertThrows(
-                IllegalArgumentException.class,
-                sut,
-                invalidData.getErrorMessage());
+        assertThatIllegalArgumentException().isThrownBy(sut)
+                .withMessageMatching(invalidData.getErrorMessage());
     }
 
     private static Stream<ClientInvalidTestData> provideInvalidClientTestData() {
         return Stream.of(
                 new ClientInvalidTestData(-1, "dummy client name", "Client id should be positive!"),
-                new ClientInvalidTestData(1, null, "Client name should be not null!"),
-                new ClientInvalidTestData(1, "", "Client name should be not empty!")
+                new ClientInvalidTestData(1, null, "Client name should be not null and not empty!"),
+                new ClientInvalidTestData(1, "", "Client name should be not null and not empty!")
         );
     }
 }

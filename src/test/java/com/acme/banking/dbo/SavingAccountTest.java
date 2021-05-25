@@ -5,14 +5,14 @@ import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.domain.SavingAccount;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assumptions.assumeTrue;
+import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assumptions.*;
+import static org.assertj.core.api.ThrowableAssert.*;
 
 @DisplayName("SavingAccount class tests")
 public class SavingAccountTest {
@@ -23,13 +23,12 @@ public class SavingAccountTest {
         final double accountAmount = 1;
 
         SavingAccount sut = new SavingAccount(accountId, accountClient, accountAmount);
-        assumeTrue(sut != null);
+        assumeThat(sut).isNotNull();
 
-        assertAll("SavingAccount store its properties",
-                () -> assertEquals(accountId, sut.getId()),
-                () -> assertSame(accountClient, sut.getClient()),
-                () -> assertEquals(accountAmount, sut.getAmount())
-        );
+        assertThat(sut)
+                .hasFieldOrPropertyWithValue("id", accountId)
+                .hasFieldOrPropertyWithValue("client", accountClient)
+                .hasFieldOrPropertyWithValue("amount", accountAmount);
     }
 
     @Test
@@ -38,18 +37,16 @@ public class SavingAccountTest {
 
         final Account sut = new SavingAccount(1, dummyClient, 1.0);
 
-        assertTrue(dummyClient.getAccounts().contains(sut));
+        assertThat(dummyClient.getAccounts().contains(sut)).isTrue();
     }
 
     @ParameterizedTest
     @MethodSource("provideInvalidAccountTestData")
     public void shouldThrowIllegalArgumentExceptionWhenFieldIsInvalid(AccoountInvalidTestData invalidData) {
-        Executable sut = () -> new SavingAccount(invalidData.getId(), invalidData.getClient(), invalidData.getAmount());
+        ThrowingCallable sut = () -> new SavingAccount(invalidData.getId(), invalidData.getClient(), invalidData.getAmount());
 
-        IllegalArgumentException e = assertThrows(
-                IllegalArgumentException.class,
-                sut,
-                invalidData.getErrorMessage());
+        assertThatIllegalArgumentException().isThrownBy(sut)
+                .withMessageMatching(invalidData.getErrorMessage());
     }
 
     private static Stream<AccoountInvalidTestData> provideInvalidAccountTestData() {
