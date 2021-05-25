@@ -45,7 +45,7 @@ public class ListTest {
         return Stream.of(
                 new TestParams(-1, "dummy name", "id!"),
                 new TestParams(1, null, "name!"),
-                new TestParams(1, "", "name!!")
+                new TestParams(1, "", "name!")
         );
     }
 }
