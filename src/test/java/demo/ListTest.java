@@ -9,8 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class ListTest {
     @Test
@@ -47,6 +50,27 @@ public class ListTest {
                 new TestParams(1, null, "name!"),
                 new TestParams(1, "", "name!!")
         );
+    }
+
+    @Test
+    public void shouldUseItemsStringRepresentationWhenToString() {
+        Object stubItem1 = mock(Object.class);
+        when(stubItem1.toString())
+                .thenReturn("str10")
+                .thenReturn("str11")
+                .thenReturn("str12");
+
+        Object stubItem2 = mock(Object.class);
+        when(stubItem2.toString()).thenReturn("str2");
+
+        final ArrayList<Object> sut = new ArrayList<>();
+        sut.add(stubItem1);
+        sut.add(stubItem2);
+
+        assertThat(sut.toString())
+                .contains("str1")
+                .contains("str2");
+
     }
 }
 

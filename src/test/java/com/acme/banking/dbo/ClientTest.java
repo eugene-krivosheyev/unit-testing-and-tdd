@@ -15,7 +15,7 @@ import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
 
 
 @DisplayName("Test suite")
-public class ClientTest {
+public class ClientTest { //IT, ST
     @Test @Disabled("temporary disabled")
     @DisplayName("Test case")
     public void shouldStorePropertiesWhenCreated() {
