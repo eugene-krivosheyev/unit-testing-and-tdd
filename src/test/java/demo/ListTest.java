@@ -21,7 +21,7 @@ public class ListTest {
     public void shouldSizeIncrementedAndContainsItemWhenAddItem() {
         //region Arrange | Fixture | Given
         final List<Object> sut = new ArrayList<>();
-        final Object dummy = new Object();
+        final Object dummy = mock(Object.class);
         assumeTrue(sut.size() == 0); //assumeTrue(sut.isEmpty());
         //endregion
 
