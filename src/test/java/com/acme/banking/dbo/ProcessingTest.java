@@ -56,6 +56,6 @@ public class ProcessingTest {
 
         sut.transfer(1, 2, 100);
 
-        verify(accountRepositoryMock).update(any(Account.class));
+        verify(accountRepositoryMock).update(any(Account.class)); //https://stackoverflow.com/questions/1142837/verify-object-attribute-value-with-mockito
     }
 }
