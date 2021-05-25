@@ -30,6 +30,8 @@ public class Client {
     }
 
     public void addAccount(Account account) {
+        if (account.getClient() != this) throw new IllegalArgumentException("The account belongs to another client!");
+
         this.accounts.add(account);
     }
 }
