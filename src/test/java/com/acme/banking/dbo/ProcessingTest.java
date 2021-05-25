@@ -1,14 +1,15 @@
 package com.acme.banking.dbo;
 
+import com.acme.banking.dbo.domain.Account;
 import com.acme.banking.dbo.domain.Client;
+import com.acme.banking.dbo.domain.SavingAccount;
 import com.acme.banking.dbo.repository.ClientRepository;
 import com.acme.banking.dbo.service.Processing;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class ProcessingTest {
     @Test
@@ -46,5 +47,15 @@ public class ProcessingTest {
         assertNotNull(savedClient);
         assertEquals(VALID_CLIENT_NAME, savedClient.getName());
         assertEquals(VALID_CLIENT_ID, savedClient.getId());
+    }
+
+    @Test
+    public void shouldTransferWhenAccountAreValid() {
+        ClientRepository accountRepositoryMock = mock(ClientRepository.class);
+        final Processing sut = new Processing(repo);
+
+        sut.transfer(1, 2, 100);
+
+        verify(accountRepositoryMock).update(any(Account.class));
     }
 }
