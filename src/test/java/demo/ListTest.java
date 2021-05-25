@@ -10,8 +10,11 @@ import org.junit.jupiter.api.function.Executable;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class ListTest {
     @Test //BDD
@@ -44,5 +47,15 @@ public class ListTest {
     @Test
     public void shouldPass() {
         System.getProperties().forEach((k,v) -> System.out.println(k + " : " + v));
+    }
+
+    @Test
+    public void shouldUseItemsStringRepresentationWhenToString() {
+        Object itemStub = mock(Object.class);
+        when(itemStub.toString()).thenReturn("str1");
+
+        final ArrayList<Object> sut = new ArrayList<>();
+        sut.add(itemStub);
+        assertThat(sut.toString()).contains("str1");
     }
 }
