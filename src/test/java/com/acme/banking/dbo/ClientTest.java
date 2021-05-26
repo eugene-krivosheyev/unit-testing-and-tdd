@@ -5,6 +5,10 @@ import com.acme.banking.dbo.domain.Client;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.*;
@@ -58,7 +62,23 @@ public class ClientTest {
                 ));
     }
 
-/*
+    @ParameterizedTest
+    @MethodSource("provideTestData")
+    public void shouldNotCreatedWhenInvalidArgument(TestData argument){
+        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> new Client(argument.getId(), argument.getName()),
+                "Expected IllegalArgumentException to be thrown if ClientName is empty.");
+        assertEquals(argument.getExceptionMessage(), thrown.getMessage());
+    }
+
+    static Stream<TestData> provideTestData(){
+        return Stream.of(
+                new TestData(-1, "Dummy name", "Client ID is less than 0."),
+                new TestData(1, null, "Client Name is null."),
+                new TestData(1, "", "Client Name is empty.")
+        );
+    }
+
+    /*
     @Test @Disabled("temporary disabled")
     @DisplayName("Test case")
     public void shouldStorePropertiesWhenCreated() {
@@ -94,3 +114,33 @@ public class ClientTest {
         //endregion
     }*/
 }
+
+class TestData{
+    private int id;
+    private String name;
+    private String exceptionMessage;
+
+    public TestData(int id, String name, String exceptionMessage) {
+        this.id = id;
+        this.name = name;
+        this.exceptionMessage = exceptionMessage;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getExceptionMessage() {
+        return exceptionMessage;
+    }
+
+    @Override
+    public String toString() {
+        return "Test case: id - " + id + ", name - " + name + ", message - " + exceptionMessage;
+    }
+}
+
