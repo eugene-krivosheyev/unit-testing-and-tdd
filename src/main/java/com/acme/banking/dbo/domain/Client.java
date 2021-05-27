@@ -10,8 +10,9 @@ public class Client {
     private Collection<Account> accounts = new ArrayList<>(); //TODO
 
     public Client(int id, String name) {
-        if ( id < 0) { throw new IllegalArgumentException(); }
-        if ( name == null || name.isEmpty()) { throw new IllegalArgumentException(); }
+        if ( id < 0)  throw new IllegalArgumentException();
+        if ( name == null || name.isEmpty())  throw new IllegalArgumentException();
+
         this.id = id;
         this.name = name;
     }
@@ -25,7 +26,7 @@ public class Client {
     }
 
     public boolean checkAccount(Account account){
-        return this.accounts.contains(accounts);
+        return this.accounts.contains(account);
     }
 
     public Collection<Account> getAccounts(){

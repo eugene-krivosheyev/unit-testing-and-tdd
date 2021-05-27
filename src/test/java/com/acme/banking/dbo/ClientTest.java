@@ -95,5 +95,23 @@ public class ClientTest {
 
         assertFalse(sut.getAccounts().isEmpty());
     }
+    @Test
+    @DisplayName("Test shouldReturnTrueWhenAccountAccountExists")
+    public void shouldReturnTrueWhenAccountAccountExists() {
 
+        final int clientId = 1;
+        final String clientName = "Client";
+        final int SavingAccountId = 1;
+        final double amount = 1;
+
+        Client sut = new Client(clientId, clientName);
+        SavingAccount dummyAccount = new SavingAccount(SavingAccountId, sut, amount );
+
+        if (sut.getAccounts().contains(dummyAccount)) {
+            System.out.println("Account found");
+        } else {
+            System.out.println("Account not found");
+        }
+        Assertions.assertTrue(sut.checkAccount(dummyAccount));
+    }
 }

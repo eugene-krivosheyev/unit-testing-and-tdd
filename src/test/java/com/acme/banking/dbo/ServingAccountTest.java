@@ -6,8 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.*;
 
 
@@ -81,8 +80,8 @@ public class ServingAccountTest {
         final double amount = 1;
         Client dummyClient = null;
 
-        Assertions.assertThrows(IllegalArgumentException.class, () -> new SavingAccount(SavingAccountId, dummyClient, amount));
-
+        assertAll("Client not Null",
+                () -> assertThrows(IllegalArgumentException.class, () -> new SavingAccount(SavingAccountId, dummyClient, amount)));
     }
 
 
