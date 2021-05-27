@@ -26,6 +26,8 @@ public class Processing {
     }
 
     public void transfer(int fromAccountId, int toAccountId, double amount) {
+        assert fromAccountId > 0 : "!!!";
+
         Account from = clients.findById(fromAccountId);
         Account to = clients.findById(toAccountId);
 

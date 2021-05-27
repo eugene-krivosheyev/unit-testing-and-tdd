@@ -5,6 +5,7 @@ import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.domain.SavingAccount;
 import com.acme.banking.dbo.repository.ClientRepository;
 import com.acme.banking.dbo.service.Processing;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -70,6 +71,8 @@ public class ProcessingTest {
         verify(accountsRepoMock, atLeastOnce()).findById(2);
 
         verify(accountsRepoMock, times(2)).update(any(Account.class)); //https://stackoverflow.com/questions/1142837/verify-object-attribute-value-with-mockito
+
+
     }
 
 //    Account accountSpy = spy(new SavingAccount(1, null, 0));
