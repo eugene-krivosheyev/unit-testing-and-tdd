@@ -11,6 +11,7 @@ import java.util.Collection;
 public class Processing {
     private ClientRepository clients;
 
+    //DI
     public Processing(ClientRepository clients) {
         this.clients = clients;
     }

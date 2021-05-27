@@ -24,6 +24,20 @@ public class ProcessingTest {
     }
 
     @Test
+    public void shouldNotSaveClientWhenClientNameIsNull() {
+        ClientRepository clientsRepositoryDummy = mock(ClientRepository.class);
+        final Processing sut = new Processing(clientsRepositoryDummy);
+
+
+        Client clientStub = mock(Client.class);
+        when(clientStub.getName()).thenReturn(null);
+        final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class,
+                () -> sut.createClient(clientStub)
+        );
+        assertEquals("name!", thrown.getMessage());
+    }
+
+    @Test
     public void shouldSaveClientWhenClientIsValid() {
         final String VALID_CLIENT_NAME = "valid expected client name";
         final Integer VALID_CLIENT_ID = 1;
@@ -51,11 +65,24 @@ public class ProcessingTest {
 
     @Test
     public void shouldTransferWhenAccountAreValid() {
+        Account accountStub1 = mock(Account.class);
+        Account accountStub2 = mock(Account.class);
         ClientRepository accountRepositoryMock = mock(ClientRepository.class);
-        final Processing sut = new Processing(repo);
+        when(accountRepositoryMock.findById(1)).thenReturn(accountStub1);
+        when(accountRepositoryMock.findById(2)).thenReturn(accountStub2);
+        final Processing sut = new Processing(accountRepositoryMock);
 
         sut.transfer(1, 2, 100);
 
-        verify(accountRepositoryMock).update(any(Account.class)); //https://stackoverflow.com/questions/1142837/verify-object-attribute-value-with-mockito
+//        verify(accountRepositoryMock, atLeastOnce()).findById(anyInt());
+        verify(accountRepositoryMock).findById(1);
+        verify(accountRepositoryMock).findById(2);
+
+//        verify(accountRepositoryMock).update(new SavingAccount(?,?,?));
+        verify(accountRepositoryMock, times(2)).update(any(Account.class)); //https://stackoverflow.com/questions/1142837/verify-object-attribute-value-with-mockito
     }
+
+//    Account accSpy = spy(new SavingAccount(???));
+//    when(accSpy.getAmount()).thenReturn(0.);
+//    verify(accSpy, atLeastOnce()).getId();
 }
