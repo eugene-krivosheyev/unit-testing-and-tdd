@@ -16,7 +16,8 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assumptions.*;
 import static org.assertj.core.api.ThrowableAssert.*;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -36,6 +37,22 @@ public class SavingAccountTest {
                 .hasFieldOrPropertyWithValue("id", accountId)
                 .hasFieldOrPropertyWithValue("client", accountClient)
                 .hasFieldOrPropertyWithValue("amount", accountAmount);
+    }
+
+    @Test
+    public void shouldStorePropertiesWhenCreatedUnit() {
+        final int accountId = 1;
+        final Client dummyClient = mock(Client.class);
+        final double accountAmount = 1;
+
+        SavingAccount sut = new SavingAccount(accountId, dummyClient, accountAmount);
+        assumeTrue(sut != null);
+
+        assertAll("SavingAccount store its properties",
+                () -> assertEquals(accountId, sut.getId()),
+                () -> assertSame(dummyClient, sut.getClient()),
+                () -> assertEquals(accountAmount, sut.getAmount())
+        );
     }
 
     @Test
