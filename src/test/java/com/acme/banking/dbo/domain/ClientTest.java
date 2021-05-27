@@ -1,6 +1,7 @@
 package com.acme.banking.dbo.domain;
 
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -9,7 +10,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assumptions.*;
-
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @DisplayName("Test suite")
 public class ClientTest {
@@ -96,12 +98,32 @@ public class ClientTest {
         }
     }
 
+    @Disabled
     @Test
-    public void shouldContainOnlyOwnAccounts(){
+    public void shouldContainOnlyOwnAccountsIntegration(){
         Client sut = new Client(CLIENT_ID, CLIENT_NAME);
         Client dummyClient = new Client(CLIENT_ID, CLIENT_NAME);
         SavingAccount dummyAccount = new SavingAccount(2,dummyClient,1);
         Assertions.assertThatThrownBy(() -> sut.addAccount(dummyAccount)).hasMessage("This account has another client!");
+    }
+
+    @Test
+    public void shouldContainOnlyOwnAccountsUnit(){
+        Client sut = new Client(CLIENT_ID, CLIENT_NAME);
+        Client dummyClient = mock(Client.class);
+        SavingAccount stubSavingAccount = mock(SavingAccount.class);
+        when(stubSavingAccount.getClient()).thenReturn(dummyClient);
+
+        Assertions.assertThatThrownBy(() -> sut.addAccount(stubSavingAccount)).hasMessage("This account has another client!");
+    }
+
+    @Test
+    public void shouldStoreAccountWhenAdd(){
+        Client sut = new Client(CLIENT_ID, CLIENT_NAME);
+        SavingAccount mockAccount = mock(SavingAccount.class);
+        when(mockAccount.getClient()).thenReturn(sut);
+        sut.addAccount(mockAccount);
+        assert (sut.getAccounts().contains(mockAccount));
     }
 
 }
