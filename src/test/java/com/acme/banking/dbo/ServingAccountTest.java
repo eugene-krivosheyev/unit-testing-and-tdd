@@ -76,12 +76,11 @@ public class ServingAccountTest {
     @DisplayName("Test shouldThrowExceptionWhenClientIsNull")
     public void shouldThrowExceptionWhenClientIsNull() {
 
-        final int SavingAccountId = -1;
+        final int SavingAccountId = 1;
         final double amount = 1;
         Client dummyClient = null;
 
-        assertAll("Client not Null",
-                () -> assertThrows(IllegalArgumentException.class, () -> new SavingAccount(SavingAccountId, dummyClient, amount)));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new SavingAccount(SavingAccountId, dummyClient, amount));
     }
 
 
