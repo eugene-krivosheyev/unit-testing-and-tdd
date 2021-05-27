@@ -29,6 +29,9 @@ public class Processing {
         Account from = clients.findById(fromAccountId);
         Account to = clients.findById(toAccountId);
 
+//        from.setAmount(1);
+//        to.setAmount(2);
+
         final SavingAccount updatedFrom = new SavingAccount(
                 fromAccountId,
                 from.getClient(),

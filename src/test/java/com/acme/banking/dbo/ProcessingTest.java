@@ -14,7 +14,7 @@ import static org.mockito.Mockito.*;
 
 public class ProcessingTest {
     @Test
-    public void shouldClientSavedWhenCreateClient() {
+    public void shouldClientSavedWhenCreateValidClient() {
         Client clientInfoToSave = mock(Client.class);
         when(clientInfoToSave.getName()).thenReturn("name");
 
@@ -34,6 +34,7 @@ public class ProcessingTest {
 
         assertNotNull(createdClient);
         assertThat(createdClient.getId()).isGreaterThan(0);
+        assertThat(createdClient.getName()).isEqualTo(clientInfoToSave.getName());
     }
 
     @Test
@@ -58,14 +59,20 @@ public class ProcessingTest {
 
     @Test
     public void shouldSaveUpdatedAccountsWhenValidTransfer() {
+        Account accountDummy = mock(Account.class);
         ClientRepository accountsRepoMock = mock(ClientRepository.class);
+        when(accountsRepoMock.findById(anyInt())).thenReturn(accountDummy);
         final Processing sut = new Processing(accountsRepoMock);
 
         sut.transfer(1, 2, 100);
 
-        verify(accountsRepoMock, times(1)).findById(1);
+        verify(accountsRepoMock, times(1)).findById(1); //any()
         verify(accountsRepoMock, atLeastOnce()).findById(2);
 
-        verify(accountsRepoMock).update(any(Account.class)); //https://stackoverflow.com/questions/1142837/verify-object-attribute-value-with-mockito
+        verify(accountsRepoMock, times(2)).update(any(Account.class)); //https://stackoverflow.com/questions/1142837/verify-object-attribute-value-with-mockito
     }
+
+//    Account accountSpy = spy(new SavingAccount(1, null, 0));
+//    when(accountSpy.getId()).thenThrow(new RuntimeException());
+//    verify(accountSpy).getId();
 }
