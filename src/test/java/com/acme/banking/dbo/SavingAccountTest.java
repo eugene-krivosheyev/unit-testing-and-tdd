@@ -50,6 +50,6 @@ public class SavingAccountTest {
         final Client dummyClient = new Client(dummyClientId, dummyClientName);
         final SavingAccount savingAccount = new SavingAccount(dummySavingAccountId, dummyClient, dummyAmount);
 
-        assert(savingAccount.getClient().getAccounts().contains(savingAccount));
+        Assertions.assertTrue(savingAccount.getClient().getAccounts().contains(savingAccount));
     }
 }
