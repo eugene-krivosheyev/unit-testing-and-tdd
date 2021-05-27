@@ -3,8 +3,10 @@ package com.acme.banking.dbo;
 import com.acme.banking.dbo.domain.Account;
 import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.domain.SavingAccount;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -13,6 +15,8 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assumptions.*;
 import static org.assertj.core.api.ThrowableAssert.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.*;
 
 @DisplayName("Client class tests")
 public class ClientTest {
@@ -30,6 +34,7 @@ public class ClientTest {
     }
 
     @Test
+    @Disabled
     public void shouldThrowIllegalArgumentExceptionWhenAnotherClientAccountAdded() {
         final Client dummyClient = new Client(1, "dummy");
         final Account dummyAccount = new SavingAccount(1, dummyClient, 1.0);
@@ -39,6 +44,21 @@ public class ClientTest {
 
         assertThatIllegalArgumentException().isThrownBy(sut)
                 .withMessageMatching("The account belongs to another client!");
+    }
+
+    @Test
+    public void shouldThrowIllegalArgumentExceptionWhenAnotherClientAccountAddedUnit() {
+        final Client dummyClient = new Client(1, "dummy");
+        final Account dummyAccount = mock(Account.class);
+        final Client anotherDummyClient = new Client(2, "dummy");
+        when(dummyAccount.getClient()).thenReturn(dummyClient);
+
+        Executable sut = () -> anotherDummyClient.addAccount(dummyAccount);
+
+        assertThrows(
+                IllegalArgumentException.class,
+                sut,
+                "The account belongs to another client!");
     }
 
     @ParameterizedTest
