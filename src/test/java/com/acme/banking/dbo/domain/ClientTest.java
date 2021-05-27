@@ -20,36 +20,15 @@ public class ClientTest {
     public static final String CLIENT_NAME = "dummy client name";
 
     @Test
-//    @Disabled("temporary disabled")
     public void shouldStorePropertiesWhenCreated() {
-        //region given
-        //endregion
 
-        //region when
         Client sut = new Client(CLIENT_ID, CLIENT_NAME);
         assumeTrue(sut != null);
-        //endregion
 
-        //region then
-        //Junit5:
- /*       assertAll("Client store its properties",
-                () -> assertEquals(CLIENT_ID, sut.getId()),
-                () -> assertEquals(CLIENT_NAME, sut.getName())
-        );*/
-
-        //Hamcrest:
- /*       assertThat(sut,
-            allOf(
-                hasProperty("id", notNullValue()),
-                hasProperty("id", equalTo(CLIENT_ID)),
-                hasProperty("name", is(CLIENT_NAME))
-        ));*/
-
-        //AssertJ:
         Assertions.assertThat(sut)
                 .hasFieldOrPropertyWithValue("id", CLIENT_ID)
                 .hasFieldOrPropertyWithValue("name", CLIENT_NAME);
-        //endregion
+
     }
 
     @ParameterizedTest
@@ -118,12 +97,12 @@ public class ClientTest {
     }
 
     @Test
-    public void shouldStoreAccountWhenAdd(){
+    public void shouldStoreWhenAddOwnAccount(){
         Client sut = new Client(CLIENT_ID, CLIENT_NAME);
         SavingAccount mockAccount = mock(SavingAccount.class);
         when(mockAccount.getClient()).thenReturn(sut);
         sut.addAccount(mockAccount);
-        assert (sut.getAccounts().contains(mockAccount));
+        Assertions.assertThat (sut.getAccounts().contains(mockAccount));
     }
 
 }
