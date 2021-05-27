@@ -1,5 +1,6 @@
 package com.acme.banking.dbo;
 
+import static org.mockito.Mockito.*;
 import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.domain.SavingAccount;
 import org.junit.jupiter.api.DisplayName;
@@ -49,6 +50,11 @@ public class ClientTest {
         //endregion
     }
 
+    @Test
+    void testOnlyOnCiServer() {
+        assumeTrue("CI".equals(System.getenv("ENV")));
+        // remainder of test
+    }
     @Test
     @DisplayName("Test shouldThrowExceptionWhenIdNegative")
     public void shouldThrowExceptionWhenIdNegative() {
@@ -114,4 +120,17 @@ public class ClientTest {
         }
         Assertions.assertTrue(sut.checkAccount(dummyAccount));
     }
+
+    @Test
+    @DisplayName("Test shouldStoreAccountWhenAddAccount")
+    public void shouldStoreAccountWhenAddAccount() {
+        Client sut = new Client(1, "Name");
+        SavingAccount mockSavingAccount = mock(SavingAccount.class);
+        when(mockSavingAccount.getClient()).thenReturn(sut);
+        sut.addAccount(mockSavingAccount);
+        Assertions.assertTrue(sut.getAccounts().contains(mockSavingAccount));
+    }
+}
+
+
 }
