@@ -2,6 +2,7 @@ package com.acme.banking.dbo.domain;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 
 public class Client {
     private final static String ARG_EXCEPTION_MESSAGE_ID_NEGATIVE = "ID is expected to be positive int";
@@ -27,5 +28,18 @@ public class Client {
 
     public String getName() {
         return name;
+    }
+
+    public void addAccount(final Account account) {
+        if (account.getClient() == null) throw new IllegalArgumentException("No client in the account");
+        if (account.getClient().getId() != this.id) {
+            throw new IllegalArgumentException("Client Id is not of this client");
+        }
+
+        accounts.add(account);
+    }
+
+    public Collection<Account> getAccounts() {
+        return Collections.unmodifiableCollection(accounts);
     }
 }

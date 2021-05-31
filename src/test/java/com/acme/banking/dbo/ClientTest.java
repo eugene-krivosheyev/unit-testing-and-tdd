@@ -1,5 +1,6 @@
 package com.acme.banking.dbo;
 
+import com.acme.banking.dbo.domain.Account;
 import com.acme.banking.dbo.domain.Client;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.SoftAssertions;
@@ -12,16 +13,21 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.mockito.Mockito;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 
 @DisplayName("Test suite")
@@ -77,7 +83,45 @@ public class ClientTest extends AbstractTest {
         // endregion
     }
 
-    @Test @Disabled("temporary disabled")
+    @Test
+    public void shouldGetAccountsWhenGetterCalled() {
+        Account dummyAccount = mock(Account.class);
+
+        Client testClient = new Client(1, "Test name");
+        when(dummyAccount.getClient()).thenReturn(testClient);
+        testClient.addAccount(dummyAccount);
+
+        Assertions.assertThat(testClient.getAccounts())
+                .hasSize(1)
+                .contains(dummyAccount);
+    }
+
+    @Test
+    public void shouldNotAddAccountWhenClientIsNull() {
+        Account dummyAccount = mock(Account.class);
+        when(dummyAccount.getClient()).thenReturn(null);
+
+        Client testClient = new Client(1, "Test name");
+        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> testClient.addAccount(dummyAccount));
+
+        Assertions.assertThat(thrown.getMessage()).isEqualTo("No client in the account");
+    }
+
+    @Test
+    public void shouldNotAddAccountWhenClientIdIsDifferent() {
+        Client accountClientStub = mock(Client.class);
+        when(accountClientStub.getId()).thenReturn(2);
+        Account dummyAccount = mock(Account.class);
+        when(dummyAccount.getClient()).thenReturn(accountClientStub);
+
+        Client testClient = new Client(1, "Test name");
+        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> testClient.addAccount(dummyAccount));
+
+        Assertions.assertThat(thrown.getMessage()).isEqualTo("Client Id is not of this client");
+    }
+
+    @Test
+    @Disabled("temporary disabled")
     @DisplayName("Test case")
     public void shouldStorePropertiesWhenCreated() {
         //region given
@@ -87,7 +131,6 @@ public class ClientTest extends AbstractTest {
 
         //region when
         Client sut = new Client(clientId, clientName);
-        assumeTrue(sut != null);
         //endregion
 
         //region then
@@ -99,11 +142,11 @@ public class ClientTest extends AbstractTest {
 
         //Hamcrest:
         assertThat(sut,
-            allOf(
-                hasProperty("id", notNullValue()),
-                hasProperty("id", equalTo(clientId)),
-                hasProperty("name", is(clientName))
-        ));
+                allOf(
+                        hasProperty("id", notNullValue()),
+                        hasProperty("id", equalTo(clientId)),
+                        hasProperty("name", is(clientName))
+                ));
 
         //AssertJ:
         org.assertj.core.api.Assertions.assertThat(sut)
