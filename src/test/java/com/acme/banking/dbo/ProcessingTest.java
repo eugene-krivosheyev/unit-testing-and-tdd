@@ -9,6 +9,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.sql.SQLException;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Matchers.any;
@@ -42,14 +44,18 @@ public class ProcessingTest {
 //                .thenReturn(null);
 
 
+        /*
         clientRepositoryDoubler = MockitoClientRepoBuilder
-                .withClient("name")
-                .withClient(1, "name")
-            .build();
+            .withClient("name")
+            .withClient(1, "name")
+        .build();
 
-        clientRepositoryDoubler = withClient(withName("name").withId(1).build())
-                                .withClient(withName("name1").build())
-                            .build();
+        clientRepositoryDoubler =
+            withClient(withName("name").withId(1).build())
+            .withClient(withName("name1").build())
+        .build();
+
+         */
 
         final Processing sut = new Processing(clientRepositoryDoubler);
 
@@ -93,8 +99,6 @@ public class ProcessingTest {
         verify(clientRepositoryDoubler, atLeastOnce()).findById(2);
 
         verify(clientRepositoryDoubler, times(2)).update(any(Account.class)); //https://stackoverflow.com/questions/1142837/verify-object-attribute-value-with-mockito
-
-
     }
 
 //    Account accountSpy = spy(new SavingAccount(1, null, 0));
