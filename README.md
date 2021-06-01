@@ -10,6 +10,8 @@
 - [20.05](https://us02web.zoom.us/rec/share/ATugkcGxoyeJvIQZ97O2rFlfpqzHk1xnI_RKX9hCiazaq2L5-qHYI_Fyra31At25.UrYZSZM85qEs1jVg)
 - [25.05](https://us02web.zoom.us/rec/share/hOJweztAGz-opZrzjXWn6GFlLDM7Cfn3_-J84hUlTdxwWCun7Ee5lTQb8BJ90hJE.P5TqS1ASeunaGAwe)
 - [27.05](https://us02web.zoom.us/rec/share/1Lh8Oi6YnWUuncGzjDg0SQ_8V2qXjqpSquyJ2WqvnFYCEcshGFx268-7bxjK6Hqn.32jxaA8AG3IIngB9)
+- [01.06](https://us02web.zoom.us/rec/share/pJyTN9BpNy19e3UJrzoZLQ_Qm-UznNBczpvCmFuNuPLjQZ65UeLyKMO61uOi8-4G.yLPZpi1j49-iNkKL)
+- [все](https://www.dropbox.com/sh/h4v7cnczg43sjqz/AABE8djci_TAEvY5B5u4OUANa?dl=0)
 
 Цели тренинга
 ============
