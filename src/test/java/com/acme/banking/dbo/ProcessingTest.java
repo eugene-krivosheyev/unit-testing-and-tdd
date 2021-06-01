@@ -28,8 +28,9 @@ public class ProcessingTest {
         this.clientsRepositoryDoubler = mock(ClientRepository.class);
         Client clientStub = mock(Client.class);
         when(clientStub.getName()).thenReturn(null);
-        when(clientsRepositoryDoubler.findById(anyInt())).thenReturn(clientStub);
+        when(clientsRepositoryDoubler.findById(anyInt())).thenReturn(null);
 
+        /*
         repo = new RepositoryBuilder()
                 .withClient(1, ...,...,....)
                 .withClient(2, ...,...,....)
@@ -43,7 +44,7 @@ public class ProcessingTest {
                 .withClient()
                     .withId(3)
                 .build();
-
+        */
 
         this.sut = new Processing(clientsRepositoryDoubler);
     }
@@ -61,7 +62,7 @@ public class ProcessingTest {
         Client clientStub = mock(Client.class);
         when(clientStub.getName()).thenReturn(null);
 
-        Client clientStub = ClientBuilder.withName(null).build();
+        //Client clientStub = ClientBuilder.withName(null).build();
 
 
         final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class,
@@ -85,11 +86,12 @@ public class ProcessingTest {
 //        when(clientsRepositoryStub.save(any(Client.class))).thenReturn(clientStub)
         when(clientsRepositoryDoubler.save(clientStub)).thenReturn(savedClientStub);
 
+        /*
         clientsRepositoryDoubler = new DBRepoBuilder("jdbc://lfkgjdl")
                 .withClient(ClientBuilder.withName().withId().build())
                 .withClient(VALID_CLIENT_ID, VALID_CLIENT_NAME)
             .build();
-
+        */
         final Client savedClient = sut.createClient(clientStub);
 
         assertNotNull(savedClient);
