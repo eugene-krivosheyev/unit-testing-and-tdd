@@ -10,6 +10,7 @@ import java.util.Collection;
 
 public class Processing {
     private ClientRepository clients;
+    private AccountFactory factory;
 
     //DI
     public Processing(ClientRepository clients) {
@@ -31,7 +32,8 @@ public class Processing {
         Account from = clients.findById(fromAccountId);
         Account to = clients.findById(toAccountId);
 
-        Account updatedFrom = new SavingAccount(
+//        Account updatedFrom = new SavingAccount(
+        Account updatedFrom = factory.create(
                 from.getId(),
                 from.getClient(),
                 from.getAmount() - amount
