@@ -9,6 +9,18 @@ public class Client {
     private Collection<Account> accounts = new ArrayList<>(); //TODO
 
     public Client(int id, String name) {
+        // Too complex, happy-fail pattern
+        // (c) Fowler
+//        if (name != null && !name.isEmpty()) { // Lazy AND
+//            this.id = id;
+//            this.name = name;
+//        } else {
+//            throw new IllegalArgumentException("Null!!11")
+//        }
+
+        // Guard clause
+        if (name == null || name.isEmpty()) throw new IllegalArgumentException("Client should not be Null or Empty:" + name);
+
         this.id = id;
         this.name = name;
     }

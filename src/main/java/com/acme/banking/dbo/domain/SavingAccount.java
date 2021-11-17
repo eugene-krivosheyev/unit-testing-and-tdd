@@ -6,9 +6,14 @@ public class SavingAccount implements Account {
     private double amount;
 
     public SavingAccount(int id, Client client, double amount) {
+
+        // Guard clause
+        if (client == null ) throw new IllegalArgumentException("Client should not be Null");
+
         this.id = id;
         this.client = client;
         this.amount = amount;
+
     }
 
     @Override
