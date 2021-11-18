@@ -20,6 +20,7 @@ public class Client {
 
         // Guard clause
         if (name == null || name.isEmpty()) throw new IllegalArgumentException("Client should not be Null or Empty:" + name);
+        if (id < 0 ) throw new IllegalArgumentException("Client id not be negative, id:" + id);
 
         this.id = id;
         this.name = name;
