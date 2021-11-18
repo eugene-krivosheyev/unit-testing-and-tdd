@@ -9,6 +9,8 @@ public class Client {
     private Collection<Account> accounts = new ArrayList<>(); //TODO
 
     public Client(int id, String name) {
+        if (name == null) throw new IllegalArgumentException("!!");
+
         this.id = id;
         this.name = name;
     }

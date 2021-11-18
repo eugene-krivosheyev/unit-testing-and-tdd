@@ -1,11 +1,11 @@
 package demo;
 
-import org.junit.jupiter.api.Disabled;
+import com.acme.banking.dbo.domain.Client;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;;
@@ -33,10 +33,16 @@ public class ArrayListTest {
 
         //region 3: Assert | Then
         //logic domain assertion -> assertions
-        assertTrue(sut.contains(dummy));
-        assertEquals(1, sut.size());
+//        assertTrue(sut.contains(dummy));
+//        assertEquals(1, sut.size());
+
+        Exception thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> new Client(1, null)
+        );
+        assertTrue(thrown.getMessage().contains("!!"));
         //endregion
     }
-
     //get
 }
+
