@@ -1,23 +1,35 @@
 package com.acme.banking.dbo;
 
 import com.acme.banking.dbo.domain.Client;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+import static org.hamcrest.CoreMatchers.allOf;
+import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assumptions.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
 import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
 
 
 @DisplayName("Test suite")
+@ExtendWith(MockitoExtension.class)
 public class ClientTest {
+    @Mock Object stub;
+//    @Autowired Object stub;
+//    @MockBean Object stub;
+
     @Test @Disabled("temporary disabled")
     @DisplayName("Test case")
+//    @DirtiesContext
     public void shouldStorePropertiesWhenCreated() {
         //region given
         final int clientId = 1;
@@ -47,7 +59,8 @@ public class ClientTest {
         //AssertJ:
         org.assertj.core.api.Assertions.assertThat(sut)
                 .hasFieldOrPropertyWithValue("id", clientId)
-                .hasFieldOrPropertyWithValue("name", clientName);
+                .hasFieldOrPropertyWithValue("name", clientName)
+                .hasNoNullFieldsOrProperties();
         //endregion
     }
 }

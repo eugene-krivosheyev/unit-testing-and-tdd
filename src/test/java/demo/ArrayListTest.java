@@ -33,8 +33,8 @@ public class ArrayListTest {
 
         //region 3: Assert | Then
         //logic domain assertion -> assertions
-//        assertTrue(sut.contains(dummy));
-//        assertEquals(1, sut.size());
+        //assertTrue(sut.contains(dummy));
+        //assertEquals(1, sut.size());
 
         Exception thrown = assertThrows(
                 IllegalArgumentException.class,
