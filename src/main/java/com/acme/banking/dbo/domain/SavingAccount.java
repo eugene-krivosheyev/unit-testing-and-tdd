@@ -11,8 +11,11 @@ public final class SavingAccount implements Account {
     public SavingAccount(int id, Client client, double amount) {
         if (amount < 0) throw new IllegalArgumentException("Parameter 'amount' is negative.");
         this.amount = amount;
-        setClient(client);
         this.id = id;
+
+        // Client class set itself like owner for account manually
+        requireNonNull(client, "Parameter 'client' must not be null")
+                .addAccount(this);
     }
 
     @Override

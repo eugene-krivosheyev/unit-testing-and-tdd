@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class SavingAccountTest {
 
     @Test
-    void shouldBeCreated() {
+    void shouldBeCreatedAndClientMustHaveIt() {
         int id = 1;
         double amount = 1;
         Client dummy = new Client(id, "Dummy");
@@ -17,7 +17,8 @@ class SavingAccountTest {
         assertAll(
                 () -> assertEquals(id, sut.getId()),
                 () -> assertEquals(amount, sut.getAmount()),
-                () -> assertSame(dummy, sut.getClient())
+                () -> assertSame(dummy, sut.getClient()),
+                () -> assertTrue(dummy.getAccounts().contains(sut))
         );
     }
 

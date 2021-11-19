@@ -35,7 +35,7 @@ final class ClientTest {
     }
 
     @Test
-    void shouldStoreAccount() {
+    void shouldStoreAccountIfNotPresent() {
         // Given
         int id = 1;
         Client sut = new Client(id, "Dummy");
@@ -53,25 +53,6 @@ final class ClientTest {
                 () -> assertThat(sut, hasProperty("accounts", hasSize(initialAccountSize + 1))),
                 () -> assertThat(account, hasProperty("client", notNullValue())),
                 () -> assertThat(account, hasProperty("client", equalTo(sut)))
-        );
-    }
-
-    @Test
-    void shouldRemoveAccount() {
-        // Given
-        int id = 1;
-        Client sut = new Client(id, "Dummy");
-
-        Account account = new SavingAccount(id, sut, 1);
-        sut.addAccount(account);
-
-        // When
-        sut.removeAccount(account);
-
-        // Then
-        assertAll(
-                () -> assertThat(sut, hasProperty("accounts", empty())),
-                () -> assertThat(account, hasProperty("client", nullValue()))
         );
     }
 
@@ -106,6 +87,45 @@ final class ClientTest {
         assertAll(
                 () -> assertThrows(NullPointerException.class, () -> sut.addAccount(null)),
                 () -> assertTrue(sut.getAccounts().isEmpty())
+        );
+    }
+
+    @Test
+    void shouldRemoveAccountIfPresent() {
+        // Given
+        int id = 1;
+        Client sut = new Client(id, "Dummy");
+
+        Account account = new SavingAccount(id, sut, 1);
+        sut.addAccount(account);
+
+        // When
+        sut.removeAccount(account);
+
+        // Then
+        assertAll(
+                () -> assertThat(sut, hasProperty("accounts", empty())),
+                () -> assertThat(account, hasProperty("client", nullValue()))
+        );
+    }
+
+    @Test
+    void shouldNotRemoveAccountIfAccountIsNotExists() {
+        // Given
+        int id = 1;
+        Client sut = new Client(id, "Dummy");
+
+        Account account = new SavingAccount(id, sut, 1);
+        sut.addAccount(account);
+        int initialAccountSize = sut.getAccounts().size();
+
+        // When
+        sut.removeAccount(null);
+
+        // Then
+        assertAll(
+                () -> assertThat(sut, hasProperty("accounts", hasSize(initialAccountSize))),
+                () -> assertThat(account, hasProperty("client", notNullValue()))
         );
     }
 }
