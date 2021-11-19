@@ -3,11 +3,11 @@ package com.acme.banking.dbo.domain;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.Matchers.*;
+import static org.hamcrest.collection.IsEmptyCollection.empty;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 final class ClientTest {
-
 
     @Test
     void shouldBeCreated() {
@@ -42,14 +42,42 @@ final class ClientTest {
         int initialAccountSize = sut.getAccounts().size();
         assumeTrue(sut.getAccounts().isEmpty());
 
+        Account account = new SavingAccount(id, sut, 1);
+
         // When
-        sut.addAccount(new SavingAccount(id, sut, 1));
+        sut.addAccount(account);
 
         // Then
         allOf(
-                hasProperty("accounts", notNullValue()),
                 hasProperty("accounts", hasSize(initialAccountSize + 1))
-        );
+        ).matches(sut);
+
+        allOf(
+                hasProperty("client", notNullValue()),
+                hasProperty("client", equalTo(sut))
+        ).matches(account);
+    }
+
+    @Test
+    void shouldRemoveAccount() {
+        // Given
+        int id = 1;
+        Client sut = new Client(id, "Dummy");
+
+        Account account = new SavingAccount(id, sut, 1);
+        sut.addAccount(account);
+
+        // When
+        sut.removeAccount(account);
+
+        // Then
+        allOf(
+                hasProperty("accounts", empty())
+        ).matches(sut);
+
+        allOf(
+                hasProperty("client", nullValue())
+        ).matches(account);
     }
 
     @Test

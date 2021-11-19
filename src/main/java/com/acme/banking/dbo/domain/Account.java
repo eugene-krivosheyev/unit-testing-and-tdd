@@ -6,4 +6,8 @@ public interface Account {
     double getAmount();
 
     Client getClient(); //TODO reference integrity
+
+    void setClient(Client client);
+
+    void removeClient();
 }

@@ -4,14 +4,14 @@ import static java.util.Objects.requireNonNull;
 
 public final class SavingAccount implements Account {
 
-    private final Client client;
     private final double amount;
+    private Client client;
     private final int id;
 
     public SavingAccount(int id, Client client, double amount) {
         if (amount < 0) throw new IllegalArgumentException("Parameter 'amount' is negative.");
-        this.client = requireNonNull(client, "Parameter 'client' must not be null.");
         this.amount = amount;
+        setClient(client);
         this.id = id;
     }
 
@@ -28,5 +28,15 @@ public final class SavingAccount implements Account {
     @Override
     public Client getClient() {
         return client;
+    }
+
+    @Override
+    public void setClient(Client client) {
+        this.client = requireNonNull(client, "Parameter 'client' must not be null.");
+    }
+
+    @Override
+    public void removeClient() {
+        this.client = null;
     }
 }
