@@ -50,4 +50,15 @@ final class ClientTest {
                 () -> assertEquals(initialAccountSize + 1, sut.getAccounts().size())
         );
     }
+
+    @Test
+    void shouldNotStoreAccountDueToError() {
+        // Given
+        Client sut = new Client(1, "Dummy");
+
+        assertAll(
+                () -> assertThrows(NullPointerException.class, () -> sut.addAccount(null)),
+                () -> assumeTrue(sut.getAccounts().isEmpty())
+        );
+    }
 }
