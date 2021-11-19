@@ -2,6 +2,7 @@ package com.acme.banking.dbo.domain;
 
 import org.junit.jupiter.api.Test;
 
+import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
@@ -45,9 +46,9 @@ final class ClientTest {
         sut.addAccount(new SavingAccount(id, sut, 1));
 
         // Then
-        assertAll(
-                () -> assertEquals(id, sut.getId()),
-                () -> assertEquals(initialAccountSize + 1, sut.getAccounts().size())
+        allOf(
+                hasProperty("accounts", notNullValue()),
+                hasProperty("accounts", hasSize(initialAccountSize + 1))
         );
     }
 
@@ -58,7 +59,7 @@ final class ClientTest {
 
         assertAll(
                 () -> assertThrows(NullPointerException.class, () -> sut.addAccount(null)),
-                () -> assumeTrue(sut.getAccounts().isEmpty())
+                () -> assertTrue(sut.getAccounts().isEmpty())
         );
     }
 }
