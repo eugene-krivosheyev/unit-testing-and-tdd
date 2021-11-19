@@ -9,6 +9,9 @@ public class Client {
     private Collection<Account> accounts = new ArrayList<>(); //TODO
 
     public Client(int id, String name) {
+        if (Integer.signum(id) == -1) throw new IllegalArgumentException("id is negative");
+        if (name == null || name.isEmpty()) throw  new IllegalArgumentException("name is empty");
+
         this.id = id;
         this.name = name;
     }
@@ -20,4 +23,14 @@ public class Client {
     public String getName() {
         return name;
     }
+
+    public void addAccount(SavingAccount account) {
+        if (account == null) throw  new IllegalArgumentException("account is null");
+
+        this.accounts.add(account);
+    }
+
+     public Collection<Account> getAccounts() {
+        return accounts;
+     }
 }
