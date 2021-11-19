@@ -2,6 +2,7 @@ package com.acme.banking.dbo.domain;
 
 import org.junit.jupiter.api.Test;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.collection.IsEmptyCollection.empty;
 import static org.junit.jupiter.api.Assertions.*;
@@ -48,14 +49,11 @@ final class ClientTest {
         sut.addAccount(account);
 
         // Then
-        allOf(
-                hasProperty("accounts", hasSize(initialAccountSize + 1))
-        ).matches(sut);
-
-        allOf(
-                hasProperty("client", notNullValue()),
-                hasProperty("client", equalTo(sut))
-        ).matches(account);
+        assertAll(
+                () -> assertThat(sut, hasProperty("accounts", hasSize(initialAccountSize + 1))),
+                () -> assertThat(account, hasProperty("client", notNullValue())),
+                () -> assertThat(account, hasProperty("client", equalTo(sut)))
+        );
     }
 
     @Test
@@ -71,13 +69,33 @@ final class ClientTest {
         sut.removeAccount(account);
 
         // Then
-        allOf(
-                hasProperty("accounts", empty())
-        ).matches(sut);
+        assertAll(
+                () -> assertThat(sut, hasProperty("accounts", empty())),
+                () -> assertThat(account, hasProperty("client", nullValue()))
+        );
+    }
 
-        allOf(
-                hasProperty("client", nullValue())
-        ).matches(account);
+    @Test
+    void shouldNotStoreAccountIfPresent() {
+        // Given
+        int id = 1;
+        Client sut = new Client(id, "Dummy");
+        assumeTrue(sut.getAccounts().isEmpty());
+
+        Account account = new SavingAccount(id, sut, 1);
+        sut.addAccount(account);
+
+        int initialAccountSize = sut.getAccounts().size();
+
+        // When
+        sut.addAccount(account);
+
+        // Then
+        assertAll(
+                () -> assertThat(sut, hasProperty("accounts", hasSize(initialAccountSize))),
+                () -> assertThat(account, hasProperty("client", notNullValue())),
+                () -> assertThat(account, hasProperty("client", equalTo(sut)))
+        );
     }
 
     @Test
