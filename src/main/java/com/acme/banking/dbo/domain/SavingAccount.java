@@ -1,14 +1,18 @@
 package com.acme.banking.dbo.domain;
 
-public class SavingAccount implements Account {
-    private int id;
-    private Client client;
-    private double amount;
+import static java.util.Objects.requireNonNull;
+
+public final class SavingAccount implements Account {
+
+    private final Client client;
+    private final double amount;
+    private final int id;
 
     public SavingAccount(int id, Client client, double amount) {
-        this.id = id;
-        this.client = client;
+        if (amount < 0) throw new IllegalArgumentException("Parameter 'amount' is negative.");
+        this.client = requireNonNull(client, "Parameter 'client' must not be null.");
         this.amount = amount;
+        this.id = id;
     }
 
     @Override
