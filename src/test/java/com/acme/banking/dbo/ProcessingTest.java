@@ -46,11 +46,11 @@ public class ProcessingTest {
     @Test
     public void shouldTransferWhenValidAmount() {
         AccountRepository accountsRepoMock = mock(AccountRepository.class);
-        Account accountFromStub = mock(Account.class);
+        Account accountFromSpy = spy(new SavingAccount(1, null, 0));
         Account accountToStub = mock(Account.class);
-        when(accountFromStub.getAmount()).thenReturn(10.);
+        when(accountFromSpy.getAmount()).thenReturn(10.);
         when(accountToStub.getAmount()).thenReturn(2.);
-        when(accountsRepoMock.getAccountById(1)).thenReturn(accountFromStub);
+        when(accountsRepoMock.getAccountById(1)).thenReturn(accountFromSpy);
         when(accountsRepoMock.getAccountById(2)).thenReturn(accountToStub);
         Processing sut = new Processing(accountsRepoMock);
 
@@ -58,9 +58,9 @@ public class ProcessingTest {
 
         verify(accountsRepoMock, times(1)).getAccountById(1);
         verify(accountsRepoMock, atLeastOnce()).getAccountById(2); //anyInt()
-        verify(accountFromStub).setAmount(1);
+        verify(accountFromSpy).setAmount(1);
         verify(accountToStub).setAmount(11);
-        verify(accountsRepoMock).save(accountFromStub);
+        verify(accountsRepoMock).save(accountFromSpy);
         verify(accountsRepoMock).save(accountToStub);
     }
 }
