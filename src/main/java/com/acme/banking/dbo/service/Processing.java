@@ -22,7 +22,9 @@ public class Processing {
     }
 
     public Collection<Account> getAccountsByClientId(int clientId) {
+        //....
         return accounts.getAccountsByClientId(clientId);
+        //....
     }
 
     public void transfer(int fromAccountId, int toAccountId, double amount) {
