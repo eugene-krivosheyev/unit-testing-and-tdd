@@ -9,7 +9,7 @@ import static java.util.Collections.unmodifiableCollection;
 import static java.util.Objects.isNull;
 import static java.util.Objects.requireNonNull;
 
-public final class Client {
+public class Client {
 
     private final int id;
     private final String name;

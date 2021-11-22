@@ -4,7 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 public final class SavingAccount implements Account {
 
-    private final double amount;
+    private double amount;
     private Client client;
     private final int id;
 
@@ -21,6 +21,11 @@ public final class SavingAccount implements Account {
     @Override
     public double getAmount() {
         return amount;
+    }
+
+    @Override
+    public void setAmount(double amount) {
+        this.amount = amount;
     }
 
     @Override
