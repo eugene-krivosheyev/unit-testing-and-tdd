@@ -28,7 +28,14 @@ public class Processing {
     }
 
     public void transfer(int fromAccountId, int toAccountId, double amount) {
-        //TODO
+        Account from = accounts.getAccountById(fromAccountId);
+        Account to = accounts.getAccountById(toAccountId);
+
+        from.setAmount( from.getAmount() - amount );
+        to.setAmount( to.getAmount() + amount );
+
+        accounts.save(from);
+        accounts.save(to);
     }
 
     public void cash(double amount, int fromAccountId) {

@@ -17,6 +17,11 @@ public class SavingAccount implements Account {
     }
 
     @Override
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    @Override
     public int getId() {
         return id;
     }
