@@ -26,6 +26,14 @@ public class Client {
         this.name = name;
     }
 
+    public void addAccount(Account clientAccount) {
+        this.accounts.add(clientAccount);
+    }
+
+    public boolean checkAccountIsOwnedBy(Account possibleAccount) {
+        return accounts.contains(possibleAccount);
+    }
+
     public int getId() {
         return id;
     }
