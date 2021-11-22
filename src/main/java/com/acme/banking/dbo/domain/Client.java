@@ -8,7 +8,10 @@ public class Client {
     private String name;
     private Collection<Account> accounts = new ArrayList<>(); //TODO
 
-    public Client(int id, String name) {
+    public Client(int id, String name) throws IllegalArgumentException {
+        if (name == null || name.isEmpty()) throw new IllegalArgumentException("Name is empty.");
+        if (id > 0) throw new IllegalArgumentException("Id is negative");
+
         this.id = id;
         this.name = name;
     }
