@@ -16,9 +16,10 @@ import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.*;
 
 public class ProcessingTest {
+    private AccountRepository accountRepoStub = mock(AccountRepository.class);
+
     @Test
     public void shouldGetStoredAccountWhenGetExistedAccountById() {
-        AccountRepository accountRepoStub = mock(AccountRepository.class);
         Account accountStub = mock(Account.class);
 
         when(accountRepoStub.getAccountsByClientId(any(Integer.class)))
@@ -33,7 +34,6 @@ public class ProcessingTest {
 
     @Test
     public void shouldGetErrorAccountWhenGetNotExistedAccountById() {
-        AccountRepository accountRepoStub = mock(AccountRepository.class);
         when(accountRepoStub.getAccountsByClientId(anyInt())).thenThrow(new IllegalStateException("!!!!!"));
         final Processing sut = new Processing(accountRepoStub);
 
@@ -45,22 +45,21 @@ public class ProcessingTest {
 
     @Test
     public void shouldTransferWhenValidAmount() {
-        AccountRepository accountsRepoMock = mock(AccountRepository.class);
         Account accountFromSpy = spy(new SavingAccount(1, null, 0));
         Account accountToStub = mock(Account.class);
         when(accountFromSpy.getAmount()).thenReturn(10.);
         when(accountToStub.getAmount()).thenReturn(2.);
-        when(accountsRepoMock.getAccountById(1)).thenReturn(accountFromSpy);
-        when(accountsRepoMock.getAccountById(2)).thenReturn(accountToStub);
-        Processing sut = new Processing(accountsRepoMock);
+        when(accountRepoStub.getAccountById(1)).thenReturn(accountFromSpy);
+        when(accountRepoStub.getAccountById(2)).thenReturn(accountToStub);
+        Processing sut = new Processing(accountRepoStub);
 
         sut.transfer(1, 2, 9);
 
-        verify(accountsRepoMock, times(1)).getAccountById(1);
-        verify(accountsRepoMock, atLeastOnce()).getAccountById(2); //anyInt()
+        verify(accountRepoStub, times(1)).getAccountById(1);
+        verify(accountRepoStub, atLeastOnce()).getAccountById(2); //anyInt()
         verify(accountFromSpy).setAmount(1);
         verify(accountToStub).setAmount(11);
-        verify(accountsRepoMock).save(accountFromSpy);
-        verify(accountsRepoMock).save(accountToStub);
+        verify(accountRepoStub).save(accountFromSpy);
+        verify(accountRepoStub).save(accountToStub);
     }
 }
