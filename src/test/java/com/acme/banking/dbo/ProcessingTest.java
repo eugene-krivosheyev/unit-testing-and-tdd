@@ -7,6 +7,7 @@ import com.acme.banking.dbo.service.Processing;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -20,7 +21,12 @@ public class ProcessingTest {
     public void shouldGetStoredAccountWhenGetExistedAccountById() {
         AccountRepository accountRepoStub = mock(AccountRepository.class);
         Account accountStub = mock(Account.class);
-        when(accountRepoStub.getAccountsByClientId(any(Integer.class))).thenReturn(Arrays.asList(accountStub));
+
+        when(accountRepoStub.getAccountsByClientId(any(Integer.class)))
+                .thenReturn(Arrays.asList(accountStub))
+                .thenReturn(Collections.EMPTY_SET)
+                .thenThrow(new IllegalStateException("NO ENTITY!"));
+
         final Processing sut = new Processing(accountRepoStub);
 
         assertThat(sut.getAccountsByClientId(1)).containsExactly(accountStub);
