@@ -17,6 +17,7 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
 public class SavingAccountTest {
 
     @ParameterizedTest
+    @Disabled
     @ValueSource(doubles = { 0, 1.1, 2.4, 3000000.50, 10/3 })
     public void shouldStorePropertiesWhenCreated(double amount) {
         //region given

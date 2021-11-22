@@ -60,7 +60,6 @@ public class ProcessingTest {
 
     @Test
     public void shouldTransferWhenValidAmount() {
-
         Account accountFromStub = mock(Account.class);
         Account accountToStub = mock(Account.class);
         when(accountFromStub.getAmount()).thenReturn(10.);
@@ -81,4 +80,15 @@ public class ProcessingTest {
         verify(accountRepoStub).save(accountToStub);
     }
 
+    @Test
+    public void shouldLogWhenCashed() {
+        int fromAccountId = 5;
+        int amount = 5;
+        Processing sut = new Processing(accountRepoStub, cashmachine);
+
+        sut.cash(amount, fromAccountId);
+
+        verify(cashmachine).log(amount, fromAccountId);
+
+    }
 }
