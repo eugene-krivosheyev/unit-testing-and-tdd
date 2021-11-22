@@ -10,6 +10,7 @@ import java.util.Collection;
 public class Processing {
 
     private AccountRepository accounts;
+    private Cash cachemachine;
 
     // This can't be overriden by DI
 //    private AccountRepository accounts = new AccountRepository();
@@ -19,8 +20,9 @@ public class Processing {
     /*
      *  Dependency INJECTION
      */
-    public Processing(AccountRepository accounts) {
+    public Processing(AccountRepository accounts, Cash cachemachine) {
         this.accounts = accounts;
+        this.cachemachine = cachemachine;
     }
 
     public Client createClient(String name) {
@@ -47,6 +49,7 @@ public class Processing {
     }
 
     public void cash(double amount, int fromAccountId) {
-        Cash.log(amount, fromAccountId);
+        //Cash.log(amount, fromAccountId) // refactoring
+        cachemachine.log(amount, fromAccountId);
     }
 }

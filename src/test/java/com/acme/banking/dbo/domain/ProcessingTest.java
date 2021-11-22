@@ -14,6 +14,7 @@ import static org.mockito.Mockito.*;
 
 public class ProcessingTest {
     private AccountRepository accountRepoStub = mock(AccountRepository.class);
+    private Cash cashmachine = mock(Cash.class);
 
     @Test
     public void shouldGetStoredAccountWhenGetExistingById() {
@@ -36,7 +37,7 @@ public class ProcessingTest {
                 .thenThrow(IllegalStateException.class);
 
 
-        final Processing sut = new Processing(accountRepoStub);
+        final Processing sut = new Processing(accountRepoStub, cashmachine);
         //final int clientId = 1;
 
         assertThat(sut.getAccountsByClientId(1)).containsExactly(accountStub);
@@ -48,7 +49,7 @@ public class ProcessingTest {
         when(accountRepoStub.getAccountsByClientId(2)).thenThrow(new IllegalStateException("!!"));
         // Usually Entity not found Exception
 
-        final Processing sut = new Processing(accountRepoStub);
+        final Processing sut = new Processing(accountRepoStub, cashmachine);
 
         assertThrows(
                 IllegalStateException.class,
@@ -66,7 +67,7 @@ public class ProcessingTest {
         when(accountToStub.getAmount()).thenReturn(2.);
         when(accountRepoStub.getAccountById(1)).thenReturn(accountFromStub);
         when(accountRepoStub.getAccountById(2)).thenReturn(accountToStub);
-        Processing sut = new Processing(accountRepoStub);
+        Processing sut = new Processing(accountRepoStub, cashmachine);
 
         sut.transfer(1, 2, 9);
 
