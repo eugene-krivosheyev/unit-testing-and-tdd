@@ -24,6 +24,10 @@ public class Client {
         this.id = id;
     }
 
+    public Client(String name) {
+        this(null, name);
+    }
+
     public int getId() {
         return id;
     }
