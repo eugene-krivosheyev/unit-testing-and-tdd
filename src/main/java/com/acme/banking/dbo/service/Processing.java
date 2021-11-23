@@ -1,6 +1,7 @@
 package com.acme.banking.dbo.service;
 
 import com.acme.banking.dbo.dao.AccountRepository;
+import com.acme.banking.dbo.dao.ClientRepository;
 import com.acme.banking.dbo.domain.Account;
 import com.acme.banking.dbo.domain.Cash;
 import com.acme.banking.dbo.domain.Client;
@@ -10,6 +11,7 @@ import java.util.Collection;
 public class Processing {
 
     private AccountRepository accounts;
+    private ClientRepository clients;
     private Cash cachemachine;
 
     // This can't be overriden by DI
@@ -20,13 +22,18 @@ public class Processing {
     /*
      *  Dependency INJECTION
      */
-    public Processing(AccountRepository accounts, Cash cachemachine) {
+    public Processing(AccountRepository accounts, ClientRepository clients, Cash cachemachine) {
         this.accounts = accounts;
+        this.clients = clients;
         this.cachemachine = cachemachine;
     }
 
     public Client createClient(String name) {
-        return null; //TODO
+        int id = clients.initClientId();
+        Client newclient = new Client(id, name);
+        return newclient;
+
+        //return null; //TODO
     }
 
     public Collection<Account> getAccountsByClientId(int clientId) {

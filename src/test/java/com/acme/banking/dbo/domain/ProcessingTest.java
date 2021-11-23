@@ -1,6 +1,7 @@
 package com.acme.banking.dbo.domain;
 
 import com.acme.banking.dbo.dao.AccountRepository;
+import com.acme.banking.dbo.dao.ClientRepository;
 import com.acme.banking.dbo.service.Processing;
 import org.junit.jupiter.api.Test;
 
@@ -14,6 +15,8 @@ import static org.mockito.Mockito.*;
 
 public class ProcessingTest {
     private AccountRepository accountRepoStub = mock(AccountRepository.class);
+    private ClientRepository clientRepoStub = mock(ClientRepository.class);
+
     private Cash cashmachine = mock(Cash.class);
 
     @Test
@@ -37,7 +40,7 @@ public class ProcessingTest {
                 .thenThrow(IllegalStateException.class);
 
 
-        final Processing sut = new Processing(accountRepoStub, cashmachine);
+        final Processing sut = new Processing(accountRepoStub, clientRepoStub, cashmachine);
         //final int clientId = 1;
 
         assertThat(sut.getAccountsByClientId(1)).containsExactly(accountStub);
@@ -49,7 +52,7 @@ public class ProcessingTest {
         when(accountRepoStub.getAccountsByClientId(2)).thenThrow(new IllegalStateException("!!"));
         // Usually Entity not found Exception
 
-        final Processing sut = new Processing(accountRepoStub, cashmachine);
+        final Processing sut = new Processing(accountRepoStub, clientRepoStub, cashmachine);
 
         assertThrows(
                 IllegalStateException.class,
@@ -66,7 +69,7 @@ public class ProcessingTest {
         when(accountToStub.getAmount()).thenReturn(2.);
         when(accountRepoStub.getAccountById(1)).thenReturn(accountFromStub);
         when(accountRepoStub.getAccountById(2)).thenReturn(accountToStub);
-        Processing sut = new Processing(accountRepoStub, cashmachine);
+        Processing sut = new Processing(accountRepoStub, clientRepoStub, cashmachine);
 
         sut.transfer(1, 2, 9);
 
@@ -84,7 +87,7 @@ public class ProcessingTest {
     public void shouldLogWhenCashed() {
         int fromAccountId = 5;
         int amount = 5;
-        Processing sut = new Processing(accountRepoStub, cashmachine);
+        Processing sut = new Processing(accountRepoStub, clientRepoStub, cashmachine);
 
         sut.cash(amount, fromAccountId);
 
