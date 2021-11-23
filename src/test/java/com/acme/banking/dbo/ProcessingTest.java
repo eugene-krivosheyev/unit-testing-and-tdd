@@ -90,9 +90,4 @@ public class ProcessingTest {
         //fixture
         //tests
     }
-
-    class Nested {
-        //fixter
-        //tests
-    }
 }
