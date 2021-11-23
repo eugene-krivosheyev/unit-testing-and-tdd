@@ -23,7 +23,7 @@ public class Processing {
     }
 
     public Client createClient(String name) {
-        return clientRepository.saveClient(new Client(1, name));
+        return clientRepository.saveClient(new Client(null, name));
     }
 
     public Collection<Account> getAccountsByClientId(int clientId) {

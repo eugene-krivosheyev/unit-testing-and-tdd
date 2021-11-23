@@ -11,11 +11,11 @@ import static java.util.Objects.requireNonNull;
 
 public class Client {
 
-    private final int id;
+    private final Integer id;
     private final String name;
     private final Set<Account> accounts;
 
-    public Client(int id, String name) {
+    public Client(Integer id, String name) {
         if (isNull(name) || name.isEmpty())
             throw new IllegalArgumentException("Parameter 'name' must not be null or empty.");
 
