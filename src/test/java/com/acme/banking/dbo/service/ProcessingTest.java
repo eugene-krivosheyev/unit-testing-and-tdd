@@ -19,10 +19,10 @@ import static org.mockito.Mockito.*;
 
 class ProcessingTest {
 
-    Processing sut;
-    Cash cashMock;
-    ClientRepository clientRepositoryMock;
-    AccountRepository accountRepositoryMock;
+    private Processing sut;
+    private Cash cashMock;
+    private ClientRepository clientRepositoryMock;
+    private AccountRepository accountRepositoryMock;
 
     @BeforeEach
     void setUp() {
