@@ -8,6 +8,8 @@ import com.acme.banking.dbo.domain.Client;
 
 import java.util.Collection;
 
+import static java.util.Objects.requireNonNull;
+
 public class Processing {
 
     private AccountRepository accounts;
@@ -23,22 +25,23 @@ public class Processing {
      *  Dependency INJECTION
      */
     public Processing(AccountRepository accounts, ClientRepository clients, Cash cachemachine) {
-        this.accounts = accounts;
-        this.clients = clients;
-        this.cachemachine = cachemachine;
+        this.accounts = requireNonNull(accounts, "'AccountRepository' must not be null");
+        this.clients = requireNonNull(clients, "'ClientRepository' must not be null");
+        this.cachemachine = requireNonNull(cachemachine, "'Cash' must not be null");;
     }
 
     public Client createClient(String name) {
         int id = clients.initClientId();
-        Client newclient = new Client(id, name);
-        return newclient;
+        Client client = new Client(id, name);
+        clients.save(client);
+        return client;
 
         //return null; //TODO
     }
 
     public Collection<Account> getAccountsByClientId(int clientId) {
         ///...
-        return accounts.getAccountsByClientId(clientId);
+        return clients.getAccountsByClientId(clientId);
         ///...
     }
 

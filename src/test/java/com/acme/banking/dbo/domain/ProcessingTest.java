@@ -3,21 +3,30 @@ package com.acme.banking.dbo.domain;
 import com.acme.banking.dbo.dao.AccountRepository;
 import com.acme.banking.dbo.dao.ClientRepository;
 import com.acme.banking.dbo.service.Processing;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.*;
 
 public class ProcessingTest {
-    private AccountRepository accountRepoStub = mock(AccountRepository.class);
-    private ClientRepository clientRepoStub = mock(ClientRepository.class);
 
-    private Cash cashmachine = mock(Cash.class);
+    private AccountRepository accountRepoStub;
+    private ClientRepository clientRepoStub = mock(ClientRepository.class);
+    private Cash cashmachine;
+    private Processing sut;
+
+    @BeforeEach // @AfterEach
+    public void setUp() {
+        accountRepoStub = mock(AccountRepository.class);
+        cashmachine = mock(Cash.class);
+        sut = new Processing(accountRepoStub, clientRepoStub, cashmachine);
+    }
 
     @Test
     public void shouldGetStoredAccountWhenGetExistingById() {
@@ -39,26 +48,44 @@ public class ProcessingTest {
                 .thenReturn(Collections.EMPTY_SET)
                 .thenThrow(IllegalStateException.class);
 
-
-        final Processing sut = new Processing(accountRepoStub, clientRepoStub, cashmachine);
         //final int clientId = 1;
 
         assertThat(sut.getAccountsByClientId(1)).containsExactly(accountStub);
     }
-
 
     @Test
     public void shouldGetErrorAccountWhenGetNotExistingById() {
         when(accountRepoStub.getAccountsByClientId(2)).thenThrow(new IllegalStateException("!!"));
         // Usually Entity not found Exception
 
-        final Processing sut = new Processing(accountRepoStub, clientRepoStub, cashmachine);
 
         assertThrows(
                 IllegalStateException.class,
                 () -> sut.getAccountsByClientId(2)
         );
+    }
 
+    @Test
+    public void shouldCreateClientWithGivenName() {
+        final String dummyName = "Dummy";
+
+        final Client client = sut.createClient(dummyName);
+
+        assertAll(
+                ()->assertNotNull(client),
+                ()->assertEquals(dummyName, client.getName())
+//                ()->assertEquals(clientId, client.getId()),
+  //              ()->assertTrue(client.getAccount().isEmpty())
+        );
+    }
+
+    @Test
+    public void shouldSaveClientWhenCreated() {
+        final String dummyName = "Dummy";
+
+        final Client client = sut.createClient(dummyName);
+
+        verify(clientRepoStub).save();
     }
 
     @Test
@@ -69,7 +96,6 @@ public class ProcessingTest {
         when(accountToStub.getAmount()).thenReturn(2.);
         when(accountRepoStub.getAccountById(1)).thenReturn(accountFromStub);
         when(accountRepoStub.getAccountById(2)).thenReturn(accountToStub);
-        Processing sut = new Processing(accountRepoStub, clientRepoStub, cashmachine);
 
         sut.transfer(1, 2, 9);
 
@@ -87,7 +113,6 @@ public class ProcessingTest {
     public void shouldLogWhenCashed() {
         int fromAccountId = 5;
         int amount = 5;
-        Processing sut = new Processing(accountRepoStub, clientRepoStub, cashmachine);
 
         sut.cash(amount, fromAccountId);
 
