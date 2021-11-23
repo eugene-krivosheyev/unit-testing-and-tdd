@@ -42,7 +42,7 @@ class ProcessingTest {
         when(clientMock.getName()).thenReturn(dummyName);
         when(clientMock.getId()).thenReturn(clientId);
 
-        when(clientRepositoryMock.saveClient(any())).thenReturn(clientMock);
+        when(clientRepositoryMock.save(any())).thenReturn(clientMock);
 
         // When
         final Client client = sut.createClient(dummyName);

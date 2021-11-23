@@ -9,5 +9,5 @@ public interface ClientRepository {
 
     Collection<Account> getAccountsByClientId(int clientId);
 
-    Client saveClient(Client client);
+    Client save(Client client);
 }
