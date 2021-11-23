@@ -10,7 +10,7 @@ public class Client {
 
     public Client(int id, String name) throws IllegalArgumentException {
         if (name == null || name.isEmpty()) throw new IllegalArgumentException("Name is empty.");
-        if (id > 0) throw new IllegalArgumentException("Id is negative");
+        if (id < 0) throw new IllegalArgumentException("Id is negative");
 
         this.id = id;
         this.name = name;
@@ -35,4 +35,26 @@ public class Client {
         return accounts;
     }
 
+    public static class ClientBuilder {
+        static int id = 1;
+        static String name = "a";
+
+        private void ClientBuilder() {
+        }
+
+        public ClientBuilder setName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public ClientBuilder setId(int id) {
+            this.id = id;
+            return this;
+        }
+
+        public Client build() {
+            return new Client(id, name);
+        }
+    }
 }
+

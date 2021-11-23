@@ -14,20 +14,21 @@ import java.util.Collection;
 import static org.mockito.Mockito.*;
 
 public class ProcessingTest {
+    private ClientRepository clientRepoStub;
+    private AccountRepository accountRepoStub;
+    private Cash cashStub;
+    private Processing sut;
 
-    {
-        ClientRepository clientRepoStub = mock(ClientRepository.class);
-        AccountRepository accountRepoStub = mock(AccountRepository.class);
-        Cash cashStub = mock(Cash.class);
+    @BeforeEach
+    void set(){
+        clientRepoStub = mock(ClientRepository.class);
+        accountRepoStub = mock(AccountRepository.class);
+        cashStub = mock(Cash.class);
+        sut = new Processing(accountRepoStub, clientRepoStub, cashStub);
     }
 
     @Test
     void shouldAddToRepositoryWhenCreateClient () {
-        ClientRepository clientRepoStub = mock(ClientRepository.class);
-        AccountRepository accountRepoStub = mock(AccountRepository.class);
-        Cash cashStub = mock(Cash.class);
-        Processing sut = new Processing(accountRepoStub, clientRepoStub, cashStub);
-
         sut.createClient("aaa");
 
         verify(clientRepoStub).add("aaa");
@@ -35,11 +36,6 @@ public class ProcessingTest {
 
     @Test
     void shouldGetAccountsWhenClientExisted () {
-        ClientRepository clientRepoStub = mock(ClientRepository.class);
-        AccountRepository accountRepoStub = mock(AccountRepository.class);
-        Cash cashStub = mock(Cash.class);
-        Processing sut = new Processing(accountRepoStub, clientRepoStub, cashStub);
-
         sut.getAccountsByClientId(1);
 
         verify(accountRepoStub).getAccountsByClientId(1);
@@ -47,10 +43,6 @@ public class ProcessingTest {
 
     @Test
     void shouldTransferWhenAccountsAndAmountValid () {
-        ClientRepository clientRepoStub = mock(ClientRepository.class);
-        AccountRepository accountRepoStub = mock(AccountRepository.class);
-        Cash cashStub = mock(Cash.class);
-        Processing sut = new Processing(accountRepoStub, clientRepoStub, cashStub);
         Account accountFromStub = mock(Account.class);
         Account accountToStub = mock(Account.class);
         when(accountFromStub.getAmount()).thenReturn(10.);
@@ -60,6 +52,8 @@ public class ProcessingTest {
 
         sut.transfer(1, 2, 5);
 
+        verify(accountFromStub).getAmount();
+        verify(accountToStub).getAmount();
         verify(accountFromStub).setAmount(5);
         verify(accountToStub).setAmount(25);
         verify(accountRepoStub).save(accountFromStub);
@@ -68,11 +62,6 @@ public class ProcessingTest {
 
     @Test
     void shouldLogWhenCashAndAmountValid () {
-        ClientRepository clientRepoStub = mock(ClientRepository.class);
-        AccountRepository accountRepoStub = mock(AccountRepository.class);
-        Cash cashStub = mock(Cash.class);
-        Processing sut = new Processing(accountRepoStub, clientRepoStub, cashStub);
-
         sut.cash(10.5, 1);
 
         verify(cashStub).log(10.5, 1);
