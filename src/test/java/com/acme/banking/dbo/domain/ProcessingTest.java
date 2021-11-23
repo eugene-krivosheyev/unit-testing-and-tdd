@@ -58,7 +58,6 @@ public class ProcessingTest {
         when(accountRepoStub.getAccountsByClientId(2)).thenThrow(new IllegalStateException("!!"));
         // Usually Entity not found Exception
 
-
         assertThrows(
                 IllegalStateException.class,
                 () -> sut.getAccountsByClientId(2)
@@ -85,7 +84,7 @@ public class ProcessingTest {
 
         final Client client = sut.createClient(dummyName);
 
-        verify(clientRepoStub).save();
+        verify(clientRepoStub).save(client);
     }
 
     @Test

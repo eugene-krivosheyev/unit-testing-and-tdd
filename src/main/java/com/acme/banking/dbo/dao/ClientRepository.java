@@ -10,6 +10,5 @@ public interface ClientRepository {
     int initClientId();
     Client getClientById(int accountId);
     void save(Client client);
-    Collection<Account> getAccountsByClientId(int clientId);
     void save();
 }

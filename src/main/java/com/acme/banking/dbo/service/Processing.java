@@ -41,7 +41,7 @@ public class Processing {
 
     public Collection<Account> getAccountsByClientId(int clientId) {
         ///...
-        return clients.getAccountsByClientId(clientId);
+        return accounts.getAccountsByClientId(clientId);
         ///...
     }
 
