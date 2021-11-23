@@ -54,8 +54,6 @@ class ProcessingTest {
                 () -> assertEquals(clientId, client.getId()),
                 () -> assertTrue(client.getAccounts().isEmpty())
         );
-
-        verify(clientRepositoryMock).saveClient(any());
     }
 
     @Test
@@ -76,8 +74,6 @@ class ProcessingTest {
                 () -> assertFalse(accounts.isEmpty()),
                 () -> assertTrue(accounts.contains(accountDummy))
         );
-
-        verify(clientRepositoryMock).getAccountsByClientId(clientId);
     }
 
     @Test
