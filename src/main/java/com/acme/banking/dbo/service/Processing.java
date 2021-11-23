@@ -14,7 +14,7 @@ public class Processing {
 
     private AccountRepository accounts;
     private ClientRepository clients;
-    private Cash cachemachine;
+    private Cash cash;
 
     // This can't be overriden by DI
 //    private AccountRepository accounts = new AccountRepository();
@@ -24,10 +24,17 @@ public class Processing {
     /*
      *  Dependency INJECTION
      */
-    public Processing(AccountRepository accounts, ClientRepository clients, Cash cachemachine) {
-        this.accounts = requireNonNull(accounts, "'AccountRepository' must not be null");
-        this.clients = requireNonNull(clients, "'ClientRepository' must not be null");
-        this.cachemachine = requireNonNull(cachemachine, "'Cash' must not be null");;
+    public Processing(AccountRepository accounts, ClientRepository clients, Cash cash) {
+
+        // Guard clause
+        if (accounts == null) throw new IllegalArgumentException("AccountRepository should not be Null");
+        if (clients == null) throw new IllegalArgumentException("ClientRepository should not be Null");
+        if (cash == null) throw new IllegalArgumentException("Cash should not be Null");
+
+        this.accounts = accounts;
+        this.clients = clients;
+        this.cash = cash;
+
     }
 
     public Client createClient(String name) {
@@ -60,6 +67,6 @@ public class Processing {
 
     public void cash(double amount, int fromAccountId) {
         //Cash.log(amount, fromAccountId) // refactoring
-        cachemachine.log(amount, fromAccountId);
+        cash.log(amount, fromAccountId);
     }
 }
