@@ -1,5 +1,6 @@
 package com.acme.banking.dbo.domain;
 
+import com.acme.banking.dbo.util.MockAccountBuilder;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -7,6 +8,7 @@ import static org.hamcrest.Matchers.*;
 import static org.hamcrest.collection.IsEmptyCollection.empty;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
+import static org.mockito.Mockito.mock;
 
 final class ClientTest {
 
@@ -43,7 +45,9 @@ final class ClientTest {
         int initialAccountSize = sut.getAccounts().size();
         assumeTrue(sut.getAccounts().isEmpty());
 
-        Account account = new SavingAccount(id, sut, 1);
+        Account account = new MockAccountBuilder()
+                .withClient(sut)
+                .build();
 
         // When
         sut.addAccount(account);
@@ -63,7 +67,9 @@ final class ClientTest {
         Client sut = new Client(id, "Dummy");
         assumeTrue(sut.getAccounts().isEmpty());
 
-        Account account = new SavingAccount(id, sut, 1);
+        Account account = new MockAccountBuilder()
+                .withClient(sut)
+                .build();
         sut.addAccount(account);
 
         int initialAccountSize = sut.getAccounts().size();
@@ -96,16 +102,16 @@ final class ClientTest {
         int id = 1;
         Client sut = new Client(id, "Dummy");
 
-        Account account = new SavingAccount(id, sut, 1);
-        sut.addAccount(account);
+        Account dummy = mock(Account.class);
+        sut.addAccount(dummy);
 
         // When
-        sut.removeAccount(account);
+        sut.removeAccount(dummy);
 
         // Then
         assertAll(
                 () -> assertThat(sut, hasProperty("accounts", empty())),
-                () -> assertThat(account, hasProperty("client", nullValue()))
+                () -> assertThat(dummy, hasProperty("client", nullValue()))
         );
     }
 
@@ -115,7 +121,10 @@ final class ClientTest {
         int id = 1;
         Client sut = new Client(id, "Dummy");
 
-        Account account = new SavingAccount(id, sut, 1);
+        Account account = new MockAccountBuilder()
+                .withClient(sut)
+                .build();
+
         sut.addAccount(account);
         int initialAccountSize = sut.getAccounts().size();
 

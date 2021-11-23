@@ -1,11 +1,11 @@
 package com.acme.banking.dbo.service;
 
-import com.acme.banking.dbo.MockAccountBuilder;
 import com.acme.banking.dbo.domain.Account;
 import com.acme.banking.dbo.domain.Cash;
 import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.repositories.AccountRepository;
 import com.acme.banking.dbo.repositories.ClientRepository;
+import com.acme.banking.dbo.util.MockAccountBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
