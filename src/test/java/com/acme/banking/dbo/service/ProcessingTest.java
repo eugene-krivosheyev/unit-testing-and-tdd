@@ -1,5 +1,6 @@
 package com.acme.banking.dbo.service;
 
+import com.acme.banking.dbo.MockAccountBuilder;
 import com.acme.banking.dbo.domain.Account;
 import com.acme.banking.dbo.domain.Cash;
 import com.acme.banking.dbo.domain.Client;
@@ -81,15 +82,17 @@ class ProcessingTest {
         // Given
         int senderId = 1;
         double senderMoneyAmount = 90;
-        Account senderMock = mock(Account.class);
-        when(senderMock.getAmount()).thenReturn(senderMoneyAmount);
-        when(senderMock.getId()).thenReturn(senderId);
+        Account senderMock = new MockAccountBuilder()
+                .withAmount(senderMoneyAmount)
+                .withId(senderId)
+                .build();
 
         int receiverId = 2;
         double receiverMoneyAmount = 10;
-        Account receiverMock = mock(Account.class);
-        when(receiverMock.getAmount()).thenReturn(receiverMoneyAmount);
-        when(receiverMock.getId()).thenReturn(receiverId);
+        Account receiverMock = new MockAccountBuilder()
+                .withAmount(receiverMoneyAmount)
+                .withId(receiverId)
+                .build();
 
         when(accountRepositoryMock.getAccountById(senderId)).thenReturn(senderMock);
         when(accountRepositoryMock.getAccountById(receiverId)).thenReturn(receiverMock);

@@ -4,16 +4,16 @@ import static java.util.Objects.requireNonNull;
 
 public final class SavingAccount implements Account {
 
+    private final int id;
     private double amount;
     private Client client;
-    private final int id;
 
     public SavingAccount(int id, Client client, double amount) {
         if (amount < 0) throw new IllegalArgumentException("Parameter 'amount' is negative.");
         this.amount = amount;
         this.id = id;
 
-        // Client class set itself like owner for account manually
+        // Client class sets itself like account's owner manually
         requireNonNull(client, "Parameter 'client' must not be null")
                 .addAccount(this);
     }
