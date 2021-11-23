@@ -9,12 +9,14 @@ import java.util.Collection;
 
 public class Processing {
     private AccountRepository accounts;
+    private Cash cash;
 
     /**
      * DI
      */
-    public Processing(AccountRepository accounts) {
+    public Processing(AccountRepository accounts, Cash cash) {
         this.accounts = accounts;
+        this.cash = cash;
     }
 
     public Client createClient(String name) {
