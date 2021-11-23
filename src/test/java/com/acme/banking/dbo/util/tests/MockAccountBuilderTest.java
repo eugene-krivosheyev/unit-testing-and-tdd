@@ -1,7 +1,8 @@
-package com.acme.banking.dbo;
+package com.acme.banking.dbo.util.tests;
 
 import com.acme.banking.dbo.domain.Account;
 import com.acme.banking.dbo.domain.Client;
+import com.acme.banking.dbo.util.MockAccountBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

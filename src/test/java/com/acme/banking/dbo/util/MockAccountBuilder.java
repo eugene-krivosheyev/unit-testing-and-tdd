@@ -1,4 +1,4 @@
-package com.acme.banking.dbo;
+package com.acme.banking.dbo.util;
 
 import com.acme.banking.dbo.domain.Account;
 import com.acme.banking.dbo.domain.Client;
