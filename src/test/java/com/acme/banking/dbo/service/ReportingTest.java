@@ -1,6 +1,7 @@
 package com.acme.banking.dbo.service;
 
 import com.acme.banking.dbo.domain.Account;
+import com.acme.banking.dbo.domain.Branch;
 import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.repositories.BranchRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,9 +18,11 @@ class ReportingTest {
     private BranchRepository branchRepositoryDouble;
     private Client clientStub;
     private Account accountStub;
+    private Branch branchStub;
 
     @BeforeEach
     public void setUp() {
+        branchStub = mock(Branch.class);
         clientStub = mock(Client.class);
         branchRepositoryDouble = mock(BranchRepository.class);
         reportingSut = new Reporting(branchRepositoryDouble);
@@ -28,25 +31,43 @@ class ReportingTest {
 
     @Test
     void shouldGetBranchReportWhenClientsWithAccountExist() {
-        int branchId = 2;
-        final String report = reportingSut.getReport(branchId);
+        // Given
+        when(branchRepositoryDouble.getBranchById(1)).thenReturn(branchStub);
+        when(branchStub.getName()).thenReturn("Moscow Branch");
+        when(branchStub.getBranchClients()).thenReturn(singletonList(clientStub));
+        when(clientStub.getName()).thenReturn("Vasya Puplin");
+        when(clientStub.getAccounts()).thenReturn(singletonList(accountStub));
+        when(accountStub.getAmount()).thenReturn(10.0);
+        when(accountStub.getId()).thenReturn(1);
+
+        // When
+        final String report = reportingSut.getReport(1);
+
+        // Then
         assertEquals(
                 "Moscow Branch" + System.lineSeparator() +
                         "============" + System.lineSeparator() +
                         "Vasya Puplin" + System.lineSeparator() +
                         "------------" + System.lineSeparator() +
-                        "- account #1: 10.0" + System.lineSeparator() +
-                        "- account #2: empty" + System.lineSeparator() +
-                        "Ivan Ivanov" + System.lineSeparator() +
-                        "-----------" + System.lineSeparator() +
-                        "- account #3: 120.0" + System.lineSeparator(),
+                        "- account #1: 10.0" + System.lineSeparator(),
                 report);
     }
 
     @Test
     void shouldGetBranchReportWithEmptyMoneyAmount() {
-        int branchId = 2;
-        final String report = reportingSut.getReport(branchId);
+        // Given
+        when(branchRepositoryDouble.getBranchById(1)).thenReturn(branchStub);
+        when(branchStub.getName()).thenReturn("Moscow Branch");
+        when(branchStub.getBranchClients()).thenReturn(singletonList(clientStub));
+        when(clientStub.getName()).thenReturn("Vasya Puplin");
+        when(clientStub.getAccounts()).thenReturn(singletonList(accountStub));
+        when(accountStub.getAmount()).thenReturn(0.0);
+        when(accountStub.getId()).thenReturn(1);
+
+        // When
+        final String report = reportingSut.getReport(1);
+
+        // Then
         assertEquals(
                 "Moscow Branch" + System.lineSeparator() +
                         "============" + System.lineSeparator() +

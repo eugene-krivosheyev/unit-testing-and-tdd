@@ -27,15 +27,16 @@ public class Reporting {
         Branch branch = branchRepository.getBranchById(branchId);
         Collection<Client> clients = branch.getBranchClients();
 
-        return "Moscow Branch" + System.lineSeparator() +
-                "============" + System.lineSeparator() +
-                "Vasya Puplin" + System.lineSeparator() +
-                "------------" + System.lineSeparator() +
-                "- account #1: 10.0" + System.lineSeparator() +
-                "- account #2: empty" + System.lineSeparator() +
-                "Ivan Ivanov" + System.lineSeparator() +
-                "-----------" + System.lineSeparator() +
-                "- account #3: 120.0" + System.lineSeparator();
+        StringBuilder builder = new StringBuilder(branch.getName())
+                .append(System.lineSeparator())
+                .append("============")
+                .append(System.lineSeparator());
+
+        clients.forEach(client -> {
+            builder.append(getReport(client));
+        });
+
+        return builder.toString();
     }
 
     public String getReport(Client client) {

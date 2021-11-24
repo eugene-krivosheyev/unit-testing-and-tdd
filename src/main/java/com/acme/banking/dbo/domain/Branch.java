@@ -6,10 +6,13 @@ import static java.util.Collections.unmodifiableCollection;
 import static java.util.stream.Collectors.toUnmodifiableSet;
 
 public class Branch {
-    private Collection<Account> accounts; //TODO
 
-    public Branch(Collection<Account> accounts) {
+    private final Collection<Account> accounts;
+    private final String name;
+
+    public Branch(Collection<Account> accounts, String name) {
         this.accounts = accounts;
+        this.name = name;
     }
 
     public Collection<Account> getAccounts() {
@@ -24,5 +27,9 @@ public class Branch {
         return accounts.stream()
                 .map(Account::getClient)
                 .collect(toUnmodifiableSet());
+    }
+
+    public String getName() {
+        return name;
     }
 }
