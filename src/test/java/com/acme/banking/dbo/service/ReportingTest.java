@@ -23,55 +23,18 @@ public class ReportingTest {
 
     @Disabled @Test
     public void shouldGetBranchReportWhenClientsWithAccountExist() {
-        final Branch branchStub = mock(Branch.class);
-
-        final String report = reportingSut.getReport(branchStub);
+        int branchId = 2;
+        final String report = reportingSut.getReport(branchId);
         assertEquals(
         "Moscow Branch" + System.lineSeparator() +
                 "============" + System.lineSeparator() +
                 "Vasya Puplin" + System.lineSeparator() +
                 "------------" + System.lineSeparator() +
                 "- account #1: 10.0" + System.lineSeparator() +
-                "- account #2: 0.0" + System.lineSeparator() +
+                "- account #2: empty" + System.lineSeparator() +
                 "Ivan Ivanov"+ System.lineSeparator() +
                 "-----------" + System.lineSeparator() +
                 "- account #3: 120.0" + System.lineSeparator(),
             report);
-    }
-
-    @Test
-    public void shouldGetAccountReportWhenEmptyAccount() {
-        when(accountStub.getId()).thenReturn(3);
-        when(accountStub.getAmount()).thenReturn(0.);
-
-        String report = reportingSut.getReport(accountStub);
-
-        assertEquals(
-                "- account #3: 0.0",
-                report
-        );
-    }
-
-    @Test
-    public void shouldGetAccountReportWhenPositiveAccount() {
-        when(accountStub.getId()).thenReturn(4);
-        when(accountStub.getAmount()).thenReturn(10.);
-
-        String report = reportingSut.getReport(accountStub);
-
-        assertEquals(
-                "- account #4: 10.0",
-                report
-        );
-    }
-
-    @Test
-    @Disabled
-    public void shouldGetClientReportWhenAccountsExist() {
-//        when(accountStub.getId()).thenThrow(???);
-
-
-//        String report = reportingSut.getReport(???);
-//        assertEquals("????", report);
     }
 }
