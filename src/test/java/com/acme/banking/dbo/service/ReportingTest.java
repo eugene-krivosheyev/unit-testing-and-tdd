@@ -70,6 +70,27 @@ class ReportingTest {
     }
 
     @Test
+    public void shouldGetAccountReportWhenEmptyAccountCollection() {
+
+        when(accountStub.getId()).thenReturn(4);
+        when(accountStub.getAmount()).thenReturn(0.);
+
+        // TO BE DONE
+        // - SECOND MOCK
+
+        Collection<Account> clientAccounts = new ArrayList<Account>();
+        clientAccounts.add(accountStub);
+        // ADD SECOND MOCK TO COLLECTION
+
+        final String report = reportingSut.getAllAccountReport(clientAccounts);
+
+        assertEquals(
+                "- account #3: 120.0" + System.lineSeparator() +
+                "- account #4: empty" + System.lineSeparator(),
+                report);
+    }
+
+    @Test
     @Disabled
     public void shouldGetAllAccountsReportWhenNotEmptyAccount() {
 

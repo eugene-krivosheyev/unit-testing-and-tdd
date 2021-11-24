@@ -65,4 +65,15 @@ public class Reporting {
         return "- account #" + accountId + ": " + amountstr + System.lineSeparator();
 
     }
+
+    public String getAllAccountReport(Collection<Account> clientAccounts) {
+        String allAccountsReport = "";
+
+        for (Account currentaccount:clientAccounts) {
+            allAccountsReport += getAccountReport(currentaccount);
+        }
+
+        return allAccountsReport;
+    }
+
 }
