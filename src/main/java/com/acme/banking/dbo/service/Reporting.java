@@ -1,5 +1,6 @@
 package com.acme.banking.dbo.service;
 
+import com.acme.banking.dbo.domain.Account;
 import com.acme.banking.dbo.domain.Branch;
 
 public class Reporting {
@@ -8,5 +9,9 @@ public class Reporting {
      */
     public String getReport(Branch rootBranch) {
         return null;
+    }
+
+    String getReport(final Account account) {
+        return "- account #" + account.getId() + ": " + account.getAmount();
     }
 }
