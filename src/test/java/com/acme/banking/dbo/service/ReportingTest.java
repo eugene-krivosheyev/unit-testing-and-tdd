@@ -3,10 +3,10 @@ package com.acme.banking.dbo.service;
 import com.acme.banking.dbo.domain.Account;
 import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.repositories.BranchRepository;
-import com.acme.banking.dbo.util.MockClientBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static java.util.Collections.singletonList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -15,10 +15,12 @@ class ReportingTest {
 
     private Reporting reportingSut;
     private BranchRepository branchRepositoryDouble;
+    private Client clientStub;
     private Account accountStub;
 
     @BeforeEach
     public void setUp() {
+        clientStub = mock(Client.class);
         branchRepositoryDouble = mock(BranchRepository.class);
         reportingSut = new Reporting(branchRepositoryDouble);
         accountStub = mock(Account.class);
@@ -56,9 +58,16 @@ class ReportingTest {
 
     @Test
     void shouldGetReportForClient() {
-        Client clientStub = new MockClientBuilder().build();
+        // Given
+        when(clientStub.getAccounts()).thenReturn(singletonList(accountStub));
+        when(clientStub.getName()).thenReturn("Vasya Puplin");
+        when(accountStub.getAmount()).thenReturn(10.0);
+        when(accountStub.getId()).thenReturn(1);
+
+        // When
         String report = reportingSut.getReport(clientStub);
 
+        // Then
         assertEquals(
                 "Vasya Puplin" + System.lineSeparator() +
                         "------------" + System.lineSeparator() +
@@ -68,9 +77,16 @@ class ReportingTest {
 
     @Test
     void shouldGetReportForClientWithEmptyMoneyAmount() {
-        Client clientStub = new MockClientBuilder().build();
+        // Given
+        when(clientStub.getAccounts()).thenReturn(singletonList(accountStub));
+        when(clientStub.getName()).thenReturn("Vasya Puplin");
+        when(accountStub.getAmount()).thenReturn(0.0);
+        when(accountStub.getId()).thenReturn(1);
+
+        // When
         String report = reportingSut.getReport(clientStub);
 
+        // Then
         assertEquals(
                 "Vasya Puplin" + System.lineSeparator() +
                         "------------" + System.lineSeparator() +

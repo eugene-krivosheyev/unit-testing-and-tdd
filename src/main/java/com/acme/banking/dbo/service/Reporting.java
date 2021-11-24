@@ -39,12 +39,14 @@ public class Reporting {
     }
 
     public String getReport(Client client) {
-        Collection<Account> accounts = client.getAccounts();
+        StringBuilder builder = new StringBuilder(client.getName())
+                .append(System.lineSeparator())
+                .append("------------")
+                .append(System.lineSeparator());
 
-        return client.getName() + System.lineSeparator() +
-                "------------" + System.lineSeparator() +
-                "- account #1: 10.0" + System.lineSeparator() +
-                "- account #2: empty" + System.lineSeparator();
+        client.getAccounts().forEach(account -> builder.append(getReport(account)));
+
+        return builder.toString();
     }
 
     public String getReport(Account account) {
