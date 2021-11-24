@@ -41,4 +41,9 @@ public class Client {
     public String getName() {
         return name;
     }
+
+    public Collection<Account> getAccounts() {
+        ///private Collection<Account> accounts = new ArrayList<>(); //TODO
+        return accounts;
+    }
 }

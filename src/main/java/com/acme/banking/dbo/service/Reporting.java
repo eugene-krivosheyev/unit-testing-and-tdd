@@ -4,6 +4,9 @@ import com.acme.banking.dbo.domain.Account;
 import com.acme.banking.dbo.domain.Branch;
 import com.acme.banking.dbo.domain.Client;
 
+import java.util.Collection;
+import java.util.Optional;
+
 public class Reporting {
     /**
      * @return Markdown report for all branches, clients, accounts
@@ -23,9 +26,32 @@ public class Reporting {
         return "- account #2: empty" + System.lineSeparator();
     }
 
-    public String getClientReport(Client clientStub) {
-        return "Ivan Ivanov"+ System.lineSeparator() +
+    public String getClientReport(Client client) {
+        String result;
+
+        //String clientName = client.getName();
+        Collection<Account> clientAccounts = client.getAccounts();
+
+        Account account = clientAccounts.iterator().next();
+        double amount = account.getAmount();
+
+//        for (Account current:clientAccounts) {
+//
+//        }
+
+        String amountstr = amount == 0 ? String.valueOf(amount) : "empty";
+
+        result = "Ivan Ivanov"+ System.lineSeparator() +
                 "-----------" + System.lineSeparator() +
-                "- account #3: 120.0" + System.lineSeparator();
+                "- account #3: " + amountstr + System.lineSeparator();
+//        Ivan Ivanov
+//        -----------
+//        - account #3: empty
+
+//         "Ivan Ivanov"+ System.lineSeparator() +
+//                "-----------" + System.lineSeparator() +
+//                "- account #3: 120.0" + System.lineSeparator();
+
+        return result;
     }
 }
