@@ -1,5 +1,6 @@
 package com.acme.banking.dbo.service;
 
+import com.acme.banking.dbo.dao.AccountRepository;
 import com.acme.banking.dbo.domain.Account;
 import com.acme.banking.dbo.domain.Branch;
 import com.acme.banking.dbo.domain.Client;
@@ -53,5 +54,15 @@ public class Reporting {
 //                "- account #3: 120.0" + System.lineSeparator();
 
         return result;
+    }
+
+    public String getAccountReport(Account account) {
+        int accountId = account.getId();
+        double amount = account.getAmount();
+
+        String amountstr = amount != 0 ? String.valueOf(amount) : "empty";
+
+        return "- account #" + accountId + ": " + amountstr + System.lineSeparator();
+
     }
 }

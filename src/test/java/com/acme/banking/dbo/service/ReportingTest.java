@@ -43,10 +43,35 @@ class ReportingTest {
                 report);
     }
 
-    //                        "- account #3: 120.0" + System.lineSeparator(),
-
     @Test
     public void shouldGetAccountReportWhenNotEmptyAccount() {
+
+        when(accountStub.getId()).thenReturn(3);
+        when(accountStub.getAmount()).thenReturn(120.);
+
+        final String report = reportingSut.getAccountReport(accountStub);
+
+        assertEquals(
+                "- account #3: 120.0" + System.lineSeparator(),
+                report);
+    }
+
+    @Test
+    public void shouldGetAccountReportWhenEmptyAccount() {
+
+        when(accountStub.getId()).thenReturn(4);
+        when(accountStub.getAmount()).thenReturn(0.);
+
+        final String report = reportingSut.getAccountReport(accountStub);
+
+        assertEquals(
+                "- account #4: empty" + System.lineSeparator(),
+                report);
+    }
+
+    @Test
+    @Disabled
+    public void shouldGetAllAccountsReportWhenNotEmptyAccount() {
 
         //accountStub When
         Client clientStub = mock(Client.class);
@@ -57,7 +82,6 @@ class ReportingTest {
 
         Collection<Account> clientAccounts = new ArrayList<Account>();
         clientAccounts.add(accountStub);
-
 
         when(clientStub.getAccounts()).thenReturn(clientAccounts);
 
@@ -72,7 +96,8 @@ class ReportingTest {
     }
 
     @Test
-    public void shouldGetAccountReportWhenEmptyAccount() {
+    @Disabled
+    public void shouldGetAllAccountsReportWhenEmptyAccount() {
 
         //accountStub When
         Client clientStub = mock(Client.class);
