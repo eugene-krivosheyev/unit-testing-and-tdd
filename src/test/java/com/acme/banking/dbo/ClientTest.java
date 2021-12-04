@@ -48,6 +48,7 @@ public class ClientTest {
         org.assertj.core.api.Assertions.assertThat(sut)
                 .hasFieldOrPropertyWithValue("id", clientId)
                 .hasFieldOrPropertyWithValue("name", clientName);
+        //also take a look at `extracting()` https://stackoverflow.com/a/51812188
         //endregion
     }
 }
