@@ -50,11 +50,11 @@ git clone --depth 1 -b <YYYY-MM-project> https://github.com/eugene-krivosheyev/u
 - [ ] Тестовый набор = спецификация компонента
 
 ### Coding Iteration #01
-- [ ] Given legacy codebase with Client and SavingAccount domain types
-- [ ] When developers add guard clauses for creating Client and SavingAccount
-- [ ] And cover these components with maintainable autotests
-- [ ] Then coverage for these components should be ≥ 80%
-- [ ] And public code review should state for maintainability
+- [x] Given legacy codebase with Client and SavingAccount domain types
+- [x] When developers add guard clauses for creating Client and SavingAccount
+- [x] And cover these components with maintainable autotests
+- [x] Then coverage for these components should be ≥ 80%
+- [x] And public code review should state for maintainability
 
 Как замерять тестовое покрытие? (0.5/0)
 ---------------------------------------
