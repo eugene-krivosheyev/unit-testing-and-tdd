@@ -11,37 +11,37 @@ class SavingAccountTest {
     @Test
     public void shouldNotCreateWhenZeroId() {
         final int id = 0;
-        final Client client = new Client(1, "Name");
-        double amount = 1;
-        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(id, client, amount));
+        final Client dummyClient = new Client(1, "Name");
+        double dummyAmount = 1;
+        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(id, dummyClient, dummyAmount));
     }
 
     @Test
     public void shouldNotCreateWhenClientIsNull() {
-        final int id = 1;
+        final int dummyId = 1;
         final Client client = null;
-        double amount = 1;
-        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(id, client, amount));
+        double dummyAmount = 1;
+        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(dummyId, client, dummyAmount));
     }
 
     @Test
     public void shouldNotCreateWhenZeroAmount() {
-        final int id = 1;
-        final Client client = new Client(1, "Name");
+        final int dummyId = 1;
+        final Client dummyClient = new Client(1, "Name");
         double amount = 0;
-        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(id, client, amount));
+        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(dummyId, dummyClient, amount));
     }
 
     @Test
     public void shouldStorePropertiesWhenCreated() {
-        final int id = 1;
-        final Client client = new Client(1, "Name");
-        double amount = 1;
-        SavingAccount sut = new SavingAccount(id, client, amount);
+        final int dummyId = 1;
+        final Client dummyClient = new Client(1, "Name");
+        double dummyAmount = 1;
+        SavingAccount sut = new SavingAccount(dummyId, dummyClient, dummyAmount);
         assertAll("Client store its properties",
-                () -> assertEquals(id, sut.getId()),
-                () -> assertEquals(client, sut.getClient()),
-                () -> assertEquals(amount, sut.getAmount())
+                () -> assertEquals(dummyId, sut.getId()),
+                () -> assertEquals(dummyClient, sut.getClient()),
+                () -> assertEquals(dummyAmount, sut.getAmount())
         );
     }
 }

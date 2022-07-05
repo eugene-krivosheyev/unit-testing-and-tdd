@@ -56,15 +56,15 @@ public class ClientTest {
     @Test
     public void shouldNotCreateWhenZeroId() {
         final int clientId = 0;
-        final String clientName = "dummy client name";
-        assertThrows(IllegalArgumentException.class, () -> new Client(clientId, clientName));
+        final String dummyName = "dummy client name";
+        assertThrows(IllegalArgumentException.class, () -> new Client(clientId, dummyName));
     }
 
     @Test
     public void shouldNotCreateWhenNameIsEmpty() {
-        final int clientId = 1;
-        final String clientName = "";
-        assertThrows(IllegalArgumentException.class, () -> new Client(clientId, clientName));
+        final int dummyId = 1;
+        final String name = "";
+        assertThrows(IllegalArgumentException.class, () -> new Client(dummyId, name));
     }
 
 }
