@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assumptions.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -51,4 +52,19 @@ public class ClientTest {
         //also take a look at `extracting()` https://stackoverflow.com/a/51812188
         //endregion
     }
+
+    @Test
+    public void shouldNotCreateWhenZeroId() {
+        final int clientId = 0;
+        final String clientName = "dummy client name";
+        assertThrows(IllegalArgumentException.class, () -> new Client(clientId, clientName));
+    }
+
+    @Test
+    public void shouldNotCreateWhenNameIsEmpty() {
+        final int clientId = 1;
+        final String clientName = "";
+        assertThrows(IllegalArgumentException.class, () -> new Client(clientId, clientName));
+    }
+
 }
