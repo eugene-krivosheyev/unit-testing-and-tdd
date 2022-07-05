@@ -53,18 +53,18 @@ public class ClientTest {
     }
 
     @Test
-    public void shouldThrowIllegalStateExceptionWhenZeroId() {
-        int id = 0;
-        String name = "Aleksandr";
+    public void shouldNotCreateWhenInvalidId() {
+        int invalidId = 0;
+        String name = "dummy";
 
-        assertThrows(IllegalStateException.class, () -> new Client(id, name));
+        assertThrows(IllegalArgumentException.class, () -> new Client(invalidId, name));
     }
 
     @Test
-    public void shouldThrowIllegalStateExceptionWhenNameIsNull() {
-        int id = 132;
+    public void shouldNotCreateWhenNameIsNull() {
+        int dummyId = 1;
         String name = null;
 
-        assertThrows(IllegalStateException.class, () -> new Client(id, name));
+        assertThrows(IllegalArgumentException.class, () -> new Client(dummyId, name));
     }
 }

@@ -9,33 +9,35 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class SavingAccountTest {
 
     @Test
-    public void shouldThrowIllegalStateExceptionZeroId() {
-        int id = 0;
-        Client client = createClient();
-        double amount = 23;
+    public void shouldNotCreateWhenInvalidId() {
+        int invalidId = 0;
+        Client dummyClient = createClient();
+        double dummyAmount = 1;
 
-        assertThrows(IllegalStateException.class, () -> new SavingAccount(id, client, amount));
+        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(invalidId, dummyClient, dummyAmount));
     }
 
     @Test
-    public void shouldThrowIllegalStateExceptionClientIsNull() {
-        int id = 34;
-        double amount = 23;
+    public void shouldNotCreateWhenClientIsNull() {
+        int dummyId = 1;
+        double dummyAmount = 1;
 
-        assertThrows(IllegalStateException.class, () -> new SavingAccount(id, null, amount));
+        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(dummyId, null, dummyAmount));
     }
 
     @Test
-    public void shouldThrowIllegalStateExceptionZeroAmount() {
-        int id = 12;
-        Client client = createClient();
-        double amount = 0;
+    public void shouldNotCreateWhenAmountInvalid() {
+        int dummyId = 1;
+        Client dummyClient = createClient();
+        double invalidAmount = 0;
 
-        assertThrows(IllegalStateException.class, () -> new SavingAccount(id, client, amount));
+        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(dummyId, dummyClient, invalidAmount));
     }
 
     private Client createClient() {
-        return new Client(134, "Alexandr");
+        int dummyId = 1;
+        String dummyName = "dummyName";
+        return new Client(dummyId, dummyName);
     }
 }
 
