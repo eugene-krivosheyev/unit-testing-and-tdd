@@ -2,16 +2,18 @@ package com.acme.banking.dbo;
 
 import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.domain.SavingAccount;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class SavingAccountTest {
     @Test
     public void shouldNotCreateWhenZeroId() {
         final int id = 0;
-        final Client dummyClient = new Client(1, "Name");
+        final Client dummyClient = new Client(1, "dummy Name");
         double dummyAmount = 1;
         assertThrows(IllegalArgumentException.class, () -> new SavingAccount(id, dummyClient, dummyAmount));
     }
@@ -27,15 +29,23 @@ class SavingAccountTest {
     @Test
     public void shouldNotCreateWhenZeroAmount() {
         final int dummyId = 1;
-        final Client dummyClient = new Client(1, "Name");
+        final Client dummyClient = new Client(1, "dummy Name");
         double amount = 0;
         assertThrows(IllegalArgumentException.class, () -> new SavingAccount(dummyId, dummyClient, amount));
     }
 
     @Test
+    public void shouldCreateWhenValidData() {
+        final int dummyId = 1;
+        final Client dummyClient = new Client(1, "dummy Name");
+        double dummyAmount = 1;
+        assertDoesNotThrow(() -> new SavingAccount(dummyId, dummyClient, dummyAmount));
+    }
+
+    @Test
     public void shouldStorePropertiesWhenCreated() {
         final int dummyId = 1;
-        final Client dummyClient = new Client(1, "Name");
+        final Client dummyClient = new Client(1, "dummy Name");
         double dummyAmount = 1;
         SavingAccount sut = new SavingAccount(dummyId, dummyClient, dummyAmount);
         assertAll("Client store its properties",
