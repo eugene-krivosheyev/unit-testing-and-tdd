@@ -6,6 +6,11 @@ import java.util.Collection;
 public class Client {
     private int id;
     private String name;
+
+    public Collection<Account> getAccounts() {
+        return accounts;
+    }
+
     private Collection<Account> accounts = new ArrayList<>(); //TODO
 
     public Client(int id, String name) {
@@ -21,5 +26,11 @@ public class Client {
 
     public String getName() {
         return name;
+    }
+
+    public void addAccount(Account account) {
+        if (account == null) throw new IllegalArgumentException();
+        this.accounts.add(account);
+        account.setClient(this);
     }
 }
