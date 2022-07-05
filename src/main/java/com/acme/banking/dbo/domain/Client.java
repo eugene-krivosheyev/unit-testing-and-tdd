@@ -9,8 +9,16 @@ public class Client {
     private Collection<Account> accounts = new ArrayList<>(); //TODO
 
     public Client(int id, String name) {
+        if (id <= 0) throw new IllegalArgumentException("Id should be grater than zero!");
+        if (name == null) throw new IllegalArgumentException("Name shouldn't be null!");
+        if (name.isEmpty()) throw new IllegalArgumentException("Name shouldn't be empty!");
+
         this.id = id;
         this.name = name;
+    }
+
+    public void addAccount (Account account) {
+        accounts.add(account);
     }
 
     public int getId() {
@@ -19,5 +27,9 @@ public class Client {
 
     public String getName() {
         return name;
+    }
+
+    public Collection<Account> getAccounts() {
+        return accounts;
     }
 }
