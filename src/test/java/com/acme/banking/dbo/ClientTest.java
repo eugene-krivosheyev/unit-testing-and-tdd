@@ -62,7 +62,7 @@ public class ClientTest {
 
     @Test
     public void shouldNotCreateClientWhenNameIsNull() {
-        int dummyId = 0;
+        int dummyId = 1;
         String clientName = null;
 
         assertThrows(IllegalArgumentException.class, () -> new Client(dummyId, clientName));
@@ -70,7 +70,7 @@ public class ClientTest {
 
     @Test
     public void shouldNotCreateClientWhenNameIsEmpty() {
-        int dummyId = 0;
+        int dummyId = 1;
         String clientName = "";
 
         assertThrows(IllegalArgumentException.class, () -> new Client(dummyId, clientName));
@@ -82,5 +82,18 @@ public class ClientTest {
         String clientName = "name";
 
         assertDoesNotThrow(() -> new Client(id, clientName));
+    }
+
+    @Test
+    public void shouldCreateClientAndGetPropsWhenPropertyValid() {
+        int id = 1;
+        String clientName = "name";
+
+        Client sut = new Client(id, clientName);
+
+        assertAll("Client store its properties",
+                () -> assertEquals(id, sut.getId()),
+                () -> assertEquals(clientName, sut.getName())
+        );
     }
 }

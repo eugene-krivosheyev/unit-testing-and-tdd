@@ -67,7 +67,7 @@ class SavingAccountTest {
         //endregion
 
         //region then
-        assertAll("Client store its properties",
+        assertAll("SavingAccount store its properties",
                 () -> assertEquals(id, sut.getId()),
                 () -> assertEquals(dummyAmount, sut.getAmount()),
                 () -> assertEquals(dummyClient, sut.getClient())
