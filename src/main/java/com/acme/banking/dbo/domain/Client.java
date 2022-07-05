@@ -23,4 +23,16 @@ public class Client {
     public String getName() {
         return name;
     }
+
+    public void saveAccount(Account account) {
+        if (account == null) {
+            throw new IllegalArgumentException();
+        }
+        account.setClient(this);
+        this.accounts.add(account);
+    }
+
+    public Collection<Account> getAccounts() {
+        return accounts;
+    }
 }

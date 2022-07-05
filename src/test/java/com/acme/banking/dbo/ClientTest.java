@@ -4,6 +4,8 @@ import com.acme.banking.dbo.domain.Client;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.*;
@@ -51,6 +53,15 @@ public class ClientTest {
         //also take a look at `extracting()` https://stackoverflow.com/a/51812188
         //endregion
     }
+
+    @Disabled
+    @ParameterizedTest
+    @CsvSource({"0, dummy",
+            "1, "})
+    public void shouldNotCreateWhenParametersInvalid(int id, String name) {
+        assertThrows(IllegalArgumentException.class, () -> new Client(id, name));
+    }
+
 
     @Test
     public void shouldNotCreateWhenInvalidId() {

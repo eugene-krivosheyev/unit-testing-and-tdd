@@ -29,4 +29,9 @@ public class SavingAccount implements Account {
     public Client getClient() {
         return client;
     }
+
+    @Override
+    public void setClient(Client client) {
+        this.client = client;
+    }
 }
