@@ -13,29 +13,29 @@ class SavingAccountTest {
     public void shouldGetErrorWhenInvalidId() {
         //region given
         int id = 0;
-        double amount = 1000;
+        double dummyAmount = 1;
 
-        int clientId = 1;
-        String clientName = "some name";
-        Client client = new Client(clientId, clientName);
+        int dummyClientId = 1;
+        String dummyClientName = "some name";
+        Client dummyClient = new Client(dummyClientId, dummyClientName);
 
-        assumeTrue(client.getId() == clientId);
-        assumeTrue(client.getName().equals(clientName));
+        assumeTrue(dummyClient.getId() == dummyClientId);
+        assumeTrue(dummyClient.getName().equals(dummyClientName));
         //endregion
 
         //region when
         //endregion
 
         //region then
-        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(id, client, amount));
+        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(id, dummyClient, dummyAmount));
         //endregion
     }
 
     @Test
     public void shouldGetErrorWhenClientIsNull() {
         //region given
-        int id = 0;
-        double amount = 1000;
+        int dummyId = 1;
+        double dummyAmount = 1;
 
         Client client = null;
         //endregion
@@ -44,33 +44,33 @@ class SavingAccountTest {
         //endregion
 
         //region then
-        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(id, client, amount));
+        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(dummyId, client, dummyAmount));
         //endregion
     }
 
     @Test
     public void shouldCreateNewAccountWhenValidClientAndId() {
         //region given
-        final int clientId = 1;
-        final String clientName = "dummy client name";
+        final int dummyClientId = 1;
+        final String dummyClientName = "dummy client name";
 
-        int accountId = 1;
-        double amount = 1000;
-        Client client = new Client(clientId, clientName);
+        int id = 1;
+        double dummyAmount = 1;
+        Client dummyClient = new Client(dummyClientId, dummyClientName);
 
-        assumeTrue(client.getId() == clientId);
-        assumeTrue(client.getName().equals(clientName));
+        assumeTrue(dummyClient.getId() == dummyClientId);
+        assumeTrue(dummyClient.getName().equals(dummyClientName));
         //endregion
 
         //region when
-        SavingAccount sut = new SavingAccount(accountId, client, amount);
+        SavingAccount sut = new SavingAccount(id, dummyClient, dummyAmount);
         //endregion
 
         //region then
         assertAll("Client store its properties",
-                () -> assertEquals(accountId, sut.getId()),
-                () -> assertEquals(amount, sut.getAmount()),
-                () -> assertEquals(client, sut.getClient())
+                () -> assertEquals(id, sut.getId()),
+                () -> assertEquals(dummyAmount, sut.getAmount()),
+                () -> assertEquals(dummyClient, sut.getClient())
         );
     }
 }
