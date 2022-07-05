@@ -11,29 +11,31 @@ class ClientTest {
     @Test
     public void shouldCreateClientWhenParamsAreValid() {
         //region given
-        int id = 1;
-        String name = "testName";
+        int validId = 1;
+        String validName = "validName";
         //endregion
 
         //region when
-        Client sut = new Client(id, name);
+        Client sut = new Client(validId, validName);
         //endregion
 
         //region then
-        assertEquals(id, sut.getId());
-        assertEquals(name, sut.getName());
+        assertAll(
+                () -> assertEquals(validId, sut.getId()),
+                () -> assertEquals(validName, sut.getName())
+        );
         //endregion
     }
 
     @Test
     public void shouldNotCreateClientWhenIdAreNegative() {
         //region given
-        int id = -1;
-        String name = "testName";
+        int invalidId = -1;
+        String dummyName = "dummyName";
         //endregion
 
         //region when
-        assertThrows(IllegalArgumentException.class, () -> new Client(id, name));
+        assertThrows(IllegalArgumentException.class, () -> new Client(invalidId, dummyName));
         //endregion
 
         //region then
@@ -43,16 +45,15 @@ class ClientTest {
     @Test
     public void shouldNotCreateClientWhenNameIsNull() {
         //region given
-        int id = 1;
-        String name = null;
+        int validId = 1;
+        String invalidName = null;
         //endregion
 
         //region when
-        assertThrows(IllegalArgumentException.class, () -> new Client(id, name));
+        assertThrows(IllegalArgumentException.class, () -> new Client(validId, invalidName));
         //endregion
 
         //region then
         //endregion
     }
-
 }

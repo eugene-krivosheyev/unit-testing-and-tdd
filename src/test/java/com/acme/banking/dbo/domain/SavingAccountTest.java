@@ -11,35 +11,39 @@ class SavingAccountTest {
     @Test
     public void shouldCreateSavingAccountWhenParamsAreValid(){
         //region given
-        int id = 1;
-        Client client = new Client(id, "testName");
-        double amount = 0.1;
+        int validId = 1;
+        Client validClient = new Client(validId, "dummyName");
+        double validAmount = 0.1;
 
         //endregion
 
         //region when
-        SavingAccount sut = new SavingAccount(id, client, amount);
+        SavingAccount sut = new SavingAccount(validId, validClient, validAmount);
         //endregion
 
         //region then
-        assertEquals(id, sut.getId());
-        assertEquals(client, sut.getClient());
-        assertEquals(amount, sut.getAmount());
+        assertAll(
+                () -> assertEquals(validId, sut.getId()),
+                () -> assertEquals(validClient, sut.getClient()),
+                () -> assertEquals(validAmount, sut.getAmount()),
+                () -> assertTrue(validClient.getAccounts().contains(sut)),
+                () -> assertEquals(1, validClient.getAccounts().size())
+        );
+
         //endregion
-
     }
-    @Test
 
+    @Test
     public void shouldNotCreateSavingAccountWhenIdIsNegative(){
         //region given
-        int id = -1;
-        Client client = new Client(1, "testName");
-        double amount = 0.1;
+        int invalidId = -1;
+        Client dummyClient = new Client(1, "testName");
+        double dummyAmount = 0.1;
 
         //endregion
 
         //region when
-        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(id, client, amount));
+        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(invalidId, dummyClient, dummyAmount));
         //endregion
 
         //region then
@@ -48,14 +52,14 @@ class SavingAccountTest {
     @Test
     public void shouldNotCreateSavingAccountWhenClientIsNull(){
         //region given
-        int id = 1;
-        Client client = null;
-        double amount = 0.1;
+        int validId = 1;
+        Client invalidClient = null;
+        double dummyAmount = 0.1;
 
         //endregion
 
         //region when
-        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(id, client, amount));
+        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(validId, invalidClient, dummyAmount));
         //endregion
 
         //region then
@@ -64,14 +68,14 @@ class SavingAccountTest {
     @Test
     public void shouldNotCreateSavingAccountWhenAmountIsZero(){
         //region given
-        int id = 1;
-        Client client = new Client(id, "testName");
-        double amount = 0;
+        int validId = 1;
+        Client validClient = new Client(validId, "testName");
+        double invalidAmount = 0;
 
         //endregion
 
         //region when
-        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(id, client, amount));
+        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(validId, validClient, invalidAmount));
         //endregion
 
         //region then
