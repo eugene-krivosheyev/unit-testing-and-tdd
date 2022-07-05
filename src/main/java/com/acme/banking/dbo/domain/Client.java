@@ -23,4 +23,12 @@ public class Client {
     public String getName() {
         return name;
     }
+
+    public Collection<Account> getAccounts() {
+        return accounts;
+    }
+
+    public void addAccount(Account account) {
+        this.accounts.add(account);
+    }
 }
