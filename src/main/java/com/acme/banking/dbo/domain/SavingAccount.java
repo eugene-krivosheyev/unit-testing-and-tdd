@@ -1,12 +1,12 @@
 package com.acme.banking.dbo.domain;
 
 public class SavingAccount implements Account {
-    private int id;
-    private Client client;
-    private double amount;
+    private final int id;
+    private final Client client;
+    private final double amount;
 
     public SavingAccount(int id, Client client, double amount) {
-        if (id == 0 ) throw new IllegalArgumentException("id is 0");
+        if (id < 1 ) throw new IllegalArgumentException("id is illegal");
         if (client == null ) throw new IllegalArgumentException("client is null");
 
         this.id = id;

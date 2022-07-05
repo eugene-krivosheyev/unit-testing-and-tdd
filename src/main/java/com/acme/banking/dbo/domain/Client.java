@@ -9,8 +9,8 @@ public class Client {
     private Collection<Account> accounts = new ArrayList<>(); //TODO
 
     public Client(int id, String name) {
-        if (id < 1 ) throw new IllegalArgumentException("id < 1");
-        if (name == null || name.equals("")) throw new IllegalArgumentException("name invalid or null");
+        if (id < 1 ) throw new IllegalArgumentException("id is illegal");
+        if (name == null || name.trim().equals("") ) throw new IllegalArgumentException("name is empty or null");
 
         this.id = id;
         this.name = name;

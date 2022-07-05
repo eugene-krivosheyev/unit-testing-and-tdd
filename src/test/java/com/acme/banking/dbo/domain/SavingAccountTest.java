@@ -1,76 +1,67 @@
 package com.acme.banking.dbo.domain;
 
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 class SavingAccountTest {
 
     @Test
-    public void shouldGetErrorWhenInvalidId() {
-        //region given
-        int id = 0;
-        double dummyAmount = 1;
+    public void shouldNotCreateAccountWhenIllegalId() {
+        int illegalId = 0;
+        double dummyAmount = 1.;
 
         int dummyClientId = 1;
-        String dummyClientName = "some name";
-        Client dummyClient = new Client(dummyClientId, dummyClientName);
+        Client dummyClient = new Client(dummyClientId, "dummyClientName");
 
-        assumeTrue(dummyClient.getId() == dummyClientId);
-        assumeTrue(dummyClient.getName().equals(dummyClientName));
-        //endregion
 
-        //region when
-        //endregion
-
-        //region then
-        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(id, dummyClient, dummyAmount));
-        //endregion
+        IllegalArgumentException sut = Assertions.assertThrows(IllegalArgumentException.class,
+                () -> new SavingAccount(illegalId, dummyClient, dummyAmount));
+        // AssertJ:
+        org.assertj.core.api.Assertions.assertThat(sut).hasMessageContaining("id is illegal");
     }
 
     @Test
-    public void shouldGetErrorWhenClientIsNull() {
-        //region given
+    public void shouldNotCreateAccountWhenClientIsNull() {
         int dummyId = 1;
         double dummyAmount = 1;
 
-        Client client = null;
-        //endregion
 
-        //region when
-        //endregion
-
-        //region then
-        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(dummyId, client, dummyAmount));
-        //endregion
+        IllegalArgumentException sut = Assertions.assertThrows(IllegalArgumentException.class,
+                () -> new SavingAccount(dummyId, null, dummyAmount));
+        // AssertJ:
+        org.assertj.core.api.Assertions.assertThat(sut).hasMessageContaining("client is null");
     }
 
     @Test
-    public void shouldCreateNewAccountWhenValidClientAndId() {
-        //region given
-        final int dummyClientId = 1;
-        final String dummyClientName = "dummy client name";
-
-        int id = 1;
+    @Disabled
+    @DisplayName("? нужно ли проверять отдельно?")
+    public void shouldCanCreateAccountWhenParamsValid() {
+        int dummyId = 1;
         double dummyAmount = 1;
-        Client dummyClient = new Client(dummyClientId, dummyClientName);
 
-        assumeTrue(dummyClient.getId() == dummyClientId);
-        assumeTrue(dummyClient.getName().equals(dummyClientName));
-        //endregion
+        Client dummyClient = new Client(1, "dummyClientName");
 
-        //region when
-        SavingAccount sut = new SavingAccount(id, dummyClient, dummyAmount);
-        //endregion
 
-        //region then
-        assertAll("SavingAccount store its properties",
-                () -> assertEquals(id, sut.getId()),
-                () -> assertEquals(dummyAmount, sut.getAmount()),
-                () -> assertEquals(dummyClient, sut.getClient())
+        Assertions.assertDoesNotThrow(() -> new SavingAccount(dummyId, dummyClient, dummyAmount));
+    }
+
+    @Test
+    public void shouldCreateAccountWhenParamsIsValid() {
+        int accountId = 1;
+        double amount = 1;
+        Client client = new Client(1, "dummyClientName");
+
+
+        Assertions.assertAll("SavingAccount created and store its properties",
+                () -> Assertions.assertDoesNotThrow(() -> new SavingAccount(accountId, client, amount)),
+                () -> {
+                    SavingAccount sut = new SavingAccount(accountId, client, amount);
+                    Assertions.assertEquals(accountId, sut.getId());
+                    Assertions.assertEquals(amount, sut.getAmount(), .0000001);
+                    Assertions.assertSame(client, sut.getClient());
+                }
         );
     }
 }

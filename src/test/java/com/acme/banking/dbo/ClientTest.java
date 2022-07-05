@@ -1,10 +1,14 @@
 package com.acme.banking.dbo;
 
 import com.acme.banking.dbo.domain.Client;
-import com.acme.banking.dbo.domain.SavingAccount;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.NullSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.*;
@@ -16,7 +20,8 @@ import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
 
 @DisplayName("Test suite")
 public class ClientTest {
-    @Test @Disabled("temporary disabled")
+    @Test
+    @Disabled("temporary disabled")
     @DisplayName("Test case")
     public void shouldStorePropertiesWhenCreated() {
         //region given
@@ -38,11 +43,11 @@ public class ClientTest {
 
         //Hamcrest:
         assertThat(sut,
-            allOf(
-                hasProperty("id", notNullValue()),
-                hasProperty("id", equalTo(clientId)),
-                hasProperty("name", is(clientName))
-        ));
+                allOf(
+                        hasProperty("id", notNullValue()),
+                        hasProperty("id", equalTo(clientId)),
+                        hasProperty("name", is(clientName))
+                ));
 
         //AssertJ:
         org.assertj.core.api.Assertions.assertThat(sut)
@@ -53,27 +58,25 @@ public class ClientTest {
     }
 
     @Test
-    public void shouldNotCreateClientWhenInvalidId() {
-        int id = 0;
-        String dummyClientName = "some name";
+    public void shouldNotCreateClientWhenIdIsIllegal() {
+        int illegalId = 0;
 
-        assertThrows(IllegalArgumentException.class, () -> new Client(id, dummyClientName));
+
+        IllegalArgumentException sut = Assertions.assertThrows(IllegalArgumentException.class,
+                () -> new Client(illegalId, "dummyClientName"));
+        // AssertJ:
+        org.assertj.core.api.Assertions.assertThat(sut).hasMessageContaining("id is illegal");
     }
 
-    @Test
-    public void shouldNotCreateClientWhenNameIsNull() {
+    @ParameterizedTest
+    @NullAndEmptySource
+    @ValueSource(strings = {" ", "\t", "\n"})
+    public void shouldNotCreateClientWhenNameIsEmptyOrNull(String client) {
         int dummyId = 1;
-        String clientName = null;
 
-        assertThrows(IllegalArgumentException.class, () -> new Client(dummyId, clientName));
-    }
-
-    @Test
-    public void shouldNotCreateClientWhenNameIsEmpty() {
-        int dummyId = 1;
-        String clientName = "";
-
-        assertThrows(IllegalArgumentException.class, () -> new Client(dummyId, clientName));
+        IllegalArgumentException sut = Assertions.assertThrows(IllegalArgumentException.class, () -> new Client(dummyId, client));
+        // AssertJ:
+        org.assertj.core.api.Assertions.assertThat(sut).hasMessageContaining("name is empty or null");
     }
 
     @Test
@@ -85,7 +88,7 @@ public class ClientTest {
     }
 
     @Test
-    public void shouldCreateClientAndGetPropsWhenPropertysValid() {
+    public void shouldCreateClientAndGetPropsWhenPropsValid() {
         int id = 1;
         String clientName = "name";
 
