@@ -17,11 +17,19 @@ public class Client {
         this.name = name;
     }
 
+    public void addAccount (Account account) {
+        accounts.add(account);
+    }
+
     public int getId() {
         return id;
     }
 
     public String getName() {
         return name;
+    }
+
+    public Collection<Account> getAccounts() {
+        return accounts;
     }
 }

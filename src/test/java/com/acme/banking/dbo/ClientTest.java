@@ -1,9 +1,13 @@
 package com.acme.banking.dbo;
 
+import com.acme.banking.dbo.domain.Account;
 import com.acme.banking.dbo.domain.Client;
+import com.acme.banking.dbo.domain.SavingAccount;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.*;
@@ -68,12 +72,12 @@ public class ClientTest {
 
     @Test
     void shouldThrowExceptionDuringCreationWhenIdLessThanOne() {
-        final int clientId = 0;
-        final String clientName = "dummy client name";
+        final int invalidClientId = 0;
+        final String dummyClientName = "dummy client name";
 
         Throwable thrown = assertThrows(
                 IllegalArgumentException.class,
-                () -> new Client(clientId, clientName)
+                () -> new Client(invalidClientId, dummyClientName)
         );
 
         assertAll("Create client fail: clientId is less than one",
@@ -84,12 +88,12 @@ public class ClientTest {
 
     @Test
     void shouldThrowExceptionDuringCreationWhenNameIsNull() {
-        final int clientId = 1;
-        final String clientName = null;
+        final int dummyClientId = 1;
+        final String invalidClientName = null;
 
         Throwable thrown = assertThrows(
                 IllegalArgumentException.class,
-                () -> new Client(clientId, clientName)
+                () -> new Client(dummyClientId, invalidClientName)
         );
 
         assertAll("Create client fail: clientName is null",
@@ -100,17 +104,36 @@ public class ClientTest {
 
     @Test
     void shouldThrowExceptionDuringCreationWhenNameIsEmpty() {
-        final int clientId = 1;
-        final String clientName = "";
+        final int dummyClientId = 1;
+        final String invalidClientName = "";
 
         Throwable thrown = assertThrows(
                 IllegalArgumentException.class,
-                () -> new Client(clientId, clientName)
+                () -> new Client(dummyClientId, invalidClientName)
         );
 
         assertAll("Create client fail: clientName is empty",
                 () -> assertNotNull(thrown.getMessage()),
                 () -> assertEquals("Name shouldn't be empty!", thrown.getMessage())
+        );
+    }
+
+    @Test
+    void clientShouldHasAccountWitchWasAdded() {
+        final int dummyClientId = 1;
+        final String dummyClientName = "dummy client name";
+        final Client dummyClient = new Client(dummyClientId, dummyClientName);
+        final double dummyAccountAmount = 1000.0;
+        final int dummyAccountId = 1;
+        final Account account = new SavingAccount(dummyAccountId, dummyClient, dummyAccountAmount);
+
+        dummyClient.addAccount(account);
+
+        Optional<Account> result = dummyClient.getAccounts().stream().findAny();
+
+        assertAll("Client should has account witch was added",
+                () -> assertTrue(result.isPresent()),
+                () -> assertEquals(account, result.get())
         );
     }
 }
