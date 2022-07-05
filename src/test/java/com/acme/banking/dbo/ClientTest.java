@@ -85,7 +85,7 @@ public class ClientTest {
     }
 
     @Test
-    public void shouldCreateClientAndGetPropsWhenPropertyValid() {
+    public void shouldCreateClientAndGetPropsWhenPropertysValid() {
         int id = 1;
         String clientName = "name";
 
