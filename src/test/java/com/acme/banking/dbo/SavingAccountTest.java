@@ -48,7 +48,7 @@ class SavingAccountTest {
         final Client dummyClient = new Client(1, "dummy Name");
         double dummyAmount = 1;
         SavingAccount sut = new SavingAccount(dummyId, dummyClient, dummyAmount);
-        assertAll("Client store its properties",
+        assertAll("SavingAccount store its properties",
                 () -> assertEquals(dummyId, sut.getId()),
                 () -> assertEquals(dummyClient, sut.getClient()),
                 () -> assertEquals(dummyAmount, sut.getAmount())
