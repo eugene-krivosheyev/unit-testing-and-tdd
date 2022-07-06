@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullSource;
 
 class SavingAccountTest {
 
@@ -12,8 +14,7 @@ class SavingAccountTest {
         int illegalId = 0;
         double dummyAmount = 1.;
 
-        int dummyClientId = 1;
-        Client dummyClient = new Client(dummyClientId, "dummyClientName");
+        Client dummyClient = new Client(1, "dummyClientName");
 
 
         IllegalArgumentException sut = Assertions.assertThrows(IllegalArgumentException.class,
@@ -22,14 +23,15 @@ class SavingAccountTest {
         org.assertj.core.api.Assertions.assertThat(sut).hasMessageContaining("id is illegal");
     }
 
-    @Test
-    public void shouldNotCreateAccountWhenClientIsNull() {
+    @ParameterizedTest
+    @NullSource
+    public void shouldNotCreateAccountWhenClientIsNull(Client nullClient) {
         int dummyId = 1;
         double dummyAmount = 1;
 
 
         IllegalArgumentException sut = Assertions.assertThrows(IllegalArgumentException.class,
-                () -> new SavingAccount(dummyId, null, dummyAmount));
+                () -> new SavingAccount(dummyId, nullClient, dummyAmount));
         // AssertJ:
         org.assertj.core.api.Assertions.assertThat(sut).hasMessageContaining("client is null");
     }
