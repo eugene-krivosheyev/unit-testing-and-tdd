@@ -31,8 +31,13 @@ public class Client {
     public void addAccount(Account newAccount) {
         if (newAccount == null) throw new IllegalArgumentException("");
         if (newAccount.getClient().id != this.id) throw new IllegalArgumentException("");
-        if (this.accounts.contains(newAccount)) throw new IllegalArgumentException("");
 
         accounts.add(newAccount);
+    }
+
+    public void printAccountIds() {
+        this.accounts.forEach(
+                account -> System.out.println(account.getId())
+        );
     }
 }

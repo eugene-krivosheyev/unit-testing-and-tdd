@@ -60,7 +60,6 @@ public class ClientTest {
     public void shouldNotAddSavingAccountWhenAccountIsInvalid() {
         int clientId = 1;
         Client sut = new Client(clientId, "dummy name");
-        SavingAccount validAccount = new SavingAccount(1, sut, 1);
 
         assertAll(
                 "Adding invalid SaveAccount",
@@ -74,13 +73,6 @@ public class ClientTest {
                             Client invalidClient = new Client(2, "dummyName");
                             SavingAccount invalidAccount = new SavingAccount(1, invalidClient, 1);
                             sut.addAccount(invalidAccount);
-                        }
-                ),
-                () -> assertThrows(
-                        IllegalArgumentException.class,
-                        () -> {
-                            sut.addAccount(validAccount);
-                            sut.addAccount(validAccount);
                         }
                 )
         );
