@@ -10,6 +10,7 @@ import java.util.Collection;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assumptions.assumeThat;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 
 class ClientTest {
@@ -44,13 +45,13 @@ class ClientTest {
 
         int dummyAccountId = 1;
         double dummyAmount = 1;
-        Account dummyAccount = new SavingAccount(dummyAccountId, null, dummyAmount);
+
+        Account dummyAccount = mock(SavingAccount.class);
 
         assertDoesNotThrow(() -> dummyClient.addAccount(dummyAccount));
 
         assertThat(dummyClient.getAccounts().size()).isEqualTo(1);
         assertThat(dummyClient.getAccounts()).contains(dummyAccount);
-        assertThat(dummyAccount.getClient()).isEqualTo(dummyClient);
     }
 
     @Test

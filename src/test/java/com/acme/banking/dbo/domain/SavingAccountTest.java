@@ -4,37 +4,26 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 class SavingAccountTest {
 
     @Test
     public void shouldNotCreateWhenIdEqualsZero() {
-        final int clientId = 1;
         final int accountId = 0;
         final double accountAmount = 0;
-        final String clientName = "Name";
-        Client sut = new Client(clientId, clientName);
+        Client dummyClient = mock(Client.class);
 
-        assertThrows(IllegalArgumentException.class,() -> new SavingAccount(accountId, sut, accountAmount));
-    }
-
-    @Test @Disabled
-    public void shouldNotCreateWhenClientIsNull() {
-        final int accountId = 1;
-        final double accountAmount = 0;
-        Client sut = null;
-
-        assertThrows(IllegalArgumentException.class,() -> new SavingAccount(accountId, sut, accountAmount));
+        assertThrows(IllegalArgumentException.class,() -> new SavingAccount(accountId, dummyClient, accountAmount));
     }
 
     @Test
     public void shouldCreate() {
-        final int clientId = 1;
         final int accountId = 1;
         final double accountAmount = 0;
-        final String clientName = "Name";
-        Client sut = new Client(clientId, clientName);
-        assertDoesNotThrow(() -> new SavingAccount(accountId, sut, accountAmount));
+
+        Client dummyClient = mock(Client.class);
+        assertDoesNotThrow(() -> new SavingAccount(accountId, dummyClient, accountAmount));
     }
 
 }
