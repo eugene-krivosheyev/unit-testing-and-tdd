@@ -13,6 +13,7 @@ public class SavingAccount implements Account {
         this.id = id;
         this.client = client;
         this.amount = amount;
+        client.getAccounts().add(this);
     }
 
     @Override
@@ -28,9 +29,5 @@ public class SavingAccount implements Account {
     @Override
     public Client getClient() {
         return client;
-    }
-
-    public void addAccountForClient(){
-        client.getAccounts().add(this);
     }
 }

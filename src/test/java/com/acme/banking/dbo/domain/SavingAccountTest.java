@@ -63,8 +63,6 @@ class SavingAccountTest {
     void shouldnAddAccountForClient() {
         SavingAccount sut = new SavingAccount(CORRECT_ID, DUMMY_CLIENT, DUMMY_AMOUNT);
 
-        sut.addAccountForClient();
-
         assertThat(sut.getClient().getAccounts())
                 .isNotEmpty()
                 .contains(sut);
