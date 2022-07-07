@@ -1,8 +1,8 @@
-package com.acme.banking.dbo.service;
+package com.acme.banking.dbo.domain.service;
 
-import com.acme.banking.dbo.domain.Account;
-import com.acme.banking.dbo.domain.Cash;
-import com.acme.banking.dbo.domain.Client;
+import com.acme.banking.dbo.domain.domain.Cash;
+import com.acme.banking.dbo.domain.domain.Account;
+import com.acme.banking.dbo.domain.domain.Client;
 
 import java.util.Collection;
 

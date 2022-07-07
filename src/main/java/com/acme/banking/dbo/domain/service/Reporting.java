@@ -1,6 +1,6 @@
-package com.acme.banking.dbo.service;
+package com.acme.banking.dbo.domain.service;
 
-import com.acme.banking.dbo.domain.Branch;
+import com.acme.banking.dbo.domain.domain.Branch;
 
 public class Reporting {
     /**

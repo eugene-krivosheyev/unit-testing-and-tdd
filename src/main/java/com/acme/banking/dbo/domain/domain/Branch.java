@@ -1,4 +1,4 @@
-package com.acme.banking.dbo.domain;
+package com.acme.banking.dbo.domain.domain;
 
 import java.util.Collection;
 

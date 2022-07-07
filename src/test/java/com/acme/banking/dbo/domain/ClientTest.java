@@ -1,5 +1,7 @@
 package com.acme.banking.dbo.domain;
 
+import com.acme.banking.dbo.domain.domain.Account;
+import com.acme.banking.dbo.domain.domain.Client;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -8,20 +10,23 @@ import org.junit.jupiter.api.Test;
 
 import static com.acme.banking.dbo.domain.ClientAccountTestHelper.DUMMY_ID;
 import static com.acme.banking.dbo.domain.ClientAccountTestHelper.DUMMY_NAME;
+import static com.acme.banking.dbo.domain.ClientAccountTestHelper.createAccountForClient;
 import static com.acme.banking.dbo.domain.ClientAccountTestHelper.createClient;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assumptions.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 
 @DisplayName("Test suite")
 class ClientTest {
+
     @Test
     @Disabled("temporary disabled")
     @DisplayName("Test case")
@@ -88,14 +93,30 @@ class ClientTest {
     }
 
     @Test
-    void shouldNotCreateClientWhenStringIsNull() {
-        final String clientName = "";
+    void shouldNotCreateClientWhenNameIsNull() {
+        final String invalidClientName = null;
 
         assertThatThrownBy(() -> {
-            new Client(DUMMY_ID, clientName);
+            new Client(DUMMY_ID, invalidClientName);
         }).isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("id is not positive");
+                .hasMessageContaining("name hasn't any text");
+    }
 
-        assertThrows(IllegalArgumentException.class, () -> new Client(DUMMY_ID, clientName));
+    @Test
+    void shouldNotCreateClientWhenNameIsEmpty() {
+        final String invalidClientName = "";
+
+        assertThatThrownBy(() -> {
+            new Client(DUMMY_ID, invalidClientName);
+        }).isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("name hasn't any text");
+    }
+
+    @Test
+    void shouldAddAccountWhenCreateSavingAccount() {
+        Client client = createClient();
+        Account stubAccount = createAccountForClient(client);
+
+        Assertions.assertThat(client.getAccounts()).contains(stubAccount);
     }
 }

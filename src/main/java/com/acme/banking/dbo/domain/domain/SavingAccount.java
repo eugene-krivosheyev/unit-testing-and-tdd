@@ -1,4 +1,4 @@
-package com.acme.banking.dbo.domain;
+package com.acme.banking.dbo.domain.domain;
 
 public class SavingAccount implements Account {
     private final int id;
@@ -18,6 +18,7 @@ public class SavingAccount implements Account {
         this.id = id;
         this.client = client;
         this.amount = amount;
+        client.getAccounts().add(this);
     }
 
     @Override
@@ -33,10 +34,6 @@ public class SavingAccount implements Account {
     @Override
     public Client getClient() {
         return client;
-    }
-
-    public void addAccountToClient() {
-        client.getAccounts().add(this);
     }
 }
 
