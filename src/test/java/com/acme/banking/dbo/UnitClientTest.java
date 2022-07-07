@@ -2,23 +2,22 @@ package com.acme.banking.dbo;
 
 import com.acme.banking.dbo.domain.Account;
 import com.acme.banking.dbo.domain.Client;
-import com.acme.banking.dbo.domain.SavingAccount;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assumptions.*;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
+import static org.mockito.Mockito.*;
 
 
 @DisplayName("Test suite")
-public class ClientTest {
+public class UnitClientTest {
     @Test
     @Disabled("temporary disabled")
     @DisplayName("Test case")
@@ -122,18 +121,37 @@ public class ClientTest {
     void clientShouldHasAccountWitchWasAdded() {
         final int dummyClientId = 1;
         final String dummyClientName = "dummy client name";
-        final Client dummyClient = new Client(dummyClientId, dummyClientName);
-        final double dummyAccountAmount = 1000.0;
-        final int dummyAccountId = 1;
-        final Account account = new SavingAccount(dummyAccountId, dummyClient, dummyAccountAmount);
+        final Client sut = new Client(dummyClientId, dummyClientName);
+        Account accountStub = mock(Account.class);
+        when(accountStub.getClient()).thenReturn(sut);
 
-        dummyClient.addAccount(account);
+        sut.addAccount(accountStub);
 
-        Optional<Account> result = dummyClient.getAccounts().stream().findAny();
+        Optional<Account> result = sut.getAccounts().stream().findAny();
 
         assertAll("Client should has account witch was added",
                 () -> assertTrue(result.isPresent()),
-                () -> assertEquals(account, result.get())
+                () -> assertEquals(accountStub, result.get()),
+                () -> verify(accountStub, times(1)).getClient()
+        );
+    }
+
+    @Test
+    void shouldThrowExceptionWhenAccountHasInvalidClient() {
+        final int dummyClientId = 1;
+        final String dummyClientName = "dummy client name";
+        final Client sut = new Client(dummyClientId, dummyClientName);
+        Account accountStub = mock(Account.class);
+        when(accountStub.getClient()).thenReturn(null);
+
+        Throwable thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> sut.addAccount(accountStub)
+        );
+
+        assertAll("Should throw exception when account has invalid client",
+                () -> assertNotNull(thrown.getMessage()),
+                () -> assertEquals("Account should have correct client!", thrown.getMessage())
         );
     }
 }

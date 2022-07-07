@@ -18,6 +18,9 @@ public class Client {
     }
 
     public void addAccount (Account account) {
+        if(account.getClient() != this) {
+            throw new IllegalArgumentException("Account should have correct client!");
+        }
         accounts.add(account);
     }
 
