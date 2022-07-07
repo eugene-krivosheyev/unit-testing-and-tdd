@@ -2,96 +2,63 @@ package com.acme.banking.dbo.domain;
 
 import org.junit.jupiter.api.*;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 class SavingAccountTest {
 
+    private static final int CORRECT_ID =1;
+    private static final int INVALID_ID = -1;
+    private static final int ZERO_ID = 0;
+    private static final double DUMMY_AMOUNT = 12;
+    private static final double ZERO_AMOUNT = 0;
+    private static final double NEGATIVE_AMOUNT = -12;
+    private static final int DUMMY_ID =1;
+    private static final String DUMMY_NAME = "Dymmy name";
+    private static final Client DUMMY_CLIENT = new Client(DUMMY_ID,DUMMY_NAME);
+
+
+
     @Test
     void shouldSaveAccount() {
-        //region given
-        final int clientId = 1;
-        final String clientName = "dummy client name";
-        final Client client = new Client(clientId, clientName);
-        final double amount = 12;
-        final int id = 3;
-        //endregion
-
-        //region then
-        SavingAccount sut = new SavingAccount(id, client, amount);
+        SavingAccount sut = new SavingAccount(CORRECT_ID, DUMMY_CLIENT, DUMMY_AMOUNT);
         assertNotNull(sut);
-        //endregion
     }
 
     @Test
     void shouldntSaveAccountWithZeroId() {
-        //region given
-        final int clientId = 1;
-        final String clientName = "dummy client name";
-        final Client client = new Client(clientId, clientName);
-        final double amount = 12;
-        final int id = 0;
-        //endregion
+        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(ZERO_ID, DUMMY_CLIENT, DUMMY_ID));
 
-        //region then
-        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(id, client, amount));
-        //endregion
     }
 
     @Test
     void shouldntSaveAccountWithNegativeId() {
-        //region given
-        final int clientId = 1;
-        final String clientName = "dummy client name";
-        final Client client = new Client(clientId, clientName);
-        final double amount = 12;
-        final int id = -3;
-        //endregion
-
-        //region then
-        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(id, client, amount));
-        //endregion
+        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(INVALID_ID, DUMMY_CLIENT, DUMMY_AMOUNT));
     }
 
     @Test
     void shouldntSaveAccountWithNullClient() {
-        //region given
-        final Client client = null;
-        final double amount = 12;
-        final int id = 1;
-        //endregion
-
-        //region then
-        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(id, client, amount));
-        //endregion
+        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(DUMMY_ID, null, DUMMY_AMOUNT));
     }
 
     @Test
     void shouldntSaveAccountWithNegativeAmount() {
-        //region given
-        final int clientId = 1;
-        final String clientName = "client name";
-        final Client client = new Client(clientId, clientName);
-        final double amount = -10;
-        final int id = 1;
-        //endregion
-
-        //region then
-        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(id, client, amount));
-        //endregion
+        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(DUMMY_ID, DUMMY_CLIENT, NEGATIVE_AMOUNT));
     }
 
     @Test
-    void shouldntSaveAccountWithZeroAccount() {
-        //region given
-        final int clientId = 1;
-        final String clientName = "client name";
-        final Client client = new Client(clientId, clientName);
-        final double amount = 0;
-        final int id = 1;
-        //endregion
+    void shouldntSaveAccountWithZeroAmount() {
+        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(DUMMY_ID, DUMMY_CLIENT, ZERO_AMOUNT));
+    }
 
-        //region then
-        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(id, client, amount));
-        //endregion
+    @Test
+    void shouldnAddAccountForClient() {
+        SavingAccount sut = new SavingAccount(CORRECT_ID, DUMMY_CLIENT, DUMMY_AMOUNT);
+
+        sut.addAccountForClient();
+
+        assertThat(sut.getClient().getAccounts())
+                .isNotEmpty()
+                .contains(sut);
     }
 }
