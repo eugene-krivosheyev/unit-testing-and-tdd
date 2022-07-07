@@ -1,12 +1,15 @@
 package com.acme.banking.dbo;
 
+import com.acme.banking.dbo.domain.Account;
 import com.acme.banking.dbo.domain.Client;
+import com.acme.banking.dbo.domain.SavingAccount;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -79,23 +82,73 @@ public class ClientTest {
     }
 
     @Test
+    @Disabled
     public void shouldCreateClientWhenPropertyValid() {
         int id = 1;
         String clientName = "name";
 
-        assertDoesNotThrow(() -> new Client(id, clientName));
+        Assertions.assertDoesNotThrow(() -> new Client(id, clientName));
     }
 
     @Test
     public void shouldCreateClientAndGetPropsWhenPropsValid() {
         int id = 1;
-        String clientName = "name";
+        String clientName = "clientName";
 
-        Client sut = new Client(id, clientName);
 
-        assertAll("Client store its properties",
-                () -> assertEquals(id, sut.getId()),
-                () -> assertEquals(clientName, sut.getName())
+        Assertions.assertAll("Client created and store its properties",
+                () -> Assertions.assertDoesNotThrow(() -> new Client(id, clientName)),
+                () -> {
+                    Client sut = new Client(id, clientName);
+                    Assertions.assertEquals(id, sut.getId());
+                    Assertions.assertEquals(clientName, sut.getName());
+                }
+        );
+    }
+
+    @ParameterizedTest
+    @NullSource
+    public void shouldThrowWhenAddAccountIsNull(Account nullAccount) {
+        Client dummyClient = new Client(1, "dummyName");
+
+
+        IllegalArgumentException sut = Assertions.assertThrows(IllegalArgumentException.class, () -> dummyClient.addAccount(nullAccount));
+        // AssertJ:
+        org.assertj.core.api.Assertions.assertThat(sut).hasMessageContaining("account is null");
+    }
+
+    @Test
+    public void shouldAddAccountIntoClientWhenAccountValid() {
+        Client dummyClient = new Client(1, "dummyName");
+        Account dummyAccount = new SavingAccount(1, dummyClient, 1.);
+        Account dummyAccount2 = new SavingAccount(2, dummyClient, 1.1);
+        assumeTrue(dummyClient.getAccounts().isEmpty());
+
+        dummyClient.addAccount(dummyAccount);
+        dummyClient.addAccount(dummyAccount);
+        dummyClient.addAccount(dummyAccount2);
+        dummyClient.addAccount(dummyAccount2);
+
+        Assertions.assertAll("Clients added and store account and not duplicate",
+                () -> assertEquals(2, dummyClient.getAccounts().size()),
+                () -> {
+                    Assertions.assertTrue(dummyClient.getAccounts().contains(dummyAccount));
+                    Assertions.assertTrue(dummyClient.getAccounts().contains(dummyAccount2));
+                }
+        );
+    }
+
+    @Test
+    public void shouldLinkedAccountAndClientWhenAccountAddToClient() {
+        Client dummyClient = new Client(1, "dummyName");
+        Account dummyAccount = new SavingAccount(1, dummyClient, 1.);
+        assumeTrue(dummyClient.getAccounts().isEmpty());
+
+        dummyClient.addAccount(dummyAccount);
+
+        Assertions.assertAll("Clients have account and account have client",
+                () -> Assertions.assertSame(dummyClient, dummyAccount.getClient()),
+                () -> Assertions.assertTrue(dummyClient.getAccounts().contains(dummyAccount))
         );
     }
 }
