@@ -1,7 +1,9 @@
 package com.acme.banking.dbo.domain;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -55,5 +57,18 @@ class ClientTest {
 
         //region then
         //endregion
+    }
+    @Test
+    public void shouldReturnAccount(){
+        Account account = Mockito.mock(Account.class);
+
+        int validId = 1;
+        String validName = "validName";
+
+        Client sut = new Client(validId, validName);
+
+        sut.addAccount(account);
+
+        assertThat(sut.getAccounts()).containsExactlyInAnyOrder(account);
     }
 }

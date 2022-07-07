@@ -1,6 +1,9 @@
 package com.acme.banking.dbo.domain;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -10,40 +13,31 @@ import static org.junit.jupiter.api.Assertions.*;
 class SavingAccountTest {
     @Test
     public void shouldCreateSavingAccountWhenParamsAreValid(){
-        //region given
         int validId = 1;
-        Client validClient = new Client(validId, "dummyName");
+        Client mockClient = Mockito.mock(Client.class);
         double validAmount = 0.1;
 
-        //endregion
 
-        //region when
-        SavingAccount sut = new SavingAccount(validId, validClient, validAmount);
-        //endregion
+        SavingAccount sut = new SavingAccount(validId, mockClient, validAmount);
 
-        //region then
         assertAll(
                 () -> assertEquals(validId, sut.getId()),
-                () -> assertEquals(validClient, sut.getClient()),
-                () -> assertEquals(validAmount, sut.getAmount()),
-                () -> assertTrue(validClient.getAccounts().contains(sut)),
-                () -> assertEquals(1, validClient.getAccounts().size())
+                () -> assertEquals(mockClient, sut.getClient()),
+                () -> assertEquals(validAmount, sut.getAmount())
         );
-
-        //endregion
     }
 
     @Test
     public void shouldNotCreateSavingAccountWhenIdIsNegative(){
         //region given
         int invalidId = -1;
-        Client dummyClient = new Client(1, "testName");
+        Client mockClient = Mockito.mock(Client.class);
         double dummyAmount = 0.1;
 
         //endregion
 
         //region when
-        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(invalidId, dummyClient, dummyAmount));
+        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(invalidId, mockClient, dummyAmount));
         //endregion
 
         //region then
@@ -69,13 +63,13 @@ class SavingAccountTest {
     public void shouldNotCreateSavingAccountWhenAmountIsZero(){
         //region given
         int validId = 1;
-        Client validClient = new Client(validId, "testName");
+        Client mockClient = Mockito.mock(Client.class);
         double invalidAmount = 0;
 
         //endregion
 
         //region when
-        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(validId, validClient, invalidAmount));
+        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(validId, mockClient, invalidAmount));
         //endregion
 
         //region then

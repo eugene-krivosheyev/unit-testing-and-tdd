@@ -77,11 +77,11 @@ git clone --depth 1 -b <YYYY-MM-project> https://github.com/eugene-krivosheyev/u
 - [ ] [Расширения](https://junit.org/junit5/docs/current/user-guide/#extensions), в том числе [готовые](https://junit.org/junit5/docs/current/user-guide/#writing-tests-built-in-extensions)
 
 ### Coding Iteration #02
-- [ ] Given legacy codebase with Client and SavingAccount domain types
-- [ ] When developers add consistency rules for linking Client and SavingAccount
-- [ ] And cover these components with maintainable autotests
-- [ ] Then coverage for these components should be ≥ 90%
-- [ ] And public code review should state for maintainability
+- [x] Given legacy codebase with Client and SavingAccount domain types
+- [x] When developers add consistency rules for linking Client and SavingAccount
+- [x] And cover these components with maintainable autotests
+- [x] Then coverage for these components should be ≥ 90%
+- [x] And public code review should state for maintainability
 
 Как писать интеграционные и модульные тесты? (1/0.5)
 -----------------------------------------------------
@@ -95,10 +95,10 @@ git clone --depth 1 -b <YYYY-MM-project> https://github.com/eugene-krivosheyev/u
 - [ ] Как среда сборки различает UT и IT
 
 ### Coding Iteration #03
-- [ ] Given legacy codebase with Processing component
-- [ ] When developers analyse and refactor production codebase for testability
-- [ ] And cover this component with maintainable _unit_ autotests
-- [ ] Then coverage for these component should be ≥ 90%
+- [x] Given legacy codebase with Processing component
+- [x] When developers analyse and refactor production codebase for testability
+- [x] And cover this component with maintainable _unit_ autotests
+- [x] Then coverage for these component should be ≥ 90%
 - [ ] And public code review should state for maintainability
 
 Реализация фикстуры для обеспечения поддерживаемости тестов (1.5/1)
