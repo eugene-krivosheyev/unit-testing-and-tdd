@@ -11,10 +11,24 @@ public class ClientUnitTest {
     @DisplayName("should ... when ...")
     public void shouldContainAccountWhenAddAccount() {
         Client sut = new Client(1, "dummy name");
-        Account stubAccount = mock(SavingAccount.class);
+        Account dummyAccount = mock(SavingAccount.class);
 
-        sut.addAccount(stubAccount);
-        Assertions.assertTrue(sut.getAccounts().contains(stubAccount));
+        sut.addAccount(dummyAccount);
+        Assertions.assertTrue(sut.getAccounts().contains(dummyAccount));
+    }
+
+    @Test
+    public void shouldClientContainAccountWithClientEqualItWhenClientAddAccount() {
+        Client sut = new Client(1, "dummy name");
+        Account stubAccount = mock(SavingAccount.class);
+        when(stubAccount.getClient()).thenReturn(sut);
+
+        sut.getAccounts();
+
+        Assertions.assertAll("shouldClientContainAccountWithClientEqualItWhenClientAddAccount",
+                ()->Assertions.assertTrue(sut.getAccounts().contains(stubAccount)),
+                ()->Assertions.assertEquals(sut, stubAccount.getClient())
+        );
     }
 
     @Test
