@@ -8,10 +8,12 @@ import org.mockito.Mockito;
 
 public class ClientUnitTest {
     private Client sut;
+
     @BeforeEach
     public void setUp(){
         sut = new Client(1, "dummy name");
     }
+
     @Test
     @DisplayName("should ... when ...")
     public void shouldContainAccountWhenAddAccount() {
