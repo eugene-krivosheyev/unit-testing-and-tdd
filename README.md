@@ -120,7 +120,7 @@ git clone --depth 1 -b <YYYY-MM-project> https://github.com/eugene-krivosheyev/u
 ----------------------------------------
 - [ ] Зачем нужны test suites?
 - [ ] [Вложенные тесты](https://junit.org/junit5/docs/current/user-guide/#writing-tests-nested)
-- [ ] [Теги](https://junit.org/junit5/docs/current/user-guide/#writing-tests-tagging-and-filtering) и [запуска набора](https://www.baeldung.com/junit-filtering-tests)
+- [ ] [Теги](https://junit.org/junit5/docs/current/user-guide/#writing-tests-tagging-and-filtering) и [запуск набора](https://howtodoinjava.com/junit5/junit5-test-suites-examples/)
 - [ ] Способ фильтрации средствами среды сборки [модульных](https://maven.apache.org/surefire/maven-surefire-plugin/examples/inclusion-exclusion.html) и [интеграционных](https://maven.apache.org/surefire/maven-failsafe-plugin/examples/inclusion-exclusion.html) тестов
 
 Как поддерживать качество тестов и снижать дублирование? (1/0.5)
