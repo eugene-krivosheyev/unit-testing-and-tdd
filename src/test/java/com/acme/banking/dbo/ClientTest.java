@@ -2,6 +2,7 @@ package com.acme.banking.dbo;
 
 import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.domain.SavingAccount;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,6 +20,13 @@ import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
 
 @DisplayName("Test suite for client")
 public class ClientTest {
+    private Client sut;
+
+    @BeforeEach
+    void setUp() {
+        sut = new Client(1, "dummy name");
+    }
+
     @Test
     @Disabled("temporary disabled")
     @DisplayName("Test case")
@@ -42,11 +50,11 @@ public class ClientTest {
 
         //Hamcrest:
         assertThat(sut,
-            allOf(
-                hasProperty("id", notNullValue()),
-                hasProperty("id", equalTo(clientId)),
-                hasProperty("name", is(clientName))
-        ));
+                allOf(
+                        hasProperty("id", notNullValue()),
+                        hasProperty("id", equalTo(clientId)),
+                        hasProperty("name", is(clientName))
+                ));
 
         //AssertJ:
         org.assertj.core.api.Assertions.assertThat(sut)
@@ -57,31 +65,26 @@ public class ClientTest {
     }
 
     @Test
-    public void shouldNotAddSavingAccountWhenAccountIsInvalid() {
-        int clientId = 1;
-        Client sut = new Client(clientId, "dummy name");
+    public void shouldNotAddSavingAccountWhenAccountIsNull() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> sut.addAccount(null)
+        );
+    }
 
-        assertAll(
-                "Adding invalid SaveAccount",
-                () -> assertThrows(
-                        IllegalArgumentException.class,
-                        () -> sut.addAccount(null)
-                ),
-                () -> assertThrows(
-                        IllegalArgumentException.class,
-                        () -> {
-                            Client invalidClient = new Client(2, "dummyName");
-                            SavingAccount invalidAccount = new SavingAccount(1, invalidClient, 1);
-                            sut.addAccount(invalidAccount);
-                        }
-                )
+    @Test
+    public void shouldNotAddSavingAccountWhenAccountWithOtherClient() {
+        Client invalidClient = new Client(2, "dummyName");
+        SavingAccount invalidAccount = new SavingAccount(1, invalidClient, 1);
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> sut.addAccount(invalidAccount)
         );
     }
 
     @Test
     public void shouldAddSavingAccountWhenAllCorrect() {
-        int clientId = 1;
-        Client sut = new Client(clientId, "dummy name");
         SavingAccount validAccount = new SavingAccount(1, sut, 1);
 
         assertDoesNotThrow(
@@ -95,12 +98,13 @@ public class ClientTest {
         String dummyName = "test name";
         Client sut = new Client(id, dummyName);
 
-        assertThat(sut,
+        assertThat(
+                sut,
                 allOf(
                         hasProperty("id", notNullValue()),
                         hasProperty("id", equalTo(id))
-                ));
-
+                )
+        );
         assertDoesNotThrow(
                 () -> new Client(id, dummyName)
         );
