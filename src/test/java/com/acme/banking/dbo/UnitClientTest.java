@@ -18,6 +18,14 @@ import static org.mockito.Mockito.*;
 
 @DisplayName("Test suite")
 public class UnitClientTest {
+
+    private final String DUMMY_CLIENT_NAME = "dummy client name";
+    private final String EMPTY_CLIENT_NAME = "";
+    private final String NULL_CLIENT_NAME = null;
+    private final int DUMMY_ID = 1;
+    private final int ZERO_ID = 0;
+
+
     @Test
     @Disabled("temporary disabled")
     @DisplayName("Test case")
@@ -57,10 +65,7 @@ public class UnitClientTest {
 
     @Test
     void shouldCreateClientWhenInputDataIsCorrect() {
-        final int clientId = 1;
-        final String clientName = "dummy client name";
-
-        Client sut = new Client(clientId, clientName);
+        Client sut = new Client(DUMMY_ID, DUMMY_CLIENT_NAME);
 
         assertAll("Should create client when input data is correct",
                 () -> assertNotNull(sut),
@@ -71,12 +76,9 @@ public class UnitClientTest {
 
     @Test
     void shouldThrowExceptionDuringCreationWhenIdLessThanOne() {
-        final int invalidClientId = 0;
-        final String dummyClientName = "dummy client name";
-
         Throwable thrown = assertThrows(
                 IllegalArgumentException.class,
-                () -> new Client(invalidClientId, dummyClientName)
+                () -> new Client(ZERO_ID, DUMMY_CLIENT_NAME)
         );
 
         assertAll("Create client fail: clientId is less than one",
@@ -87,12 +89,9 @@ public class UnitClientTest {
 
     @Test
     void shouldThrowExceptionDuringCreationWhenNameIsNull() {
-        final int dummyClientId = 1;
-        final String invalidClientName = null;
-
         Throwable thrown = assertThrows(
                 IllegalArgumentException.class,
-                () -> new Client(dummyClientId, invalidClientName)
+                () -> new Client(DUMMY_ID, NULL_CLIENT_NAME)
         );
 
         assertAll("Create client fail: clientName is null",
@@ -103,12 +102,9 @@ public class UnitClientTest {
 
     @Test
     void shouldThrowExceptionDuringCreationWhenNameIsEmpty() {
-        final int dummyClientId = 1;
-        final String invalidClientName = "";
-
         Throwable thrown = assertThrows(
                 IllegalArgumentException.class,
-                () -> new Client(dummyClientId, invalidClientName)
+                () -> new Client(DUMMY_ID, EMPTY_CLIENT_NAME)
         );
 
         assertAll("Create client fail: clientName is empty",
@@ -119,9 +115,7 @@ public class UnitClientTest {
 
     @Test
     void clientShouldHasAccountWitchWasAdded() {
-        final int dummyClientId = 1;
-        final String dummyClientName = "dummy client name";
-        final Client sut = new Client(dummyClientId, dummyClientName);
+        final Client sut = new Client(DUMMY_ID, DUMMY_CLIENT_NAME);
         Account accountStub = mock(Account.class);
         when(accountStub.getClient()).thenReturn(sut);
 
@@ -138,9 +132,7 @@ public class UnitClientTest {
 
     @Test
     void shouldThrowExceptionWhenAccountHasInvalidClient() {
-        final int dummyClientId = 1;
-        final String dummyClientName = "dummy client name";
-        final Client sut = new Client(dummyClientId, dummyClientName);
+        final Client sut = new Client(DUMMY_ID, DUMMY_CLIENT_NAME);
         Account accountStub = mock(Account.class);
         when(accountStub.getClient()).thenReturn(null);
 
