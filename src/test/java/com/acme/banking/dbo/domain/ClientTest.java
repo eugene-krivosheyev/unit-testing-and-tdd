@@ -10,62 +10,39 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Smirnov Sergey (ruasisl)
  */
 class ClientTest {
+    private static final Integer VALID_ID = 1;
+    private static final String VALID_NAME = "validName";
+
     @Test
     public void shouldCreateClientWhenParamsAreValid() {
-        //region given
-        int validId = 1;
-        String validName = "validName";
-        //endregion
+        Client sut = new Client(VALID_ID, VALID_NAME);
 
-        //region when
-        Client sut = new Client(validId, validName);
-        //endregion
-
-        //region then
         assertAll(
-                () -> assertEquals(validId, sut.getId()),
-                () -> assertEquals(validName, sut.getName())
+                () -> assertEquals(VALID_ID, sut.getId()),
+                () -> assertEquals(VALID_NAME, sut.getName())
         );
-        //endregion
     }
 
     @Test
     public void shouldNotCreateClientWhenIdAreNegative() {
-        //region given
         int invalidId = -1;
         String dummyName = "dummyName";
-        //endregion
 
-        //region when
         assertThrows(IllegalArgumentException.class, () -> new Client(invalidId, dummyName));
-        //endregion
-
-        //region then
-        //endregion
     }
 
     @Test
     public void shouldNotCreateClientWhenNameIsNull() {
-        //region given
-        int validId = 1;
         String invalidName = null;
-        //endregion
 
-        //region when
-        assertThrows(IllegalArgumentException.class, () -> new Client(validId, invalidName));
-        //endregion
-
-        //region then
-        //endregion
+        assertThrows(IllegalArgumentException.class, () -> new Client(VALID_ID, invalidName));
     }
+
     @Test
     public void shouldReturnAccount(){
         Account account = Mockito.mock(Account.class);
 
-        int validId = 1;
-        String validName = "validName";
-
-        Client sut = new Client(validId, validName);
+        Client sut = new Client(VALID_ID, VALID_NAME);
 
         sut.addAccount(account);
 
