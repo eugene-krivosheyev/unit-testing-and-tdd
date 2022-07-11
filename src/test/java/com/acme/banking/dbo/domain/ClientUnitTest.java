@@ -1,16 +1,21 @@
 package com.acme.banking.dbo.domain;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 public class ClientUnitTest {
+    private Client sut;
+    @BeforeEach
+    public void setUp(){
+        sut = new Client(1, "dummy name");
+    }
     @Test
     @DisplayName("should ... when ...")
     public void shouldContainAccountWhenAddAccount() {
-        Client sut = new Client(1, "dummy name");
-        Account dummyAccount = Mockito.mock(SavingAccount.class);
+        Account dummyAccount = new MockitoAccountBuilder().build();
 
         sut.addAccount(dummyAccount);
         Assertions.assertTrue(sut.getAccounts().contains(dummyAccount));
@@ -18,11 +23,9 @@ public class ClientUnitTest {
 
     @Test
     public void shouldClientContainAccountWithClientEqualItWhenClientAddAccount() {
-        Client sut = new Client(1, "dummy name");
-        Account stubAccount = Mockito.mock(SavingAccount.class);
-        Mockito.when(stubAccount.getClient()).thenReturn(sut);
+        Account stubAccount = new MockitoAccountBuilder().widthClient(sut).build();
 
-        sut.getAccounts();
+        sut.addAccount(stubAccount);
 
         Assertions.assertAll("shouldClientContainAccountWithClientEqualItWhenClientAddAccount",
                 ()->Assertions.assertTrue(sut.getAccounts().contains(stubAccount)),
@@ -32,11 +35,9 @@ public class ClientUnitTest {
 
     @Test
     public void shouldCallMethodInMockSavingAccountWhenClientPrintAccounts() {
-        Client sut = new Client(1, "dummy name");
-        Account mockAccount = Mockito.mock(SavingAccount.class);
+        Account mockAccount = new MockitoAccountBuilder().build();
         sut.addAccount(mockAccount);
 
-        // when(stubAccount.getClient()).thenReturn(null);
         sut.printAccounts();
 
         Mockito.verify(mockAccount, Mockito.atMost(1)).getAmount();
