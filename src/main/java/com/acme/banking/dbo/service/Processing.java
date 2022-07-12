@@ -7,12 +7,21 @@ import com.acme.banking.dbo.domain.Client;
 import java.util.Collection;
 
 public class Processing {
+    private ClientRepository clientRepository;
+    private AccountRepository accountsRepository;
+
+    public Processing(ClientRepository clientRepository) {
+    this.clientRepository = clientRepository;
+    }
+
     public Client createClient(String name) {
-        return null; //TODO
+        Client client = new Client(1, name);
+        clientRepository.save(client);
+        return client; //TODO
     }
 
     public Collection<Account> getAccountsByClientId(int clientId) {
-        return null; //TODO
+        return accountsRepository.findClientById(clientId);
     }
 
     public void transfer(int fromAccountId, int toAccountId, double amount) {
@@ -20,6 +29,11 @@ public class Processing {
     }
 
     public void cash(double amount, int fromAccountId) {
-        Cash.log(amount, fromAccountId);
+        try {
+            Cash.log(amount, fromAccountId);
+        }
+        catch (Exception e) {
+            throw new IllegalStateException ("error cash.log");
+        }
     }
 }
