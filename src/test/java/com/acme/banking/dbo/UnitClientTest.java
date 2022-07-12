@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
 import static org.mockito.Mockito.*;
 
 
-@DisplayName("Test suite")
+@DisplayName("Unit client tests")
 public class UnitClientTest {
 
     private final String DUMMY_CLIENT_NAME = "dummy client name";
@@ -116,8 +116,7 @@ public class UnitClientTest {
     @Test
     void clientShouldHasAccountWitchWasAdded() {
         final Client sut = new Client(DUMMY_ID, DUMMY_CLIENT_NAME);
-        Account accountStub = mock(Account.class);
-        when(accountStub.getClient()).thenReturn(sut);
+        Account accountStub = new MockitoAccountBuilder().withClient(sut).build();
 
         sut.addAccount(accountStub);
 
@@ -133,8 +132,7 @@ public class UnitClientTest {
     @Test
     void shouldThrowExceptionWhenAccountHasInvalidClient() {
         final Client sut = new Client(DUMMY_ID, DUMMY_CLIENT_NAME);
-        Account accountStub = mock(Account.class);
-        when(accountStub.getClient()).thenReturn(null);
+        Account accountStub = new MockitoAccountBuilder().withClient(null).build();
 
         Throwable thrown = assertThrows(
                 IllegalArgumentException.class,

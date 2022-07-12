@@ -2,39 +2,25 @@ package com.acme.banking.dbo;
 
 import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.domain.SavingAccount;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class UnitSavingAccountTest {
-    int accountId;
-    double accountAmount;
-    Client client;
-
-    private void setAccountIdAndAmount(int id, double amount) {
-        accountId = id;
-        accountAmount = amount;
-    }
+    private Client client;
 
     @BeforeEach
     private void buildDummyClient() {
         client = new Client(1, "dummy");
     }
 
-    @AfterEach
-    private void resetAccountIdAndAmount() {
-        accountId = 0;
-        accountAmount = 0.0;
-    }
-
-
     @Test
     void shouldSaveAccountWhenInputDataIsCorrect() {
-        setAccountIdAndAmount(1, 1000.0);
+        int dummyAccountId = 1;
+        double dummyAccountAmount = 1000.0;
 
-        SavingAccount sut = new SavingAccount(accountId, client, accountAmount);
+        SavingAccount sut = new SavingAccount(dummyAccountId, client, dummyAccountAmount);
 
         assertAll("Should save account when input data is correct",
                 () -> assertNotNull(sut),
@@ -47,11 +33,12 @@ class UnitSavingAccountTest {
 
     @Test
     public void shouldNotSaveAcoountWhenIdIsZero() {
-        setAccountIdAndAmount(0, 1000.0);
+        int invalidAccountId = 0;
+        double dummyAccountAmount = 1000.0;
 
         Throwable thrown = assertThrows(
                 IllegalArgumentException.class,
-                () -> new SavingAccount(accountId, client, accountAmount)
+                () -> new SavingAccount(invalidAccountId, client, dummyAccountAmount)
         );
 
         assertAll("Saving account fail: clientId is zero",
@@ -62,12 +49,13 @@ class UnitSavingAccountTest {
 
     @Test
     public void shouldNotSaveAcoountWhenClientIsNull() {
-        setAccountIdAndAmount(1, 1000.0);
+        int dummyAccountId = 1;
+        double dummyAccountAmount = 1000.0;
         client = null;
 
         Throwable thrown = assertThrows(
                 IllegalArgumentException.class,
-                () -> new SavingAccount(accountId, client, accountAmount)
+                () -> new SavingAccount(dummyAccountId, client, dummyAccountAmount)
         );
 
         assertAll("Saving account fail: client is null",
@@ -78,11 +66,12 @@ class UnitSavingAccountTest {
 
     @Test
     public void shouldNotSaveAcoountWhenAmountIsLessThanZero() {
-        setAccountIdAndAmount(1, -1000.0);
+        int dummyAccountId = 1;
+        double invalidAccountAmount = -1000.0;
 
         Throwable thrown = assertThrows(
                 IllegalArgumentException.class,
-                () -> new SavingAccount(accountId, client, accountAmount)
+                () -> new SavingAccount(dummyAccountId, client, invalidAccountAmount)
         );
 
         assertAll("Saving account fail: amount is less than zero",
