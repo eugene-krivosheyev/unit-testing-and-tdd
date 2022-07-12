@@ -46,7 +46,7 @@ public class ProcessingTest {
     }
 
     @Test
-    public void shouldNotErrorWhenCash() {
+    public void shouldDoesNotThrowWhenCash() {
         Processing dummyProcessing = new Processing(null);
         int dummyAccountId = 1;
 
