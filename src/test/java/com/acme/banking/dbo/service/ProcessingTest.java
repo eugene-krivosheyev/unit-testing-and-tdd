@@ -39,13 +39,70 @@ class ProcessingTest {
         Cash cashStub = mock(Cash.class);
         Processing sut = new Processing(cashStub, repoStub);
         when(repoStub.findById(1)).thenReturn(accountFromStub);
+        when(accountFromStub.getAmount()).thenReturn(2.0);
 
-        sut.cash(1000.0, 1);
+
+        sut.cash(1.0, 1);
 
         assertAll("Cash test",
-                () -> verify(accountFromStub, times(1)).debit(1000.0),
+                () -> verify(accountFromStub, times(1)).debit(1.0),
                 () -> verify(repoStub, times(1)).save(accountFromStub),
-                () -> verify(cashStub, times(1)).log(1000.0, 1)
+                () -> verify(cashStub, times(1)).log(1.0, 1)
         );
+    }
+
+    @Test
+    void shouldNotThrowExceptionWhenCash() {
+        Account accountFromStub = new MockitoAccountBuilder().build();
+        AccountRepository repoStub = mock(AccountRepository.class);
+        Cash cashStub = mock(Cash.class);
+        Processing sut = new Processing(cashStub, repoStub);
+        when(repoStub.findById(1)).thenReturn(accountFromStub);
+        when(accountFromStub.getAmount()).thenReturn(2.0);
+        double dummyAmount = 1.0;
+        int dummyAccountId = 1;
+
+        assertDoesNotThrow(() -> sut.cash(dummyAmount, dummyAccountId));
+    }
+
+    @Test
+    void shouldNotCashWhenInvalidAmount() {
+        Account accountFromStub = new MockitoAccountBuilder().build();
+        AccountRepository repoStub = mock(AccountRepository.class);
+        Cash cashStub = mock(Cash.class);
+        Processing sut = new Processing(cashStub, repoStub);
+        when(repoStub.findById(1)).thenReturn(accountFromStub);
+        int dummyAccountId = 1;
+        double invalidAmount = 0.0;
+
+        assertThrows(IllegalArgumentException.class,
+                () -> sut.cash(invalidAmount, dummyAccountId));
+    }
+
+    @Test
+    void shouldNotCashWhenAccountNotFound() {
+        AccountRepository repoStub = mock(AccountRepository.class);
+        Cash cashStub = mock(Cash.class);
+        Processing sut = new Processing(cashStub, repoStub);
+        int stubAccountId = 1;
+        double dummyAmount = 1.0;
+
+        assertThrows(IllegalArgumentException.class,
+                () -> sut.cash(dummyAmount, stubAccountId));
+    }
+
+    @Test
+    void shouldNotCashWhenNotEnoughAmount() {
+        Account accountFromStub = new MockitoAccountBuilder().build();
+        AccountRepository repoStub = mock(AccountRepository.class);
+        Cash cashStub = mock(Cash.class);
+        Processing sut = new Processing(cashStub, repoStub);
+        when(repoStub.findById(1)).thenReturn(accountFromStub);
+        when(accountFromStub.getAmount()).thenReturn(0.0);
+        int stubAccountId = 1;
+        double stubAmount = 1.0;
+
+        assertThrows(IllegalStateException.class,
+                () -> sut.cash(stubAmount, stubAccountId));
     }
 }

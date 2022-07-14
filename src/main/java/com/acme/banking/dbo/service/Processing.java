@@ -37,9 +37,25 @@ public class Processing {
     }
 
     public void cash(double amount, int fromAccountId) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Invalid amount!");
+        }
         Account accountFrom = accountRepository.findById(fromAccountId);
+        if (accountFrom == null) {
+            throw new IllegalArgumentException("Account not found!");
+        }
+
+        if (accountFrom.getAmount() < amount) {
+            throw new IllegalStateException("Not enough amount!");
+        }
+
         accountFrom.debit(amount);
-        cash.log(amount, fromAccountId);
+        try {
+            cash.log(amount, fromAccountId);
+        }catch (Exception ex) {
+            throw new IllegalStateException("Smth went wrong!");
+        }
+
         accountRepository.save(accountFrom);
     }
 }
