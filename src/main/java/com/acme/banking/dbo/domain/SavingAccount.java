@@ -30,4 +30,13 @@ public class SavingAccount implements Account {
         return client;
     }
 
+    @Override
+    public void debit(double amount) {
+        this.amount = this.amount - amount;
+    }
+
+    @Override
+    public void issue(double amount) {
+        this.amount = this.amount + amount;
+    }
 }
