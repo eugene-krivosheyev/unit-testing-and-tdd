@@ -26,8 +26,20 @@ public class Processing {
     }
 
     public void transfer(int fromAccountId, int toAccountId, double amount) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Invalid amount!");
+        }
+
         Account accountFrom = accountRepository.findById(fromAccountId);
         Account accountTo = accountRepository.findById(toAccountId);
+
+        if (accountFrom == null || accountTo == null) {
+            throw new IllegalArgumentException("One of accounts not found!");
+        }
+
+        if (accountFrom.getAmount() < amount) {
+            throw new IllegalStateException("Not enough amount!");
+        }
 
         accountFrom.debit(amount);
         accountTo.issue(amount);

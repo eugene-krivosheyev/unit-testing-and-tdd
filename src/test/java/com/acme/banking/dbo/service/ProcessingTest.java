@@ -20,16 +20,69 @@ class ProcessingTest {
         Processing sut = new Processing(cashStub, repoStub);
         when(repoStub.findById(1)).thenReturn(accountFromStub);
         when(repoStub.findById(2)).thenReturn(accountToStub);
+        when(accountFromStub.getAmount()).thenReturn(2.0);
+        int stubAccountId1 = 1;
+        int stubAccountId2 = 2;
+        double dummyAmount = 1.0;
 
-        sut.transfer(1, 2, 1000.0);
+        sut.transfer(stubAccountId1, stubAccountId2, dummyAmount);
 
 
         assertAll("Should call correct methods when transfer",
-                () -> verify(accountFromStub, times(1)).debit(1000.0),
-                () -> verify(accountToStub, times(1)).issue(1000.0),
+                () -> verify(accountFromStub, times(1)).debit(1.0),
+                () -> verify(accountToStub, times(1)).issue(1.0),
                 () -> verify(repoStub, times(1)).save(accountFromStub),
                 () -> verify(repoStub, times(1)).save(accountToStub)
         );
+    }
+
+    @Test
+    void shouldNotTransferWhenInvalidAmount() {
+        Account accountFromStub = new MockitoAccountBuilder().build();
+        Account accountToStub = new MockitoAccountBuilder().build();
+        AccountRepository repoStub = mock(AccountRepository.class);
+        Cash cashStub = mock(Cash.class);
+        Processing sut = new Processing(cashStub, repoStub);
+        when(repoStub.findById(1)).thenReturn(accountFromStub);
+        when(repoStub.findById(2)).thenReturn(accountToStub);
+        int stubAccountId1 = 1;
+        int stubAccountId2 = 2;
+        double invalidAmount = 0.0;
+
+        assertThrows(IllegalArgumentException.class,
+                () -> sut.transfer(stubAccountId1, stubAccountId2, invalidAmount));
+    }
+
+    @Test
+    void shouldNotTransferWhenOneOfAccountsNotFound() {
+        Account accountFromStub = new MockitoAccountBuilder().build();
+        AccountRepository repoStub = mock(AccountRepository.class);
+        Cash cashStub = mock(Cash.class);
+        Processing sut = new Processing(cashStub, repoStub);
+        when(repoStub.findById(1)).thenReturn(accountFromStub);
+        int stubAccountId1 = 1;
+        int stubAccountId2 = 2;
+        double dummyAmount = 1.0;
+
+        assertThrows(IllegalArgumentException.class,
+                () -> sut.transfer(stubAccountId1, stubAccountId2, dummyAmount));
+    }
+
+    @Test
+    void shouldNotTransferWhenNotEnoughAmount() {
+        Account accountFromStub = new MockitoAccountBuilder().build();
+        Account accountToStub = new MockitoAccountBuilder().build();
+        AccountRepository repoStub = mock(AccountRepository.class);
+        Cash cashStub = mock(Cash.class);
+        Processing sut = new Processing(cashStub, repoStub);
+        when(repoStub.findById(1)).thenReturn(accountFromStub);
+        when(repoStub.findById(2)).thenReturn(accountToStub);
+        int stubAccountId1 = 1;
+        int stubAccountId2 = 2;
+        double stubAmount = 1.0;
+
+        assertThrows(IllegalStateException.class,
+                () -> sut.transfer(stubAccountId1, stubAccountId2, stubAmount));
     }
 
     @Test
