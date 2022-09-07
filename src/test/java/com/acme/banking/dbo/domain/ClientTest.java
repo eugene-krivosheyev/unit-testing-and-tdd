@@ -16,7 +16,7 @@ class ClientTest {
     @Test
     void constructor_whenIdNotValid_thenThrowIllegalArgumentException() {
 
-        IllegalArgumentException actualExc = assertThrows(IllegalArgumentException.class, () -> new Client(-1, "name"));
+        assertThrows(IllegalArgumentException.class, () -> new Client(-1, "name"));
     }
 
     @Test

@@ -6,17 +6,10 @@ import org.junit.jupiter.api.Test;
 
 class SavingAccountTest {
 
-    private final Client client = new Client(10, "name");
+    private final Client correctClient = new Client(10, "name");
 
     @Test
     void constructor_whenArgsValid_thenCreateNewSavingAccount() {
-        assertDoesNotThrow(() -> new SavingAccount(10, client, 10.0));
+        assertDoesNotThrow(() -> new SavingAccount(10, correctClient, 10.0));
     }
-
-    @Test
-    void constructor_when_thenCreateNewSavingAccount() {
-
-
-    }
-
 }
