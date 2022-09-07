@@ -9,6 +9,9 @@ public class Client {
     private Collection<Account> accounts = new ArrayList<>(); //TODO
 
     public Client(int id, String name) {
+        if (id < 1) throw new IllegalArgumentException("Некорректный ID");
+        if (name.isEmpty()) throw new IllegalArgumentException("Пустой Name");
+
         this.id = id;
         this.name = name;
     }

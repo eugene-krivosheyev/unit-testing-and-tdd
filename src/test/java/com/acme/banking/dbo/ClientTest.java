@@ -14,10 +14,10 @@ import static org.hamcrest.Matchers.*;
 import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
 
 
-@DisplayName("Test suite")
+@DisplayName("Client Test suite")
 public class ClientTest {
-    @Test @Disabled("temporary disabled")
-    @DisplayName("Test case")
+    @Test
+    @DisplayName("Client successfully created")
     public void shouldStorePropertiesWhenCreated() {
         //region given
         final int clientId = 1;
@@ -38,11 +38,11 @@ public class ClientTest {
 
         //Hamcrest:
         assertThat(sut,
-            allOf(
-                hasProperty("id", notNullValue()),
-                hasProperty("id", equalTo(clientId)),
-                hasProperty("name", is(clientName))
-        ));
+                allOf(
+                        hasProperty("id", notNullValue()),
+                        hasProperty("id", equalTo(clientId)),
+                        hasProperty("name", is(clientName))
+                ));
 
         //AssertJ:
         org.assertj.core.api.Assertions.assertThat(sut)
