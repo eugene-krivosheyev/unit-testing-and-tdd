@@ -26,4 +26,11 @@ public class Client {
     public String getName() {
         return name;
     }
+
+    public void addAccount(Account account) {
+        if (id != account.getClient().getId()) {
+            throw new IllegalArgumentException("");
+        }
+        accounts.add(account);
+    }
 }
