@@ -1,5 +1,10 @@
 package com.acme.banking.dbo.domain;
 
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+@ToString
+@NoArgsConstructor
 public class SavingAccount implements Account {
     private int id;
     private Client client;
@@ -24,6 +29,11 @@ public class SavingAccount implements Account {
     @Override
     public double getAmount() {
         return amount;
+    }
+
+    @Override
+    public void setAmount(double amount) {
+        this.amount = amount;
     }
 
     @Override
