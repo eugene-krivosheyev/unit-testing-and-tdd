@@ -6,7 +6,7 @@ import java.util.Collection;
 public class Client {
     private int id;
     private String name;
-    private Collection<Account> accounts = new ArrayList<>(); //TODO
+    private Collection<Account> accounts = new ArrayList<>();
 
     public Client(int id, String name) {
         if (id < 1) throw new IllegalArgumentException("Некорректный ID");
@@ -22,5 +22,9 @@ public class Client {
 
     public String getName() {
         return name;
+    }
+
+    public Collection<Account> getAccounts() {
+        return accounts;
     }
 }
