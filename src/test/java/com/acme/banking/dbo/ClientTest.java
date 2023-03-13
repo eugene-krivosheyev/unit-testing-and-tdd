@@ -5,8 +5,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -51,4 +50,70 @@ public class ClientTest {
         //also take a look at `extracting()` https://stackoverflow.com/a/51812188
         //endregion
     }
+
+    @Test
+    public void shouldStoreIdAndNameWhenNonEmptyNameAndNonNegativeId(){
+        //given
+        int id = 1;
+        String name = "test";
+
+        //when
+        Client sut = new Client(id, name);
+
+        //then
+        assertEquals(id, sut.getId());
+        assertEquals(name, sut.getName());
+    }
+
+    @Test
+    public void shouldGetIllegalArgumentExceptionWhenIdIsNegative(){
+        //given
+        int id = -1;
+        String name = "test";
+
+        //when
+        IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> new Client(id, name),
+                "Expected new object but was thrown exception"
+        );
+
+        //then
+        assertTrue(thrown.getMessage().contentEquals("id should not be less than 0"));
+    }
+
+    @Test
+    public void shouldGetIllegalArgumentExceptionWhenNameIsNull(){
+        //given
+        int id = 1;
+        String name = null;
+
+        //when
+        IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> new Client(id, name),
+                "Expected new object but was thrown exception"
+        );
+
+        //then
+        assertTrue(thrown.getMessage().contentEquals("name should not be null or empty"));
+    }
+
+    @Test
+    public void shouldGetIllegalArgumentExceptionWhenNameIsEmpty(){
+        //given
+        int id = 1;
+        String name = "";
+
+        //when
+        IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> new Client(id, name),
+                "Expected new object but was thrown exception"
+        );
+
+        //then
+        assertTrue(thrown.getMessage().contentEquals("name should not be null or empty"));
+    }
+
 }
