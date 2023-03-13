@@ -1,21 +1,22 @@
 package com.acme.banking.dbo.domain;
 
-import java.util.Collection;
-
 import static java.util.Collections.unmodifiableCollection;
 
+import java.util.Collection;
+
 public class Branch {
-    private Collection<Account> accounts; //TODO
 
-    public Branch(Collection<Account> accounts) {
-        this.accounts = accounts;
-    }
+  private Collection<Account> accounts; //TODO
 
-    public Collection<Account> getAccounts() {
-        return unmodifiableCollection(accounts);
-    }
+  public Branch(Collection<Account> accounts) {
+    this.accounts = accounts;
+  }
 
-    public Collection<Branch> getChildren() {
-        return null; //TODO
-    }
+  public Collection<Account> getAccounts() {
+    return unmodifiableCollection(accounts);
+  }
+
+  public Collection<Branch> getChildren() {
+    return null; //TODO
+  }
 }

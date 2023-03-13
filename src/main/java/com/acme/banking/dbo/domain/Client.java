@@ -4,20 +4,45 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class Client {
-    private int id;
-    private String name;
-    private Collection<Account> accounts = new ArrayList<>(); //TODO
 
-    public Client(int id, String name) {
-        this.id = id;
-        this.name = name;
+  private int id;
+  private String name;
+  private Collection<Account> accounts;
+
+  public Client(int id, String name) {
+
+    if (id < 0) {
+      throw new IllegalArgumentException(String.format("Client id is not valid. %d", id));
+    }
+    if (name == null || name.isEmpty()) {
+      throw new IllegalArgumentException(String.format("Client name is not valid %s", name));
     }
 
-    public int getId() {
-        return id;
-    }
+    this.id = id;
+    this.name = name;
+    this.accounts = new ArrayList<>();
+  }
 
-    public String getName() {
-        return name;
+  public void addAccount(Account account) {
+    if (account == null) {
+      throw new IllegalArgumentException("Account is not valid");
     }
+    if (this.accounts == null) {
+      this.accounts = new ArrayList<>();
+    }
+    this.accounts.add(account);
+  }
+
+  public int getId() {
+    return id;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public Collection<Account> getAccounts() {
+    return new ArrayList<>(accounts);
+  }
+
 }
