@@ -1,54 +1,69 @@
 package com.acme.banking.dbo;
 
 import com.acme.banking.dbo.domain.Client;
-import org.junit.jupiter.api.Disabled;
+import com.acme.banking.dbo.domain.SavingAccount;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assumptions.*;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
-import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 @DisplayName("Test suite")
-public class ClientTest {
-    @Test @Disabled("temporary disabled")
-    @DisplayName("Test case")
-    public void shouldStorePropertiesWhenCreated() {
-        //region given
-        final int clientId = 1;
-        final String clientName = "dummy client name";
-        //endregion
+class ClientTest {
 
-        //region when
-        Client sut = new Client(clientId, clientName);
-        assumeTrue(sut != null);
-        //endregion
+    @Test
+    void shouldThrowIllegalArgumentExceptionWhenIdLessThanZero() {
+        assertThrows(IllegalArgumentException.class, () -> new Client(-1, "name"));
+    }
 
-        //region then
-        //Junit5:
-        assertAll("Client store its properties",
-                () -> assertEquals(clientId, sut.getId()),
-                () -> assertEquals(clientName, sut.getName())
-        );
+    @Test
+    void shouldThrowIllegalArgumentExceptionWhenNameIsNull() {
+        assertThrows(IllegalArgumentException.class, () -> new Client(1, null));
+    }
 
-        //Hamcrest:
-        assertThat(sut,
-            allOf(
-                hasProperty("id", notNullValue()),
-                hasProperty("id", equalTo(clientId)),
-                hasProperty("name", is(clientName))
-        ));
+    @Test
+    void shouldThrowIllegalArgumentExceptionWhenNameIsEmpty() {
+        assertThrows(IllegalArgumentException.class, () -> new Client(1, "    "));
+    }
 
-        //AssertJ:
-        org.assertj.core.api.Assertions.assertThat(sut)
-                .hasFieldOrPropertyWithValue("id", clientId)
-                .hasFieldOrPropertyWithValue("name", clientName);
-        //also take a look at `extracting()` https://stackoverflow.com/a/51812188
-        //endregion
+    @ParameterizedTest
+    @CsvSource({
+            "0, name",
+            "1, name"
+    })
+    void shouldCreateNewClientSuccessfully(int id, String name) {
+        Client client = new Client(id, name);
+        assertEquals(id, client.getId());
+        assertEquals(name, client.getName());
+    }
+
+    @Test
+    void shouldAddAccount() {
+        var client = new Client(1, "name");
+
+        var sut = new SavingAccount(0, client, 0d);
+
+        assertEquals(client, sut.getClient());
+        assertTrue(client.getAccounts().contains(sut));
+    }
+
+    @Test
+    void shouldNotAddAccountWhenAccountOwnerIsOtherClient() {
+        var client = new Client(1, "name");
+        var otherClient = new Client(2, "other_name");
+        var sut = new SavingAccount(0, client, 0d);
+
+        assertThrows(IllegalArgumentException.class, () -> otherClient.addAccount(sut));
+    }
+
+    @Test
+    void shouldNotAddAccountWhenAccountAlreadyExist() {
+        var client = new Client(1, "name");
+        var sut = new SavingAccount(0, client, 0d);
+
+        assertThrows(IllegalArgumentException.class, () -> client.addAccount(sut));
+
     }
 }
