@@ -6,9 +6,12 @@ import java.util.Collection;
 public class Client {
     private int id;
     private String name;
-    private Collection<Account> accounts = new ArrayList<>(); //TODO
+    private final Collection<Account> accounts = new ArrayList<>();
 
     public Client(int id, String name) {
+        if (id < 0 || name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException();
+        }
         this.id = id;
         this.name = name;
     }
