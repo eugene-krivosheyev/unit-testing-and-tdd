@@ -29,7 +29,7 @@
 
 ### Fork and then clone codebase for further development
 ```
-git clone --depth 1 -b <YYYY-MM-project> https://github.com/eugene-krivosheyev/unit-testing-and-tdd
+git clone --depth 1 -b <YYYY-MM-project> http://github.com/eugene-krivosheyev/unit-testing-and-tdd
 ```
 
 Что такое автотест? (1.5/0.5)
