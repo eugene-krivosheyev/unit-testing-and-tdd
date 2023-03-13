@@ -62,7 +62,7 @@ public class ClientTest {
 
     @Test
     void shouldThrowWhenNegativeId() {
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> new Client(-100, "Ivan"));
+        assertThrows(IllegalArgumentException.class, () -> new Client(-100, "Ivan"));
     }
 
     @Test
