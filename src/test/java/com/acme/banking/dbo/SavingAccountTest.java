@@ -31,6 +31,42 @@ public class SavingAccountTest {
     }
 
     @Test
+    public void shouldStorePropertiesWhenIdIsPositiveAndClientIsNonNullAndZeroAmount() {
+        //given
+        int id = RANDOM.nextInt(2147483647);
+        double amount = 0;
+        int clientId = RANDOM.nextInt(2147483647);
+        String clientName = "test";
+        Client client = new Client(clientId, clientName);
+
+        //when
+        SavingAccount sut = new SavingAccount(id, client, amount);
+
+        //then
+        assertEquals(id, sut.getId());
+        assertEquals(client, sut.getClient());
+        assertEquals(amount, sut.getAmount());
+    }
+
+    @Test
+    public void shouldStorePropertiesWhenIdZeroAndClientIsNonNullAndAmountIsPositive() {
+        //given
+        int id = 0;
+        double amount = Math.random();
+        int clientId = RANDOM.nextInt(2147483647);
+        String clientName = "test";
+        Client client = new Client(clientId, clientName);
+
+        //when
+        SavingAccount sut = new SavingAccount(id, client, amount);
+
+        //then
+        assertEquals(id, sut.getId());
+        assertEquals(client, sut.getClient());
+        assertEquals(amount, sut.getAmount());
+    }
+
+    @Test
     public void shouldThrowIllegalArgumentExceptionWhenIdIsNegative() {
         //given
         int id = - (RANDOM.nextInt(2147483647));

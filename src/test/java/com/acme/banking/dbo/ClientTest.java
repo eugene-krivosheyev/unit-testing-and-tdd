@@ -71,6 +71,20 @@ public class ClientTest {
     }
 
     @Test
+    public void shouldStoreIdAndNameWhenNonEmptyNameAndIdZero(){
+        //given
+        int id = 0;
+        String name = "test";
+
+        //when
+        Client sut = new Client(id, name);
+
+        //then
+        assertEquals(id, sut.getId());
+        assertEquals(name, sut.getName());
+    }
+
+    @Test
     public void shouldGetIllegalArgumentExceptionWhenIdIsNegative(){
         //given
         int id = - (RANDOM.nextInt(2147483647) + 1) ;
@@ -86,6 +100,7 @@ public class ClientTest {
         //then
         assertTrue(thrown.getMessage().contentEquals("id should not be less than 0"));
     }
+
 
     @Test
     public void shouldGetIllegalArgumentExceptionWhenNameIsNull(){
