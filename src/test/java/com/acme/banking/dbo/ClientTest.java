@@ -1,5 +1,7 @@
 package com.acme.banking.dbo;
 
+import java.util.Random;
+
 import com.acme.banking.dbo.domain.Client;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -15,6 +17,9 @@ import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
 
 @DisplayName("Test suite")
 public class ClientTest {
+
+    private final Random RANDOM = new Random();
+
     @Test @Disabled("temporary disabled")
     @DisplayName("Test case")
     public void shouldStorePropertiesWhenCreated() {
@@ -54,7 +59,7 @@ public class ClientTest {
     @Test
     public void shouldStoreIdAndNameWhenNonEmptyNameAndNonNegativeId(){
         //given
-        int id = 1;
+        int id = RANDOM.nextInt(2147483647);
         String name = "test";
 
         //when
@@ -68,7 +73,7 @@ public class ClientTest {
     @Test
     public void shouldGetIllegalArgumentExceptionWhenIdIsNegative(){
         //given
-        int id = -1;
+        int id = - (RANDOM.nextInt(2147483647) + 1) ;
         String name = "test";
 
         //when
@@ -85,7 +90,7 @@ public class ClientTest {
     @Test
     public void shouldGetIllegalArgumentExceptionWhenNameIsNull(){
         //given
-        int id = 1;
+        int id = RANDOM.nextInt(2147483647);
         String name = null;
 
         //when
@@ -102,7 +107,7 @@ public class ClientTest {
     @Test
     public void shouldGetIllegalArgumentExceptionWhenNameIsEmpty(){
         //given
-        int id = 1;
+        int id = RANDOM.nextInt(2147483647);
         String name = "";
 
         //when

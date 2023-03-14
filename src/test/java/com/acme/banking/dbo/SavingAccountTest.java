@@ -1,5 +1,7 @@
 package com.acme.banking.dbo;
 
+import java.util.Random;
+
 import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.domain.SavingAccount;
 import org.junit.jupiter.api.Test;
@@ -8,12 +10,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class SavingAccountTest {
 
+    private final Random RANDOM = new Random();
+
     @Test
     public void shouldStorePropertiesWhenIdIsPositiveAndClientIsNonNullAndAmountIsPositive() {
         //given
-        int id = 1;
-        double amount = 10;
-        int clientId = 2;
+        int id = RANDOM.nextInt(2147483647);
+        double amount = Math.random();
+        int clientId = RANDOM.nextInt(2147483647);
         String clientName = "test";
         Client client = new Client(clientId, clientName);
 
@@ -29,9 +33,9 @@ public class SavingAccountTest {
     @Test
     public void shouldThrowIllegalArgumentExceptionWhenIdIsNegative() {
         //given
-        int id = - 1;
-        double amount = 10;
-        int clientId = 2;
+        int id = - (RANDOM.nextInt(2147483647));
+        double amount = Math.random();
+        int clientId = RANDOM.nextInt(2147483647);
         String clientName = "test";
         Client client = new Client(clientId, clientName);
 
@@ -50,8 +54,8 @@ public class SavingAccountTest {
     @Test
     public void shouldThrowIllegalArgumentExceptionWhenClientIsNull() {
         //given
-        int id = 1;
-        double amount = 10;
+        int id = RANDOM.nextInt(2147483647);
+        double amount = Math.random();
         Client client = null;
 
         //when
@@ -69,9 +73,9 @@ public class SavingAccountTest {
     @Test
     public void shouldThrowIllegalArgumentExceptionWhenAmountIsNagative() {
         //given
-        int id = 1;
-        double amount = -1;
-        int clientId = 2;
+        int id = RANDOM.nextInt(2147483647);
+        double amount = - (Math.random());
+        int clientId = RANDOM.nextInt(2147483647);
         String clientName = "test";
         Client client = new Client(clientId, clientName);
 
