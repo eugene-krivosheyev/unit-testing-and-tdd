@@ -15,6 +15,7 @@ import com.acme.banking.dbo.domain.Account;
 import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.domain.SavingAccount;
 import org.assertj.core.api.Assertions;
+import org.assertj.core.api.Assumptions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -76,6 +77,8 @@ public class ClientTest {
 
     Client client = new Client(1, "test name");
     Account account = new SavingAccount(1, client, 10d);
+
+    Assumptions.assumeThat(client.getAccounts().size()).isEqualTo(0);
 
     client.addAccount(account);
 
