@@ -5,7 +5,7 @@ public class SavingAccount implements Account {
     private Client client;
     private double amount;
 
-    public SavingAccount(int id, Client client, double amount) {
+    public SavingAccount(int id, Client client, double amount ) {
         this.id = id;
         this.client = client;
         this.amount = amount;
