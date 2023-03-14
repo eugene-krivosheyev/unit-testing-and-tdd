@@ -36,7 +36,11 @@ class SavingAccountTest {
 
     @ParameterizedTest
     @MethodSource
-    void shouldCreateWhenValidParams(int id, Client client, double amount) {
-        assertDoesNotThrow(() -> new SavingAccount(id, client, amount));
+    void shouldCreateWhenValidParams(int validId, Client validClient, double validAmount) {
+        SavingAccount savingAccount = new SavingAccount(validId, validClient, validAmount);
+
+        assertEquals(validId, savingAccount.getId());
+        assertEquals(validClient, savingAccount.getClient());
+        assertEquals(validAmount, savingAccount.getAmount());
     }
 }

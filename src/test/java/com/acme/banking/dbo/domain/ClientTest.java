@@ -72,11 +72,14 @@ public class ClientTest {
                 Arguments.of(0, null)
         );
     }
+
     @ParameterizedTest
     @MethodSource
-    void shouldCreateWhenValidParams(int id, String name) {
-       assertDoesNotThrow(()-> new Client(id, name));
+    void shouldCreateWhenValidParams(int validId, String validName) {
+        Client client = new Client(validId, validName);
 
+        assertEquals(validId, client.getId());
+        assertEquals(validName, client.getName());
     }
 
     private static Stream<Arguments> shouldCreateWhenValidParams() {
