@@ -1,10 +1,17 @@
-package com.acme.banking.dbo;
+package com.acme.banking.dbo.domain;
+
+import java.util.stream.Stream;
 
 import com.acme.banking.dbo.domain.Client;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assumptions.*;
@@ -50,5 +57,32 @@ public class ClientTest {
                 .hasFieldOrPropertyWithValue("name", clientName);
         //also take a look at `extracting()` https://stackoverflow.com/a/51812188
         //endregion
+    }
+
+    @ParameterizedTest
+    @MethodSource
+    void shouldThrowExceptionWhenInvalidParams(int id, String name) {
+        assertThrows(IllegalArgumentException.class, ()-> new Client(id, name));
+    }
+
+    private static Stream<Arguments> shouldThrowExceptionWhenInvalidParams() {
+        return Stream.of(
+                Arguments.of(-1, "1"),
+                Arguments.of(0, ""),
+                Arguments.of(0, null)
+        );
+    }
+    @ParameterizedTest
+    @MethodSource
+    void shouldCreateWhenValidParams(int id, String name) {
+       assertDoesNotThrow(()-> new Client(id, name));
+
+    }
+
+    private static Stream<Arguments> shouldCreateWhenValidParams() {
+        return Stream.of(
+                Arguments.of(0, "1"),
+                Arguments.of(1, "12")
+        );
     }
 }

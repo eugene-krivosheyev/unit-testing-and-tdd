@@ -9,8 +9,15 @@ public class Client {
     private Collection<Account> accounts = new ArrayList<>(); //TODO
 
     public Client(int id, String name) {
+        checkArguments(id, name);
         this.id = id;
         this.name = name;
+    }
+
+    private void checkArguments(int id, String name) {
+        if (id < 0 || name == null || name.isEmpty()) {
+            throw new IllegalArgumentException();
+        }
     }
 
     public int getId() {

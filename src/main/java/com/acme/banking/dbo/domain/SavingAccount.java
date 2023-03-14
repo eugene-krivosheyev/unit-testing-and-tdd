@@ -5,20 +5,27 @@ public class SavingAccount implements Account {
     private Client client;
     private double amount;
 
-    public SavingAccount(int id, Client client, double amount ) {
+    public SavingAccount(int id, Client client, double amount) {
+        checkArguments(id, client, amount);
         this.id = id;
         this.client = client;
         this.amount = amount;
     }
 
-    @Override
-    public double getAmount() {
-        return amount;
+    private void checkArguments(int id, Client client, double amount) {
+        if (id < 0 || amount < 0 || client == null) {
+            throw new IllegalArgumentException();
+        }
     }
 
     @Override
     public int getId() {
         return id;
+    }
+
+    @Override
+    public double getAmount() {
+        return amount;
     }
 
     @Override
