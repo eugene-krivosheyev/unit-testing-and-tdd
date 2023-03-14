@@ -1,28 +1,17 @@
 package com.acme.banking.dbo;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assumptions.assumeThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 import com.acme.banking.dbo.domain.Account;
 import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.domain.SavingAccount;
-import org.assertj.core.api.Assertions;
-import org.assertj.core.api.Assumptions;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-@DisplayName("Test suite")
+@DisplayName("Client test cases")
 public class ClientTest {
-
 
   @Test
   void shouldCreateClientWhenIdIsPositiveAndNameIsNotNullAndNotEmpty() {
@@ -32,18 +21,18 @@ public class ClientTest {
 
     Client sut = new Client(clientId, clientName);
 
-    Assertions.assertThat(sut.getId())
+    assertThat(sut.getId())
         .describedAs("Client id should be equal %s", clientId)
         .isEqualTo(clientId);
 
-    Assertions.assertThat(sut.getName())
+    assertThat(sut.getName())
         .describedAs("Client name should be equal %s", clientName)
         .isEqualTo(clientName);
 
   }
 
   @Test
-  void shouldNotCreateClientAndThrowExceptionWhenIdIsNegative() {
+  void shouldNotCreateClientAndShowErrorWhenIdIsNegative() {
 
     int clientId = -1;
     String clientName = "test client";
@@ -53,7 +42,7 @@ public class ClientTest {
   }
 
   @Test
-  void shouldNotCreateClientAndThrowExceptionWhenNameIsNull() {
+  void shouldNotCreateClientAndShowErrorWhenNameIsNull() {
 
     int clientId = 1;
     String clientName = null;
@@ -63,7 +52,7 @@ public class ClientTest {
   }
 
   @Test
-  void shouldNotCreateClientAndThrowExceptionWhenNameIsEmpty() {
+  void shouldNotCreateClientAndShowErrorWhenNameIsEmpty() {
 
     int clientId = 1;
     String clientName = "";
@@ -78,50 +67,25 @@ public class ClientTest {
     Client client = new Client(1, "test name");
     Account account = new SavingAccount(1, client, 10d);
 
-    Assumptions.assumeThat(client.getAccounts().size()).isEqualTo(0);
+    assumeThat(client.getAccounts().size()).isEqualTo(0);
 
     client.addAccount(account);
 
-    Assertions.assertThat(client.getAccounts().size())
+    assertThat(client.getAccounts().size())
         .isEqualTo(1);
 
   }
 
   @Test
-  @Disabled
-  @DisplayName("Test case")
-  public void shouldStorePropertiesWhenCreated() {
-    //region given
-    final int clientId = 1;
-    final String clientName = "dummy client name";
-    //endregion
+  void shouldShowErrorWhenAddNullAccountToClient() {
 
-    //region when
-    Client sut = new Client(clientId, clientName);
-    assumeTrue(sut != null);
-    //endregion
+    Client client = new Client(1, "test name");
+    Account nullAccount = null;
 
-    //region then
-    //Junit5:
-    assertAll("Client store its properties",
-        () -> assertEquals(clientId, sut.getId()),
-        () -> assertEquals(clientName, sut.getName())
-    );
+    assumeThat(client.getAccounts().size()).isEqualTo(0);
 
-    //Hamcrest:
-    assertThat(sut,
-        allOf(
-            hasProperty("id", notNullValue()),
-            hasProperty("id", equalTo(clientId)),
-            hasProperty("name", is(clientName))
-        ));
+    assertThrows(IllegalArgumentException.class, () -> client.addAccount(nullAccount));
 
-    //AssertJ:
-    org.assertj.core.api.Assertions.assertThat(sut)
-        .hasFieldOrPropertyWithValue("id", clientId)
-        .hasFieldOrPropertyWithValue("name", clientName);
-    //also take a look at `extracting()` https://stackoverflow.com/a/51812188
-    //endregion
   }
 
 }

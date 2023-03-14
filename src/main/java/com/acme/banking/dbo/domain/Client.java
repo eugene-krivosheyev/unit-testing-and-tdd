@@ -27,9 +27,6 @@ public class Client {
     if (account == null) {
       throw new IllegalArgumentException("Account is not valid");
     }
-    if (this.accounts == null) {
-      this.accounts = new ArrayList<>();
-    }
     this.accounts.add(account);
   }
 
