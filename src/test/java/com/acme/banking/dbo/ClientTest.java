@@ -7,6 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -17,6 +18,8 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 @DisplayName("Test suite")
 public class ClientTest {
+    private static final String CLIENT_NAME = "Ivan";
+
     @Test
     @Disabled("temporary disabled")
     @DisplayName("Test case")
@@ -56,20 +59,21 @@ public class ClientTest {
 
     @ParameterizedTest
     @NullAndEmptySource
-    void shouldThrowWhenNullAndEmptyName(String name) {
-        assertThrows(IllegalArgumentException.class, () -> new Client(100, name));
+    void shouldThrowWhenNullAndEmptyName(String invalidName) {
+        assertThrows(IllegalArgumentException.class, () -> new Client(100, invalidName));
     }
 
     @Test
     void shouldThrowWhenNegativeId() {
-        assertThrows(IllegalArgumentException.class, () -> new Client(-100, "Ivan"));
+        assertThrows(IllegalArgumentException.class, () -> new Client(-100, CLIENT_NAME));
     }
 
-    @Test
-    void shouldCreateClient() {
-        Client client = new Client(100, "Ivan");
+    @ParameterizedTest
+    @ValueSource(ints = {0, 1})
+    void shouldCreateClientWhenValidParams(int clientId) {
+        Client client = new Client(clientId, CLIENT_NAME);
 
-        Assertions.assertEquals("Ivan", client.getName());
-        Assertions.assertEquals(100, client.getId());
+        Assertions.assertEquals(CLIENT_NAME, client.getName());
+        Assertions.assertEquals(clientId, client.getId());
     }
 }
