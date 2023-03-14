@@ -1,10 +1,12 @@
+package com.acme.banking.dbo;
+
 import com.acme.banking.dbo.domain.Client;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
-public class ClientTest {
+public class CreateClientTest {
     final int VALID_CLIENT_ID = 1;
     final String VALID_CLIENT_NAME = "John Doe";
     Client sut = new Client(VALID_CLIENT_ID, VALID_CLIENT_NAME);

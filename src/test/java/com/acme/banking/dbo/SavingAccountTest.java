@@ -1,3 +1,5 @@
+package com.acme.banking.dbo;
+
 import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.domain.SavingAccount;
 import org.junit.jupiter.api.Assertions;
