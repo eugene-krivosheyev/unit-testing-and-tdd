@@ -6,42 +6,33 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 public class SavingAccountTest {
-    final int id = 111;
-    final double amount = 6.66;
-    final Client client = new Client(111, "John Doe");
-    SavingAccount sut = new SavingAccount(id, client, amount);
+    final int VALID_ACC_ID = 1;
+    final double VALID_ACC_AMOUNT = 1.1;
+    final Client client = new Client(1, "John Doe");
+    SavingAccount sut = new SavingAccount(VALID_ACC_ID, client, VALID_ACC_AMOUNT);
 
     @Test
-    public void shouldThrowWhenIdNegative() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> new SavingAccount(-111, client, amount));
+    public void shouldNotCreateNewAccountWhenIdNegative() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new SavingAccount(-1, client, VALID_ACC_AMOUNT));
     }
 
     @Test
-    public void shouldThrowWhenAmountNegative() {
+    public void shouldNotCreateNewAccountWhenAmountNegative() {
 
-        Assertions.assertThrows(IllegalArgumentException.class, () -> new SavingAccount(id, client, -6.66));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new SavingAccount(VALID_ACC_ID, client, -6.66));
     }
 
     @Test
-    public void shouldThrowWhenClientNull() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> new SavingAccount(id, null, amount));
+    public void shouldNotCreateNewAccountWhenClientNull() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new SavingAccount(VALID_ACC_ID, null, VALID_ACC_AMOUNT));
     }
 
     @Test
-    public void shouldCGetIdWhenSavingAccount() {
+    public void shouldCreateNewAccountSuccessfullyWhenArgumentsValid() {
         assumeTrue(sut != null);
-        Assertions.assertEquals(id, sut.getId());
-    }
-
-    @Test
-    public void shouldGetAmountWhenSavingAccount() {
-        assumeTrue(sut != null);
-        Assertions.assertEquals(amount, sut.getAmount());
-    }
-
-    @Test
-    public void shouldGetClientWhenSavingAccount() {
-        assumeTrue(sut != null);
+        Assertions.assertEquals(VALID_ACC_ID, sut.getId());
+        Assertions.assertEquals(VALID_ACC_AMOUNT, sut.getAmount());
         Assertions.assertEquals(client, sut.getClient());
     }
+
 }

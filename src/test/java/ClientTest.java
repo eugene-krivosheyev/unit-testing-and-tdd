@@ -5,28 +5,23 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 public class ClientTest {
-    final int id = 111;
-    final String name = "John Doe";
-    Client sut = new Client(id, name);
+    final int VALID_CLIENT_ID = 1;
+    final String VALID_CLIENT_NAME = "John Doe";
+    Client sut = new Client(VALID_CLIENT_ID, VALID_CLIENT_NAME);
     @Test
-    public void shouldThrowWhenIdNegative() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> new Client(-111, name));
+    public void shouldNotCreateNewClientWhenIdNegative() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new Client(-1, VALID_CLIENT_NAME));
     }
 
     @Test
-    public void shouldThrowWhenNameEmpty() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> new Client(id, ""));
+    public void shouldNotCreateNewClientWhenNameEmpty() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new Client(VALID_CLIENT_ID, ""));
     }
 
     @Test
-    public void shouldCGetIdWhenCreateClient() {
+    public void shouldCCreateNewClientSuccessfullyWhenArgumentsValid() {
         assumeTrue(sut != null);
-        Assertions.assertEquals(id, sut.getId());
-    }
-
-    @Test
-    public void shouldGetNameWhenCreateClient() {
-        assumeTrue(sut != null);
-        Assertions.assertEquals(name, sut.getName());
+        Assertions.assertEquals(VALID_CLIENT_ID, sut.getId());
+        Assertions.assertEquals(VALID_CLIENT_NAME, sut.getName());
     }
 }
