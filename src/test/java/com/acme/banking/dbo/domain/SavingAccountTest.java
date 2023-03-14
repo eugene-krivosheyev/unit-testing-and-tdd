@@ -6,9 +6,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class SavingAccountTest {
-    Client CLIENT = new Client(200, "Ivan");
-    double AMOUNT = 100.24;
-    int ACCOUNT_ID = 100;
+    private static final Client CLIENT = new Client(200, "Ivan");
+    private static final double AMOUNT = 100.24;
+    private static final int ACCOUNT_ID = 100;
 
     @Test
     void shouldCreateSavingAccount() {
