@@ -1,24 +1,31 @@
 package com.acme.banking.dbo;
 
 import java.util.Random;
+import java.util.stream.Stream;
 
 import com.acme.banking.dbo.domain.Client;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assumptions.*;
-
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 
 @DisplayName("Test suite")
 public class ClientTest {
 
-    private final Random RANDOM = new Random();
+    private static final Random RANDOM = new Random();
 
     @Test @Disabled("temporary disabled")
     @DisplayName("Test case")
@@ -56,32 +63,26 @@ public class ClientTest {
         //endregion
     }
 
-    @Test
-    public void shouldStoreIdAndNameWhenNonEmptyNameAndNonNegativeId(){
+    @ParameterizedTest
+    @MethodSource("validArgumentsForClientIdAndName")
+    public void shouldStoreIdAndNameWhenNonEmptyNameAndNonNegativeId(int id, String name){
         //given
-        int id = RANDOM.nextInt(2147483647);
-        String name = "test";
 
         //when
         Client sut = new Client(id, name);
 
         //then
-        assertEquals(id, sut.getId());
-        assertEquals(name, sut.getName());
+        assertAll(
+                () -> assertEquals(id, sut.getId()),
+                () -> assertEquals(name, sut.getName())
+        );
     }
 
-    @Test
-    public void shouldStoreIdAndNameWhenNonEmptyNameAndIdZero(){
-        //given
-        int id = 0;
-        String name = "test";
-
-        //when
-        Client sut = new Client(id, name);
-
-        //then
-        assertEquals(id, sut.getId());
-        assertEquals(name, sut.getName());
+    static Stream<Arguments> validArgumentsForClientIdAndName() {
+        return Stream.of(
+                arguments(RANDOM.nextInt(2147483647), "test name"),
+                arguments(0, "test name")
+        );
     }
 
     @Test
@@ -91,49 +92,26 @@ public class ClientTest {
         String name = "test";
 
         //when
-        IllegalArgumentException thrown = assertThrows(
-                IllegalArgumentException.class,
-                () -> new Client(id, name),
-                "Expected new object but was thrown exception"
-        );
 
         //then
-        assertTrue(thrown.getMessage().contentEquals("id should not be less than 0"));
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> new Client(id, name))
+                .withMessage("id should not be less than 0");
     }
 
-
-    @Test
-    public void shouldGetIllegalArgumentExceptionWhenNameIsNull(){
+    @ParameterizedTest
+    @NullAndEmptySource
+    @ValueSource(strings = { "", "  ", "\t", "\n" })
+    public void shouldGetIllegalArgumentExceptionWhenNameIsEmptyOrNull(String name){
         //given
         int id = RANDOM.nextInt(2147483647);
-        String name = null;
 
         //when
-        IllegalArgumentException thrown = assertThrows(
-                IllegalArgumentException.class,
-                () -> new Client(id, name),
-                "Expected new object but was thrown exception"
-        );
 
         //then
-        assertTrue(thrown.getMessage().contentEquals("name should not be null or empty"));
-    }
-
-    @Test
-    public void shouldGetIllegalArgumentExceptionWhenNameIsEmpty(){
-        //given
-        int id = RANDOM.nextInt(2147483647);
-        String name = "";
-
-        //when
-        IllegalArgumentException thrown = assertThrows(
-                IllegalArgumentException.class,
-                () -> new Client(id, name),
-                "Expected new object but was thrown exception"
-        );
-
-        //then
-        assertTrue(thrown.getMessage().contentEquals("name should not be null or empty"));
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> new Client(id, name))
+                .withMessage("name should not be null or empty");
     }
 
 }

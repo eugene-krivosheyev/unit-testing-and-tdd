@@ -13,7 +13,7 @@ public class Client {
         if (id < 0 ) {
             throw new IllegalArgumentException("id should not be less than 0");
         }
-        if (name == null || name.isEmpty()) {
+        if (name == null || name.trim().isEmpty()) {
             throw new IllegalArgumentException("name should not be null or empty");
         }
         this.id = id;
