@@ -6,6 +6,7 @@ import com.acme.banking.dbo.domain.SavingAccount;
 public class TestData {
     public static final int VALID_ID_1 = 1;
     public static final int VALID_ID_0 = 0;
+    public static final int INCORRECT_ID = -1;
     public static final double VALID_AMOUNT_0 = 0.0;
     public static final double VALID_AMOUNT_1 = 1.0;
     public static final String VALID_CLIENT_NAME = "dummy_name";
