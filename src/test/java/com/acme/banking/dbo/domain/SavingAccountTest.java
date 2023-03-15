@@ -8,38 +8,38 @@ import org.junit.jupiter.params.provider.CsvSource;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class SavingAccountTest {
-    private static final Client CLIENT = new Client(200, "Ivan");
-    private static final double AMOUNT = 100.24;
-    private static final int ACCOUNT_ID = 100;
+    private static final Client VALID_CLIENT = new Client(200, "Ivan");
+    private static final double VALID_AMOUNT = 100.24;
+    private static final int VALID_ACCOUNT_ID = 100;
 
     @ParameterizedTest
     @CsvSource(delimiter = '|', value = {
             "0  |0",
             "1  |0",
             "1  |1"})
-    void shouldCreateSavingAccountWhenValidParams(int accountId, double amount) {
-        SavingAccount savingAccount = new SavingAccount(accountId, CLIENT, amount);
+    void shouldCreateSavingAccountWhenValidParams(int validAccountId, double validAmount) {
+        SavingAccount savingAccount = new SavingAccount(validAccountId, VALID_CLIENT, validAmount);
 
-        Assertions.assertEquals(accountId, savingAccount.getId());
-        Assertions.assertEquals(CLIENT.getId(), savingAccount.getClient().getId());
-        Assertions.assertEquals(CLIENT.getName(), savingAccount.getClient().getName());
-        Assertions.assertEquals(amount, savingAccount.getAmount());
+        Assertions.assertEquals(validAccountId, savingAccount.getId());
+        Assertions.assertEquals(VALID_CLIENT.getId(), savingAccount.getClient().getId());
+        Assertions.assertEquals(VALID_CLIENT.getName(), savingAccount.getClient().getName());
+        Assertions.assertEquals(validAmount, savingAccount.getAmount());
     }
 
     @Test
     void shouldThrowWhenNegativeAccountId() {
-        int accountId = -100;
-        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(accountId, CLIENT, AMOUNT));
+        int invalidAccountId = -1;
+        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(invalidAccountId, VALID_CLIENT, VALID_AMOUNT));
     }
 
     @Test
     void shouldThrowWhenClientIsNull() {
-        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(ACCOUNT_ID, null, AMOUNT));
+        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(VALID_ACCOUNT_ID, null, VALID_AMOUNT));
     }
 
     @Test
     void shouldThrowWhenNegativeAmount() {
-        double amount = -100;
-        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(ACCOUNT_ID, CLIENT, amount));
+        double invalidAmount = -1;
+        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(VALID_ACCOUNT_ID, VALID_CLIENT, invalidAmount));
     }
 }

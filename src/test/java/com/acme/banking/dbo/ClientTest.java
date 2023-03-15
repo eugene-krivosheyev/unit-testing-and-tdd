@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 @DisplayName("Test suite")
 public class ClientTest {
-    private static final String CLIENT_NAME = "Ivan";
+    private static final String VALID_CLIENT_NAME = "Ivan";
 
     @Test
     @Disabled("temporary disabled")
@@ -65,15 +65,15 @@ public class ClientTest {
 
     @Test
     void shouldThrowWhenNegativeId() {
-        assertThrows(IllegalArgumentException.class, () -> new Client(-100, CLIENT_NAME));
+        assertThrows(IllegalArgumentException.class, () -> new Client(-100, VALID_CLIENT_NAME));
     }
 
     @ParameterizedTest
     @ValueSource(ints = {0, 1})
     void shouldCreateClientWhenValidParams(int clientId) {
-        Client client = new Client(clientId, CLIENT_NAME);
+        Client client = new Client(clientId, VALID_CLIENT_NAME);
 
-        Assertions.assertEquals(CLIENT_NAME, client.getName());
+        Assertions.assertEquals(VALID_CLIENT_NAME, client.getName());
         Assertions.assertEquals(clientId, client.getId());
     }
 }
