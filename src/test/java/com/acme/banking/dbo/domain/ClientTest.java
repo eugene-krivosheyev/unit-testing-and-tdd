@@ -24,7 +24,7 @@ import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
 public class ClientTest {
 
     @Test
-    void shouldAddAccountWhenValidAccount() {
+    void shouldStoreAccountWhenAddAccount() {
         Client client = new Client(1, "1");
         SavingAccount savingAccount = new SavingAccount(1, client, 1);
 
