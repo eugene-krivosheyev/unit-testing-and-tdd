@@ -104,7 +104,7 @@ class ClientTest {
                 .describedAs("Account collection should be equal 0 before adding new one")
                 .hasSize(0);
 
-        assertThrows(IllegalArgumentException.class, () -> sut.addAccount(dummyAccount));
+        assertThrows(IllegalStateException.class, () -> sut.addAccount(dummyAccount));
 
     }
 

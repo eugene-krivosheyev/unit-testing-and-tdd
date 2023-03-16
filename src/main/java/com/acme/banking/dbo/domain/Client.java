@@ -23,7 +23,7 @@ public class Client {
 
     public void addAccount(Account account) {
         if (account == null) throw new IllegalArgumentException("Account is not valid");
-        if (!account.getClient().equals(this)) throw new IllegalArgumentException("Client is not valid");
+        if (!account.getClient().equals(this)) throw new IllegalStateException("Client is not valid");
         this.accounts.add(account);
     }
 
