@@ -2,15 +2,29 @@ package com.acme.banking.dbo.domain;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
 
-import static com.acme.banking.dbo.TestData.INCORRECT_ID;
-import static com.acme.banking.dbo.TestData.VALID_CLIENT_NAME;
+import java.util.stream.Stream;
+
+import static com.acme.banking.dbo.TestData.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class CreateClientTest {
+
+    private static Stream<Arguments> incorrectAddAccountArguments() {
+        return Stream.of(
+                Arguments.of(
+                        new SavingAccount(VALID_ID_1, CLIENT_SUT, CORRECT_AMOUNT_1), "AccountBelongsAnotherClient"
+                ),
+                Arguments.of(
+                        null, "AccountIsNull"
+                )
+        );
+    }
 
     @Test
     public void shouldNotCreateNewClientWhenIdNegative() {
@@ -31,5 +45,13 @@ public class CreateClientTest {
         assertThat(sut)
                 .hasFieldOrPropertyWithValue("id", id)
                 .hasFieldOrPropertyWithValue("name", name);
+    }
+
+    @ParameterizedTest(name = "{1}")
+    @MethodSource("incorrectAddAccountArguments")
+    public void shouldThrowWhenAddIncorrectAccount(Account account, String testName) {
+        Client client = new Client(VALID_ID_0, VALID_CLIENT_NAME);
+
+        assertThrows(IllegalStateException.class, () -> client.addAccount(account));
     }
 }

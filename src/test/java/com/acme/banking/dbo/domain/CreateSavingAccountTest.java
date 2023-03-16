@@ -15,17 +15,6 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 public class CreateSavingAccountTest {
 
-    private static Stream<Arguments> incorrectAddAccountArguments() {
-        return Stream.of(
-                Arguments.of(
-                        new SavingAccount(VALID_ID_1, CLIENT_SUT, CORRECT_AMOUNT_1), "AccountBelongsAnotherClient"
-                ),
-                Arguments.of(
-                        null, "AccountIsNull"
-                )
-        );
-    }
-
     private static Stream<Arguments> successAccountArguments() {
         return Stream.of(
                 Arguments.of(
@@ -82,14 +71,6 @@ public class CreateSavingAccountTest {
                 .hasSize(1)
         ;
 
-    }
-
-    @ParameterizedTest(name = "{1}")
-    @MethodSource("incorrectAddAccountArguments")
-    public void shouldThrowWhenAddIncorrectAccount(Account account, String testName) {
-        Client client = new Client(VALID_ID_0, VALID_CLIENT_NAME);
-
-        assertThrows(IllegalStateException.class, () -> client.addAccount(account));
     }
 
 }
