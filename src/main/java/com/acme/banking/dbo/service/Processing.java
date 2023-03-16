@@ -7,7 +7,6 @@ import com.acme.banking.dbo.domain.Client;
 import java.util.Collection;
 
 public class Processing {
-
     public Client createClient(String name) {
         return null; //TODO
     }
