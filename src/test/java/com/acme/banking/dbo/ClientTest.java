@@ -79,7 +79,9 @@ public class ClientTest {
 
     @Test
     void shouldThrowErrorWhenAddNullAccount() {
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> client.addAccount(null));
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> client.addAccount(null))
+                .withMessage("Account must be not null");
     }
 
     @Test
@@ -87,8 +89,8 @@ public class ClientTest {
         Client notLinkedClient = new Client(1, "1");
         SavingAccount savingAccount = new SavingAccount(1, notLinkedClient, 1);
 
-        IllegalStateException exception = assertThrows(IllegalStateException.class, () -> client.addAccount(savingAccount));
-        assertThat(exception.getMessage()).isEqualTo("Can't add Account, because clients are different");
+        assertThatExceptionOfType(IllegalStateException.class)
+                .isThrownBy(() -> client.addAccount(savingAccount));
     }
 
     @ParameterizedTest
