@@ -2,8 +2,7 @@ package com.acme.banking.dbo.domain;
 
 import java.util.stream.Stream;
 
-import com.acme.banking.dbo.domain.Client;
-import org.junit.jupiter.api.Assertions;
+import org.assertj.core.api.AbstractThrowableAssert;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,14 +15,43 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assumptions.*;
 
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.*;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
 
 
 @DisplayName("Test suite")
 public class ClientTest {
-    @Test @Disabled("temporary disabled")
+
+    @Test
+    void shouldAddAccountWhenValidAccount() {
+        Client client = new Client(1, "1");
+        SavingAccount savingAccount = new SavingAccount(1, client, 1);
+
+        client.addAccount(savingAccount);
+
+        assertThat(client.getAccounts()).hasSize(1);
+        assertThat(client.getAccounts()).contains(savingAccount);
+    }
+
+    @Test
+    void shouldThrowErrorWhenAddNullAccount() {
+        Client client = new Client(1, "1");
+
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> client.addAccount(null));
+    }
+
+    @Test
+    void shouldThrowErrorWhenAddAccountWithNotLinkedClient() {
+        Client notLinkedClient = new Client(1, "1");
+        Client client = new Client(0, "0");
+
+        SavingAccount savingAccount = new SavingAccount(1, notLinkedClient, 1);
+
+        assertThrows(IllegalArgumentException.class, () -> client.addAccount(savingAccount));
+    }
+
+    @Test
     @DisplayName("Test case")
     public void shouldStorePropertiesWhenCreated() {
         //region given
@@ -33,7 +61,7 @@ public class ClientTest {
 
         //region when
         Client sut = new Client(clientId, clientName);
-        assumeTrue(sut != null);
+        assumeTrue(true);
         //endregion
 
         //region then
@@ -44,15 +72,15 @@ public class ClientTest {
         );
 
         //Hamcrest:
-        assertThat(sut,
-            allOf(
-                hasProperty("id", notNullValue()),
-                hasProperty("id", equalTo(clientId)),
-                hasProperty("name", is(clientName))
-        ));
+        org.hamcrest.MatcherAssert.assertThat(sut,
+                allOf(
+                        hasProperty("id", notNullValue()),
+                        hasProperty("id", equalTo(clientId)),
+                        hasProperty("name", is(clientName))
+                ));
 
         //AssertJ:
-        org.assertj.core.api.Assertions.assertThat(sut)
+        assertThat(sut)
                 .hasFieldOrPropertyWithValue("id", clientId)
                 .hasFieldOrPropertyWithValue("name", clientName);
         //also take a look at `extracting()` https://stackoverflow.com/a/51812188
@@ -61,11 +89,11 @@ public class ClientTest {
 
     @ParameterizedTest
     @MethodSource
-    void shouldThrowExceptionWhenInvalidParams(int id, String name) {
-        assertThrows(IllegalArgumentException.class, ()-> new Client(id, name));
+    void shouldThrowErrorWhenInvalidParams(int id, String name) {
+        assertThrows(IllegalArgumentException.class, () -> new Client(id, name));
     }
 
-    private static Stream<Arguments> shouldThrowExceptionWhenInvalidParams() {
+    private static Stream<Arguments> shouldThrowErrorWhenInvalidParams() {
         return Stream.of(
                 Arguments.of(-1, "1"),
                 Arguments.of(0, ""),
@@ -88,4 +116,5 @@ public class ClientTest {
                 Arguments.of(1, "12")
         );
     }
+
 }
