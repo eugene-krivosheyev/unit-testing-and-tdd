@@ -3,6 +3,8 @@ package com.acme.banking.dbo.domain;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import static java.util.Collections.unmodifiableCollection;
+
 public class Client {
 
     private int id;
@@ -36,7 +38,7 @@ public class Client {
     }
 
     public Collection<Account> getAccounts() {
-        return new ArrayList<>(accounts);
+        return unmodifiableCollection(accounts);
     }
 
 }
