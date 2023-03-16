@@ -8,10 +8,23 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 
 import static com.acme.banking.dbo.TestData.*;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 public class CreateSavingAccountTest {
+
+    private static Stream<Arguments> incorrectAddAccountArguments() {
+        return Stream.of(
+                Arguments.of(
+                        new SavingAccount(VALID_ID_1, CLIENT_SUT, CORRECT_AMOUNT_1), "AccountBelongsAnotherClient"
+                ),
+                Arguments.of(
+                        null, "AccountIsNull"
+                )
+        );
+    }
 
     private static Stream<Arguments> successAccountArguments() {
         return Stream.of(
@@ -57,19 +70,26 @@ public class CreateSavingAccountTest {
 
     @Test
     public void shouldAddNewAccountIntoClientAccountsWhenAccountCreated() {
-        SavingAccount sut = new SavingAccount(VALID_ID_1, CLIENT_SUT, CORRECT_AMOUNT_1);
+        Client sutClient = new Client(VALID_ID_1, VALID_CLIENT_NAME);
 
-        assertAll(
-                () -> assertTrue(CLIENT_SUT.getAccounts().contains(sut))
-        );
+        assumeTrue(sutClient.getAccounts().size() == 0);
+
+        SavingAccount sutAccount = assertDoesNotThrow(() -> new SavingAccount(VALID_ID_1, sutClient, CORRECT_AMOUNT_1));
+
+        assertThat(sutClient.getAccounts())
+                .filteredOn(account -> account.equals(sutAccount))
+                .filteredOn(account -> account.getClient().equals(sutClient))
+                .hasSize(1)
+        ;
+
     }
 
-    @Test
-    public void shouldThrowWhenAccountBelongsAnotherClient() {
-        SavingAccount sut = new SavingAccount(VALID_ID_1, CLIENT_SUT, CORRECT_AMOUNT_1);
+    @ParameterizedTest(name = "{1}")
+    @MethodSource("incorrectAddAccountArguments")
+    public void shouldThrowWhenAddIncorrectAccount(Account account, String testName) {
         Client client = new Client(VALID_ID_0, VALID_CLIENT_NAME);
 
-        assertThrows(IllegalArgumentException.class, () -> client.addAccount(sut));
+        assertThrows(IllegalStateException.class, () -> client.addAccount(account));
     }
 
 }

@@ -2,7 +2,6 @@ package com.acme.banking.dbo.domain;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 public class Client {
     private final int id;
@@ -26,13 +25,12 @@ public class Client {
     }
 
     public void addAccount(Account account) {
-        if (account.getClient() != this) {
-            throw new IllegalArgumentException("Account belongs another client");
-        }
+        if (account == null) throw new IllegalStateException("Account is null");
+        if (!account.getClient().equals(this)) throw new IllegalStateException("Account belongs another client");
         accounts.add(account);
     }
 
     public Collection<Account> getAccounts() {
-        return List.copyOf(accounts);
+        return new ArrayList<>(accounts);
     }
 }
