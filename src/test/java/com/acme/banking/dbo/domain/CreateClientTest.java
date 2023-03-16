@@ -19,7 +19,7 @@ public class CreateClientTest {
 
     @ParameterizedTest(name = "{2}")
     @CsvSource({"1,,NULL_NAME", "1,'',EMPTY_NAME"})
-    public void shouldNotCreateNewClientWhenNameEmpty(int id, String name, String test) {
+    public void shouldNotCreateNewClientWhenNameIncorrect(int id, String name, String testName) {
         assertThrows(IllegalArgumentException.class, () -> new Client(id, name));
     }
 
