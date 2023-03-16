@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class Client {
-    private int id;
-    private String name;
+    private final int id;
+    private final String name;
     private Collection<Account> accounts = new ArrayList<>(); //TODO
 
     public Client(int id, String name) {
@@ -30,5 +30,19 @@ public class Client {
 
     public String getName() {
         return name;
+    }
+
+    public Collection<Account> getAccounts() {
+        return accounts;
+    }
+
+    public void addAccount(Account account) {
+        if (account == null) {
+            throw new IllegalArgumentException("Account must be not null");
+        }
+        if (!account.getClient().equals(this)) {
+            throw new IllegalStateException("Can't add Account, because clients are different");
+        }
+        accounts.add(account);
     }
 }

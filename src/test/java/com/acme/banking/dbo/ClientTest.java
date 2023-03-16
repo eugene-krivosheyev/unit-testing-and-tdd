@@ -1,15 +1,14 @@
 package com.acme.banking.dbo;
 
 import com.acme.banking.dbo.domain.Client;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import com.acme.banking.dbo.domain.SavingAccount;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,6 +18,15 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
 @DisplayName("Test suite")
 public class ClientTest {
     private static final String VALID_CLIENT_NAME = "Ivan";
+    private static final int VALID_CLIENT_ID = 1;
+
+    Client client;
+
+    @BeforeEach
+    void init() {
+        client = new Client(VALID_CLIENT_ID, VALID_CLIENT_NAME);
+    }
+
 
     @Test
     @Disabled("temporary disabled")
@@ -42,7 +50,7 @@ public class ClientTest {
         );
 
         //Hamcrest:
-        assertThat(sut,
+        org.hamcrest.MatcherAssert.assertThat(sut,
                 allOf(
                         hasProperty("id", notNullValue()),
                         hasProperty("id", equalTo(clientId)),
@@ -50,11 +58,37 @@ public class ClientTest {
                 ));
 
         //AssertJ:
-        org.assertj.core.api.Assertions.assertThat(sut)
+        assertThat(sut)
+                .hasFieldOrPropertyWithValue("id", clientId)
                 .hasFieldOrPropertyWithValue("id", clientId)
                 .hasFieldOrPropertyWithValue("name", clientName);
         //also take a look at `extracting()` https://stackoverflow.com/a/51812188
         //endregion
+    }
+
+    @Test
+    void shouldAddAccountWhenComeValidAccount() {
+        SavingAccount savingAccount = new SavingAccount(1, client, 1);
+
+        client.addAccount(savingAccount);
+
+        assertThat(client.getAccounts())
+                .hasSize(1)
+                .contains(savingAccount);
+    }
+
+    @Test
+    void shouldThrowErrorWhenAddNullAccount() {
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> client.addAccount(null));
+    }
+
+    @Test
+    void shouldThrowErrorWhenAddAccountWithNotLinkedClient() {
+        Client notLinkedClient = new Client(1, "1");
+        SavingAccount savingAccount = new SavingAccount(1, notLinkedClient, 1);
+
+        IllegalStateException exception = assertThrows(IllegalStateException.class, () -> client.addAccount(savingAccount));
+        assertThat(exception.getMessage()).isEqualTo("Can't add Account, because clients are different");
     }
 
     @ParameterizedTest
