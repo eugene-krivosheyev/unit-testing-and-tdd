@@ -11,7 +11,7 @@ public class Client {
 
     public Client(int id, String name) {
 
-        if (id < 0) throw new IllegalArgumentException(String.format("Client id is not valid. %d", id));
+        if (id <= 0) throw new IllegalArgumentException(String.format("Client id is not valid. %d", id));
         if (name == null || name.isEmpty())
             throw new IllegalArgumentException(String.format("Client name is not valid %s", name));
 

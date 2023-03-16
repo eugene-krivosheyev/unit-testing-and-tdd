@@ -11,13 +11,13 @@ class SavingAccountTest {
 
 
   @Test
-  void shouldCreateSavingAccountWhenAccountIdAndAmountArePositiveAndClientIsValid() {
+  void shouldCreateSavingAccountWhenAccountIdAndAmountNonNegativeAndClientIsValid() {
 
     String dummyClientName = "dummy client name";
 
     int dummyClientId = 1;
     int accountId = 1;
-    double accountAmount = 10d;
+    double accountAmount = 0d;
 
     Client dummyClient = new Client(dummyClientId, dummyClientName);
     Account sut = new SavingAccount(accountId, dummyClient, accountAmount);
@@ -30,10 +30,10 @@ class SavingAccountTest {
   }
 
   @Test
-  void shouldShowArgumentErrorWhenAccountIdIsNegative() {
+  void shouldShowArgumentErrorWhenAccountIdIsZero() {
 
-    int dummyAccountId = -1;
-    double dummyAccountAmount = 1d;
+    int dummyAccountId = 0;
+    double dummyAccountAmount = 0d;
     Client dummyClient = new Client(1, "dummy client name");
 
     assertThrows(IllegalArgumentException.class,

@@ -1,4 +1,4 @@
-package com.acme.banking.dbo;
+package com.acme.banking.dbo.domain;
 
 import com.acme.banking.dbo.domain.Account;
 import com.acme.banking.dbo.domain.Client;
@@ -30,9 +30,9 @@ class ClientTest {
     }
 
     @Test
-    void shouldNotCreateClientAndShowErrorWhenIdIsNegative() {
+    void shouldNotCreateClientAndShowErrorWhenIdIsZero() {
 
-        int dummyClientId = -1;
+        int dummyClientId = 0;
         String dummyClientName = "dummy test client";
 
         assertThrows(IllegalArgumentException.class, () -> new Client(dummyClientId, dummyClientName));
