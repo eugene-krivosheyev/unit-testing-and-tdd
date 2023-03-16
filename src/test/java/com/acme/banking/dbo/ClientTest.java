@@ -10,34 +10,32 @@ import com.acme.banking.dbo.domain.SavingAccount;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-@DisplayName("Client test cases")
-public class ClientTest {
+@DisplayName("Create client test cases")
+class ClientTest {
 
   @Test
   void shouldCreateClientWhenIdIsPositiveAndNameIsNotNullAndNotEmpty() {
 
-    int clientId = 1;
-    String clientName = "test client";
+    int dummyClientId = 1;
+    String dummyClientName = "dummy test client";
 
-    Client sut = new Client(clientId, clientName);
+    Client sut = new Client(dummyClientId, dummyClientName);
 
-    assertThat(sut.getId())
-        .describedAs("Client id should be equal %s", clientId)
-        .isEqualTo(clientId);
-
-    assertThat(sut.getName())
-        .describedAs("Client name should be equal %s", clientName)
-        .isEqualTo(clientName);
+    assertThat(sut)
+        .hasFieldOrPropertyWithValue("id", dummyClientId)
+        .describedAs("Client id should be equal %s", dummyClientId)
+        .hasFieldOrPropertyWithValue("name", dummyClientName)
+        .describedAs("Client name should be equal %s", dummyClientName);
 
   }
 
   @Test
   void shouldNotCreateClientAndShowErrorWhenIdIsNegative() {
 
-    int clientId = -1;
-    String clientName = "test client";
+    int dummyClientId = -1;
+    String dummyClientName = "dummy test client";
 
-    assertThrows(IllegalArgumentException.class, () -> new Client(clientId, clientName));
+    assertThrows(IllegalArgumentException.class, () -> new Client(dummyClientId, dummyClientName));
 
   }
 
@@ -54,37 +52,59 @@ public class ClientTest {
   @Test
   void shouldNotCreateClientAndShowErrorWhenNameIsEmpty() {
 
-    int clientId = 1;
-    String clientName = "";
+    int dummyClientId = 1;
+    String dummyClientName = "";
 
-    assertThrows(IllegalArgumentException.class, () -> new Client(clientId, clientName));
+    assertThrows(IllegalArgumentException.class, () -> new Client(dummyClientId, dummyClientName));
 
   }
 
   @Test
   void shouldAddAccountToClientAccountsWhenAccountIsNonNull() {
 
-    Client client = new Client(1, "test name");
-    Account account = new SavingAccount(1, client, 10d);
+    Client sut = new Client(1, "dummy test name");
+    Account dummyAccount = new SavingAccount(1, sut, 10d);
 
-    assumeThat(client.getAccounts().size()).isEqualTo(0);
+    assumeThat(sut.getAccounts())
+        .describedAs("Account collection should be equal 0 before adding new one")
+        .hasSize(0);
 
-    client.addAccount(account);
+    sut.addAccount(dummyAccount);
 
-    assertThat(client.getAccounts().size())
-        .isEqualTo(1);
+    assertThat(sut.getAccounts())
+        .describedAs("Account collection should be equal 1 before adding new one")
+        .hasSize(1);
 
   }
 
   @Test
   void shouldShowErrorWhenAddNullAccountToClient() {
 
-    Client client = new Client(1, "test name");
+    Client sut = new Client(1, "dummy test name");
     Account nullAccount = null;
 
-    assumeThat(client.getAccounts().size()).isEqualTo(0);
+    assumeThat(sut.getAccounts())
+        .describedAs("Account collection should be equal 0 before adding new one")
+        .hasSize(0);
 
-    assertThrows(IllegalArgumentException.class, () -> client.addAccount(nullAccount));
+    assertThrows(IllegalArgumentException.class, () -> sut.addAccount(nullAccount));
+
+  }
+
+  @Test
+  void shouldShowErrorWhenAddAccountWithDifferentClient() {
+
+    Client sut = new Client(1, "dummy test name");
+
+    Client dummyDifferentClient = new Client(2, "different dummy test name");
+
+    Account dummyAccount = new SavingAccount(1, dummyDifferentClient, 1d);
+
+    assumeThat(sut.getAccounts())
+        .describedAs("Account collection should be equal 0 before adding new one")
+        .hasSize(0);
+
+    assertThrows(IllegalArgumentException.class, () -> sut.addAccount(dummyAccount));
 
   }
 

@@ -1,63 +1,66 @@
 package com.acme.banking.dbo.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+@DisplayName("Saving account test cases")
 class SavingAccountTest {
 
 
   @Test
   void shouldCreateSavingAccountWhenAccountIdAndAmountArePositiveAndClientIsValid() {
 
-    String clientName = "dummy client name";
+    String dummyClientName = "dummy client name";
 
-    int clientId = 1;
+    int dummyClientId = 1;
     int accountId = 1;
     double accountAmount = 10d;
 
-    Client client = new Client(clientId, clientName);
-    Account account = new SavingAccount(accountId, client, accountAmount);
+    Client dummyClient = new Client(dummyClientId, dummyClientName);
+    Account sut = new SavingAccount(accountId, dummyClient, accountAmount);
 
-    assertThat(account.getId()).isEqualTo(clientId);
-    assertThat(account.getAmount()).isEqualTo(accountAmount);
-    assertThat(account.getClient()).isEqualTo(client);
+    assertThat(sut)
+        .hasFieldOrPropertyWithValue("id", dummyClientId)
+        .hasFieldOrPropertyWithValue("amount", accountAmount)
+        .hasFieldOrPropertyWithValue("client", dummyClient);
 
   }
 
   @Test
   void shouldShowArgumentErrorWhenAccountIdIsNegative() {
 
-    int accountId = -1;
-    double accountAmount = 10d;
-    Client client = new Client(1, "dummy client name");
+    int dummyAccountId = -1;
+    double dummyAccountAmount = 1d;
+    Client dummyClient = new Client(1, "dummy client name");
 
-    Assertions.assertThrows(IllegalArgumentException.class,
-        () -> new SavingAccount(accountId, client, accountAmount));
+    assertThrows(IllegalArgumentException.class,
+        () -> new SavingAccount(dummyAccountId, dummyClient, dummyAccountAmount));
 
   }
 
   @Test
   void shouldShowArgumentErrorWhenAccountAmountIsNegative() {
 
-    int accountId = 1;
-    double accountAmount = -1d;
-    Client client = new Client(1, "dummy client name");
+    int dummyAccountId = 1;
+    double dummyAccountAmount = -1d;
+    Client dummyClient = new Client(1, "dummy client name");
 
-    Assertions.assertThrows(IllegalArgumentException.class,
-        () -> new SavingAccount(accountId, client, accountAmount));
+    assertThrows(IllegalArgumentException.class,
+        () -> new SavingAccount(dummyAccountId, dummyClient, dummyAccountAmount));
 
   }
 
   @Test
   void shouldShowArgumentErrorWhenClientIsNull() {
 
-    int accountId = 1;
-    double accountAmount = 10d;
+    int dummyAccountId = 1;
+    double dummyAccountAmount = 1d;
 
-    Assertions.assertThrows(IllegalArgumentException.class,
-        () -> new SavingAccount(accountId, null, accountAmount));
+    assertThrows(IllegalArgumentException.class,
+        () -> new SavingAccount(dummyAccountId, null, dummyAccountAmount));
 
   }
 

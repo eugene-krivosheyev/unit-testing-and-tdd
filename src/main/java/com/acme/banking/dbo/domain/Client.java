@@ -21,11 +21,15 @@ public class Client {
     this.id = id;
     this.name = name;
     this.accounts = new ArrayList<>();
+
   }
 
   public void addAccount(Account account) {
     if (account == null) {
       throw new IllegalArgumentException("Account is not valid");
+    }
+    if (!account.getClient().equals(this)) {
+      throw new IllegalArgumentException("Client is not valid");
     }
     this.accounts.add(account);
   }
