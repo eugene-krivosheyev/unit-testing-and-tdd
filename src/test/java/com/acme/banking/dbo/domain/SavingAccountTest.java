@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-@DisplayName("Saving account test cases")
+@DisplayName("Create saving account")
 class SavingAccountTest {
 
 
@@ -16,16 +16,16 @@ class SavingAccountTest {
     String dummyClientName = "dummy client name";
 
     int dummyClientId = 1;
-    int accountId = 1;
-    double accountAmount = 0d;
+    int dummyAccountId = 1;
+    double dummyAccountAmount = 0.0d;
 
     Client dummyClient = new Client(dummyClientId, dummyClientName);
-    Account sut = new SavingAccount(accountId, dummyClient, accountAmount);
+    Account sut = new SavingAccount(dummyAccountId, dummyClient, dummyAccountAmount);
 
     assertThat(sut)
         .hasFieldOrPropertyWithValue("id", dummyClientId)
-        .hasFieldOrPropertyWithValue("amount", accountAmount)
-        .hasFieldOrPropertyWithValue("client", dummyClient);
+        .hasFieldOrPropertyWithValue("client", dummyClient)
+        .hasFieldOrPropertyWithValue("amount", dummyAccountAmount);
 
   }
 
