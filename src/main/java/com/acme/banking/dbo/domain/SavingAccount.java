@@ -3,7 +3,7 @@ package com.acme.banking.dbo.domain;
 public class SavingAccount implements Account {
     private final int id;
     private final Client client;
-    private final double amount;
+    private double amount;
 
     public SavingAccount(int id, Client client, double amount) {
         if ( id < 0 ) {
@@ -34,5 +34,10 @@ public class SavingAccount implements Account {
     @Override
     public Client getClient() {
         return client;
+    }
+
+    @Override
+    public void setAmount(double amount) {
+        this.amount = amount;
     }
 }
