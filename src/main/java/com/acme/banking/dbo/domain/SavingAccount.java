@@ -3,12 +3,12 @@ package com.acme.banking.dbo.domain;
 public class SavingAccount implements Account {
     private final int id;
     private final Client client;
-    private final double amount;
+    private double amount;
 
     public SavingAccount(int id, Client client, double amount) {
-        if (id<0) throw new IllegalArgumentException();
+        if (id < 0) throw new IllegalArgumentException();
         if (client == null) throw new IllegalArgumentException();
-        if (amount <0) throw new IllegalArgumentException();
+        if (amount < 0) throw new IllegalArgumentException();
         this.id = id;
         this.client = client;
         this.amount = amount;
@@ -28,5 +28,18 @@ public class SavingAccount implements Account {
     @Override
     public Client getClient() {
         return client;
+    }
+
+    @Override
+    public void withdraw(double amount) {
+        if (amount > this.amount) {
+            throw new RuntimeException("Amount not enough");
+        }
+        this.amount = this.amount - amount;
+    }
+
+    @Override
+    public void deposit(double amount) {
+        this.amount = this.amount + amount;
     }
 }
