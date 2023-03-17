@@ -1,6 +1,5 @@
 package com.acme.banking.dbo;
 
-import java.util.Random;
 import java.util.stream.Stream;
 
 import com.acme.banking.dbo.domain.Client;
@@ -11,13 +10,13 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 public class SavingAccountTest {
 
-    private static final Random RANDOM = new Random();
-    private static final Client VALID_CLIENT = new Client(RANDOM.nextInt(2147483647), "test");
+    private static final Client VALID_CLIENT = new Client(1, "test");
 
     @ParameterizedTest
     @MethodSource("validArgumentsForIdAndAmountAndClient")
@@ -26,7 +25,7 @@ public class SavingAccountTest {
         //given
 
         //when
-        SavingAccount sut = new SavingAccount(id, client, amount);
+        final SavingAccount sut = new SavingAccount(id, client, amount);
 
         //then
         assertAll(
@@ -38,17 +37,17 @@ public class SavingAccountTest {
 
     static Stream<Arguments> validArgumentsForIdAndAmountAndClient() {
         return Stream.of(
-                arguments(RANDOM.nextInt(2147483647), Math.random(), VALID_CLIENT),
-                arguments(0, Math.random(), VALID_CLIENT),
-                arguments(RANDOM.nextInt(2147483647), 0.0, VALID_CLIENT)
+                arguments(1, 1.00, VALID_CLIENT),
+                arguments(0, 1.00, VALID_CLIENT),
+                arguments(1, 0.00, VALID_CLIENT)
         );
     }
 
     @Test
     public void shouldThrowIllegalArgumentExceptionWhenIdIsNegative() {
         //given
-        int id = - (RANDOM.nextInt(2147483647));
-        double amount = Math.random();
+        final int id = - 1;
+        final double amount = 1.00;
 
         //when
 
@@ -61,8 +60,8 @@ public class SavingAccountTest {
     @Test
     public void shouldThrowIllegalArgumentExceptionWhenClientIsNull() {
         //given
-        int id = RANDOM.nextInt(2147483647);
-        double amount = Math.random();
+        final int id = 1;
+        final double amount = 1.00;
 
         //when
 
@@ -73,10 +72,10 @@ public class SavingAccountTest {
     }
 
     @Test
-    public void shouldThrowIllegalArgumentExceptionWhenAmountIsNagative() {
+    public void shouldThrowIllegalArgumentExceptionWhenAmountIsNegative() {
         //given
-        int id = RANDOM.nextInt(2147483647);
-        double amount = - (Math.random());
+        final int id = 1;
+        final double amount = - 1.00;
 
         //when
 

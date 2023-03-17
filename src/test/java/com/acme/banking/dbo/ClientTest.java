@@ -1,9 +1,9 @@
 package com.acme.banking.dbo;
 
-import java.util.Random;
 import java.util.stream.Stream;
 
 import com.acme.banking.dbo.domain.Client;
+import com.acme.banking.dbo.domain.SavingAccount;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,8 +24,6 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 @DisplayName("Test suite")
 public class ClientTest {
-
-    private static final Random RANDOM = new Random();
 
     @Test @Disabled("temporary disabled")
     @DisplayName("Test case")
@@ -80,7 +78,7 @@ public class ClientTest {
 
     static Stream<Arguments> validArgumentsForClientIdAndName() {
         return Stream.of(
-                arguments(RANDOM.nextInt(2147483647), "test name"),
+                arguments(1, "test name"),
                 arguments(0, "test name")
         );
     }
@@ -88,8 +86,8 @@ public class ClientTest {
     @Test
     public void shouldGetIllegalArgumentExceptionWhenIdIsNegative(){
         //given
-        int id = - (RANDOM.nextInt(2147483647) + 1) ;
-        String name = "test";
+        final int id = - 1 ;
+        final String name = "test";
 
         //when
 
@@ -104,7 +102,7 @@ public class ClientTest {
     @ValueSource(strings = { "", "  ", "\t", "\n" })
     public void shouldGetIllegalArgumentExceptionWhenNameIsEmptyOrNull(String name){
         //given
-        int id = RANDOM.nextInt(2147483647);
+        final int id = 1;
 
         //when
 
@@ -112,6 +110,40 @@ public class ClientTest {
         assertThatExceptionOfType(IllegalArgumentException.class)
                 .isThrownBy(() -> new Client(id, name))
                 .withMessage("name should not be null or empty");
+    }
+
+    @Test
+    public void shouldSaveAccountWhenTheAccountIsOwnedByCurrentClient(){
+        //given
+        final Client sut = new Client(1, "test");
+        final SavingAccount account = new SavingAccount(2, sut, 1.00);
+        final int initialSize = sut.getAccounts().size();
+
+        //when
+        sut.saveAccountForClient(account);
+
+        //then
+        assertAll(
+                () -> assertEquals(initialSize+1, sut.getAccounts().size()),
+                () -> assertTrue(sut.getAccounts().contains(account))
+        );
+    }
+
+    @Test
+    public void shouldGetIllegalArgumentExceptionWhenSavingAccountWithAnotherClient(){
+        //given
+        final int id = 1;
+        final double amount = 1.00;
+        final Client sut = new Client(1, "test");
+        final SavingAccount account = new SavingAccount(id, sut, amount);
+        final Client newClient = new Client(2, "new client");
+
+        //when
+
+        //then
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> newClient.saveAccountForClient(account))
+                .withMessage("The account belongs to another client");
     }
 
 }

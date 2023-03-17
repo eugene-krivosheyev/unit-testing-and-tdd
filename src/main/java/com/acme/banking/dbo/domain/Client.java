@@ -2,12 +2,13 @@ package com.acme.banking.dbo.domain;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 
 
 public class Client {
-    private int id;
-    private String name;
-    private Collection<Account> accounts = new ArrayList<>(); //TODO
+    private final int id;
+    private final String name;
+    private final Collection<Account> accounts = new ArrayList<>();
 
     public Client(int id, String name) {
         if (id < 0 ) {
@@ -26,5 +27,16 @@ public class Client {
 
     public String getName() {
         return name;
+    }
+
+    public Collection<Account> getAccounts() {
+        return Collections.unmodifiableCollection(accounts);
+    }
+
+    public void saveAccountForClient(Account account) {
+        if (!this.equals(account.getClient())) {
+            throw new IllegalArgumentException("The account belongs to another client");
+        }
+        accounts.add(account);
     }
 }

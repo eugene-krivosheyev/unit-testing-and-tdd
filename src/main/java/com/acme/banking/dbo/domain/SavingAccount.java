@@ -1,9 +1,9 @@
 package com.acme.banking.dbo.domain;
 
 public class SavingAccount implements Account {
-    private int id;
-    private Client client;
-    private double amount;
+    private final int id;
+    private final Client client;
+    private final double amount;
 
     public SavingAccount(int id, Client client, double amount) {
         if ( id < 0 ) {
@@ -18,6 +18,7 @@ public class SavingAccount implements Account {
         this.id = id;
         this.client = client;
         this.amount = amount;
+        client.saveAccountForClient(this);
     }
 
     @Override
