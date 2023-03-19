@@ -1,8 +1,5 @@
 package com.acme.banking.dbo.domain;
 
-import com.acme.banking.dbo.domain.Account;
-import com.acme.banking.dbo.domain.Client;
-import com.acme.banking.dbo.domain.SavingAccount;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -10,8 +7,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assumptions.assumeThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@DisplayName("Create client test cases")
-class ClientTest {
+@DisplayName("Client - create")
+class ClientCreateUnitTest {
 
     @Test
     void shouldCreateClientWhenIdIsPositiveAndNameIsNotNullAndNotEmpty() {
@@ -22,10 +19,10 @@ class ClientTest {
         Client sut = new Client(dummyClientId, dummyClientName);
 
         assertThat(sut)
-                .hasFieldOrPropertyWithValue("id", dummyClientId)
                 .describedAs("Client id should be equal %s", dummyClientId)
-                .hasFieldOrPropertyWithValue("name", dummyClientName)
-                .describedAs("Client name should be equal %s", dummyClientName);
+                .hasFieldOrPropertyWithValue("id", dummyClientId)
+                .describedAs("Client name should be equal %s", dummyClientName)
+                .hasFieldOrPropertyWithValue("name", dummyClientName);
 
     }
 
