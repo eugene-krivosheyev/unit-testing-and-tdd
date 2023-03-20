@@ -163,7 +163,6 @@ public class ProcessingTest {
     void shouldGiveIllegalArgumentExceptionWhenAccountFromDoesNotHaveEnoughAmount() {
         //given
         final double amountInAccountFrom = 10.00;
-        final double amountInAccountTo = 0.00;
         Account accountFrom = mock(Account.class);
         Account accountTo = mock(Account.class);
         when(mockAccountRepository.findAccountById(1)).thenReturn(accountFrom);
