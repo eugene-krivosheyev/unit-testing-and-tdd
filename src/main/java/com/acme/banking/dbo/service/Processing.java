@@ -8,9 +8,15 @@ import com.acme.banking.dbo.repository.ClientRepository;
 
 import java.util.Collection;
 
+
 public class Processing {
-    private ClientRepository clientRepository;
-    private AccountRepository accountRepository;
+    private final ClientRepository clientRepository;
+    private final AccountRepository accountRepository;
+
+    public Processing(ClientRepository clientRepository, AccountRepository accountRepository){
+        this.clientRepository = clientRepository;
+        this.accountRepository = accountRepository;
+    }
 
     public Client createClient(String name) {
         Client client = new Client(clientRepository.getLastClientId() + 1, name);
@@ -34,7 +40,7 @@ public class Processing {
         if(accountTo == null)
             throw new IllegalArgumentException("AccountTo does not exist");
         if(accountFrom.getAmount() - amount < 0)
-            throw new IllegalArgumentException("Amount not enought");
+            throw new IllegalArgumentException("Not enough amount in accountFrom");
         accountFrom.setAmount(accountFrom.getAmount() - amount);
         accountTo.setAmount(accountTo.getAmount() + amount);
         accountRepository.saveAccount(accountFrom);
