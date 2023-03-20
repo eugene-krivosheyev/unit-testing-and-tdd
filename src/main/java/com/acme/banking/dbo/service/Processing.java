@@ -27,8 +27,8 @@ public class Processing {
     }
 
     public void transfer(int fromAccountId, int toAccountId, double amount) {
-        Account accountTransfer = accountDao.selectById(fromAccountId);
-        Account accountReceive = accountDao.selectById(toAccountId);
+        Account accountTransfer = getAccountTransfer(fromAccountId);
+        Account accountReceive = getAccountTransfer(toAccountId);
 
         accountTransfer.minusCash(amount);
         accountReceive.plusCash(amount);
@@ -38,13 +38,22 @@ public class Processing {
 
     }
 
-    private Client getClient(int clientId){
+    private Account getAccountTransfer(int accountId) {
+        Account account = accountDao.selectById(accountId);
+        if (account == null) {
+            throw new IllegalArgumentException("Account not found by clientId=" + accountId);
+        }
+        return account;
+    }
+
+    private Client getClient(int clientId) {
         Client client = clientDao.selectClientById(clientId);
         if (client == null) {
             throw new IllegalArgumentException("Client not found by clientId=" + clientId);
         }
         return client;
     }
+
     public void cash(double amount, int fromAccountId) {
         Cash.log(amount, fromAccountId);
     }
