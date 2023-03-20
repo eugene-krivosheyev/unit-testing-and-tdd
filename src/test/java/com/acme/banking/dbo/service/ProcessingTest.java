@@ -2,6 +2,7 @@ package com.acme.banking.dbo.service;
 
 import com.acme.banking.dbo.dao.AccountDao;
 import com.acme.banking.dbo.dao.ClientDao;
+import com.acme.banking.dbo.domain.Account;
 import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.domain.SavingAccount;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,8 +11,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -41,8 +41,8 @@ class ProcessingTest {
 
     @Test
     void shouldReceiveAccountByClientId() {
-        Client client = new Client(CLIENT_ID, CLIENT_NAME);
-        doReturn(client).when(clientDao).selectClientById(CLIENT_ID);
+        SavingAccount account = new SavingAccount(1, new Client(CLIENT_ID, CLIENT_NAME), 100);
+        doReturn(account).when(accountDao).selectById(CLIENT_ID);
 
         processing.getAccountsByClientId(CLIENT_ID);
 
@@ -52,18 +52,18 @@ class ProcessingTest {
     @Test
     void shouldTransferAmount() {
         double amount = 100;
-        SavingAccount clientTransfer = new SavingAccount(1, new Client(CLIENT_ID, CLIENT_NAME), 1000);
-        SavingAccount clientReceive = new SavingAccount(2, new Client(CLIENT_ID, CLIENT_NAME), 1000);
-        doReturn(clientTransfer).when(accountDao).selectById(1);
-        doReturn(clientReceive).when(accountDao).selectById(2);
+        Account transfer = mock(Account.class);
+        Account receive = mock(Account.class);
+        doReturn(transfer).when(accountDao).selectById(1);
+        doReturn(receive).when(accountDao).selectById(2);
 
         processing.transfer(1, 2, amount);
 
-        verify(clientTransfer).minusCash(amount);
-        verify(clientReceive).plusCash(amount);
+        verify(transfer).minusCash(amount);
+        verify(receive).plusCash(amount);
 
-        verify(accountDao).updateAmount(clientTransfer);
-        verify(accountDao).updateAmount(clientReceive);
+        verify(accountDao).updateAmount(transfer);
+        verify(accountDao).updateAmount(receive);
 
 
     }

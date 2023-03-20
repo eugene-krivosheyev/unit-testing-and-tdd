@@ -22,7 +22,7 @@ public class Processing {
     }
 
     public Collection<Account> getAccountsByClientId(int clientId) {
-        Client client = clientDao.selectClientById(clientId);
+        Client client = getClient(clientId);
         return client.getAccounts();
     }
 
@@ -38,6 +38,13 @@ public class Processing {
 
     }
 
+    private Client getClient(int clientId){
+        Client client = clientDao.selectClientById(clientId);
+        if (client == null) {
+            throw new IllegalArgumentException("Client not found by clientId=" + clientId);
+        }
+        return client;
+    }
     public void cash(double amount, int fromAccountId) {
         Cash.log(amount, fromAccountId);
     }
