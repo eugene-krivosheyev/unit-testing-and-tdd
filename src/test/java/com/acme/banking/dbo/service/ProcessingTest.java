@@ -1,6 +1,7 @@
 package com.acme.banking.dbo.service;
 
 import com.acme.banking.dbo.domain.Account;
+import com.acme.banking.dbo.domain.Cash;
 import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.repository.AccountRepository;
 import com.acme.banking.dbo.repository.ClientRepository;
@@ -14,9 +15,9 @@ import java.util.Collections;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class ProcessingTest {
@@ -28,7 +29,9 @@ class ProcessingTest {
     @Mock
     private Client client;
     @Mock
-    private Account account;
+    private Account fromAccount, toAccount, account;
+    @Mock
+    private Cash cash;
     @InjectMocks
     private Processing sut;
 
@@ -62,5 +65,70 @@ class ProcessingTest {
 
         verify(clients).findById(1);
         verify(client).getAccounts();
+    }
+
+    @Test
+    void shouldCreateClientWhenClientNotFound() {
+        when(clients.findById(1)).thenReturn(null);
+        when(clients.save(any())).thenReturn(client);
+
+        assertThat(sut.createClient(1, "name"))
+                .isNotNull()
+                .isSameAs(client);
+
+        verify(clients).findById(1);
+        verify(clients).save(any());
+    }
+
+    @Test
+    void shouldNotCreateClientWhenClientAlreadyExists() {
+        when(clients.findById(1)).thenReturn(client);
+
+        assertThatThrownBy(() -> sut.createClient(1, "dummyName"))
+                .isInstanceOf(IllegalArgumentException.class);
+
+        verify(clients).findById(1);
+        verify(clients, never()).save(any());
+    }
+
+    @Test
+    void shouldTransferWhenAtLeastOneClientWithAccount() {
+        double dummyAmount = 100.0;
+        when(accounts.findById(1)).thenReturn(fromAccount);
+        when(accounts.findById(2)).thenReturn(toAccount);
+
+        sut.transfer(1, 2, dummyAmount);
+
+        verify(accounts).findById(1);
+        verify(accounts).findById(2);
+        verify(fromAccount).withdraw(dummyAmount);
+        verify(toAccount).deposit(dummyAmount);
+
+        verify(accounts).save(fromAccount);
+        verify(accounts).save(toAccount);
+    }
+
+    @Test
+    void shouldNotTransferWhenAccountFromNotFound() {
+        double dummyAmount = 100.0;
+        when(accounts.findById(1)).thenReturn(null);
+
+        assertThatThrownBy(() -> sut.transfer(1, 2, dummyAmount));
+    }
+
+    @Test
+    void shouldNotTransferWhenAccountToNotFound() {
+        double dummyAmount = 100.0;
+        when(accounts.findById(1)).thenReturn(fromAccount);
+        when(accounts.findById(2)).thenReturn(null);
+
+        assertThatThrownBy(() -> sut.transfer(1, 2, dummyAmount));
+    }
+
+    @Test
+    void shouldLogCash() {
+        sut.cash(1.0, 1);
+
+        verify(cash).log(1.0, 1);
     }
 }

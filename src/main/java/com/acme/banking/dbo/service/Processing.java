@@ -13,14 +13,22 @@ public class Processing {
 
     private final ClientRepository clients;
     private final AccountRepository accounts;
+    private final Cash cash;
 
-    public Processing(ClientRepository clients, AccountRepository accounts) {
+    public Processing(ClientRepository clients, AccountRepository accounts, Cash cash) {
         this.clients = clients;
         this.accounts = accounts;
+        this.cash = cash;
     }
 
     public Client createClient(int id, String name) {
-        return clients.create(new Client(id, name));
+        Client client = clients.findById(id);
+        if (Objects.isNull(client)) {
+            client = new Client(id, name);
+        } else {
+            throw new IllegalArgumentException("Client with id " + id + " already exists");
+        }
+        return clients.save(client);
     }
 
     public Collection<Account> getAccountsByClientId(int clientId) {
@@ -47,6 +55,6 @@ public class Processing {
     }
 
     public void cash(double amount, int fromAccountId) {
-        Cash.log(amount, fromAccountId);
+        cash.log(amount, fromAccountId);
     }
 }
