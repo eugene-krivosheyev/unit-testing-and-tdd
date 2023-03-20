@@ -23,7 +23,11 @@ public class Processing {
 
     public Collection<Account> getAccountsByClientId(int clientId) {
         Client client = getClient(clientId);
-        return client.getAccounts();
+        Collection<Account> accounts = client.getAccounts();
+        if (accounts == null || accounts.isEmpty()){
+            throw new IllegalArgumentException("Client has not Accounts");
+        }
+        return accounts;
     }
 
     public void transfer(int fromAccountId, int toAccountId, double amount) {

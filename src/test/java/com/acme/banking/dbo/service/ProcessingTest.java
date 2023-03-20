@@ -11,7 +11,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
+
 import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -22,6 +25,8 @@ class ProcessingTest {
     ClientDao clientDao;
     @Mock
     AccountDao accountDao;
+    @Mock
+    SavingAccount savingAccount;
     Processing processing;
 
     @BeforeEach
@@ -41,29 +46,33 @@ class ProcessingTest {
 
     @Test
     void shouldReceiveAccountByClientId() {
-        SavingAccount account = new SavingAccount(1, new Client(CLIENT_ID, CLIENT_NAME), 100);
-        doReturn(account).when(accountDao).selectById(CLIENT_ID);
+        Account account = mock(Account.class);
+        Client client = mock(Client.class);
+        doReturn(client).when(clientDao).selectClientById(CLIENT_ID);
+        doReturn(List.of(account)).when(client).getAccounts();
 
         processing.getAccountsByClientId(CLIENT_ID);
 
         verify(clientDao).selectClientById(CLIENT_ID);
+        verify(client).getAccounts();
     }
 
     @Test
-    void shouldTransferAmount() {
+    void shouldVerifyUpdateAmountWhenTransfer() {
         double amount = 100;
-        Account transfer = mock(Account.class);
-        Account receive = mock(Account.class);
-        doReturn(transfer).when(accountDao).selectById(1);
-        doReturn(receive).when(accountDao).selectById(2);
+        Account transferAccount = mock(Account.class);
+        Account receiveAccount = mock(Account.class);
+
+        doReturn(transferAccount).when(accountDao).selectById(1);
+        doReturn(receiveAccount).when(accountDao).selectById(2);
 
         processing.transfer(1, 2, amount);
 
-        verify(transfer).minusCash(amount);
-        verify(receive).plusCash(amount);
+        verify(transferAccount).minusCash(amount);
+        verify(receiveAccount).plusCash(amount);
 
-        verify(accountDao).updateAmount(transfer);
-        verify(accountDao).updateAmount(receive);
+        verify(accountDao).updateAmount(transferAccount);
+        verify(accountDao).updateAmount(receiveAccount);
 
 
     }
