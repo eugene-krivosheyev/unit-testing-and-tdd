@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class SavingAccountTest {
@@ -20,10 +21,13 @@ class SavingAccountTest {
     void shouldCreateSavingAccountWhenValidParams(int validAccountId, double validAmount) {
         SavingAccount savingAccount = new SavingAccount(validAccountId, VALID_CLIENT, validAmount);
 
-        Assertions.assertEquals(validAccountId, savingAccount.getId());
-        Assertions.assertEquals(VALID_CLIENT.getId(), savingAccount.getClient().getId());
-        Assertions.assertEquals(VALID_CLIENT.getName(), savingAccount.getClient().getName());
-        Assertions.assertEquals(validAmount, savingAccount.getAmount());
+        assertThat(savingAccount)
+                .hasNoNullFieldsOrProperties()
+                .hasFieldOrPropertyWithValue("id", validAccountId)
+                .hasFieldOrPropertyWithValue("amount", savingAccount.getAmount());
+        assertThat(savingAccount.getClient())
+                .hasFieldOrPropertyWithValue("id", VALID_CLIENT.getId())
+                .hasFieldOrPropertyWithValue("name", VALID_CLIENT.getName());
     }
 
     @Test
