@@ -2,13 +2,14 @@ package com.acme.banking.dbo.domain;
 
 import java.util.stream.Stream;
 
-import org.assertj.core.api.AbstractThrowableAssert;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -21,6 +22,7 @@ import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
 
 
 @DisplayName("Test suite")
+@ExtendWith(MockitoExtension.class)
 public class ClientTest {
 
     @Test
@@ -117,4 +119,17 @@ public class ClientTest {
         );
     }
 
+    @ParameterizedTest
+    @NullAndEmptySource
+    void shodGetErrorWhenCreateClientWithInvalidName(String name) {
+        assertThrows(IllegalArgumentException.class, () -> new Client(name));
+    }
+
+    @Test
+    void shouldCreateWhenValidName() {
+        String validName = "testName";
+        Client client = new Client(validName);
+
+        assertEquals(validName, client.getName());
+    }
 }

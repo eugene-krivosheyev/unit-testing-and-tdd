@@ -14,8 +14,24 @@ public class Client {
         this.name = name;
     }
 
+    public Client(String name) {
+        checkName(name);
+        this.name = name;
+    }
+
+    private void checkName(String name) {
+        if (name == null || name.isEmpty()) {
+            throw new IllegalArgumentException();
+        }
+    }
+
     private void checkArguments(int id, String name) {
-        if (id < 0 || name == null || name.isEmpty()) {
+        checkId(id);
+        checkName(name);
+    }
+
+    private void checkId(int id) {
+        if (id < 0) {
             throw new IllegalArgumentException();
         }
     }

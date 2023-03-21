@@ -32,4 +32,14 @@ public class SavingAccount implements Account {
     public Client getClient() {
         return client;
     }
+
+    @Override
+    public void minusAmount(double amount) {
+        this.amount-=amount;
+    }
+
+    @Override
+    public void plusAmount(double amount) {
+        this.amount+=amount;
+    }
 }
