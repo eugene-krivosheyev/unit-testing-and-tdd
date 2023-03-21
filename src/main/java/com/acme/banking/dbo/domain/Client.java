@@ -17,6 +17,11 @@ public class Client {
         this.name = name;
     }
 
+    public Client(String name) {
+        this.name = name;
+        this.id = -1;
+    }
+
     public int getId() {
         return id;
     }

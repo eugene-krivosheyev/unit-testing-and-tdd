@@ -32,20 +32,11 @@ public class SavingAccount implements Account {
 
     @Override
     public void withdraw(double amount) {
-        if (amount <= 0) {
-            throw new IllegalArgumentException("Amount must be more 0");
-        }
-        if (amount > this.amount) {
-            throw new RuntimeException("Amount not enough");
-        }
         this.amount = this.amount - amount;
     }
 
     @Override
     public void deposit(double amount) {
-        if (amount <= 0) {
-            throw new IllegalArgumentException("Amount must be more 0");
-        }
         this.amount = this.amount + amount;
     }
 }

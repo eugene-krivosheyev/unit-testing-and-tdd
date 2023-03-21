@@ -21,13 +21,8 @@ public class Processing {
         this.cash = cash;
     }
 
-    public Client createClient(int id, String name) {
-        Client client = clients.findById(id);
-        if (Objects.isNull(client)) {
-            client = new Client(id, name);
-        } else {
-            throw new IllegalArgumentException("Client with id " + id + " already exists");
-        }
+    public Client createClient(String name) {
+        Client client = new Client(name);
         return clients.save(client);
     }
 

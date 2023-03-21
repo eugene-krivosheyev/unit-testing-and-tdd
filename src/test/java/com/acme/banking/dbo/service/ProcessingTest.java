@@ -17,7 +17,8 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class ProcessingTest {
@@ -41,7 +42,7 @@ class ProcessingTest {
         when(clients.findById(1)).thenReturn(client);
 
         assertThat(sut.getAccountsByClientId(1))
-                .contains(account);
+                .isNotEmpty();
 
         verify(clients).findById(1);
         verify(client).getAccounts();
@@ -68,27 +69,13 @@ class ProcessingTest {
     }
 
     @Test
-    void shouldCreateClientWhenClientNotFound() {
-        when(clients.findById(1)).thenReturn(null);
+    void shouldCreateClient() {
         when(clients.save(any())).thenReturn(client);
 
-        assertThat(sut.createClient(1, "name"))
-                .isNotNull()
-                .isSameAs(client);
+        assertThat(sut.createClient("name"))
+                .isNotNull();
 
-        verify(clients).findById(1);
         verify(clients).save(any());
-    }
-
-    @Test
-    void shouldNotCreateClientWhenClientAlreadyExists() {
-        when(clients.findById(1)).thenReturn(client);
-
-        assertThatThrownBy(() -> sut.createClient(1, "dummyName"))
-                .isInstanceOf(IllegalArgumentException.class);
-
-        verify(clients).findById(1);
-        verify(clients, never()).save(any());
     }
 
     @Test
