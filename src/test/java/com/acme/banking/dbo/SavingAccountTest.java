@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 
 
 @DisplayName("Test suite")
-public class ClientTest {
+public class SavingAccountTest {
     @Test @Disabled("temporary disabled")
     @DisplayName("Test case")
     public void shouldStorePropertiesWhenCreated() {
