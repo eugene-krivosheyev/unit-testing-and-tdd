@@ -1,6 +1,10 @@
 package com.acme.banking.dbo;
 
 import com.acme.banking.dbo.domain.Client;
+import com.acme.banking.dbo.domain.Errors;
+import static com.acme.banking.dbo.domain.Errors.ACCOUNT_NEGATIVE_AMOUNT_MESSAGE;
+import static com.acme.banking.dbo.domain.Errors.ACCOUNT_NEGATIVE_ID_MESSAGE;
+import static com.acme.banking.dbo.domain.Errors.ACCOUNT_NULL_CLIENT_MESSAGE;
 import com.acme.banking.dbo.domain.SavingAccount;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -21,7 +25,7 @@ public class SavingAccountTest {
         final var amount = 1;
 
         var negativeAccountIdEx = assertThrows(IllegalArgumentException.class, () -> new SavingAccount(accountId, client, amount));
-        assertEquals("SavingAccount id cannot be negative", negativeAccountIdEx.getMessage());
+        assertEquals(ACCOUNT_NEGATIVE_ID_MESSAGE, negativeAccountIdEx.getMessage());
     }
 
     @Test
@@ -32,7 +36,7 @@ public class SavingAccountTest {
         final var amount = 1;
 
         var nullClientEx = assertThrows(IllegalArgumentException.class, () -> new SavingAccount(accountId, client, amount));
-        assertEquals("SavingAccount client cannot be null", nullClientEx.getMessage());
+        assertEquals(ACCOUNT_NULL_CLIENT_MESSAGE, nullClientEx.getMessage());
     }
 
     @Test
@@ -43,7 +47,7 @@ public class SavingAccountTest {
         final var amount = -1;
 
         var negativeAmountEx = assertThrows(IllegalArgumentException.class, () -> new SavingAccount(accountId, client, amount));
-        assertEquals("SavingAccount amount cannot be negative", negativeAmountEx.getMessage());
+        assertEquals(ACCOUNT_NEGATIVE_AMOUNT_MESSAGE, negativeAmountEx.getMessage());
     }
 
     @Test

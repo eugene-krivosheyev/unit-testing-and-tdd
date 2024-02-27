@@ -1,6 +1,9 @@
 package com.acme.banking.dbo;
 
 import com.acme.banking.dbo.domain.Client;
+import com.acme.banking.dbo.domain.Errors;
+import static com.acme.banking.dbo.domain.Errors.CLIENT_EMPTY_NAME_MESSAGE;
+import static com.acme.banking.dbo.domain.Errors.CLIENT_NEGATIVE_ID_MESSAGE;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -19,7 +22,7 @@ public class ClientTest {
         final String clientName = "dummy client name";
 
         var nullClientIdEx = assertThrows(IllegalArgumentException.class, () -> new Client(clientId, clientName));
-        assertEquals("Client id cannot be negative", nullClientIdEx.getMessage());
+        assertEquals(CLIENT_NEGATIVE_ID_MESSAGE, nullClientIdEx.getMessage());
     }
 
     @Test
@@ -31,8 +34,8 @@ public class ClientTest {
 
         var nullClientNameEx = assertThrows(IllegalArgumentException.class, () -> new Client(clientId, nullClientName));
         var emptyClientNameEx = assertThrows(IllegalArgumentException.class, () -> new Client(clientId, emptyClientName));
-        assertEquals("Client name cannot be null or empty", nullClientNameEx.getMessage());
-        assertEquals("Client name cannot be null or empty", emptyClientNameEx.getMessage());
+        assertEquals(CLIENT_EMPTY_NAME_MESSAGE, nullClientNameEx.getMessage());
+        assertEquals(CLIENT_EMPTY_NAME_MESSAGE, emptyClientNameEx.getMessage());
     }
 
     @Test

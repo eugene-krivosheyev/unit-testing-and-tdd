@@ -1,5 +1,9 @@
 package com.acme.banking.dbo.domain;
 
+import static com.acme.banking.dbo.domain.Errors.ACCOUNT_NEGATIVE_AMOUNT_MESSAGE;
+import static com.acme.banking.dbo.domain.Errors.ACCOUNT_NEGATIVE_ID_MESSAGE;
+import static com.acme.banking.dbo.domain.Errors.ACCOUNT_NULL_CLIENT_MESSAGE;
+
 public class SavingAccount implements Account {
     private int id;
     private Client client;
@@ -7,13 +11,13 @@ public class SavingAccount implements Account {
 
     public SavingAccount(int id, Client client, double amount) {
         if (id < 0) {
-            throw new IllegalArgumentException("SavingAccount id cannot be negative");
+            throw new IllegalArgumentException(ACCOUNT_NEGATIVE_ID_MESSAGE);
         }
         if (client == null) {
-            throw new IllegalArgumentException("SavingAccount client cannot be null");
+            throw new IllegalArgumentException(ACCOUNT_NULL_CLIENT_MESSAGE);
         }
         if (amount < 0) {
-            throw new IllegalArgumentException("SavingAccount amount cannot be negative");
+            throw new IllegalArgumentException(ACCOUNT_NEGATIVE_AMOUNT_MESSAGE);
         }
         this.id = id;
         this.client = client;
