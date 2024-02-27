@@ -10,8 +10,8 @@ public class Client {
 
     public Client(int id, String name) {
 
-        if (id <=0 ) throw new IllegalArgumentException("Invalid value for id!");
-        if (name.equals("")) throw new IllegalArgumentException("Client name cannot be empty");
+        if (id <= 0) throw new IllegalArgumentException("Invalid value for id!");
+        if ("".equals(name) || name == null) throw new IllegalArgumentException("Client name cannot be empty");
 
         this.id = id;
         this.name = name;

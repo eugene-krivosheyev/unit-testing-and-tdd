@@ -3,6 +3,7 @@ package com.acme.banking.dbo.domain;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class SavingAccountTest {
@@ -11,7 +12,12 @@ class SavingAccountTest {
     final Client client = new Client(1, "Test Name");
     final double amount = 5.0;
 
-    SavingAccount sut = new SavingAccount (id, client, amount);
+    SavingAccount sut;
+
+    @BeforeEach
+    void createSUT(){
+        sut = new SavingAccount (id, client, amount);
+    }
 
     @Test
     public void invalidIdThrowsIllegalArgumentException(){
@@ -21,8 +27,7 @@ class SavingAccountTest {
 
     @Test
     public void emptyClientThrowsIllegalArgumentException(){
-        final Client emptyClient = null;
-        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(id, emptyClient, amount));
+        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(id, null, amount));
     }
 
     @Test

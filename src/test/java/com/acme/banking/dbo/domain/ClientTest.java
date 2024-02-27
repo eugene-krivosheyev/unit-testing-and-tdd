@@ -10,7 +10,12 @@ class ClientTest {
     final int clientId = 1;
     final String clientName = "Test Name";
 
-    Client sut = new Client(clientId, clientName);
+    Client sut;
+
+    @BeforeEach
+    void createSUT(){
+        sut = new Client(clientId, clientName);
+    }
 
     @Test
     public void createClientWithInvalidIdThrowsIllegalArgumentException(){
@@ -20,8 +25,7 @@ class ClientTest {
 
     @Test
     public void createClientWithEmptyNameThrowsIllegalArgumentException(){
-        String emptyName = "";
-        assertThrows(IllegalArgumentException.class, () -> new Client(clientId, emptyName));
+        assertThrows(IllegalArgumentException.class, () -> new Client(clientId, null));
     }
 
 
