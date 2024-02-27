@@ -1,55 +1,61 @@
 package com.acme.banking.dbo;
 
 import com.acme.banking.dbo.domain.Client;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
+import com.acme.banking.dbo.domain.SavingAccount;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 
-@DisplayName("Test suite")
+@DisplayName("SavingAccount Test")
 public class SavingAccountTest {
-    @Test @Disabled("temporary disabled")
-    @DisplayName("Test case")
-    public void shouldStorePropertiesWhenCreated() {
-        //region given
-        final int clientId = 1;
-        final String clientName = "dummy client name";
-        //endregion
 
-        //region when
-        Client sut = new Client(clientId, clientName);
+    @Test
+    @DisplayName("Negative accountId testCase")
+    public void shouldThrowExceptionWhenAccountIdNegative() {
+        final var accountId = -1;
+        final var client = new Client(1, "dummyClientName");
+        final var amount = 1;
+
+        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(accountId, client, amount));
+    }
+
+    @Test
+    @DisplayName("Null client testCase")
+    public void shouldThrowExceptionWhenClientIsNull() {
+        final var accountId = 1;
+        final Client client = null;
+        final var amount = 1;
+
+        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(accountId, client, amount));
+    }
+
+    @Test
+    @DisplayName("Negative amount testCase")
+    public void shouldThrowExceptionWhenAmountIsNegative() {
+        final var accountId = 1;
+        final Client client = new Client(1, "dummyClientName");
+        final var amount = -1;
+
+        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(accountId, client, amount));
+    }
+    @Test
+    @DisplayName("Saving account initialize with valid params testCase")
+    public void shouldCreateSavingAccountWhenParamsAreValid() {
+        final var accountId = 1;
+        final var client = new Client(1, "dummyClientName");
+        final var amount = 1;
+
+        SavingAccount sut = new SavingAccount(accountId, client, amount);
         assumeTrue(sut != null);
-        //endregion
 
-        //region then
-        //Junit5:
-        assertAll("Client store its properties",
-                () -> assertEquals(clientId, sut.getId()),
-                () -> assertEquals(clientName, sut.getName())
+        assertAll("Saving account stores its properties",
+                () -> assertEquals(accountId, sut.getId()),
+                () -> assertEquals(client, sut.getClient()),
+                () -> assertEquals(amount, sut.getAmount())
         );
-
-        //Hamcrest:
-        assertThat(sut,
-            allOf(
-                hasProperty("id", notNullValue()),
-                hasProperty("id", equalTo(clientId)),
-                hasProperty("name", is(clientName))
-        ));
-
-        //AssertJ:
-        org.assertj.core.api.Assertions.assertThat(sut)
-                .hasFieldOrPropertyWithValue("id", clientId)
-                .hasFieldOrPropertyWithValue("name", clientName);
-        //also take a look at `extracting()` https://stackoverflow.com/a/51812188
-        //endregion
     }
 }
