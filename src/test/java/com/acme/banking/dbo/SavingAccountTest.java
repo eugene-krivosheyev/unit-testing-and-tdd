@@ -20,7 +20,8 @@ public class SavingAccountTest {
         final var client = new Client(1, "dummyClientName");
         final var amount = 1;
 
-        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(accountId, client, amount));
+        var negativeAccountIdEx = assertThrows(IllegalArgumentException.class, () -> new SavingAccount(accountId, client, amount));
+        assertEquals("SavingAccount id cannot be negative", negativeAccountIdEx.getMessage());
     }
 
     @Test
@@ -30,7 +31,8 @@ public class SavingAccountTest {
         final Client client = null;
         final var amount = 1;
 
-        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(accountId, client, amount));
+        var nullClientEx = assertThrows(IllegalArgumentException.class, () -> new SavingAccount(accountId, client, amount));
+        assertEquals("SavingAccount client cannot be null", nullClientEx.getMessage());
     }
 
     @Test
@@ -40,8 +42,10 @@ public class SavingAccountTest {
         final Client client = new Client(1, "dummyClientName");
         final var amount = -1;
 
-        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(accountId, client, amount));
+        var negativeAmountEx = assertThrows(IllegalArgumentException.class, () -> new SavingAccount(accountId, client, amount));
+        assertEquals("SavingAccount amount cannot be negative", negativeAmountEx.getMessage());
     }
+
     @Test
     @DisplayName("Saving account initialize with valid params testCase")
     public void shouldCreateSavingAccountWhenParamsAreValid() {

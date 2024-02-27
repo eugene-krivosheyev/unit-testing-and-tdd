@@ -18,7 +18,8 @@ public class ClientTest {
         final int clientId = -1;
         final String clientName = "dummy client name";
 
-        assertThrows(IllegalArgumentException.class, () -> new Client(clientId, clientName));
+        var nullClientIdEx = assertThrows(IllegalArgumentException.class, () -> new Client(clientId, clientName));
+        assertEquals("Client id cannot be negative", nullClientIdEx.getMessage());
     }
 
     @Test
@@ -28,8 +29,10 @@ public class ClientTest {
         final String nullClientName = null;
         final String emptyClientName = "";
 
-        assertThrows(IllegalArgumentException.class, () -> new Client(clientId, nullClientName));
-        assertThrows(IllegalArgumentException.class, () -> new Client(clientId, emptyClientName));
+        var nullClientNameEx = assertThrows(IllegalArgumentException.class, () -> new Client(clientId, nullClientName));
+        var emptyClientNameEx = assertThrows(IllegalArgumentException.class, () -> new Client(clientId, emptyClientName));
+        assertEquals("Client name cannot be null or empty", nullClientNameEx.getMessage());
+        assertEquals("Client name cannot be null or empty", emptyClientNameEx.getMessage());
     }
 
     @Test
