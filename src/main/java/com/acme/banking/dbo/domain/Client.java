@@ -1,9 +1,15 @@
 package com.acme.banking.dbo.domain;
 
+import com.acme.banking.dbo.exception.NameAlphabeticalValidationException;
+import com.acme.banking.dbo.exception.IdValidationException;
+import com.acme.banking.dbo.exception.NameValidationException;
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
 import java.util.Collection;
 
 public class Client {
+    public static final String ALPHABET = "абвгдеёжзийклмнопрстуфхцчшщъыьэюяabcdefghijklmnopqrstuvwxyz -";
     private int id;
     private String name;
     private Collection<Account> accounts = new ArrayList<>(); //TODO
@@ -24,21 +30,27 @@ public class Client {
     }
 
     private void checkClientArguments(int id, String name) {
-        if (id < 0) throw new InternalError("ID не может быть отрицательным числом");
-        if (name == null) throw new InternalError("Name не должно быть null");
-        if (name.equals("")) throw new InternalError("Name должно содержать хотя бы 1 букву");
-        if (name.equals(" ")) throw new InternalError("Name должно содержать хотя бы 1 букву");
-        if (name.equals("-")) throw new InternalError("Name должно содержать хотя бы 1 букву");
-        if (name.indexOf(" ") == 0) throw new InternalError("Name не должно начинаться с пробела");
-        if (name.indexOf(" ") == name.length() - 1) throw new InternalError("Name не должно оканчиваться пробелом");
-        if (name.indexOf("-") == 0) throw new InternalError("Name не должно начинаться с дефиса");
-        if (name.indexOf("-") == name.length() - 1) throw new InternalError("Name не должно оканчиваться дефисом");
+        if (id < 0) {
+            throw new IdValidationException();
 
-        String alphabet = "абвгдеёжзийклмнопрстуфхцчшщъыьэюяabcdefghijklmnopqrstuvwxyz -";
+        }
+        if (!isNameValid(name)) {
+            throw new NameValidationException();
+        }
+
         for (Character ch : name.toCharArray()) {
-            if (!alphabet.contains(ch.toString().toLowerCase())) {
-                throw new InternalError("Name содержит символы помимо кириллицы, латиницы, пробела и дефиса");
+            if (!ALPHABET.contains(ch.toString().toLowerCase())) {
+                throw new NameAlphabeticalValidationException();
             }
         }
+    }
+
+    private boolean isNameValid(String name) {
+        return StringUtils.isNoneBlank(name) &&
+            !StringUtils.startsWith(name, " ") &&
+            !StringUtils.endsWith(name, " ") &&
+            !StringUtils.startsWith(name, "-") &&
+            !StringUtils.endsWith(name, "-")
+            ;
     }
 }
