@@ -8,12 +8,16 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class ClientValidationTest {
+class ClientValidationTest {
 
 
     @DisplayName("Success create client with valid data")
@@ -24,7 +28,7 @@ public class ClientValidationTest {
             "2147483647, ABCDEFGHIJKLMNOPQRSTUVWXYZ - abcdefghijklmnopqrstuvwxyz"
         }
     )
-    public void successCreateClientWithValidData(int id, String name) {
+    void successCreateClientWithValidData(int id, String name) {
 
         Executable actSut = () -> new Client(id, name);
 
@@ -38,7 +42,7 @@ public class ClientValidationTest {
         "0, /",
         "0, £"
     })
-    public void failedCreateClientWithNameHaveNotLettersAndSpaceAndHyphen(int id, String name) {
+    void failedCreateClientWithNameHaveNotLettersAndSpaceAndHyphen(int id, String name) {
         Executable actSut = () -> new Client(id, name);
 
         assertThrows(NameAlphabeticalValidationException.class, actSut);
@@ -46,7 +50,7 @@ public class ClientValidationTest {
 
     @Test
     @DisplayName("Невалидные данные: отрицательный id")
-    public void failedCreateClientWithNegativeId() {
+    void failedCreateClientWithNegativeId() {
         int id = -1;
         String name = "Максим";
 
@@ -55,91 +59,27 @@ public class ClientValidationTest {
         assertThrows(IdValidationException.class, actSut);
     }
 
-    @Test
-    @DisplayName("Невалидные данные: Name - null")
-    public void failedCreateClientWithNameIsNull() {
-        int id = 0;
-        String name = null;
+
+
+    @DisplayName("Success create client with valid data")
+    @ParameterizedTest
+    @MethodSource("provideValidationIncorrectDataForClientCreation")
+    void givenClientCreationShouldRaiseErrorsWhileValidation(int id, String name, String description) {
 
         Executable actSut = () -> new Client(id, name);
 
-        assertThrows(NameValidationException.class, actSut);
+        assertThrows(NameValidationException.class, actSut, description);
     }
 
-    @Test
-    @DisplayName("Невалидные данные: пустое Name")
-    public void failedCreateClientWithNameIsEmpty() {
-        int id = 0;
-        String name = "";
-
-        Executable actSut = () -> new Client(id, name);
-
-        assertThrows(NameValidationException.class, actSut);
-    }
-
-    @Test
-    @DisplayName("Невалидные данные: Name - только пробел")
-    public void failedCreateClientWithNameIsOnlySpace() {
-        int id = 0;
-        String name = " ";
-
-        Executable actSut = () -> new Client(id, name);
-
-        assertThrows(NameValidationException.class, actSut);
-    }
-
-    @Test
-    @DisplayName("Невалидные данные: Name - только дефис")
-    public void failedCreateClientWithNameIsOnlyHyphen() {
-        int id = 0;
-        String name = "-";
-
-        Executable actSut = () -> new Client(id, name);
-
-        assertThrows(NameValidationException.class, actSut);
-    }
-
-    @Test
-    @DisplayName("Невалидные данные: Name начинается с пробела")
-    public void failedCreateClientWithNameStartsWithSpace() {
-        int id = 0;
-        String name = " Максим";
-
-        Executable actSut = () -> new Client(id, name);
-
-        assertThrows(NameValidationException.class, actSut);
-    }
-
-    @Test
-    @DisplayName("Невалидные данные: Name оканчивается пробелом")
-    public void failedCreateClientWithNameEndsWithSpace() {
-        int id = 0;
-        String name = "Максим ";
-
-        Executable actSut = () -> new Client(id, name);
-
-        assertThrows(NameValidationException.class, actSut);
-    }
-
-    @Test
-    @DisplayName("Невалидные данные: Name начинается с дефиса")
-    public void failedCreateClientWithNameStartsWithHyphen() {
-        int id = 0;
-        String name = "-Максим";
-
-        Executable actSut = () -> new Client(id, name);
-
-        assertThrows(NameValidationException.class, actSut);
-    }
-
-    @Test
-    @DisplayName("Невалидные данные: Name оканчивается дефисом")
-    public void failedCreateClientWithNameEndsWithHyphen() {
-        int id = 0;
-        String name = "Максим-";
-
-        Executable actSut = () -> new Client(id, name);
-
-        assertThrows(NameValidationException.class, actSut);
+    private static Stream<Arguments> provideValidationIncorrectDataForClientCreation(){
+        return Stream.of(
+            Arguments.of(0, "Максим-", "Невалидные данные: Name оканчивается дефисом"),
+            Arguments.of(0, "-Максим", "Невалидные данные: Name начинается с дефиса"),
+            Arguments.of(0, "Максим ", "Невалидные данные: Name оканчивается пробелом"),
+            Arguments.of(0, " Максим", "Невалидные данные: Name начинается с пробела"),
+            Arguments.of(0, "-", "Невалидные данные: Name - только дефис"),
+            Arguments.of(0, "", "Невалидные данные: пустое Name"),
+            Arguments.of(0, null, "Невалидные данные: Name - null")
+        );
     }
 }
