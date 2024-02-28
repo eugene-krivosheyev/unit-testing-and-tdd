@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assumptions.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -16,6 +17,24 @@ import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
 
 @DisplayName("Test suite")
 public class ClientTest {
+
+    private final int id = 5;
+    private final String name = "name";
+
+    @Test
+    public void shouldCreateClientWithValidArgs(){
+        var resultClient = new Client(id, name);
+        assertEquals(id, resultClient.getId());
+        assertEquals(name, resultClient.getName());
+    }
+
+    @Test
+    public void shouldThrowWhenCreateClientWithInvalidArgs(){
+        assertThrows(IllegalArgumentException.class, () -> new Client(-5, name));
+        assertThrows(IllegalArgumentException.class, () -> new Client(id, null));
+        assertThrows(IllegalArgumentException.class, () -> new Client(id, "   "));
+    }
+
     @Test @Disabled("temporary disabled")
     @DisplayName("Test case")
     public void shouldStorePropertiesWhenCreated() {

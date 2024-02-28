@@ -11,7 +11,7 @@ public class Client {
     public Client(int id, String name) {
 
         if (id < 0) throw new IllegalArgumentException("id should be more zero");
-        if ("".equals(name)) throw new IllegalArgumentException("name should be not empty");
+        if (name == null || name.isBlank()) throw new IllegalArgumentException("name should be not empty");
 
         this.id = id;
         this.name = name;
