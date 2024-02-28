@@ -26,20 +26,19 @@ public class ClientTest {
     }
 
     @Test
-    public void shouldNotCreateClientWithNullName() {
+    public void shouldNotCreateClientWhenNullName() {
         var thrown = assertThrows(IllegalArgumentException.class, () -> new Client(id, null));
-
         assertEquals("Name is null", thrown.getMessage());
     }
 
     @Test
-    public void shouldNotCreateClientWithEmptyName() {
+    public void shouldNotCreateClientWhenEmptyName() {
         var thrown = assertThrows(IllegalArgumentException.class, () -> new Client(id, ""));
         assertEquals("Name is empty", thrown.getMessage());
     }
 
     @Test
-    public void shouldNotCreateClientWithNegativeId() {
+    public void shouldNotCreateClientWhenNegativeId() {
         var thrown = assertThrows(IllegalArgumentException.class, () -> new Client(-1, name));
         assertEquals("Id is not valid", thrown.getMessage());
     }
