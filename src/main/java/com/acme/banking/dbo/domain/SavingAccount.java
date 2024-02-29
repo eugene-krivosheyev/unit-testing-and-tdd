@@ -9,6 +9,8 @@ public class SavingAccount implements Account {
         this.id = id;
         this.client = client;
         this.amount = amount;
+
+        this.client.addAccount(this);
     }
 
     @Override
@@ -24,5 +26,18 @@ public class SavingAccount implements Account {
     @Override
     public Client getClient() {
         return client;
+    }
+
+    public void setClient(Client newClient) {
+        if (client.getId() != newClient.getId()){
+            client.removeAccount(this);
+        }
+
+        this.client = newClient;
+        this.client.addAccount(this);
+    }
+
+    public void unlinkClient(){
+        this.client = null;
     }
 }
