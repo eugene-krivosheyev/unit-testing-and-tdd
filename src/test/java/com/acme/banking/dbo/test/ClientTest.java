@@ -46,12 +46,12 @@ public class ClientTest {
 
     @Test
     public void shouldNotCreateClientWhenEmptyName() {
-        assertThrows(IllegalClientNameArgumentException.class, () -> new Client(clientId, ""));
+        assertThrows(ClientInvalidNameException.class, () -> new Client(clientId, ""));
     }
 
     @Test
     public void shouldNotCreateClientWhenNegativeId() {
-        assertThrows(IllegalClientIdArgumentException.class, () -> new Client(-1, clientName));
+        assertThrows(ClientNegativeIdException.class, () -> new Client(-1, clientName));
     }
 
     @Test
@@ -66,6 +66,6 @@ public class ClientTest {
         Account account = new SavingAccount(accountId, new Client(clientId, clientName), accountAmount);
         Client sut = new Client(clientId, clientName);
 
-        assertThrows(IllegalClientStateException.class, () -> sut.setAccount(account));
+        assertThrows(ClientInvalidStateException.class, () -> sut.setAccount(account));
     }
 }

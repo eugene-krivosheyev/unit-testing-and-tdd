@@ -2,9 +2,9 @@ package com.acme.banking.dbo.test;
 
 import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.domain.SavingAccount;
-import com.acme.banking.dbo.exception.saving_account.ClientNullException;
-import com.acme.banking.dbo.exception.saving_account.IllegalSavingAccountAmountArgumentException;
-import com.acme.banking.dbo.exception.saving_account.IllegalSavingAccountIdArgumentException;
+import com.acme.banking.dbo.exception.saving_account.SavingAccountClientNullException;
+import com.acme.banking.dbo.exception.saving_account.SavingAccountNegativeAmountException;
+import com.acme.banking.dbo.exception.saving_account.SavingAccountInvalidIdException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -41,16 +41,16 @@ public class SavingAccountTest {
 
     @Test
     public void shouldNotCreateSavingAccountWhenNegativeId() {
-        assertThrows(IllegalSavingAccountIdArgumentException.class, () -> new SavingAccount(-1, client, accountAmount));
+        assertThrows(SavingAccountInvalidIdException.class, () -> new SavingAccount(-1, client, accountAmount));
     }
 
     @Test
     public void shouldNotCreateSavingAccountWhenNullClient() {
-        assertThrows(ClientNullException.class, () -> new SavingAccount(accountId, null, accountAmount));
+        assertThrows(SavingAccountClientNullException.class, () -> new SavingAccount(accountId, null, accountAmount));
     }
 
     @Test
     public void shouldNotCreateSavingAccountWhenNegativeAmount() {
-        assertThrows(IllegalSavingAccountAmountArgumentException.class, () -> new SavingAccount(accountId, client, -1.0));
+        assertThrows(SavingAccountNegativeAmountException.class, () -> new SavingAccount(accountId, client, -1.0));
     }
 }

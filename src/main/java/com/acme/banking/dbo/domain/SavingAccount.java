@@ -1,8 +1,8 @@
 package com.acme.banking.dbo.domain;
 
-import com.acme.banking.dbo.exception.saving_account.ClientNullException;
-import com.acme.banking.dbo.exception.saving_account.IllegalSavingAccountAmountArgumentException;
-import com.acme.banking.dbo.exception.saving_account.IllegalSavingAccountIdArgumentException;
+import com.acme.banking.dbo.exception.saving_account.SavingAccountClientNullException;
+import com.acme.banking.dbo.exception.saving_account.SavingAccountNegativeAmountException;
+import com.acme.banking.dbo.exception.saving_account.SavingAccountInvalidIdException;
 
 import java.util.Objects;
 
@@ -12,9 +12,9 @@ public class SavingAccount implements Account {
     private double amount;
 
     public SavingAccount(int id, Client client, double amount) {
-        if (id < 0) throw new IllegalSavingAccountIdArgumentException("Id can't be negative");
-        if (client == null) throw new ClientNullException("Client is null");
-        if (amount < 0) throw new IllegalSavingAccountAmountArgumentException("Amount can't be negative");
+        if (id < 0) throw new SavingAccountInvalidIdException("Id can't be negative");
+        if (client == null) throw new SavingAccountClientNullException("Client is null");
+        if (amount < 0) throw new SavingAccountNegativeAmountException("Amount can't be negative");
 
         this.id = id;
         this.client = client;

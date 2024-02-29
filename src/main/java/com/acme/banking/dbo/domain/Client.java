@@ -12,9 +12,9 @@ public class Client {
     private Collection<Account> accounts = new ArrayList<>();
 
     public Client(int id, String name) {
-        if (id < 0) throw new IllegalClientIdArgumentException("Id can't be negative");
+        if (id < 0) throw new ClientNegativeIdException("Id can't be negative");
         if (name == null) throw new ClientNameNullException("Name is null");
-        if (name.isEmpty()) throw new IllegalClientNameArgumentException("Name is empty");
+        if (name.isEmpty()) throw new ClientInvalidNameException("Name is empty");
 
         this.id = id;
         this.name = name;
@@ -37,7 +37,7 @@ public class Client {
         if (account.getClient() == this) {
             this.accounts.add(account);
         } else {
-            throw new IllegalClientStateException("Some account has another owner");
+            throw new ClientInvalidStateException("Some account has another owner");
         }
     }
 }
