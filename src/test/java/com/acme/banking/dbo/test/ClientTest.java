@@ -1,45 +1,71 @@
 package com.acme.banking.dbo.test;
 
+import com.acme.banking.dbo.domain.Account;
 import com.acme.banking.dbo.domain.Client;
+import com.acme.banking.dbo.domain.SavingAccount;
+import com.acme.banking.dbo.exception.client.*;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ClientTest {
 
-    private final int id = 1;
-    private final String name = "ClientName";
+    private final int clientId = 1;
+    private final String clientName = "ClientName";
+    private final int accountId = 2;
+    private final double accountAmount = 1.0;
 
     @Test
     public void shouldReturnIdWhenGetId() {
-        Client sut = new Client(id, name);
+        Client sut = new Client(clientId, clientName);
 
-        assertEquals(id, sut.getId());
+        assertEquals(clientId, sut.getId());
     }
 
     @Test
     public void shouldReturnNameWhenGetName() {
-        Client sut = new Client(id, name);
+        Client sut = new Client(clientId, clientName);
 
-        assertEquals(name, sut.getName());
+        assertEquals(clientName, sut.getName());
+    }
+
+    @Test
+    public void shouldReturnAccountsWhenGetAccounts() {
+        Client sut = new Client(clientId, clientName);
+        Account account = new SavingAccount(accountId, sut, accountAmount);
+
+        sut.setAccount(account);
+
+        assertTrue(sut.getAccounts().contains(account));
     }
 
     @Test
     public void shouldNotCreateClientWhenNullName() {
-        var thrown = assertThrows(IllegalArgumentException.class, () -> new Client(id, null));
-        assertEquals("Name is null", thrown.getMessage());
+        assertThrows(ClientNameNullException.class, () -> new Client(clientId, null));
     }
 
     @Test
     public void shouldNotCreateClientWhenEmptyName() {
-        var thrown = assertThrows(IllegalArgumentException.class, () -> new Client(id, ""));
-        assertEquals("Name is empty", thrown.getMessage());
+        assertThrows(IllegalClientNameArgumentException.class, () -> new Client(clientId, ""));
     }
 
     @Test
     public void shouldNotCreateClientWhenNegativeId() {
-        var thrown = assertThrows(IllegalArgumentException.class, () -> new Client(-1, name));
-        assertEquals("Id is not valid", thrown.getMessage());
+        assertThrows(IllegalClientIdArgumentException.class, () -> new Client(-1, clientName));
+    }
+
+    @Test
+    public void shouldNotSetAccountsWhenNullAccounts() {
+        Client sut = new Client(clientId, clientName);
+
+        assertThrows(ClientAccountsNullException.class, () -> sut.setAccount(null));
+    }
+
+    @Test
+    public void shouldNotCreateClientWhenAccountHasAnotherOwner() {
+        Account account = new SavingAccount(accountId, new Client(clientId, clientName), accountAmount);
+        Client sut = new Client(clientId, clientName);
+
+        assertThrows(IllegalClientStateException.class, () -> sut.setAccount(account));
     }
 }

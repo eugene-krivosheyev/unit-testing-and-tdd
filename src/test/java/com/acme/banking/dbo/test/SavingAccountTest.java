@@ -2,6 +2,9 @@ package com.acme.banking.dbo.test;
 
 import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.domain.SavingAccount;
+import com.acme.banking.dbo.exception.saving_account.ClientNullException;
+import com.acme.banking.dbo.exception.saving_account.IllegalSavingAccountAmountArgumentException;
+import com.acme.banking.dbo.exception.saving_account.IllegalSavingAccountIdArgumentException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -9,47 +12,45 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class SavingAccountTest {
 
-    private final int id = 1;
-    private final double amount = 1.2;
-    private final Client client = new Client(id, "ClientName");
+    private final int accountId = 1;
+    private final double accountAmount = 1.0;
+    private final int clientId = 2;
+    private final String clientName = "ClientName";
+    private final Client client = new Client(clientId, clientName);
 
     @Test
     public void shouldReturnIdWhenGetId() {
-        SavingAccount sut = new SavingAccount(id, client, amount);
+        SavingAccount sut = new SavingAccount(accountId, client, accountAmount);
 
-        assertEquals(id, sut.getId());
+        assertEquals(accountId, sut.getId());
     }
 
     @Test
     public void shouldReturnAmountWhenGetAmount() {
-        SavingAccount sut = new SavingAccount(id, client, amount);
+        SavingAccount sut = new SavingAccount(accountId, client, accountAmount);
 
-        assertEquals(amount, sut.getAmount());
+        assertEquals(accountAmount, sut.getAmount());
     }
 
     @Test
     public void shouldReturnClientWhenGetClient() {
-        SavingAccount sut = new SavingAccount(id, client, amount);
+        SavingAccount sut = new SavingAccount(accountId, client, accountAmount);
 
         assertEquals(client, sut.getClient());
     }
 
     @Test
     public void shouldNotCreateSavingAccountWhenNegativeId() {
-        var thrown = assertThrows(IllegalArgumentException.class, () -> new SavingAccount(-1, client, amount));
-        assertEquals("Id is not valid", thrown.getMessage());
+        assertThrows(IllegalSavingAccountIdArgumentException.class, () -> new SavingAccount(-1, client, accountAmount));
     }
 
     @Test
     public void shouldNotCreateSavingAccountWhenNullClient() {
-        var thrown = assertThrows(IllegalArgumentException.class, () -> new SavingAccount(id, null, amount));
-        assertEquals("Client is null", thrown.getMessage());
+        assertThrows(ClientNullException.class, () -> new SavingAccount(accountId, null, accountAmount));
     }
 
     @Test
     public void shouldNotCreateSavingAccountWhenNegativeAmount() {
-        var thrown = assertThrows(IllegalArgumentException.class, () -> new SavingAccount(id, client, -1));
-        assertEquals("Amount can not be negative", thrown.getMessage());
+        assertThrows(IllegalSavingAccountAmountArgumentException.class, () -> new SavingAccount(accountId, client, -1.0));
     }
 }
-
