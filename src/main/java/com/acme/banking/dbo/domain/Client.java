@@ -24,4 +24,18 @@ public class Client {
     public String getName() {
         return name;
     }
+
+    public Collection<Account> getAccounts(){
+        return accounts;
+    }
+
+    public void addAccount(Account account){
+        if (account.getClient().getName().equals(name)){
+            accounts.add(account);
+        } else {
+            throw new IllegalStateException("This account does not belong " + name);
+        }
+
+    }
+
 }

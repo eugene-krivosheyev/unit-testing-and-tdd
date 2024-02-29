@@ -2,8 +2,7 @@ package com.acme.banking.dbo.domain;
 
 import org.junit.jupiter.api.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ClientTest {
 
@@ -24,8 +23,13 @@ class ClientTest {
     }
 
     @Test
-    public void createClientWithEmptyNameThrowsIllegalArgumentException(){
+    public void createClientWithNullNameThrowsIllegalArgumentException(){
         assertThrows(IllegalArgumentException.class, () -> new Client(clientId, null));
+    }
+
+    @Test
+    public void createClientWithEmptyNameThrowsIllegalArgumentException(){
+        assertThrows(IllegalArgumentException.class, () -> new Client(clientId, ""));
     }
 
 
@@ -37,6 +41,23 @@ class ClientTest {
     @Test
     public void getNameFromClientReturnsExpectedValue(){
         assertEquals(clientName, sut.getName());
+    }
+
+    @Test
+    public void shouldAddExistingAccountForCurrentClient(){
+        Account account = new SavingAccount(1, sut, 500);
+        sut.addAccount(account);
+        assertAll("Check addAccount() method and check equals account and accounts element",
+                () -> assertEquals(1, sut.getAccounts().size()),
+                () -> assertEquals(sut.getName(),sut.getAccounts().stream().findFirst().get().getClient().getName())
+        );
+    }
+
+    @Test
+    public void shouldThrowExceptionWhenAddInvalidAccount(){
+        Client otherClient = new Client(2, "Other Client");
+        Account account = new SavingAccount(3, otherClient, 50);
+        assertThrows(IllegalStateException.class, () -> sut.addAccount(account));
     }
 
 }
