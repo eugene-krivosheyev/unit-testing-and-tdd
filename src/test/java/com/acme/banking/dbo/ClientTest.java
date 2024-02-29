@@ -126,16 +126,16 @@ public class ClientTest {
         final String validClientName = "dummy client name";
 
         Client validClient = new Client(validClientId, validClientName);
-        Account validAccount = new SavingAccount(1, validClient, 100.00);
-        validClient.addAccount(validAccount);
-        Account invalidAccount = new SavingAccount(1, validClient, 110.00);
+        Account existingAccount = new SavingAccount(1, validClient, 100.00);
+        validClient.addAccount(existingAccount);
+        Account duplicatingAccount = new SavingAccount(1, validClient, 110.00);
 
         assumeTrue(validClient != null);
-        assumeTrue(validAccount != null);
-        assumeTrue(validClient.getAccounts().contains(validAccount));
-        assumeTrue(invalidAccount != null);
+        assumeTrue(existingAccount != null);
+        assumeTrue(validClient.getAccounts().contains(existingAccount));
+        assumeTrue(duplicatingAccount != null);
 
-        assertThrows(IllegalStateException.class, () -> validClient.addAccount(invalidAccount));
+        assertThrows(IllegalStateException.class, () -> validClient.addAccount(duplicatingAccount));
     }
 
     @Test
