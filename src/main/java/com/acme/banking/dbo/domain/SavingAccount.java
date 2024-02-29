@@ -38,6 +38,7 @@ public class SavingAccount implements Account {
     }
 
     public void unlinkClient(){
+        this.client.removeAccount(this);
         this.client = null;
     }
 }

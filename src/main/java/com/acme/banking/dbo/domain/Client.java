@@ -61,6 +61,9 @@ public class Client {
     }
 
     public void removeAccount(SavingAccount savingAccount) {
+        if (!this.accounts.contains(savingAccount)){
+            return;
+        }
         this.accounts.remove(savingAccount);
         savingAccount.unlinkClient();
     }
