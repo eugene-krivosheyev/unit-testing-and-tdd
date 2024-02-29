@@ -9,13 +9,13 @@ public class Client {
     private Collection<Account> accounts = new ArrayList<>(); //TODO
 
     public Client(int id, String name) {
-        if (name==null){
+        if (name == null) {
             throw new IllegalArgumentException("Name can not be null");
         }
-        if (name.isBlank()){
+        if (name.isBlank()) {
             throw new IllegalArgumentException("Name can not be blank or empty");
         }
-        if (id < 0){
+        if (id < 0) {
             throw new IllegalArgumentException("Id can not less then 0");
         }
         this.id = id;
@@ -26,7 +26,21 @@ public class Client {
         return id;
     }
 
+    // если кл1 утв что владеет счетом 1 то автоматически должно обеспечиваться что счет1 своим хозяином считает кл1
     public String getName() {
         return name;
+    }
+
+    public Collection<Account> getAccount(){
+        return accounts;
+    }
+
+    public void addAccount(Account account) {
+        if (account.getClient().getId() != id) {
+            throw new IllegalStateException(
+                    String.format("account can not be linked to this client, already linked to %s", account.getClient().getId())
+            );
+        }
+        this.accounts.add(account);
     }
 }

@@ -1,6 +1,7 @@
 package com.acme.banking.dbo;
 
 import com.acme.banking.dbo.domain.Client;
+import com.acme.banking.dbo.domain.SavingAccount;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -27,6 +28,16 @@ class ClientCreationTest {
         public void shouldNotThrowWhenCorrectInput() {
             Assertions.assertDoesNotThrow(() -> new Client(0, "Petr"));
         }
+
+        @Test
+        public void shouldAddAccountWhenCorrectAccountOwner(){
+            Client sut = new Client(10, "Petr");
+            SavingAccount clientAccount = new SavingAccount(1, sut, 10);
+            Assertions.assertAll(
+                    () -> Assertions.assertEquals(1, sut.getAccount().size()),
+                    () -> Assertions.assertEquals(clientAccount, sut.getAccount().toArray()[0])
+            );
+        }
     }
 
     @Nested
@@ -49,6 +60,14 @@ class ClientCreationTest {
         @Test()
         public void shouldFailWhenIdIsNegative() {
             Assertions.assertThrows(IllegalArgumentException.class, () -> new Client(-5, "Petr"));
+        }
+
+        @Test
+        public void shouldFailWhenAccountClientIsNotThisClient() {
+            Client sut = new Client(10, "Petr");
+            Client otherClient = new Client(2, "Vasya");
+            SavingAccount otherClientAccount = new SavingAccount(1, otherClient, 10);
+            Assertions.assertThrows(IllegalStateException.class, () -> sut.addAccount(otherClientAccount));
         }
     }
 }

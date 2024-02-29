@@ -2,6 +2,7 @@ package com.acme.banking.dbo;
 
 import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.domain.SavingAccount;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -29,6 +30,16 @@ public class SavingAccountTest {
         }
 
         @Test()
+        public void shouldCreateWhenAmountIsZero() {
+            client = new Client(0, "test");
+            SavingAccount sut = new SavingAccount(0, client, 0);
+
+            Assertions.assertEquals(0, sut.getId());
+            Assertions.assertEquals(client, sut.getClient());
+            Assertions.assertEquals(0, sut.getAmount());
+        }
+
+        @Test
         public void shouldCreateWhenIdIsPositive() {
             client = new Client(0, "test");
             SavingAccount sut = new SavingAccount(10, client, 10);
@@ -63,7 +74,7 @@ public class SavingAccountTest {
         }
 
         @Test()
-        public void shouldFailWhenAmountIsNegativeIsEmpty() {
+        public void shouldFailWhenAmountIsNegative() {
             Assertions.assertThrows(IllegalArgumentException.class,
                     () -> new SavingAccount(0, client, -1));
         }
