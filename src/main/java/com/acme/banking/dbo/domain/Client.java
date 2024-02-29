@@ -28,6 +28,7 @@ public class Client {
 
     public void addAccount(SavingAccount account){
 
+        if (account == null) throw new IllegalArgumentException("Account is null");
         if (id != account.getClient().getId()) throw new IllegalStateException("Account related to another client");
 
         accounts.add(account);

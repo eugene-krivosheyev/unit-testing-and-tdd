@@ -62,6 +62,7 @@ public class ClientTest {
 
         assertAll(
                 () -> assertThrows(IllegalStateException.class, () -> client.addAccount(account)),
+                () -> assertThrows(IllegalArgumentException.class, () -> client.addAccount(null)),
                 () -> assertEquals(0, client.getAccountsSize())
         );
 
