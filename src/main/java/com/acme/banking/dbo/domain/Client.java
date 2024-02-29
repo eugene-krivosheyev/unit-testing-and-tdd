@@ -2,6 +2,7 @@ package com.acme.banking.dbo.domain;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 
 public class Client {
     private int id;
@@ -31,8 +32,8 @@ public class Client {
         return name;
     }
 
-    public Collection<Account> getAccount(){
-        return accounts;
+    public Collection<Account> getAccounts(){
+        return Collections.unmodifiableCollection(accounts);
     }
 
     public void addAccount(Account account) {
@@ -43,4 +44,5 @@ public class Client {
         }
         this.accounts.add(account);
     }
+
 }

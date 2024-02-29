@@ -1,10 +1,13 @@
 package com.acme.banking.dbo;
 
+import com.acme.banking.dbo.domain.Account;
 import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.domain.SavingAccount;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+
+import java.util.Collection;
 
 class ClientCreationTest {
 
@@ -33,9 +36,12 @@ class ClientCreationTest {
         public void shouldAddAccountWhenCorrectAccountOwner(){
             Client sut = new Client(10, "Petr");
             SavingAccount clientAccount = new SavingAccount(1, sut, 10);
+            sut.addAccount(clientAccount);
+            Collection<Account> accounts = sut.getAccounts();
+            accounts.add(clientAccount);
             Assertions.assertAll(
-                    () -> Assertions.assertEquals(1, sut.getAccount().size()),
-                    () -> Assertions.assertEquals(clientAccount, sut.getAccount().toArray()[0])
+                    () -> Assertions.assertEquals(1, sut.getAccounts().size()),
+                    () -> Assertions.assertEquals(clientAccount, sut.getAccounts().toArray()[0])
             );
         }
     }
@@ -68,6 +74,15 @@ class ClientCreationTest {
             Client otherClient = new Client(2, "Vasya");
             SavingAccount otherClientAccount = new SavingAccount(1, otherClient, 10);
             Assertions.assertThrows(IllegalStateException.class, () -> sut.addAccount(otherClientAccount));
+        }
+
+        @Test
+        public void shouldFailWhenAccountClientIsNotThisClient2() {
+            Client sut = new Client(10, "Petr");
+            Client otherClient = new Client(2, "Vasya");
+            SavingAccount otherClientAccount = new SavingAccount(1, otherClient, 10);
+            Collection<Account> accounts = sut.getAccounts();
+            Assertions.assertThrows(UnsupportedOperationException.class, () -> accounts.add(otherClientAccount));
         }
     }
 }
