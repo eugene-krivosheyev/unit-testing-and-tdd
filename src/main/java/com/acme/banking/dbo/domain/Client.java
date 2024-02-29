@@ -2,6 +2,7 @@ package com.acme.banking.dbo.domain;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Optional;
 
 public class Client {
     private int id;
@@ -23,5 +24,20 @@ public class Client {
 
     public String getName() {
         return name;
+    }
+
+    public void addAccount(SavingAccount account){
+
+        if (id != account.getClient().getId()) throw new IllegalStateException("Account related to another client");
+
+        accounts.add(account);
+    }
+
+    public int getAccountsSize() {
+        return accounts.size();
+    }
+
+    public Optional<Account> getAccount(int accountId){
+        return accounts.stream().filter(a -> a.getId() == accountId).findAny();
     }
 }
