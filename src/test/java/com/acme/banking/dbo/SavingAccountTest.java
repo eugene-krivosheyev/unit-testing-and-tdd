@@ -1,7 +1,6 @@
 package com.acme.banking.dbo;
 
 import com.acme.banking.dbo.domain.Client;
-import com.acme.banking.dbo.domain.Errors;
 import static com.acme.banking.dbo.domain.Errors.ACCOUNT_NEGATIVE_AMOUNT_MESSAGE;
 import static com.acme.banking.dbo.domain.Errors.ACCOUNT_NEGATIVE_ID_MESSAGE;
 import static com.acme.banking.dbo.domain.Errors.ACCOUNT_NULL_CLIENT_MESSAGE;
@@ -48,6 +47,23 @@ public class SavingAccountTest {
 
         var negativeAmountEx = assertThrows(IllegalArgumentException.class, () -> new SavingAccount(accountId, client, amount));
         assertEquals(ACCOUNT_NEGATIVE_AMOUNT_MESSAGE, negativeAmountEx.getMessage());
+    }
+
+    @Test
+    @DisplayName("Saving account initialize with zero params testCase")
+    public void shouldCreateSavingAccountWhenAccountAndAmountAreZero() {
+        final var accountId = 0;
+        final var client = new Client(1, "dummyClientName");
+        final var amount = 0;
+
+        SavingAccount sut = new SavingAccount(accountId, client, amount);
+        assumeTrue(sut != null);
+
+        assertAll("Saving account stores its properties",
+                () -> assertEquals(accountId, sut.getId()),
+                () -> assertEquals(client, sut.getClient()),
+                () -> assertEquals(amount, sut.getAmount())
+        );
     }
 
     @Test
