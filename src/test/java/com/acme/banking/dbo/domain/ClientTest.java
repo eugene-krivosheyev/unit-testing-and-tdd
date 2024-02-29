@@ -49,7 +49,7 @@ class ClientTest {
         sut.addAccount(account);
         assertAll("Check addAccount() method and check equals account and accounts element",
                 () -> assertEquals(1, sut.getAccounts().size()),
-                () -> assertEquals(sut.getName(),sut.getAccounts().stream().findFirst().get().getClient().getName())
+                () -> assertEquals(sut,sut.getAccounts().stream().findFirst().get().getClient())
         );
     }
 

@@ -30,7 +30,7 @@ public class Client {
     }
 
     public void addAccount(Account account){
-        if (account.getClient().getName().equals(name)){
+        if (account.getClient().equals(this)){
             accounts.add(account);
         } else {
             throw new IllegalStateException("This account does not belong " + name);
