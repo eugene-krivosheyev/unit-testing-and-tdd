@@ -32,19 +32,23 @@ class SavingAccountTest {
     }
 
     @Test
-    public void shouldCreatedWhenValidArgs(){
+    public void shouldCreatedWhenValidArgs() {
 
-        assertEquals(id, account.getId());
-        assertEquals(client, account.getClient());
-        assertEquals(amount, account.getAmount());
+        assertAll(
+                () -> assertEquals(id, account.getId()),
+                () -> assertEquals(client, account.getClient()),
+                () -> assertEquals(amount, account.getAmount())
+        );
     }
 
     @Test
-    public void shouldNotCreatedWhenInvalidArgs(){
+    public void shouldNotCreatedWhenInvalidArgs() {
 
-        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(invalidId, client, amount));
-        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(id, invalidClient, amount));
-        assertThrows(IllegalArgumentException.class, () -> new SavingAccount(id, client, invalidAmount));
+        assertAll(
+                () -> assertThrows(IllegalArgumentException.class, () -> new SavingAccount(invalidId, client, amount)),
+                () -> assertThrows(IllegalArgumentException.class, () -> new SavingAccount(id, invalidClient, amount)),
+                () -> assertThrows(IllegalArgumentException.class, () -> new SavingAccount(id, client, invalidAmount))
+        );
     }
 
 }
