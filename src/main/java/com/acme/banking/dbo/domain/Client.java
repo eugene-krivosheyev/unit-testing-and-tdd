@@ -12,7 +12,7 @@ public class Client {
     private Collection<Account> accounts = new ArrayList<>();
 
     public Client(int id, String name) {
-        if (id < 0) throw new IllegalClientIdArgumentException("Id is not valid");
+        if (id < 0) throw new IllegalClientIdArgumentException("Id can't be negative");
         if (name == null) throw new ClientNameNullException("Name is null");
         if (name.isEmpty()) throw new IllegalClientNameArgumentException("Name is empty");
 

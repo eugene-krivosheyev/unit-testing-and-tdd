@@ -12,9 +12,9 @@ public class SavingAccount implements Account {
     private double amount;
 
     public SavingAccount(int id, Client client, double amount) {
-        if (id < 0) throw new IllegalSavingAccountIdArgumentException("Id is not valid");
+        if (id < 0) throw new IllegalSavingAccountIdArgumentException("Id can't be negative");
         if (client == null) throw new ClientNullException("Client is null");
-        if (amount < 0) throw new IllegalSavingAccountAmountArgumentException("Amount can not be negative");
+        if (amount < 0) throw new IllegalSavingAccountAmountArgumentException("Amount can't be negative");
 
         this.id = id;
         this.client = client;
