@@ -2,6 +2,7 @@ package com.acme.banking.dbo.domain;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 
 public class Client {
     private int id;
@@ -24,4 +25,18 @@ public class Client {
     public String getName() {
         return name;
     }
+
+    public Collection<Account> getAccounts(){
+        return Collections.unmodifiableCollection(accounts);
+    }
+
+    public void addAccount(Account account){
+        if (account.getClient().equals(this)){
+            accounts.add(account);
+        } else {
+            throw new IllegalStateException("This account does not belong " + name);
+        }
+
+    }
+
 }
