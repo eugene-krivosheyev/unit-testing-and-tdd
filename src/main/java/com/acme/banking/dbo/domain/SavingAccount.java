@@ -40,6 +40,15 @@ public class SavingAccount implements Account {
     }
 
     @Override
+    public void setAmount(int accountId) {
+
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
