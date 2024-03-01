@@ -1,13 +1,13 @@
 package com.acme.banking.dbo.domain;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Objects;
+
 import com.acme.banking.dbo.exception.IdValidationException;
 import com.acme.banking.dbo.exception.NameAlphabeticalValidationException;
 import com.acme.banking.dbo.exception.NameValidationException;
 import org.apache.commons.lang3.StringUtils;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.stream.Collectors;
 
 public class Client {
     public static final String ALPHABET = "абвгдеёжзийклмнопрстуфхцчшщъыьэюяabcdefghijklmnopqrstuvwxyz -";
@@ -23,7 +23,7 @@ public class Client {
     }
 
     public Client addAccount(Account account) {
-        if (accounts.contains(account)){
+        if (accounts.contains(account)) {
             return this;
         }
         accounts.add(account);
@@ -57,11 +57,11 @@ public class Client {
 
     private boolean isNameValid(String name) {
         return StringUtils.isNoneBlank(name) && !StringUtils.startsWith(name, " ") && !StringUtils.endsWith(name,
-            " ") && !StringUtils.startsWith(name, "-") && !StringUtils.endsWith(name, "-");
+                " ") && !StringUtils.startsWith(name, "-") && !StringUtils.endsWith(name, "-");
     }
 
     public void removeAccount(SavingAccount savingAccount) {
-        if (!this.accounts.contains(savingAccount)){
+        if (!this.accounts.contains(savingAccount)) {
             return;
         }
         this.accounts.remove(savingAccount);
@@ -70,5 +70,17 @@ public class Client {
 
     public Collection<Account> getAccounts() {
         return new ArrayList<>(accounts);
+    }
+
+    @Override public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Client client = (Client) o;
+        return id == client.id && Objects.equals(name, client.name) &&
+                Objects.equals(accounts, client.accounts);
+    }
+
+    @Override public int hashCode() {
+        return Objects.hash(id, name, accounts);
     }
 }
