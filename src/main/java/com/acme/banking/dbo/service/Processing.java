@@ -4,6 +4,7 @@ import com.acme.banking.dbo.domain.Account;
 import com.acme.banking.dbo.domain.Cash;
 import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.exceptions.CreateClientException;
+import com.acme.banking.dbo.exceptions.GetAccountsException;
 import com.acme.banking.dbo.repo.ClientRepository;
 
 import java.util.Collection;
@@ -30,7 +31,12 @@ public class Processing {
     }
 
     public Collection<Account> getAccountsByClientId(int clientId) {
-        return null; //TODO
+        try {
+            Client client = clientRepository.getClientById(clientId);
+            return client.getAccounts();
+        } catch (Exception e){
+            throw new GetAccountsException("Cannot get accounts for client!");
+        }
     }
 
     public void transfer(int fromAccountId, int toAccountId, double amount) {
