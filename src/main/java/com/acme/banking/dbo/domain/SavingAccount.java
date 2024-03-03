@@ -30,4 +30,9 @@ public class SavingAccount implements Account {
     public Client getClient() {
         return client;
     }
+
+    @Override
+    public void setBalance(double balance){
+        this.amount = balance;
+    }
 }
