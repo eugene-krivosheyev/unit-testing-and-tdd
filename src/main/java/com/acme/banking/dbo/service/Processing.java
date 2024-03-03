@@ -17,7 +17,7 @@ public class Processing {
     }
 
     public Client createClient(String name) {
-        int id=clientRepository.generateId();
+        int id = clientRepository.generateId();
         Client client = new Client(id,  name);
         Client savedClient;
         try {
