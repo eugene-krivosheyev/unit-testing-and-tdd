@@ -89,7 +89,6 @@ public class ProcessingTest {
 
         processing.transfer(1, toAccountId, 1);
 
-
         verify(cashLoggerProviderMock).log(doubleCaptor.capture(), intCaptor.capture());
         assertAll(() -> assertEquals(0, fromAccount.getAmount()),
                 () -> assertEquals(1, intCaptor.getValue()),
