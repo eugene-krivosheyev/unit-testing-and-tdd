@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Collection;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -36,9 +37,7 @@ public class ProcessingTest {
         var stubClientRepository = mock(ClientRepository.class);
         var sut = new Processing(stubClientRepository);
         Client client = new Client(1, "client1");
-        Account account = new SavingAccount(1, client, 200);
-        client.addAccount(account);
-        when(stubClientRepository.findClientById(any())).thenReturn(client);
+        when(stubClientRepository.findClientById(anyInt())).thenReturn(client);
 
         Collection<Account> accounts = sut.getAccountsByClientId(1);
 
