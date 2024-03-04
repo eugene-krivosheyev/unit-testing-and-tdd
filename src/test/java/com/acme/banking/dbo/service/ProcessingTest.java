@@ -105,6 +105,69 @@ class ProcessingTest {
     }
 
     @Test
+    void shouldNotTransferNegativeAmount() {
+        assertThrows(IllegalArgumentException.class, () -> processingService.transfer(1, 2, -1));
+    }
+
+    @Test
+    void shouldNotTransferWhenAccountFromNotFound() {
+        when(accountRepositoryMock.findAccountById(1)).thenReturn(null);
+        assertThrows(IllegalArgumentException.class, () -> processingService.transfer(1, 2, 100));
+    }
+
+    @Test
+    void shouldNotTransferWhenAccountToNotFound() {
+        when(accountRepositoryMock.findAccountById(-1)).thenReturn(null);
+        assertThrows(IllegalArgumentException.class, () -> processingService.transfer(1, -1, 100));
+    }
+
+    @Test
+    void shouldFailTransferWhenClientFromAmountNotChanged() {
+        var validClientFrom = new Client(1, "Ivan");
+        var validClientTo = new Client(2, "Sergey");
+        var validAccountFrom = new SavingAccount(1, validClientFrom, 1000.00);
+        var validAccountTo = new SavingAccount(2, validClientTo, 100.00);
+        var validTransferedAccountFrom = new SavingAccount(1, validClientFrom, 900);
+        var invalidTransferedAccountFrom = new SavingAccount(1, validClientFrom, 1000);
+        var validTransferedAccountTo = new SavingAccount(2, validClientTo, 200);
+
+        when(accountRepositoryMock.findAccountById(1)).thenReturn(validAccountFrom);
+        when(accountRepositoryMock.findAccountById(2)).thenReturn(validAccountTo);
+        when(accountRepositoryMock.updateClientAccount(validTransferedAccountFrom)).thenReturn(invalidTransferedAccountFrom);
+        when(accountRepositoryMock.updateClientAccount(validTransferedAccountTo)).thenReturn(validTransferedAccountTo);
+
+        assertThrows(IllegalStateException.class, () -> processingService.transfer(1,2,100));
+
+        verify(accountRepositoryMock, times(1)).findAccountById(1);
+        verify(accountRepositoryMock, times(1)).findAccountById(2);
+        verify(accountRepositoryMock, times(1)).updateClientAccount(validTransferedAccountFrom);
+        verify(accountRepositoryMock, times(0)).updateClientAccount(validTransferedAccountTo);
+    }
+
+    @Test
+    void shouldFailTransferWhenClientToAmountNotChanged() {
+        var validClientFrom = new Client(1, "Ivan");
+        var validClientTo = new Client(2, "Sergey");
+        var validAccountFrom = new SavingAccount(1, validClientFrom, 1000.00);
+        var validAccountTo = new SavingAccount(2, validClientTo, 100.00);
+        var validTransferedAccountFrom = new SavingAccount(1, validClientFrom, 900);
+        var validTransferedAccountTo = new SavingAccount(2, validClientTo, 200);
+        var invalidTransferedAccountTo = new SavingAccount(2, validClientFrom, 100);
+
+        when(accountRepositoryMock.findAccountById(1)).thenReturn(validAccountFrom);
+        when(accountRepositoryMock.findAccountById(2)).thenReturn(validAccountTo);
+        when(accountRepositoryMock.updateClientAccount(validTransferedAccountFrom)).thenReturn(validTransferedAccountFrom);
+        when(accountRepositoryMock.updateClientAccount(validTransferedAccountTo)).thenReturn(invalidTransferedAccountTo);
+
+        assertThrows(IllegalStateException.class, () -> processingService.transfer(1,2,100));
+
+        verify(accountRepositoryMock, times(1)).findAccountById(1);
+        verify(accountRepositoryMock, times(1)).findAccountById(2);
+        verify(accountRepositoryMock, times(1)).updateClientAccount(validTransferedAccountFrom);
+        verify(accountRepositoryMock, times(1)).updateClientAccount(validTransferedAccountTo);
+    }
+
+    @Test
     void shouldLogValidCashOperation() {
         var logAmount = 100.00;
         var logAccountId = 1;

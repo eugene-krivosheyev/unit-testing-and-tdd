@@ -47,15 +47,22 @@ public class Processing {
             throw new IllegalArgumentException();
         }
 
-        if (accountTo.getAmount() < amount) {
+        if (accountFrom.getAmount() < amount) {
             throw new IllegalArgumentException();
         }
 
         accountTo.setAmount(accountTo.getAmount() + amount);
-        accountFrom.setAmount(accountTo.getAmount() - amount);
+        accountFrom.setAmount(accountFrom.getAmount() - amount);
 
-        accountRepository.updateClientAccount(accountFrom);
-        accountRepository.updateClientAccount(accountTo);
+        var updatedFromAccount = accountRepository.updateClientAccount(accountFrom);
+        if (updatedFromAccount.getAmount() != accountFrom.getAmount()) {
+            throw new IllegalStateException();
+        }
+
+        var updatedToAccount = accountRepository.updateClientAccount(accountTo);
+        if (updatedToAccount.getAmount() != accountTo.getAmount()) {
+            throw new IllegalStateException();
+        }
     }
 
     public void logCash(double amount, int fromAccountId) {
