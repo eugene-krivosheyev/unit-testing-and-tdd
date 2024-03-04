@@ -1,5 +1,6 @@
 package com.acme.banking.dbo.service;
 
+import java.math.BigDecimal;
 import java.util.Collection;
 
 import com.acme.banking.dbo.domain.Account;
@@ -17,20 +18,22 @@ public class Processing {
         this.accountRepository = accountRepository;
     }
 
-    public Client createClient(String name) {
-        int newId = clientRepository.createUniqueId();
-        return new Client(newId, name);
+//    public Client createClient(String name) {
+//        int newId = clientRepository.createUniqueId();
+//        return new Client(newId, name);
+//    }
+
+//    public Collection<Account> getAccountsByClientId(int clientId) {
+//        return accountRepository.getAccountsArray(clientId);
+//    }
+
+    public void transfer(Integer fromAccountId, Integer toAccountId, BigDecimal amount) {
+        if(toAccountId == null) {
+            Cash.log(amount, fromAccountId);
+        }
     }
 
-    public Collection<Account> getAccountsByClientId(int clientId) {
-        return accountRepository.getAccountsArray(clientId);
-    }
-
-    public void transfer(int fromAccountId, int toAccountId, double amount) {
-        //TODO
-    }
-
-    public void cash(double amount, int fromAccountId) {
-        Cash.log(amount, fromAccountId);
-    }
+//    public void cash(double amount, int fromAccountId) {
+//        Cash.log(amount, fromAccountId);
+//    }
 }

@@ -24,6 +24,7 @@ public class ProcessingTest {
         var stubElement = mock(ClientRepository.class);
         when(stubElement.createUniqueId())
                 .thenReturn(11);
+
         Client newClient = processing.createClient("НовыйКлиент");
         Assertions.assertAll(
                 () -> Assertions.assertEquals(11, newClient.getId()),
