@@ -46,7 +46,7 @@ public class ProcessingTest {
     }
 
     @Test
-    @DisplayName("Успешно вывести деньги с аккаунта")
+    @DisplayName("Успешно вывести деньги с аккаунта, проверка внутреннего логера")
     void givenProcessingServiceShouldProvideExtractionsFromAccount() {
 
         var mockedRepository = mock(AccountRepository.class);
@@ -56,6 +56,7 @@ public class ProcessingTest {
         when(mockedRepository.getAccount(1)).thenReturn(fromAccount);
         var cashTransactions = (List<CashTransaction>) ReflectionTestUtils.getField(new CashInternalLogger(),
             "cashTransactions");
+
         processing.transfer(1, toAccountId, 1);
 
         assertAll(() -> assertEquals(0, fromAccount.getAmount()),
@@ -75,7 +76,7 @@ public class ProcessingTest {
     }
 
     @Test
-    @DisplayName("Успешно вывести деньги с аккаунта")
+    @DisplayName("Успешно вывести деньги с аккаунта, проверка логгирования вывода")
     void givenProcessingServiceShouldProvideExtractionsFromAccountAndCaptureLog() {
 
         var mockedRepository = mock(AccountRepository.class);
