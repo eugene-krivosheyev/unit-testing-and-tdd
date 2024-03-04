@@ -142,7 +142,7 @@ class ProcessingTest {
         when(accountRepoMock.getAccountById(toAccountId)).thenReturn(spyToAccount);
         doThrow(new RuntimeException()).when(spyToAccount).setBalance(Mockito.anyDouble());
 
-        assertAll("When account repo is not available or accounts are the same, transfer has to be stopped",
+        assertAll("When accounts are the same or account service has problems, transfer has to be stopped",
                 () -> assertEquals("The source account is the same as the target!",
                         getErrorTransferMessage(fromAccountId, fromAccountId, 100)),
                 () -> assertEquals("Fail transaction",
