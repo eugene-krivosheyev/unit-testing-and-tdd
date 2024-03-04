@@ -2,6 +2,7 @@ package com.acme.banking.dbo.domain;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 
 public class Client {
     private int id;
@@ -9,6 +10,10 @@ public class Client {
     private Collection<Account> accounts = new ArrayList<>(); //TODO
 
     public Client(int id, String name) {
+
+        if (id <= 0) throw new IllegalArgumentException("Invalid value for id!");
+        if ("".equals(name) || name == null) throw new IllegalArgumentException("Client name cannot be empty");
+
         this.id = id;
         this.name = name;
     }
@@ -20,4 +25,18 @@ public class Client {
     public String getName() {
         return name;
     }
+
+    public Collection<Account> getAccounts(){
+        return Collections.unmodifiableCollection(accounts);
+    }
+
+    public void addAccount(Account account){
+        if (account.getClient().equals(this)){
+            accounts.add(account);
+        } else {
+            throw new IllegalStateException("This account does not belong " + name);
+        }
+
+    }
+
 }

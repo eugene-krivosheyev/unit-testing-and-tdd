@@ -6,6 +6,11 @@ public class SavingAccount implements Account {
     private double amount;
 
     public SavingAccount(int id, Client client, double amount) {
+
+        if (id <= 0) throw new IllegalArgumentException("Invalid value for id!");
+        if (client == null) throw new IllegalArgumentException("Client cannot be null!");
+        if (amount < 0) throw new IllegalArgumentException("Invalid value for amount!");
+
         this.id = id;
         this.client = client;
         this.amount = amount;
@@ -24,5 +29,10 @@ public class SavingAccount implements Account {
     @Override
     public Client getClient() {
         return client;
+    }
+
+    @Override
+    public void setBalance(double balance){
+        this.amount = balance;
     }
 }
