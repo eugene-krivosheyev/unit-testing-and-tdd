@@ -45,7 +45,7 @@ public class ProcessingTest {
     }
 
     @Test
-    public void shouldReturnEmptyAccountsWhenClientHasOneAccount() {
+    public void shouldReturnCorrectAccountsWhenClientHasOneAccount() {
         var stubClientRepository = mock(ClientRepository.class);
         var sut = new Processing(stubClientRepository);
         Client client = new Client(1, "client1");
