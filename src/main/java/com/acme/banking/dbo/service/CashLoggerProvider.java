@@ -2,7 +2,6 @@ package com.acme.banking.dbo.service;
 
 import com.acme.banking.dbo.domain.CashInternalLogger;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiConsumer;
@@ -15,8 +14,8 @@ public class CashLoggerProvider {
         loggersList.add(CashInternalLogger::log);
     }
 
-    public BiConsumer<Double, Integer> getLogger(){
-       return loggersList.get(0);
+    public void log(double amount, Integer fromAccountId){
+        loggersList.get(0).accept(amount,fromAccountId);
     }
 
 }

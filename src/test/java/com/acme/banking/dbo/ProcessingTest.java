@@ -12,6 +12,7 @@ import com.acme.banking.dbo.service.Processing;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.List;
@@ -19,7 +20,9 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class ProcessingTest {
@@ -37,7 +40,9 @@ public class ProcessingTest {
 
         processing.transfer(1, 2, 1);
 
-        assertAll(() -> assertEquals(0, fromAccount.getAmount()), () -> assertEquals(1, toAccount.getAmount()));
+        assertAll(() -> assertEquals(0, fromAccount.getAmount()),
+            () -> assertEquals(1, toAccount.getAmount())
+        );
     }
 
     @Test
@@ -53,7 +58,8 @@ public class ProcessingTest {
             "cashTransactions");
         processing.transfer(1, toAccountId, 1);
 
-        assertAll(() -> assertEquals(0, fromAccount.getAmount()), () -> assertEquals(1, cashTransactions.size()));
+        assertAll(() -> assertEquals(0, fromAccount.getAmount()),
+            () -> assertEquals(1, cashTransactions.size()));
     }
 
     @Test
@@ -68,6 +74,26 @@ public class ProcessingTest {
         );
     }
 
+    @Test
+    @DisplayName("Успешно вывести деньги с аккаунта")
+    void givenProcessingServiceShouldProvideExtractionsFromAccountAndCaptureLog() {
 
+        var mockedRepository = mock(AccountRepository.class);
+        var cashLoggerProviderMock = mock(CashLoggerProvider.class);
+        var processing = new Processing(mockedRepository, cashLoggerProviderMock);
+        var doubleCaptor = ArgumentCaptor.forClass(Double.class);
+        var intCaptor = ArgumentCaptor.forClass(Integer.class);
+        SavingAccount fromAccount = new SavingAccount(1, new Client(1, "aaa"), 1);
+        Integer toAccountId = null;
+        when(mockedRepository.getAccount(1)).thenReturn(fromAccount);
+
+        processing.transfer(1, toAccountId, 1);
+
+
+        verify(cashLoggerProviderMock).log(doubleCaptor.capture(), intCaptor.capture());
+        assertAll(() -> assertEquals(0, fromAccount.getAmount()),
+            () -> assertEquals(1, intCaptor.getValue()),
+            () -> assertEquals(1.0d, doubleCaptor.getValue()));
+    }
 
 }

@@ -1,6 +1,5 @@
 package com.acme.banking.dbo.service;
 
-import com.acme.banking.dbo.domain.CashInternalLogger;
 import com.acme.banking.dbo.repository.AccountRepository;
 
 
@@ -19,7 +18,7 @@ public class Processing {
         validation.validate(amount);
         accountRepository.getAccount(fromAccountId).changeBalance(-amount);
         if (toAccountId == null) {
-            logger.getLogger().accept(amount, fromAccountId);
+            logger.log(amount, fromAccountId);
         } else {
             accountRepository.getAccount(toAccountId).changeBalance(amount);
         }
