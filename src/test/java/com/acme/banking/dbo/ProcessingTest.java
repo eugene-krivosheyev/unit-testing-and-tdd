@@ -37,9 +37,7 @@ public class ProcessingTest {
 
         processing.transfer(1, 2, 1);
 
-        assertAll(
-                () -> assertEquals(0, fromAccount.getAmount()),
-                () -> assertEquals(1, toAccount.getAmount()));
+        assertAll(() -> assertEquals(0, fromAccount.getAmount()), () -> assertEquals(1, toAccount.getAmount()));
     }
 
     @Test
@@ -51,13 +49,11 @@ public class ProcessingTest {
         SavingAccount fromAccount = new SavingAccount(1, new Client(1, "aaa"), 1);
         Integer toAccountId = null;
         when(mockedRepository.getAccount(1)).thenReturn(fromAccount);
-        var cashTransactions = (List<CashTransaction>)ReflectionTestUtils.getField(new CashInternalLogger(), "cashTransactions");
+        var cashTransactions = (List<CashTransaction>) ReflectionTestUtils.getField(new CashInternalLogger(),
+            "cashTransactions");
         processing.transfer(1, toAccountId, 1);
 
-        assertAll(
-            () -> assertEquals(0, fromAccount.getAmount()),
-            () -> assertEquals(1, cashTransactions.size())
-        );
+        assertAll(() -> assertEquals(0, fromAccount.getAmount()), () -> assertEquals(1, cashTransactions.size()));
     }
 
     @Test
@@ -67,6 +63,11 @@ public class ProcessingTest {
         var mockedRepository = mock(AccountRepository.class);
         var processing = new Processing(mockedRepository, new CashLoggerProvider());
 
-        assertThrows(OddTransactionValidationException.class, ()-> processing.transfer(1, null, 2));
+        assertThrows(OddTransactionValidationException.class,
+            () -> processing.transfer(1, null, 2)
+        );
     }
+
+
+
 }
