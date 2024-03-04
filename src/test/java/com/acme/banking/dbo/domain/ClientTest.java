@@ -32,7 +32,6 @@ class ClientTest {
         assertThrows(IllegalArgumentException.class, () -> new Client(clientId, ""));
     }
 
-
     @Test
     public void getIdFromClientReturnsExpectedValue(){
         assertEquals(clientId, sut.getId());
