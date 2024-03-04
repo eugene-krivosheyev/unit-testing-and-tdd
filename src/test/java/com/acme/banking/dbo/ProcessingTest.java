@@ -6,10 +6,8 @@ import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.domain.SavingAccount;
 import com.acme.banking.dbo.exception.OddTransactionValidationException;
 import com.acme.banking.dbo.repository.AccountRepository;
-import com.acme.banking.dbo.repository.ClientRepository;
 import com.acme.banking.dbo.service.CashLoggerProvider;
 import com.acme.banking.dbo.service.Processing;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -20,7 +18,6 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -56,6 +53,7 @@ public class ProcessingTest {
         when(mockedRepository.getAccount(1)).thenReturn(fromAccount);
         var cashTransactions = (List<CashTransaction>) ReflectionTestUtils.getField(new CashInternalLogger(),
             "cashTransactions");
+
         processing.transfer(1, toAccountId, 1);
 
         assertAll(() -> assertEquals(0, fromAccount.getAmount()),
@@ -88,7 +86,6 @@ public class ProcessingTest {
         when(mockedRepository.getAccount(1)).thenReturn(fromAccount);
 
         processing.transfer(1, toAccountId, 1);
-
 
         verify(cashLoggerProviderMock).log(doubleCaptor.capture(), intCaptor.capture());
         assertAll(() -> assertEquals(0, fromAccount.getAmount()),
