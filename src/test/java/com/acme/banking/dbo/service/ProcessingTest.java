@@ -122,7 +122,7 @@ class ProcessingTest {
     }
 
     @Test
-    void shouldFailTransferWhenClientFromAmountNotChanged() {
+    void shouldNotTransferWhenClientFromAmountNotChanged() {
         var validClientFrom = new Client(1, "Ivan");
         var validClientTo = new Client(2, "Sergey");
         var validAccountFrom = new SavingAccount(1, validClientFrom, 1000.00);
@@ -145,7 +145,7 @@ class ProcessingTest {
     }
 
     @Test
-    void shouldFailTransferWhenClientToAmountNotChanged() {
+    void shouldNotTransferWhenClientToAmountNotChanged() {
         var validClientFrom = new Client(1, "Ivan");
         var validClientTo = new Client(2, "Sergey");
         var validAccountFrom = new SavingAccount(1, validClientFrom, 1000.00);
