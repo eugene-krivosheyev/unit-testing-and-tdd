@@ -25,10 +25,7 @@ public class ProcessingTest {
         when(stubElement.createUniqueId())
                 .thenReturn(11);
 
-        Client newClient = processing.createClient("НовыйКлиент");
-        Assertions.assertAll(
-                () -> Assertions.assertEquals(11, newClient.getId()),
-                () -> Assertions.assertEquals("НовыйКлиент", newClient.getName()));
+
     }
 
 

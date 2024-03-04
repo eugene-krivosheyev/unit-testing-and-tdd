@@ -5,4 +5,6 @@ public interface Account {
     double getAmount();
     Client getClient();
     void setClient(Client newClient);
+
+    void changeBalance(double amount);
 }
