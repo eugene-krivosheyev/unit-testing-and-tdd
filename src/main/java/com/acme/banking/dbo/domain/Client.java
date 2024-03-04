@@ -5,6 +5,7 @@ import com.acme.banking.dbo.exception.client.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Objects;
 
 public class Client {
     private int id;
@@ -39,5 +40,18 @@ public class Client {
         } else {
             throw new ClientInvalidStateException("Some account has another owner");
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Client client = (Client) o;
+        return id == client.id && Objects.equals(name, client.name) && Objects.equals(accounts, client.accounts);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, accounts);
     }
 }
