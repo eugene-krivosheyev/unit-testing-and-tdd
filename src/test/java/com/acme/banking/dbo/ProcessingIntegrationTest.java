@@ -18,7 +18,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -105,7 +104,7 @@ public class ProcessingIntegrationTest {
 
     @Test
     @DisplayName("Ошибка списания, перерасход")
-    void givenTwoAccountsAndTransferAmountBetweenThey1() {
+    void givenTwoAccountsShouldAbortTransactionDueOverdraft() {
 
         var processing = new Processing(new AccountRepositoryImpl(), new CashLoggerProvider());
         SavingAccount fromAccount = new SavingAccount(1, new Client(1, "aaa"), 1);
@@ -116,7 +115,7 @@ public class ProcessingIntegrationTest {
 
     @Test
     @DisplayName("Ошибка списания, не найден клиент")
-    void givenTwoAccountsAndTransferAmountBetweenThey12() {
+    void givenOneAccountShouldAbortTransferingDueSecondAccountDoNotFound() {
 
         var processing = new Processing(new AccountRepositoryImpl(), new CashLoggerProvider());
         SavingAccount fromAccount = new SavingAccount(1, new Client(1, "aaa"), 1);
