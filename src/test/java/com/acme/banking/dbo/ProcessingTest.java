@@ -4,6 +4,7 @@ import com.acme.banking.dbo.domain.CashInternalLogger;
 import com.acme.banking.dbo.domain.CashTransaction;
 import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.domain.SavingAccount;
+import com.acme.banking.dbo.exception.OddTransactionValidationException;
 import com.acme.banking.dbo.repository.AccountRepository;
 import com.acme.banking.dbo.repository.ClientRepository;
 import com.acme.banking.dbo.service.CashLoggerProvider;
@@ -17,6 +18,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -42,7 +44,7 @@ public class ProcessingTest {
 
     @Test
     @DisplayName("Успешно вывести деньги с аккаунта")
-    void successTransfer() {
+    void givenProcessingServiceShouldProvideExtractionsFromAccount() {
 
         var mockedRepository = mock(AccountRepository.class);
         var processing = new Processing(mockedRepository, new CashLoggerProvider());
@@ -56,5 +58,15 @@ public class ProcessingTest {
             () -> assertEquals(0, fromAccount.getAmount()),
             () -> assertEquals(1, cashTransactions.size())
         );
+    }
+
+    @Test
+    @DisplayName("Ошибка валидации по сумме операции")
+    void givenProcessingServiceShouldThrowExceptionByValidation() {
+
+        var mockedRepository = mock(AccountRepository.class);
+        var processing = new Processing(mockedRepository, new CashLoggerProvider());
+
+        assertThrows(OddTransactionValidationException.class, ()-> processing.transfer(1, null, 2));
     }
 }
