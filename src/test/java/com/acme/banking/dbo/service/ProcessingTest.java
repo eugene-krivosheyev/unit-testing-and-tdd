@@ -55,8 +55,8 @@ class ProcessingTest {
         assertThrows(IllegalArgumentException.class, () -> processingService.createClient(invalidNullName));
         assertThrows(IllegalArgumentException.class, () -> processingService.createClient(invalidEmptyName));
 
-        verify(clientRepositoryMock, times(0)).saveClientWithName(null);
-        verify(clientRepositoryMock, times(0)).saveClientWithName("");
+        verify(clientRepositoryMock, times(0)).saveClientWithName(invalidNullName);
+        verify(clientRepositoryMock, times(0)).saveClientWithName(invalidEmptyName);
     }
 
     @Test
