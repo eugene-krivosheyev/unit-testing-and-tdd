@@ -46,7 +46,7 @@ public class ProcessingTest {
     }
 
     @Test
-    @DisplayName("Успешно вывести деньги с аккаунта")
+    @DisplayName("Успешно вывести деньги с аккаунта, проверка внутреннего логера")
     void givenProcessingServiceShouldProvideExtractionsFromAccount() {
 
         var mockedRepository = mock(AccountRepository.class);
@@ -75,7 +75,7 @@ public class ProcessingTest {
     }
 
     @Test
-    @DisplayName("Успешно вывести деньги с аккаунта")
+    @DisplayName("Успешно вывести деньги с аккаунта, проверка логгирования вывода")
     void givenProcessingServiceShouldProvideExtractionsFromAccountAndCaptureLog() {
 
         var mockedRepository = mock(AccountRepository.class);
