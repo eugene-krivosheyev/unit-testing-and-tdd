@@ -75,7 +75,6 @@ public class ProcessingTest {
 
         assertAll(
                 () -> verify(stubAccountRepository).getById(fromAccId),
-                () -> verify(stubAccountRepository).getById(fromAccId),
                 () -> verify(stubAccountRepository).getById(toAccId),
                 () -> verify(stubAccountRepository).save(fromAcc),
                 () -> verify(stubAccountRepository).save(toAcc),
