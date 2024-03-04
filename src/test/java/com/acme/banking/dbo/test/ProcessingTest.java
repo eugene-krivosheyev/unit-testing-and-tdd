@@ -7,7 +7,9 @@ import com.acme.banking.dbo.repository.ClientRepository;
 import com.acme.banking.dbo.service.Processing;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class ProcessingTest {
@@ -18,17 +20,33 @@ public class ProcessingTest {
     public void shouldSaveClient() {
         var stubClientRepository = mock(ClientRepository.class);
         var dummyAccountRepository = mock(AccountRepository.class);
-        var expectedClient = new Client(clientId, clientName);
+        var expected = new Client(clientId, clientName);
         when(stubClientRepository.nextId()).thenReturn(clientId);
-        when(stubClientRepository.save(expectedClient)).thenReturn(
-                new Client(expectedClient.getId(), expectedClient.getName())
+        when(stubClientRepository.save(expected)).thenReturn(
+                new Client(expected.getId(), expected.getName())
         );
         var sut = new Processing(stubClientRepository, dummyAccountRepository);
 
-        var savedClient = sut.createClient(clientName);
+        var actual = sut.createClient(clientName);
 
-        verify(stubClientRepository).save(expectedClient);
-        assertEquals(expectedClient, savedClient);
+        verify(stubClientRepository).save(expected);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldGetAccountByClientId() {
+        var stubClientRepository = mock(ClientRepository.class);
+        var dummyAccountRepository = mock(AccountRepository.class);
+        var client = new Client(clientId, clientName);
+        var expected = new SavingAccount(1, client, 100.0);
+        client.setAccount(expected);
+        when(stubClientRepository.getById(clientId)).thenReturn(client);
+        var sut = new Processing(stubClientRepository, dummyAccountRepository);
+
+        var actual = sut.getAccountsByClientId(client.getId());
+
+        verify(stubClientRepository).getById(client.getId());
+        assertIterableEquals(List.of(expected), actual);
     }
 
     @Test
@@ -36,32 +54,26 @@ public class ProcessingTest {
         var dummyClientRepository = mock(ClientRepository.class);
         var stubAccountRepository = mock(AccountRepository.class);
         var client = new Client(clientId, clientName);
-        var fromAcc = new SavingAccount(1, client, 100.0);
-        var toAcc = new SavingAccount(2, client, 100.0);
-        var sut = new Processing(dummyClientRepository, stubAccountRepository);
+        var fromAccId = 1;
+        var toAccId = 2;
+        var fromAccBalance = 100.0;
+        var toAccBalance = 100.0;
+        var fromAcc = new SavingAccount(fromAccId, client, fromAccBalance);
+        var toAcc = new SavingAccount(toAccId, client, toAccBalance);
+        var transferAmount = 100.0;
         when(stubAccountRepository.getById(fromAcc.getId())).thenReturn(fromAcc);
         when(stubAccountRepository.getById(toAcc.getId())).thenReturn(toAcc);
         when(stubAccountRepository.save(fromAcc)).thenReturn(fromAcc);
         when(stubAccountRepository.save(toAcc)).thenReturn(toAcc);
+        var sut = new Processing(dummyClientRepository, stubAccountRepository);
 
-        sut.transfer(fromAcc.getId(), toAcc.getId(), 100.0);
+        sut.transfer(fromAcc.getId(), toAcc.getId(), transferAmount);
 
-        assertEquals(fromAcc.getAmount(), 0);
-        assertEquals(toAcc.getAmount(), 200.0);
+        verify(stubAccountRepository).getById(fromAccId);
+        verify(stubAccountRepository).getById(toAccId);
+        verify(stubAccountRepository).save(fromAcc);
+        verify(stubAccountRepository).save(toAcc);
+        assertEquals(fromAcc.getAmount(), fromAccBalance - transferAmount);
+        assertEquals(toAcc.getAmount(), toAccBalance + transferAmount);
     }
-
-//    @Test
-//    @Disabled
-//    public void shouldGetAccountsByClientId() {
-//        var client = new Client(clientId, clientName);
-//        client.setAccount(new SavingAccount(accountId, client, accountAmount));
-//        var clientRepositoryStub = mock(ClientRepository.class);
-////        when(clientRepositoryStub.getById(client.getId())).thenReturn();
-//
-//        var sut = new Processing(clientRepositoryStub);
-//
-//        var clientAccounts = sut.getAccountsByClientId(client.getId());
-//
-//        assertEquals(client.getAccounts(), clientAccounts);
-//    }
 }
