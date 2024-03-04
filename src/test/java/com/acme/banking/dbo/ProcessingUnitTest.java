@@ -14,6 +14,7 @@ import org.mockito.ArgumentCaptor;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -22,7 +23,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class ProcessingTest {
+public class ProcessingUnitTest {
 
     @Test
     @DisplayName("Успешно передать день в другой аккаунт")
@@ -32,8 +33,8 @@ public class ProcessingTest {
         var processing = new Processing(mockedRepository, new CashLoggerProvider());
         SavingAccount fromAccount = new SavingAccount(1, new Client(1, "aaa"), 1);
         SavingAccount toAccount = new SavingAccount(2, new Client(1, "bbb"), 0);
-        when(mockedRepository.getAccount(1)).thenReturn(fromAccount);
-        when(mockedRepository.getAccount(2)).thenReturn(toAccount);
+        when(mockedRepository.getAccount(1)).thenReturn(Optional.of(fromAccount));
+        when(mockedRepository.getAccount(2)).thenReturn(Optional.of(toAccount));
 
         processing.transfer(1, 2, 1);
 
@@ -50,7 +51,7 @@ public class ProcessingTest {
         var processing = new Processing(mockedRepository, new CashLoggerProvider());
         SavingAccount fromAccount = new SavingAccount(1, new Client(1, "aaa"), 1);
         Integer toAccountId = null;
-        when(mockedRepository.getAccount(1)).thenReturn(fromAccount);
+        when(mockedRepository.getAccount(1)).thenReturn(Optional.of(fromAccount));
         var cashTransactions = (List<CashTransaction>) ReflectionTestUtils.getField(new CashInternalLogger(),
             "cashTransactions");
 
@@ -83,7 +84,7 @@ public class ProcessingTest {
         var intCaptor = ArgumentCaptor.forClass(Integer.class);
         SavingAccount fromAccount = new SavingAccount(1, new Client(1, "aaa"), 1);
         Integer toAccountId = null;
-        when(mockedRepository.getAccount(1)).thenReturn(fromAccount);
+        when(mockedRepository.getAccount(1)).thenReturn(Optional.of(fromAccount));
 
         processing.transfer(1, toAccountId, 1);
 

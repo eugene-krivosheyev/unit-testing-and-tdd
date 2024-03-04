@@ -1,5 +1,6 @@
 package com.acme.banking.dbo.service;
 
+import com.acme.banking.dbo.exception.AccountNotFoundException;
 import com.acme.banking.dbo.repository.AccountRepository;
 
 
@@ -16,11 +17,11 @@ public class Processing {
 
     public void transfer(Integer fromAccountId, Integer toAccountId, double amount) {
         validation.validate(amount);
-        accountRepository.getAccount(fromAccountId).changeBalance(-amount);
+        accountRepository.getAccount(fromAccountId).orElseThrow(() ->  new AccountNotFoundException(fromAccountId)).changeBalanceTo(-amount);
         if (toAccountId == null) {
             logger.log(amount, fromAccountId);
         } else {
-            accountRepository.getAccount(toAccountId).changeBalance(amount);
+            accountRepository.getAccount(toAccountId).orElseThrow(() ->  new AccountNotFoundException(toAccountId)).changeBalanceTo(amount);
         }
     }
 

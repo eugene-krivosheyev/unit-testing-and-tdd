@@ -1,6 +1,12 @@
 package com.acme.banking.dbo.domain;
 
+import com.acme.banking.dbo.exception.OverdraftException;
+import com.acme.banking.dbo.repository.AccountRepository;
+import com.acme.banking.dbo.repository.impl.AccountRepositoryImpl;
+
 public class SavingAccount implements Account {
+
+    private static AccountRepository repo = new AccountRepositoryImpl();
     private int id;
     private Client client;
     private double amount;
@@ -11,6 +17,7 @@ public class SavingAccount implements Account {
         this.amount = amount;
 
         this.client.addAccount(this);
+        repo.registerAccount(this);
     }
 
     @Override
@@ -38,7 +45,10 @@ public class SavingAccount implements Account {
     }
 
     @Override
-    public void changeBalance(double amount) {
+    public void changeBalanceTo(double amount) {
+        if (this.amount + amount < 0){
+            throw new OverdraftException();
+        }
         this.amount = this.amount + amount;
     }
 

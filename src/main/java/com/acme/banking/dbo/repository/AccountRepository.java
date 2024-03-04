@@ -1,9 +1,11 @@
 package com.acme.banking.dbo.repository;
 
-import java.util.Collection;
+import java.util.Optional;
 
 import com.acme.banking.dbo.domain.Account;
 
 public interface AccountRepository {
-    Account getAccount(int accountId);
+
+    Account registerAccount(Account account);
+    Optional<Account> getAccount(int accountId);
 }
