@@ -7,9 +7,11 @@ import com.acme.banking.dbo.repository.AccountRepository;
 public class Processing {
     private AccountRepository accountRepository;
     private TransactionValidation validation;
+    private CashLoggerProvider logger;
 
-    public Processing(AccountRepository accountRepository) {
+    public Processing(AccountRepository accountRepository, CashLoggerProvider logger) {
         this.accountRepository = accountRepository;
+        this.logger = logger;
         this.validation = new TransactionValidation();
     }
 
@@ -17,7 +19,7 @@ public class Processing {
         validation.validate(amount);
         accountRepository.getAccount(fromAccountId).changeBalance(-amount);
         if (toAccountId == null) {
-            CashInternalLogger.log(amount, fromAccountId);
+            logger.getLogger().accept(amount, fromAccountId);
         } else {
             accountRepository.getAccount(toAccountId).changeBalance(amount);
         }
