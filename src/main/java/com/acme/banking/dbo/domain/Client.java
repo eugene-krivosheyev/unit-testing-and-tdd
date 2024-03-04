@@ -9,6 +9,15 @@ public class Client {
     private String name;
     private Collection<Account> accounts = new ArrayList<>(); //TODO
 
+    public Client(String name) {
+        if (name == null) {
+            throw new IllegalArgumentException("Name can not be null");
+        }
+        if (name.isBlank()) {
+            throw new IllegalArgumentException("Name can not be blank or empty");
+        }
+        this.name = name;
+    }
     public Client(int id, String name) {
         if (name == null) {
             throw new IllegalArgumentException("Name can not be null");
