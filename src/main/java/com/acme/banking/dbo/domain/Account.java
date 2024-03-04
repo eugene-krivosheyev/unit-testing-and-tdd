@@ -7,5 +7,5 @@ public interface Account {
 
     Client getClient(); //TODO reference integrity
 
-    void setAmount(int accountId);
+    void setAmount(double amount);
 }

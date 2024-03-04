@@ -47,4 +47,8 @@ public class Client {
         }
         accounts.add(account);
     }
+
+    public void addAccounts(List<SavingAccount> accounts) {
+        accounts.forEach(this::addAccount);
+    }
 }

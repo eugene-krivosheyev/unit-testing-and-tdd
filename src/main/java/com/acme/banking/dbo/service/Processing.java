@@ -12,19 +12,6 @@ public class Processing {
     private AccountRepository accountRepository;
     private CashLogService cashLogService;
 
-    public Processing(ClientRepository clientRepository) {
-        this.clientRepository = clientRepository;
-    }
-
-    public Processing(CashLogService cashLogService) {
-        this.cashLogService = cashLogService;
-    }
-
-    public Processing(ClientRepository clientRepository, AccountRepository accountRepository) {
-        this.clientRepository = clientRepository;
-        this.accountRepository = accountRepository;
-    }
-
     public Processing(ClientRepository clientRepository, AccountRepository accountRepository, CashLogService cashLogService) {
         this.clientRepository = clientRepository;
         this.accountRepository = accountRepository;
@@ -32,21 +19,49 @@ public class Processing {
     }
 
     public Client createClient(String name) {
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("ClientName is invalid");
+        }
         return clientRepository.saveClientWithName(name);
     }
 
     public Collection<Account> getAccountsByClientId(int clientId) {
+        if (clientId < 0) {
+            throw new IllegalArgumentException("ClientId is invalid");
+        }
         return accountRepository.findAccountsByClient(clientId);
     }
 
     public void transfer(int fromAccountId, int toAccountId, double amount) {
-        var accountFrom = accountRepository.findAccountById(fromAccountId);
-        var accountTo = accountRepository.findAccountById(toAccountId);
-//        accountFrom.s
+        if (amount <= 0) {
+            throw new IllegalArgumentException();
+        }
 
+        var accountFrom = accountRepository.findAccountById(fromAccountId);
+        if (accountFrom == null) {
+            throw new IllegalArgumentException();
+        }
+
+        var accountTo = accountRepository.findAccountById(toAccountId);
+        if (accountTo == null) {
+            throw new IllegalArgumentException();
+        }
+
+        if (accountTo.getAmount() < amount) {
+            throw new IllegalArgumentException();
+        }
+
+        accountTo.setAmount(accountTo.getAmount() + amount);
+        accountFrom.setAmount(accountTo.getAmount() - amount);
+
+        accountRepository.updateClientAccount(accountFrom);
+        accountRepository.updateClientAccount(accountTo);
     }
 
-    public void cash(double amount, int fromAccountId) {
-        cashLogService.log(amount, fromAccountId);
+    public void logCash(double amount, int fromAccountId) {
+        if (fromAccountId < 0) {
+            throw new IllegalArgumentException("Invalid accountId");
+        }
+        cashLogService.logCash(amount, fromAccountId);
     }
 }

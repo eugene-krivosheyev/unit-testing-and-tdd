@@ -39,11 +39,6 @@ public class SavingAccount implements Account {
         return client;
     }
 
-    @Override
-    public void setAmount(int accountId) {
-
-    }
-
     public void setAmount(double amount) {
         this.amount = amount;
     }
