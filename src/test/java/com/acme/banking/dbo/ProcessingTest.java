@@ -1,26 +1,23 @@
 package com.acme.banking.dbo;
 
+import java.util.List;
+
 import com.acme.banking.dbo.domain.CashInternalLogger;
 import com.acme.banking.dbo.domain.CashTransaction;
 import com.acme.banking.dbo.domain.Client;
 import com.acme.banking.dbo.domain.SavingAccount;
 import com.acme.banking.dbo.exception.OddTransactionValidationException;
 import com.acme.banking.dbo.repository.AccountRepository;
-import com.acme.banking.dbo.repository.ClientRepository;
 import com.acme.banking.dbo.service.CashLoggerProvider;
 import com.acme.banking.dbo.service.Processing;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -41,7 +38,7 @@ public class ProcessingTest {
         processing.transfer(1, 2, 1);
 
         assertAll(() -> assertEquals(0, fromAccount.getAmount()),
-            () -> assertEquals(1, toAccount.getAmount())
+                () -> assertEquals(1, toAccount.getAmount())
         );
     }
 
@@ -51,16 +48,18 @@ public class ProcessingTest {
 
         var mockedRepository = mock(AccountRepository.class);
         var processing = new Processing(mockedRepository, new CashLoggerProvider());
-        SavingAccount fromAccount = new SavingAccount(1, new Client(1, "aaa"), 1);
+        SavingAccount fromAccount = new SavingAccount(1, new Client(1, "UnicueId"), 1);
         Integer toAccountId = null;
         when(mockedRepository.getAccount(1)).thenReturn(fromAccount);
         var cashTransactions = (List<CashTransaction>) ReflectionTestUtils.getField(new CashInternalLogger(),
-            "cashTransactions");
+                "cashTransactions");
 
         processing.transfer(1, toAccountId, 1);
 
         assertAll(() -> assertEquals(0, fromAccount.getAmount()),
-            () -> assertEquals(1, cashTransactions.size()));
+                () -> assertEquals(1, cashTransactions.stream()
+                        .filter(e -> e.getFromAccountId().equals(fromAccount.getId()))
+                        .count()));
     }
 
     @Test
@@ -71,7 +70,7 @@ public class ProcessingTest {
         var processing = new Processing(mockedRepository, new CashLoggerProvider());
 
         assertThrows(OddTransactionValidationException.class,
-            () -> processing.transfer(1, null, 2)
+                () -> processing.transfer(1, null, 2)
         );
     }
 
@@ -93,8 +92,8 @@ public class ProcessingTest {
 
         verify(cashLoggerProviderMock).log(doubleCaptor.capture(), intCaptor.capture());
         assertAll(() -> assertEquals(0, fromAccount.getAmount()),
-            () -> assertEquals(1, intCaptor.getValue()),
-            () -> assertEquals(1.0d, doubleCaptor.getValue()));
+                () -> assertEquals(1, intCaptor.getValue()),
+                () -> assertEquals(1.0d, doubleCaptor.getValue()));
     }
 
 }
