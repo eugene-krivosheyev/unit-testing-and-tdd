@@ -61,17 +61,17 @@ class ProcessingTest {
 
     @Test
     void shouldReturnAllAccountsByValidClient() {
-        var validClient = new Client(1, "Ivan");
+        var validClient = new Client(0, "Ivan");
         var clientAccount_1 = new SavingAccount(1, validClient, 10.00);
         var clientAccount_2 = new SavingAccount(2, validClient, 100.00);
         var validAccounts = Arrays.asList(clientAccount_1, clientAccount_2);
         validClient.addAccounts(validAccounts);
 
-        when(accountRepositoryMock.findAccountsByClient(1)).thenReturn(Arrays.asList(clientAccount_1, clientAccount_2));
+        when(accountRepositoryMock.findAccountsByClient(0)).thenReturn(Arrays.asList(clientAccount_1, clientAccount_2));
 
         var actualAccounts = processingService.getAccountsByClientId(validClient.getId());
 
-        verify(accountRepositoryMock, times(1)).findAccountsByClient(1);
+        verify(accountRepositoryMock, times(1)).findAccountsByClient(0);
 
         assertAll(
                 () -> assertTrue(Objects.nonNull(actualAccounts)),
@@ -117,7 +117,7 @@ class ProcessingTest {
 
     @Test
     void shouldNotTransferWhenAccountToNotFound() {
-        when(accountRepositoryMock.findAccountById(-1)).thenReturn(null);
+        when(accountRepositoryMock.findAccountById(0)).thenReturn(null);
         assertThrows(IllegalArgumentException.class, () -> processingService.transfer(1, -1, 100));
     }
 
