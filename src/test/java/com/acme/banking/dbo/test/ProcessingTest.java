@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.Mockito.*;
 
 public class ProcessingTest {
@@ -22,15 +23,16 @@ public class ProcessingTest {
         var dummyAccountRepository = mock(AccountRepository.class);
         var expected = new Client(clientId, clientName);
         when(stubClientRepository.nextId()).thenReturn(clientId);
-        when(stubClientRepository.save(expected)).thenReturn(
-                new Client(expected.getId(), expected.getName())
-        );
+        when(stubClientRepository.save(expected)).thenReturn(expected);
         var sut = new Processing(stubClientRepository, dummyAccountRepository);
 
         var actual = sut.createClient(clientName);
 
-        verify(stubClientRepository).save(expected);
-        assertEquals(expected, actual);
+        assertAll(
+                () -> verify(stubClientRepository).save(expected),
+                () -> assertEquals(expected, actual)
+        );
+
     }
 
     @Test
@@ -45,8 +47,10 @@ public class ProcessingTest {
 
         var actual = sut.getAccountsByClientId(client.getId());
 
-        verify(stubClientRepository).getById(client.getId());
-        assertIterableEquals(List.of(expected), actual);
+        assertAll(
+                () -> verify(stubClientRepository).getById(client.getId()),
+                () -> assertIterableEquals(List.of(expected), actual)
+        );
     }
 
     @Test
@@ -61,19 +65,22 @@ public class ProcessingTest {
         var fromAcc = new SavingAccount(fromAccId, client, fromAccBalance);
         var toAcc = new SavingAccount(toAccId, client, toAccBalance);
         var transferAmount = 100.0;
+        var sut = new Processing(dummyClientRepository, stubAccountRepository);
         when(stubAccountRepository.getById(fromAcc.getId())).thenReturn(fromAcc);
         when(stubAccountRepository.getById(toAcc.getId())).thenReturn(toAcc);
         when(stubAccountRepository.save(fromAcc)).thenReturn(fromAcc);
         when(stubAccountRepository.save(toAcc)).thenReturn(toAcc);
-        var sut = new Processing(dummyClientRepository, stubAccountRepository);
 
         sut.transfer(fromAcc.getId(), toAcc.getId(), transferAmount);
 
-        verify(stubAccountRepository).getById(fromAccId);
-        verify(stubAccountRepository).getById(toAccId);
-        verify(stubAccountRepository).save(fromAcc);
-        verify(stubAccountRepository).save(toAcc);
-        assertEquals(fromAcc.getAmount(), fromAccBalance - transferAmount);
-        assertEquals(toAcc.getAmount(), toAccBalance + transferAmount);
+        assertAll(
+                () -> verify(stubAccountRepository).getById(fromAccId),
+                () -> verify(stubAccountRepository).getById(fromAccId),
+                () -> verify(stubAccountRepository).getById(toAccId),
+                () -> verify(stubAccountRepository).save(fromAcc),
+                () -> verify(stubAccountRepository).save(toAcc),
+                () -> assertEquals(fromAcc.getAmount(), fromAccBalance - transferAmount),
+                () -> assertEquals(toAcc.getAmount(), toAccBalance + transferAmount)
+        );
     }
 }
