@@ -44,17 +44,17 @@ public class Processing {
     }
 
     public void transfer(int fromAccountId, int toAccountId, double amount) {
+        Account fromAccount;
+        Account toAccount;
 
         if (fromAccountId == toAccountId) throw new TransferException("The source account is the same as the target!");
         if (amount <= 0) throw new TransferException("Amount " + amount + " is invalid value!");
-        Account fromAccount;
-        Account toAccount;
 
         try {
             fromAccount = accountRepository.getAccountById(fromAccountId);
             toAccount = accountRepository.getAccountById(toAccountId);
         } catch (Exception e){
-            throw new TransferException("Account service returned error");
+            throw new TransferException("Could not get account");
         }
 
         double fromAccountBalance = fromAccount.getAmount();
@@ -64,8 +64,14 @@ public class Processing {
 
         try {
             fromAccount.setBalance(fromAccountBalance - amount);
+        } catch(Exception e){
+            throw new TransferException("Fail transaction");
+        }
+
+        try {
             toAccount.setBalance(toAccountBalance + amount);
         } catch(Exception e){
+            fromAccount.setBalance(fromAccountBalance);
             throw new TransferException("Fail transaction");
         }
     }
