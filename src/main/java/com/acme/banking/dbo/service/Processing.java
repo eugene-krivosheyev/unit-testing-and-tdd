@@ -1,25 +1,27 @@
 package com.acme.banking.dbo.service;
 
-import com.acme.banking.dbo.domain.Account;
-import com.acme.banking.dbo.domain.Cash;
-import com.acme.banking.dbo.domain.Client;
+import com.acme.banking.dbo.repository.AccountRepository;
 
-import java.util.Collection;
 
 public class Processing {
-    public Client createClient(String name) {
-        return null; //TODO
+    private AccountRepository accountRepository;
+    private TransactionValidation validation;
+    private CashLoggerProvider logger;
+
+    public Processing(AccountRepository accountRepository, CashLoggerProvider logger) {
+        this.accountRepository = accountRepository;
+        this.logger = logger;
+        this.validation = new TransactionValidation();
     }
 
-    public Collection<Account> getAccountsByClientId(int clientId) {
-        return null; //TODO
+    public void transfer(Integer fromAccountId, Integer toAccountId, double amount) {
+        validation.validate(amount);
+        accountRepository.getAccount(fromAccountId).changeBalance(-amount);
+        if (toAccountId == null) {
+            logger.log(amount, fromAccountId);
+        } else {
+            accountRepository.getAccount(toAccountId).changeBalance(amount);
+        }
     }
 
-    public void transfer(int fromAccountId, int toAccountId, double amount) {
-        //TODO
-    }
-
-    public void cash(double amount, int fromAccountId) {
-        Cash.log(amount, fromAccountId);
-    }
 }
