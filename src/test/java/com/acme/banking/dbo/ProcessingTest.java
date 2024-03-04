@@ -33,7 +33,7 @@ public class ProcessingTest {
     }
 
     @Test
-    public void shouldReturnEmptyAccountsWhenClientHasNotAccount(){
+    public void shouldReturnEmptyAccountsWhenClientHasNotAccount() {
         var stubClientRepository = mock(ClientRepository.class);
         var sut = new Processing(stubClientRepository);
         Client client = new Client(1, "client1");
@@ -44,7 +44,19 @@ public class ProcessingTest {
         Assertions.assertTrue(accounts.isEmpty());
     }
 
+    @Test
+    public void shouldReturnEmptyAccountsWhenClientHasOneAccount() {
+        var stubClientRepository = mock(ClientRepository.class);
+        var sut = new Processing(stubClientRepository);
+        Client client = new Client(1, "client1");
+        Account account = new SavingAccount(1, client, 100);
+        client.addAccount(account);
+        when(stubClientRepository.findClientById(anyInt())).thenReturn(client);
 
+        Collection<Account> accounts = sut.getAccountsByClientId(1);
+
+        Assertions.assertTrue(accounts.contains(account));
+    }
 
 
 }
