@@ -37,6 +37,11 @@ public class SavingAccount implements Account {
         this.client.addAccount(this);
     }
 
+    @Override
+    public void changeBalance(double amount) {
+        this.amount = this.amount + amount;
+    }
+
     public void unlinkClient(){
         this.client.removeAccount(this);
         this.client = null;
