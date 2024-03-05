@@ -14,7 +14,6 @@ import static org.mockito.Mockito.when;
 
 public class ReportingTesting {
 
-
     @Test
     void givenReportingServiceWithNullBranchShouldReportEmptyReport() {
         var reportingService = new Reporting();
@@ -26,21 +25,21 @@ public class ReportingTesting {
     void givenReportWithBranchWithoutAccountAndChildBranchShouldReport() {
         var reportingService = new Reporting();
         var mockedBranch = mock(Branch.class);
-        when(mockedBranch.getName()).thenReturn("SomeName");
+        when(mockedBranch.getName()).thenReturn("BranchName");
 
-        assertEquals("#SomeName", reportingService.getReport(mockedBranch));
+        assertEquals("# BranchName", reportingService.getReport(mockedBranch));
     }
 
     @Test
     void givenReportWithBranchWithAccountAndWithoutChildBranchShouldReport() {
         var reportingService = new Reporting();
         var mockedBranch = mock(Branch.class);
-        when(mockedBranch.getName()).thenReturn("SomeName");
+        when(mockedBranch.getName()).thenReturn("BranchName");
         var mockedAccount = mock(SavingAccount.class);
         when(mockedAccount.getAmount()).thenReturn(100d);
         when(mockedBranch.getAccounts()).thenReturn(List.of(mockedAccount));
 
-        assertEquals("#SomeName Account balance: 100.0", reportingService.getReport(mockedBranch));
+        assertEquals("# BranchName \nAccount balance: 100.0", reportingService.getReport(mockedBranch));
     }
 
 
@@ -48,53 +47,13 @@ public class ReportingTesting {
     void givenReportWithBranchWithAccountAndChildBranchShouldReport() {
         var reportingService = new Reporting();
         var mockedBranch = mock(Branch.class);
-        when(mockedBranch.getName()).thenReturn("SomeName");
+        when(mockedBranch.getName()).thenReturn("BranchName");
         var mockedAccount = mock(SavingAccount.class);
         when(mockedAccount.getAmount()).thenReturn(100d);
         when(mockedBranch.getAccounts()).thenReturn(List.of(mockedAccount));
         when(mockedBranch.getChildren()).thenReturn(List.of(mockedBranch));
 
 
-        assertEquals("#SomeName Account balance: 100.0 ##SomeName", reportingService.getReport(mockedBranch));
-    }
-
-
-
-    @Nested
-    class BranchConverterToMarkdown {
-
-        @Test
-        void givenBranchShouldTranslateToMarkdown() {
-            var converter = new BranchToMarkdownConverter();
-            var mockedBranch = mock(Branch.class);
-            when(mockedBranch.getName()).thenReturn("someName");
-
-            assertEquals("#someName", converter.toMarkdown(mockedBranch));
-        }
-
-        @Test
-        void givenBranchWithBranchShpuldTranslateToMarkdown() {
-            var converter = new BranchToMarkdownConverter();
-            var mockedBranch = mock(Branch.class);
-            when(mockedBranch.getName()).thenReturn("someName");
-            when(mockedBranch.getChildren()).thenReturn(List.of(mockedBranch));
-
-            assertEquals("#someName ##someName", converter.toMarkdown(mockedBranch));
-        }
-
-    }
-
-
-    @Nested
-    class AccountConverterToMarkdown {
-
-        @Test
-        void givenAccountShouldConvertToAccount() {
-            var converter = new AccountToMarkdownConverter();
-            var mockedAccount = mock(SavingAccount.class);
-            when(mockedAccount.getAmount()).thenReturn(100d);
-
-            assertEquals("Account balance: 100.0", converter.toMarkdown(mockedAccount));
-        }
+        assertEquals("# BranchName \nAccount balance: 100.0 ## BranchName", reportingService.getReport(mockedBranch));
     }
 }

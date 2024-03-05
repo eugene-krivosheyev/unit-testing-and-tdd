@@ -13,22 +13,22 @@ public class BranchToMarkdownConverter implements MarkDownConverter<Branch> {
     public String toMarkdown(Branch object) {
         var accountsMarkdown = "";
         if (!object.getAccounts().isEmpty()) {
-            accountsMarkdown = object
+            accountsMarkdown = " \n" + object
                 .getAccounts()
                 .stream()
-                .map(e -> accountConverter.toMarkdown(e))
+                .map(accountConverter::toMarkdown)
                 .collect(Collectors.joining("\n"));
         }
 
         if (object.getChildren().isEmpty()) {
-            return "#" + object.getName() + " " + accountsMarkdown;
+            return "# " + object.getName() +  accountsMarkdown;
         }
 
 
-        return "#" + object.getName() + " " + accountsMarkdown + " ##" + object
+        return "# " + object.getName() + accountsMarkdown + " ## " + object
             .getChildren()
             .stream()
             .map(Branch::getName)
-            .collect(Collectors.joining("\n ##"));
+            .collect(Collectors.joining("\n ## "));
     }
 }
