@@ -7,6 +7,12 @@ public class Reporting {
      * @return Markdown report for all branches, clients, accounts
      */
     public String getReport(Branch rootBranch) {
-        return null;
+        if (rootBranch == null){
+            return "EMPTY REPORT";
+        }
+        if (rootBranch.getAccounts() == null){
+            throw new IllegalArgumentException("Branch should have at least one account");
+        }
+        return "EMPTY REPORT";
     }
 }
