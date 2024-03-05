@@ -8,7 +8,9 @@ import static java.util.Collections.unmodifiableCollection;
 public class Branch {
     private Collection<Account> accounts; //TODO
 
-    private Collection<Branch> childs;
+    private String name;
+
+    private Collection<Branch> childs = new ArrayList<>();
 
     public Branch(Collection<Account> accounts) {
         this.accounts = accounts;
@@ -20,5 +22,13 @@ public class Branch {
 
     public Collection<Branch> getChildren() {
         return new ArrayList<>(childs);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
