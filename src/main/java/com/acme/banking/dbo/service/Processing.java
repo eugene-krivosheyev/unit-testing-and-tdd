@@ -7,6 +7,7 @@ import com.acme.banking.dbo.repository.AccountRepository;
 import com.acme.banking.dbo.repository.ClientRepository;
 
 import java.util.Collection;
+import java.util.Collections;
 
 public class Processing {
 
@@ -24,7 +25,7 @@ public class Processing {
     }
 
     public Collection<Account> getAccountsByClientId(int clientId) {
-        return clientRepository.getById(clientId).getAccounts();
+        return Collections.unmodifiableCollection(clientRepository.getById(clientId).getAccounts());
     }
 
     public void transfer(int fromAccountId, int toAccountId, double amount) {
