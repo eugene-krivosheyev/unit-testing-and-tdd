@@ -18,6 +18,7 @@ public class Client {
         }
         this.name = name;
     }
+
     public Client(int id, String name) {
         if (name == null) {
             throw new IllegalArgumentException("Name can not be null");

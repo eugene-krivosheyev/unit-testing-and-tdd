@@ -33,12 +33,11 @@ class ClientCreationTest {
         }
 
         @Test
-        public void shouldAddAccountWhenCorrectAccountOwner(){
+        public void shouldAddAccountWhenCorrectAccountOwner() {
             Client sut = new Client(10, "Petr");
             SavingAccount clientAccount = new SavingAccount(1, sut, 10);
             sut.addAccount(clientAccount);
             Collection<Account> accounts = sut.getAccounts();
-            accounts.add(clientAccount);
             Assertions.assertAll(
                     () -> Assertions.assertEquals(1, sut.getAccounts().size()),
                     () -> Assertions.assertEquals(clientAccount, sut.getAccounts().toArray()[0])
@@ -67,6 +66,22 @@ class ClientCreationTest {
         public void shouldFailWhenIdIsNegative() {
             Assertions.assertThrows(IllegalArgumentException.class, () -> new Client(-5, "Petr"));
         }
+
+        @Test()
+        public void shouldFailWhenNameIsNullAndNoOtherArgs() {
+            Assertions.assertThrows(IllegalArgumentException.class, () -> new Client(null));
+        }
+
+        @Test()
+        public void shouldFailWhenNameIsEmptyAndNoOtherArgs() {
+            Assertions.assertThrows(IllegalArgumentException.class, () -> new Client(""));
+        }
+
+        @Test()
+        public void shouldFailWhenNameIsBlankAndNoOtherArgs() {
+            Assertions.assertThrows(IllegalArgumentException.class, () -> new Client(" "));
+        }
+
 
         @Test
         public void shouldFailWhenAccountClientIsNotThisClient() {
